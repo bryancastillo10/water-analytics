@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
-import Provider from "@/app/Providers";
+import Providers from "@/app/Providers";
 import AppLayout from "@/components/layout/AppLayout";
 
 import { SignIn, SignUp } from "@/features/auth";
@@ -8,7 +8,7 @@ import { Dashboard, WaterQuality, Profile } from "@/features";
 
 const App = () => {
   return (
-    <Provider>
+    <Providers>
       <Routes>
         <Route index path="/" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
@@ -18,7 +18,7 @@ const App = () => {
           <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
-    </Provider>
+    </Providers>
   );
 };
 
