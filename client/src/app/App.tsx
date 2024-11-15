@@ -4,7 +4,7 @@ import Providers from "@/app/Providers";
 import AppLayout from "@/components/layout/AppLayout";
 
 import { SignIn, SignUp } from "@/features/auth";
-import { Dashboard, WaterQuality, Profile,Sites } from "@/features";
+import { Dashboard, WaterQuality, Settings,Sites } from "@/features";
 
 const App = () => {
   return (
@@ -16,7 +16,7 @@ const App = () => {
           <Route index path="dashboard" element={<Dashboard />} />
           <Route path="data-table" element={<WaterQuality />} />
           <Route path="sites" element={<Sites/>}/>
-          <Route path="profile" element={<Profile />} />
+          <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>
     </Providers>
