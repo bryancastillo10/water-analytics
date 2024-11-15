@@ -5,7 +5,7 @@ import Sidebar from "@/components/navigation/Sidebar";
 
 const AppLayout = () => {
   return (
-    <main className="flex bg-white w-full h-screen">
+    <main className="flex bg-light w-full h-screen">
       <Sidebar />
       <div className="flex-1">
         <Navbar />
