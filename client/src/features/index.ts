@@ -1,5 +1,6 @@
 import Dashboard from "./dashboard/Dashboard";
 import WaterQuality from "./waterquality/WaterQuality";
-import Profile from "./profile/Profile";
+import Settings from "./profile/Settings";
+import Sites from "./sites/Sites";
 
-export { Dashboard, WaterQuality, Profile };
+export { Dashboard, WaterQuality, Settings,Sites };

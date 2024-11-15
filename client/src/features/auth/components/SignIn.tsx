@@ -41,7 +41,7 @@ const SignIn = () => {
         <p>
           No account yet? &nbsp;
           <span className="italic text-darkGray hover:underline hover:text-primary">
-            <Link to="sign-up">click here to sign up</Link>
+            <Link to="sign-up">sign up here</Link>
           </span>
         </p>
       </article>
