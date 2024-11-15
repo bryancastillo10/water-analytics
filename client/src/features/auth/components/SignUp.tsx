@@ -1,11 +1,66 @@
+import { EnvelopeSimple, Key, User } from "@phosphor-icons/react";
+import { Link } from "react-router-dom";
 
+import { AnimatedInput, Button } from "@/components/ui";
+import useSignUpForm from "@/features/auth/hooks/useSignUpForm";
+import AuthContainer from "@/features/auth/components/AuthContainer";
 
-const SignUp = () => {
+const SignIn = () => {
+  const { signUpData, onChangeInput, handleSubmit } = useSignUpForm();
+
+  const SignInFormBody = (
+    <>
+      <form onSubmit={handleSubmit}>
+          <AnimatedInput
+            id="username"
+            type="text"
+            label="username"
+            icon={User}
+            value={signUpData.username}
+            onChange={onChangeInput}
+          />
+
+          <AnimatedInput
+            id="email"
+            type="email"
+            label="email"
+            icon={EnvelopeSimple}
+            value={signUpData.email}
+            onChange={onChangeInput}
+          />
+
+          <AnimatedInput
+            id="password"
+            type="password"
+            label="password"
+            isPassword
+            icon={Key}
+            value={signUpData.password}
+            onChange={onChangeInput}
+          />
+        <Button type="submit" width="w-full" variant="primary">
+          Submit
+        </Button>
+      </form>
+
+      <article className="mt-4 text-xs md:text-sm text-dark ">
+        <p>
+          Already have an account? &nbsp;
+          <span className="italic text-darkGray hover:underline hover:text-primary">
+            <Link to="/">click here to sign in</Link>
+          </span>
+        </p>
+      </article>
+    </>
+  );
+
   return (
-    <div>
-      Sign Up Page
-    </div>
-  )
-}
+    <AuthContainer
+      title="Water Analytics App"
+      caption="Sign In to Get Started!"
+      body={SignInFormBody}
+    />
+  );
+};
 
-export default SignUp
+export default SignIn;
