@@ -14,7 +14,7 @@ interface InputProps {
   validationMessage?: string;
 }
 
-const Input = ({
+const AnimatedInput = ({
   id,
   type = "text",
   label,
@@ -33,7 +33,7 @@ const Input = ({
       };
     
   return (
-    <div className="relative my-8">
+    <div className="relative my-10">
       <input
         id={id}
         type={type === "password" ? (isVisible ? "text" : "password") : type}
@@ -76,4 +76,4 @@ const Input = ({
   );
 };
 
-export default Input;
+export default AnimatedInput;

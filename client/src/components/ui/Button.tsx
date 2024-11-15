@@ -1,6 +1,6 @@
 
 interface ButtonProps {
-  action: () => void;
+  action?: () => void;
   type: "submit" | "reset" | "button";
   width?: string;
   loading?: boolean;
