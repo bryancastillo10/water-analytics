@@ -3,7 +3,7 @@ import AppLogo from "@/assets/water.png";
 import { sidebarItems, type sidebarItemsProps } from "@/components/navigation/sidebarItems";
 import { ArrowCircleLeft, ArrowCircleRight } from "@phosphor-icons/react";
 
-interface SidebarProps{
+export interface NavigationProps{
   isSidebarExpanded: boolean;
   toggleSidebar: () => void;
 }
@@ -29,7 +29,7 @@ const SideBarRowItem = ({ name, icon: Icon,link, isSidebarExpanded }: sidebarIte
 };
 
 // Sidebar parent component
-const Sidebar = ({isSidebarExpanded, toggleSidebar}:SidebarProps) => {
+const Sidebar = ({isSidebarExpanded, toggleSidebar}:NavigationProps) => {
   return (
     <nav
       className={`flex flex-col transition-all duration-500 

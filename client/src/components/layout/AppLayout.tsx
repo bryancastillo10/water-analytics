@@ -16,9 +16,15 @@ const AppLayout = () => {
 
   return (
     <main className="flex bg-light w-full h-screen">
-      <Sidebar isSidebarExpanded={isSidebarExpanded} toggleSidebar={toggleSidebar} />
+      <Sidebar
+        isSidebarExpanded={isSidebarExpanded}
+        toggleSidebar={toggleSidebar}
+      />
       <div className="flex-1">
-        <Navbar />
+        <Navbar
+          isSidebarExpanded={isSidebarExpanded}
+          toggleSidebar={toggleSidebar}
+        />
         <section className="py-3 px-6">
           <Outlet />
         </section>
