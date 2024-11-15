@@ -18,6 +18,10 @@ export default {
       fontWeight: {
         regular: 400,
         semibold:700
+      },
+      fontFamily: {
+         primary: ["Poppins", "sans-serif"], 
+        secondary: ["Stint Ultra Condensed", "sans-serif"], 
       }
     },
   },

@@ -20,7 +20,7 @@ const SideBarRowItem = ({ name, icon: Icon,link, isSidebarExpanded }: sidebarIte
       ${isSidebarExpanded ? "my-4 w-fit":"w-full my-3 gap-2"}
       flex justify-start  items-center p-2  rounded-2xl`}>
       <Icon size="28" color={isActive ? "#F4F3F2" : "#040710"} />
-      {isSidebarExpanded ? null: <span className={`font-semibold ${isActive ? "text-white" : "text-dark"}`}>
+      {isSidebarExpanded ? null: <span className={`${isActive ? "text-white font-semibold" : "text-dark"}`}>
         {name}
         </span>} 
       </li>
@@ -41,7 +41,7 @@ const Sidebar = ({isSidebarExpanded, toggleSidebar}:SidebarProps) => {
         {/* Sidebar Header */}
         <div className="flex justify-start gap-2 items-center">
           <img src={AppLogo} alt="logo" className={`${isSidebarExpanded ? "mt-8":"mt-0"} size-10`} />
-          {!isSidebarExpanded && (<h1 className="text-lg text-left font-bold">Water Analytics</h1>)}
+          {!isSidebarExpanded && (<h1 className="text-lg text-left font-secondary">Water Analytics</h1>)}
         </div>
         <div className="absolute top-6 right-4 cursor-pointer hover:text-primary" onClick={toggleSidebar}>
           {isSidebarExpanded ? <ArrowCircleRight size="24"/>: <ArrowCircleLeft size="24" />}
