@@ -1,62 +1,59 @@
 import { EnvelopeSimple, Key } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
-import useSignInForm from "@/features/auth/hooks/useSignInForm";
 
-import AnimatedInput from "@/components/ui/AnimatedInput";
-import Button from "@/components/ui/Button";
+import {AnimatedInput, Button} from "@/components/ui";
+import useSignInForm from "@/features/auth/hooks/useSignInForm";
+import AuthContainer from "@/features/auth/components/AuthContainer";
 
 const SignIn = () => {
   const { signInData, onChangeInput, handleSubmit } = useSignInForm();
 
+  const SignInFormBody = (
+    <>
+      <form onSubmit={handleSubmit}>
+        <AnimatedInput
+          id="email"
+          type="email"
+          label="email"
+          icon={EnvelopeSimple}
+          value={signInData.email}
+          onChange={onChangeInput}
+        />
+
+        <AnimatedInput
+          id="password"
+          type="password"
+          label="password"
+          isPassword
+          icon={Key}
+          value={signInData.password}
+          onChange={onChangeInput}
+        />
+        <Button type="submit" width="w-full" variant="primary">
+          Submit
+        </Button>
+      </form>
+
+      <article className="mt-4 text-xs md:text-sm text-dark ">
+        <p className="cursor-pointer hover:underline hover:text-primary mb-2">
+          Forgot your password?
+        </p>
+        <p>
+          No account yet? &nbsp;
+          <span className="italic text-darkGray hover:underline hover:text-primary">
+            <Link to="sign-up">click here to sign up</Link>
+          </span>
+        </p>
+      </article>
+    </>
+  );
+
   return (
-    <main className="bg-primary/50 w-full h-screen">
-      <section className="flex flex-col justify-center items-center h-screen w-fit m-auto">
-        <div className="bg-light rounded-2xl shadow-md px-10 py-8">
-          <h1 className="font-semibold text-2xl md:text-4xl  text-center text-nowrap text-primary mb-2">
-            Water Dashboard App
-          </h1>
-          <p className="text-[#858585] text-md md:text-lg text-center">
-            Sign In to Get Started!
-          </p>
-          <hr className="border border-neutral my-4" />
-          <form onSubmit={handleSubmit}>
-            <AnimatedInput
-              id="email"
-              type="text"
-              label="email"
-              icon={EnvelopeSimple}
-              value={signInData.email}
-              onChange={onChangeInput}
-            />
-
-            <AnimatedInput
-              id="password"
-              type="password"
-              label="password"
-              isPassword
-              icon={Key}
-              value={signInData.password}
-              onChange={onChangeInput}
-            />
-            <Button type="submit" width="w-full" variant="primary">
-              Submit
-            </Button>
-          </form>
-
-          <article className="mt-4 text-xs md:text-sm text-dark ">
-            <p className="cursor-pointer hover:underline hover:text-primary mb-2">
-              Forgot your password?
-            </p>
-            <p>
-              No account yet? &nbsp;
-              <span className="italic text-darkGray hover:underline hover:text-primary">
-                <Link to="sign-up">click here to sign up</Link>
-              </span>
-            </p>
-          </article>
-        </div>
-      </section>
-    </main>
+    <AuthContainer
+      title="Water Analytics App"
+      caption="Sign In to Get Started!"
+      body={SignInFormBody}
+    />
   );
 }
 
