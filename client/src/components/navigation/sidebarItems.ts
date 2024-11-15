@@ -6,11 +6,12 @@ import {
     type Icon
 } from "@phosphor-icons/react";
 
-interface sidebarItemsProps {
+export interface sidebarItemsProps {
     id: number;
     name: string;
     icon: Icon;
     link: string;
+    isSidebarExpanded?: boolean;
 }
 export const sidebarItems: sidebarItemsProps[] = [
     {
