@@ -30,7 +30,7 @@ const SignIn = () => {
           onChange={onChangeInput}
         />
         <Button type="submit" width="w-full" variant="primary">
-          Submit
+          Sign In
         </Button>
       </form>
 

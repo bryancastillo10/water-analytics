@@ -8,7 +8,7 @@ import AuthContainer from "@/features/auth/components/AuthContainer";
 const SignIn = () => {
   const { signUpData, onChangeInput, handleSubmit } = useSignUpForm();
 
-  const SignInFormBody = (
+  const SignUpFormBody = (
     <>
       <form onSubmit={handleSubmit}>
           <AnimatedInput
@@ -39,7 +39,7 @@ const SignIn = () => {
             onChange={onChangeInput}
           />
         <Button type="submit" width="w-full" variant="primary">
-          Submit
+          Sign Up
         </Button>
       </form>
 
@@ -57,8 +57,8 @@ const SignIn = () => {
   return (
     <AuthContainer
       title="Water Analytics App"
-      caption="Sign In to Get Started!"
-      body={SignInFormBody}
+      caption="Register A New Account"
+      body={SignUpFormBody}
     />
   );
 };
