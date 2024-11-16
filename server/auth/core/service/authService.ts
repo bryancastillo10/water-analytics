@@ -15,8 +15,8 @@ export class AuthService {
             throw new Error("Cannot found account with that email. Try again.");
         }
         
-        const isPasswordMatched = validatePassword(password, user.password);
-
+        const isPasswordMatched = await validatePassword(password, user.password);
+    
         if (!isPasswordMatched) {
             throw new Error("Invalid password. Please try again.");
         };
