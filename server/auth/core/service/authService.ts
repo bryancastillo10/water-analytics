@@ -15,7 +15,7 @@ export class AuthService {
             throw new Error("Cannot found account with that email. Try again.");
         }
         
-        const isPasswordMatched = await validatePassword(password, user.password);
+        const isPasswordMatched = await validatePassword(password, user?.password!);
     
         if (!isPasswordMatched) {
             throw new Error("Invalid password. Please try again.");
@@ -57,7 +57,7 @@ export class AuthService {
 
         // Password Hashing
         const hashedPassword = await toHashPassword(password);
-        const newUser = await this.authRepository.signUp({
+        const newUser = await this.authRepository.createUser({
             ...signUpData,
             password: hashedPassword,
             profilePicURL: "",
@@ -66,8 +66,5 @@ export class AuthService {
         return newUser;
     }
 
-    async signOut() {
-        return;
-    }
 }
 

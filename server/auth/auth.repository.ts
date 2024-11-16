@@ -1,15 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import { IAuthRepository, IAuthResponse } from "@/auth/core/interface/IAuthRepository";
-import { SignInData, SignUpData } from "@/auth/core/entity/auth";
+import { SignUpData } from "@/auth/core/entity/auth";
 
-export class AuthRepository implements IAuthRepository{
+export class AuthRepository implements IAuthRepository {
     private prisma = new PrismaClient();
 
-    async signIn(signInData: SignInData) {
-        return ;
-    }
-
-    async signUp(signUpData: SignUpData): Promise<IAuthResponse> {
+    async createUser(signUpData: SignUpData): Promise<IAuthResponse> {
         const newUser = await this.prisma.user.create({
             data: {
                 username: signUpData.username,
@@ -17,19 +13,40 @@ export class AuthRepository implements IAuthRepository{
                 password: signUpData.password,
                 profilePic: signUpData.profilePicURL || "",
                 role: signUpData.role,
-            }
+            },
         });
 
-        return newUser;
+        return {
+            id: newUser.id,
+            username: newUser.username,
+            email: newUser.email,
+            profilePic: newUser.profilePic,
+            role: newUser.role,
+        };
     }
 
-   async findByEmail(email: string) {
-        return this.prisma.user.findUnique({
+    async findByEmail(email: string): Promise<IAuthResponse|null> {
+        const user = await this.prisma.user.findUnique({
             where: { email },
+            select: {
+                id: true,
+                username: true,
+                email: true,
+                profilePic: true,
+                role: true,
+            },
         });
-   }
-    
-    async signOut() {
-        return;
+
+        if (!user) {
+            return null;
+        }
+
+        return {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            profilePic: user.profilePic,
+            role: user.role,
+        };
     }
 }

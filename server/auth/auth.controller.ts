@@ -41,7 +41,12 @@ export class AuthController{
   }
 
     async signOut(req: Request, res: Response) {
-        res.clearCookie("jwt")
-        res.status(200).json({ "message": "You have successfully logged out" });
+       try {
+        res.cookie("jwt", "", { maxAge: 0 });
+        res.status(200).json({ message: "You have been logged out successfully" });
+    } catch (error:any) {
+        console.error("Error LogOut controller", error.message);
+        res.status(500).json({ error: "Internal server error" });
+    }
     }
 }

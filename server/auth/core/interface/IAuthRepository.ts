@@ -1,14 +1,14 @@
-import { SignInData, SignUpData } from "@/auth/core/entity/auth";
+import { SignUpData } from "@/auth/core/entity/auth";
 
 export interface IAuthRepository {
-    signIn(singInData: SignInData): Promise<void>;
-    signUp(signUpData: SignUpData): Promise<IAuthResponse>;
-    signOut(): Promise<void>;
+    createUser(signUpData: SignUpData): Promise<IAuthResponse>;
+    findByEmail(email:string): Promise<IAuthResponse|null>;
 }
 
 export interface IAuthResponse{
     id: string;
     username: string;
+    password?: string | null;
     email: string;
     profilePic: string;
     role: string;
