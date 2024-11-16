@@ -19,18 +19,20 @@ export class AuthRepository implements IAuthRepository {
         return {
             id: newUser.id,
             username: newUser.username,
+            password: newUser.password,
             email: newUser.email,
             profilePic: newUser.profilePic,
             role: newUser.role,
         };
     }
 
-    async findByEmail(email: string): Promise<IAuthResponse|null> {
+    async findByEmail(email: string): Promise<IAuthResponse | null> {
         const user = await this.prisma.user.findUnique({
             where: { email },
             select: {
                 id: true,
                 username: true,
+                password:true,
                 email: true,
                 profilePic: true,
                 role: true,
@@ -44,6 +46,7 @@ export class AuthRepository implements IAuthRepository {
         return {
             id: user.id,
             username: user.username,
+            password: user.password,
             email: user.email,
             profilePic: user.profilePic,
             role: user.role,

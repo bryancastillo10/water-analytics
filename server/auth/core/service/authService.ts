@@ -11,11 +11,12 @@ export class AuthService {
     async signIn(signInData: SignInData) {
         const { email, password } = signInData;
         const user = await this.authRepository.findByEmail(email);
+
         if (!user) {
-            throw new Error("Cannot found account with that email. Try again.");
+            throw new Error("Cannot find an account with that email. Try again.");
         }
         
-        const isPasswordMatched = await validatePassword(password, user?.password!);
+        const isPasswordMatched = await validatePassword(password, user.password as string);
     
         if (!isPasswordMatched) {
             throw new Error("Invalid password. Please try again.");
