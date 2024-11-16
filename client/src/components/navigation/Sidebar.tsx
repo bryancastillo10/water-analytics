@@ -29,7 +29,8 @@ const SideBarRowItem = ({ name, icon: Icon,link, isSidebarExpanded }: sidebarIte
 };
 
 // Sidebar parent component
-const Sidebar = ({isSidebarExpanded, toggleSidebar}:NavigationProps) => {
+const Sidebar = ({ isSidebarExpanded, toggleSidebar }: NavigationProps) => {
+  const currentYear = new Date().getFullYear();
   return (
     <nav
       className={`fixed xl:static z-40 flex flex-col transition-all duration-500 
@@ -47,7 +48,7 @@ const Sidebar = ({isSidebarExpanded, toggleSidebar}:NavigationProps) => {
           {isSidebarExpanded ? <ArrowCircleRight size="24"/>: <ArrowCircleLeft size="24" />}
         </div>
         {/* Sidebar Items */}
-        <ul className="mt-10">
+        <ul className="h-full mt-10 ">
           {sidebarItems.map((items) => (
             <SideBarRowItem
               key={items.id}
@@ -58,8 +59,13 @@ const Sidebar = ({isSidebarExpanded, toggleSidebar}:NavigationProps) => {
               isSidebarExpanded={isSidebarExpanded}
             />
          ))}
-       
         </ul>
+        
+        {/* Sidebar Footer */}
+        <div className={`${isSidebarExpanded ? "hidden" : "block"} mt-12 xl:mt-32`}>
+          <p className={`p-2 text-center text-medium ${isSidebarExpanded ? "block" : "hidden"}`}>&copy;</p>
+          <p className="text-xs text-dark">&copy; {currentYear} Water Analytics</p>
+        </div>
       </div>
     </nav>
   );
