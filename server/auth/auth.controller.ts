@@ -13,8 +13,10 @@ export class AuthController{
     async signIn(req: Request, res: Response) {
         try {
             const signInData = req.body;
-            await this.authService.signIn(signInData);
-            res.status(200).json({ "message": "You have successfully signed in" });
+            const loggedUser = await this.authService.signIn(signInData);
+
+            generateTokenAndSetCookie(loggedUser.id, res);
+            res.status(200).json({ "message": "You have successfully signed in", user: loggedUser });
         }
         catch (error:any) {
              res.status(400).json({ error: error.message });
@@ -26,9 +28,9 @@ export class AuthController{
     try {
       const signUpData = req.body;
       const newUser = await this.authService.signUp(signUpData);
-     
-      
+       
         generateTokenAndSetCookie(newUser.id, res);
+
       res.status(201).json({
         message: "New user has been created successfully",
         user: newUser 

@@ -1,18 +1,27 @@
 import { SignUpData, SignInData } from "@/auth/core/entity/auth";
+import { IAuthResponse } from "@/auth/core/interface/IAuthRepository";
 import { AuthRepository } from "@/auth/auth.repository";
 
-import { toHashPassword } from "@/auth/utils/hashing";
-import { IAuthResponse } from "../interface/IAuthRepository";
+import { toHashPassword, validatePassword } from "@/auth/utils/bcrypt";
 
 export class AuthService {
     constructor(private readonly authRepository: AuthRepository) {
-        
     }
 
     async signIn(signInData: SignInData) {
         const { email, password } = signInData;
+        const user = await this.authRepository.findByEmail(email);
+        if (!user) {
+            throw new Error("Cannot found account with that email. Try again.");
+        }
+        
+        const isPasswordMatched = validatePassword(password, user.password);
 
-        return;
+        if (!isPasswordMatched) {
+            throw new Error("Invalid password. Please try again.");
+        };
+
+        return user;
     }
 
     async signUp(signUpData: SignUpData): Promise<IAuthResponse> {

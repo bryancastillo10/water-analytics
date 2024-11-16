@@ -27,8 +27,8 @@ export class AuthRepository implements IAuthRepository{
         return this.prisma.user.findUnique({
             where: { email },
         });
-    }
-
+   }
+    
     async signOut() {
         return;
     }
