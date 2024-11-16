@@ -4,16 +4,19 @@ import { AuthService } from "@/auth/core/service/authService";
 export class AuthController{
     private authService: AuthService;
 
-    constructor() {
-        this.authService = new AuthService();
-    }    
+   constructor(authService: AuthService) {
+        this.authService = authService;
+   }
     
     async signIn(req: Request, res: Response) {
-        const signInData = req.body;
-
-        // const validateSignIn = await this.authService.signIn(signInData);
-
-        res.status(200).json({ "message": "You have successfully signed in" });
+        try {
+            const signInData = req.body;
+            await this.authService.signIn(signInData);
+            res.status(200).json({ "message": "You have successfully signed in" });
+        }
+        catch (error:any) {
+             res.status(400).json({ error: error.message });
+        }   
     }
 
     async signUp(req: Request, res: Response) {

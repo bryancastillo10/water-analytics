@@ -1,15 +1,20 @@
+import bcrypt from "bcryptjs";
+
 import { SignUpData, SignInData } from "@/auth/core/entity/auth";
 import { AuthRepository } from "@/auth/auth.repository";
+
 
 export class AuthService {
     private authRepository: AuthRepository;
 
-    constructor() {
+    constructor(authRepository: AuthRepository) {
         this.authRepository = new AuthRepository;
     }
     
     
     async signIn(signInData: SignInData) {
+        const { email, password } = signInData;
+
         return;
     }
 
@@ -43,7 +48,15 @@ export class AuthService {
         if (existingUser) {
             throw new Error("Email already used, please try another");
         }
-    
+
+                // Password Hashing
+        const hashedpPassword = await bcrypt.hash(password, 10);
+        await this.authRepository.signUp({
+            ...signUpData,
+            password: hashedpPassword,
+            profilePicURL: "",
+        })
+
     }
 
     async signOut() {
