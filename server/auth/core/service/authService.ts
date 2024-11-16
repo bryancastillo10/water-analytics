@@ -5,12 +5,9 @@ import { AuthRepository } from "@/auth/auth.repository";
 
 
 export class AuthService {
-    private authRepository: AuthRepository;
-
-    constructor(authRepository: AuthRepository) {
-        this.authRepository = new AuthRepository;
+    constructor(private readonly authRepository: AuthRepository) {
+        
     }
-    
     
     async signIn(signInData: SignInData) {
         const { email, password } = signInData;

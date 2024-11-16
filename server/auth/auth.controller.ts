@@ -2,11 +2,11 @@ import { Request, Response } from "express";
 import { AuthService } from "@/auth/core/service/authService";
 
 export class AuthController{
-    private authService: AuthService;
-
-   constructor(authService: AuthService) {
-        this.authService = authService;
-   }
+    constructor(private readonly authService: AuthService) {
+        this.signIn = this.signIn.bind(this);
+        this.signUp = this.signUp.bind(this);
+        this.signOut = this.signOut.bind(this);
+    }
     
     async signIn(req: Request, res: Response) {
         try {
