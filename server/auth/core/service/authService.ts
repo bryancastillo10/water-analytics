@@ -1,21 +1,31 @@
-import bcrypt from "bcryptjs";
-
 import { SignUpData, SignInData } from "@/auth/core/entity/auth";
+import { IAuthResponse } from "@/auth/core/interface/IAuthRepository";
 import { AuthRepository } from "@/auth/auth.repository";
 
+import { toHashPassword, validatePassword } from "@/auth/utils/bcrypt";
 
 export class AuthService {
     constructor(private readonly authRepository: AuthRepository) {
-        
     }
-    
+
     async signIn(signInData: SignInData) {
         const { email, password } = signInData;
+        const user = await this.authRepository.findByEmail(email);
 
-        return;
+        if (!user) {
+            throw new Error("Cannot find an account with that email. Try again.");
+        }
+        
+        const isPasswordMatched = await validatePassword(password, user.password as string);
+    
+        if (!isPasswordMatched) {
+            throw new Error("Invalid password. Please try again.");
+        };
+
+        return user;
     }
 
-    async signUp(signUpData: SignUpData) {
+    async signUp(signUpData: SignUpData): Promise<IAuthResponse> {
         const {  username, email, password, confirmPassword } = signUpData;
     
         // Missing Fields Validation
@@ -46,18 +56,16 @@ export class AuthService {
             throw new Error("Email already used, please try another");
         }
 
-                // Password Hashing
-        const hashedpPassword = await bcrypt.hash(password, 10);
-        await this.authRepository.signUp({
+        // Password Hashing
+        const hashedPassword = await toHashPassword(password);
+        const newUser = await this.authRepository.createUser({
             ...signUpData,
-            password: hashedpPassword,
+            password: hashedPassword,
             profilePicURL: "",
-        })
+        });
 
+        return newUser;
     }
 
-    async signOut() {
-        return;
-    }
 }
 
