@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { IAuthRepository } from "@/auth/core/interface/IAuthRepository";
+import { IAuthRepository, IAuthResponse } from "@/auth/core/interface/IAuthRepository";
 import { SignInData, SignUpData } from "@/auth/core/entity/auth";
 
 export class AuthRepository implements IAuthRepository{
@@ -9,8 +9,8 @@ export class AuthRepository implements IAuthRepository{
         return ;
     }
 
-    async signUp(signUpData: SignUpData) {
-        await this.prisma.user.create({
+    async signUp(signUpData: SignUpData): Promise<IAuthResponse> {
+        const newUser = await this.prisma.user.create({
             data: {
                 username: signUpData.username,
                 email: signUpData.email,
@@ -18,7 +18,9 @@ export class AuthRepository implements IAuthRepository{
                 profilePic: signUpData.profilePicURL || "",
                 role: signUpData.role,
             }
-        })
+        });
+
+        return newUser;
     }
 
    async findByEmail(email: string) {

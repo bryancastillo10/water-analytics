@@ -1,21 +1,21 @@
-import bcrypt from "bcryptjs";
-
 import { SignUpData, SignInData } from "@/auth/core/entity/auth";
 import { AuthRepository } from "@/auth/auth.repository";
 
+import { toHashPassword } from "@/auth/utils/hashing";
+import { IAuthResponse } from "../interface/IAuthRepository";
 
 export class AuthService {
     constructor(private readonly authRepository: AuthRepository) {
         
     }
-    
+
     async signIn(signInData: SignInData) {
         const { email, password } = signInData;
 
         return;
     }
 
-    async signUp(signUpData: SignUpData) {
+    async signUp(signUpData: SignUpData): Promise<IAuthResponse> {
         const {  username, email, password, confirmPassword } = signUpData;
     
         // Missing Fields Validation
@@ -46,14 +46,15 @@ export class AuthService {
             throw new Error("Email already used, please try another");
         }
 
-                // Password Hashing
-        const hashedpPassword = await bcrypt.hash(password, 10);
-        await this.authRepository.signUp({
+        // Password Hashing
+        const hashedPassword = await toHashPassword(password);
+        const newUser = await this.authRepository.signUp({
             ...signUpData,
-            password: hashedpPassword,
+            password: hashedPassword,
             profilePicURL: "",
-        })
+        });
 
+        return newUser;
     }
 
     async signOut() {
