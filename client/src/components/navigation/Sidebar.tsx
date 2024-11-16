@@ -32,8 +32,8 @@ const SideBarRowItem = ({ name, icon: Icon,link, isSidebarExpanded }: sidebarIte
 const Sidebar = ({isSidebarExpanded, toggleSidebar}:NavigationProps) => {
   return (
     <nav
-      className={`flex flex-col transition-all duration-500 
-      overflow-hidden h-full shadow-lg   bg-light
+      className={`fixed xl:static z-40 flex flex-col transition-all duration-500 
+      overflow-hidden h-full shadow-lg  bg-light
       ${isSidebarExpanded ? "w-0 md:w-14" :"w-48"}
       `}
     >
@@ -41,9 +41,9 @@ const Sidebar = ({isSidebarExpanded, toggleSidebar}:NavigationProps) => {
         {/* Sidebar Header */}
         <div className="flex justify-start gap-2 items-center">
           <img src={AppLogo} alt="logo" className={`${isSidebarExpanded ? "mt-8":"mt-0"} size-10`} />
-          {!isSidebarExpanded && (<h1 className="text-lg text-left font-secondary">Water Analytics</h1>)}
+          {!isSidebarExpanded && (<h1 className="text-xl tracking-wider text-left font-secondary">Water Analytics</h1>)}
         </div>
-        <div className="absolute top-6 right-4 cursor-pointer hover:text-primary" onClick={toggleSidebar}>
+        <div className="absolute top-4 right-4 cursor-pointer hover:text-primary" onClick={toggleSidebar}>
           {isSidebarExpanded ? <ArrowCircleRight size="24"/>: <ArrowCircleLeft size="24" />}
         </div>
         {/* Sidebar Items */}

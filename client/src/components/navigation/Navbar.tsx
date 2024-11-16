@@ -21,7 +21,7 @@ const Navbar = ({isSidebarExpanded, toggleSidebar}: NavigationProps) => {
             <List size="24" />
           </div>
           </>)}
-          <h1 className="text-lg md:text-xl font-secondary">{currentPage}</h1>
+          <h1 className="text-lg md:text-xl font-secondary hidden md:block">{currentPage}</h1>
         </div>
 
         {/* Right Side */}
@@ -32,11 +32,11 @@ const Navbar = ({isSidebarExpanded, toggleSidebar}: NavigationProps) => {
           </div>
 
           {/* Username Greetings */}
-          {isSidebarExpanded && (<>    <div className="grid-cols-1 items-center">
+          <div className="grid-cols-1  items-center">
             <h1 className="font-secondary">Welcome</h1>
             <p className="text-sm text-neutral">username</p>
           </div>
-          <hr className="h-10 border border-light" /></>)}
+          <hr className="h-10 border border-light" />
 
           <div className="flex items-center gap-x-3">      
           {/* Avatar */}
