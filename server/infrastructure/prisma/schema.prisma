@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  GUEST
+}
+
+model User{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  email String
+  password String
+  profilePic String
+  role UserRole
+
+  waterQuality WaterQuality?
+  notes Notes[]
+  sites Sites[]
+}
+
+model WaterQuality {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @unique @db.ObjectId
+  pH Float
+  Temperature Float
+  totalCOD Int
+  solubleCOD Int
+  totalSolids Int
+  volatileSolids Int 
+  TKN Int 
+  FOG Int
+  Ammonia Int
+  Phosphate Int 
+  Nitrate Int 
+
+  user User @relation(fields: [userId], references: [id])
+  InfluentWaterData InfluentWaterData[]
+  EffluentWaterData EffluentWaterData[]
+}
+
+model InfluentWaterData {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  waterQualityId String @unique @db.ObjectId
+  waterQuality WaterQuality @relation(fields:[waterQualityId], references: [id])
+}
+
+model EffluentWaterData {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  waterQualityId String @unique @db.ObjectId
+  waterQuality WaterQuality @relation(fields:[waterQualityId], references: [id])
+}
+
+model Sites {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @unique @db.ObjectId
+  location String
+  description String
+  startDate DateTime?
+  endDate DateTime? 
+  imgURL String
+
+  user User @relation(fields: [userId],references: [id]) 
+}
+
+model Notes {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @unique @db.ObjectId
+  title String
+  category String 
+  content String
+  isCompleted Boolean 
+
+  user User @relation(fields: [userId], references: [id])
+}
