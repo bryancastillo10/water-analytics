@@ -16,7 +16,10 @@ const Dashboard = () => {
           />
       ))}
       </div>
-      <h1>Dashboard Page</h1>
+      <div className="mt-8">
+
+        Dashboard Charts Here
+      </div>
     </main>
   )
 }

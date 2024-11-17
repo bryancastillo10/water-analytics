@@ -34,7 +34,7 @@ export const statisticsCard: statisticsCardProps[] = [
     id: 4, 
     parameter: "Fecal Coliform",
     icon: Microscope,
-    value: 10,
+    value: 220,
     unit: "MPN/100mL"
   }
 ]
