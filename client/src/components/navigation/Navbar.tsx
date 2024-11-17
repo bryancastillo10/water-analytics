@@ -13,7 +13,7 @@ const Navbar = ({isSidebarExpanded, toggleSidebar}: NavigationProps) => {
   )?.name || "Dashboard";
 
   return (
-    <nav className="sticky top-0 bg-primary text-light px-6 py-4">
+    <nav className="sticky z-20 top-0 bg-primary text-light px-6 py-4">
       <section className="flex items-center justify-between">
       {/* Left Side */}
       <div className="flex gap-x-3">
