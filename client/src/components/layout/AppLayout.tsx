@@ -20,7 +20,7 @@ const AppLayout = () => {
         isSidebarExpanded={isSidebarExpanded}
         toggleSidebar={toggleSidebar}
       />
-      <div className="flex-1">
+      <div className="flex-1 md:pl-12 xl:pl-0">
         <Navbar
           isSidebarExpanded={isSidebarExpanded}
           toggleSidebar={toggleSidebar}

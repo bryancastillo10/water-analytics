@@ -21,7 +21,7 @@ export default {
       },
       fontFamily: {
          primary: ["Poppins", "sans-serif"], 
-        secondary: ["Stint Ultra Condensed", "sans-serif"], 
+        secondary: ["Oldenburg", "serif"], 
       }
     },
   },
