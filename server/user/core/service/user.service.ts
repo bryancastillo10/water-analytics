@@ -16,12 +16,7 @@ export class UserService {
     }
 
     async deleteUser(userId: string) {
-        try {
-            await this.deleteUser(userId);
-        }
-        catch (error: any) {
-            throw new Error("Deleting the user account has failed");
-        }
+            await this.userRepository.deleteUserProfile(userId);
         return;
     }
 }

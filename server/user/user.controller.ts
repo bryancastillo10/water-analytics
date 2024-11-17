@@ -9,7 +9,7 @@ export class UserController {
 
     async updateUser(req: Request, res: Response) {
         try {
-            const userId = req.params.userId;
+            const userId = req.params.id;
             const toUpdateUser = req.body;
             const updatedUser = await this.userService.updateUser({userId, toUpdateUser});
 
@@ -21,7 +21,7 @@ export class UserController {
 
     async deleteUser(req: Request, res: Response) {
         try {
-            const userId = req.params.userId; 
+            const userId = req.params.id; 
             await this.userService.deleteUser(userId);
 
             res.status(200).json({ message: "You have deleted your account successfully"});
