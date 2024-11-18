@@ -19,7 +19,7 @@ const AuthContainer = ({
           <h1 className="font-secondary text-2xl tracking-wider text-center text-nowrap text-primary mb-2">
             {title}
           </h1>
-          <p className={`text-darkGray leading-tight ${captionAlignment}`}>{caption}</p>
+                  <p className="text-darkGray text-center">{caption}</p>
           <hr className="border border-neutral my-4" />
           <div className="mt-4">{body}</div>
         </div>
