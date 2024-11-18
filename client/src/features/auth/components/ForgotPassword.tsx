@@ -11,8 +11,8 @@ enum STEP {
 }
 
 const ForgotPassword = () => {
-    const [step, setStep] = useState(STEP.EMAIL);
-    const navigate = useNavigate();
+  const [step, setStep] = useState(STEP.EMAIL);
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPw, setConfirmPw] = useState<string>("");
@@ -29,23 +29,14 @@ const ForgotPassword = () => {
     console.log(code);
     }
 
-    // const actionLabel = useMemo(() => {
-    //     if (step = STEP.RESETPASSWORD) {
-    //         return 'Reset Password'
-    //     };
-    //     return 'Next';
-    // }, [step]);
-
-    // const secondaryActionLabel = useMemo(() => {
-    //     if (step = STEP.EMAIL) {
-    //         return undefined;
-    //     }
-    //     return 'Back';
-    // },[step]);
-
   let bodyContent = (
     <>
-      <form onSubmit={()=>{}}>
+       <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            stepForward();
+          }}
+        >
         <FormInput
           id="email"
           label="Email"
@@ -58,7 +49,7 @@ const ForgotPassword = () => {
           <Button action ={()=>navigate("/")} type="button" width="w-full" variant="outline">
             Back
           </Button>
-          <Button action={stepForward} type="submit" width="w-full" variant="primary">
+          <Button  type="submit" width="w-full" variant="primary">
             Send A Code
           </Button>
         </div>
@@ -72,7 +63,12 @@ const ForgotPassword = () => {
   if (step === STEP.VALIDATION) {
     bodyContent = (
       <>
-        <form onSubmit={() => { }}>
+         <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            stepForward();
+          }}
+        >
           <CodeInput length={5} onComplete={handleCompletedCode} />
           <div className="flex items-center justify-between gap-x-2">
             <Button
@@ -103,7 +99,12 @@ const ForgotPassword = () => {
   if (step === STEP.RESETPASSWORD) {
     bodyContent = (
       <>
-        <form onSubmit={() => {}}>
+         <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            stepForward();
+          }}
+        >
           <FormInput
             id="password"
             label="New Password"
@@ -133,22 +134,21 @@ const ForgotPassword = () => {
               Back
             </Button>
             <Button
-              action={stepForward}
+              action={()=>navigate("/")}
               type="submit"
               width="w-full"
               variant="primary"
             >
-              Verify Code
+              Reset
             </Button>
           </div>
           <div className="mt-8 h-full">
-            <ProgressBar step={2} totalSteps={3} />
+            <ProgressBar step={3} totalSteps={3} />
           </div>
         </form>
       </>
     );
   }
-
 
   return (
     <AuthContainer
