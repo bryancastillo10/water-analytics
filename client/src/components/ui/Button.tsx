@@ -21,7 +21,7 @@ const Button = ({
         case "primary":
           return "border border-transparent bg-primary text-white hover:bg-primary/70";
         case "outline":
-          return "border text-primary border-primary hover:border-secondary  hover:bg-secondary hover:text-white";
+          return "border text-primary border-primary hover:border-primary  hover:bg-primary hover:text-white";
         default:
           return "bg-cyan-600 text-slate-100  hover:bg-teal-500/90 p-0";
       }
