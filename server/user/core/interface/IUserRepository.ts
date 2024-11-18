@@ -2,8 +2,9 @@ import { UserData } from "@/user/core/entity/user";
 
 export interface IUserRepository {
     updateUserProfile({ userId, toUpdateUser }: UpdateUserRequest): Promise<UserData>;
-    resetPasword({email, toUpdatePassword}:ResetPasswordRequest): Promise<UserData>;
+    findUserbyEmail(email: string): Promise<UserData | null>;
     deleteUserProfile(userId: string): Promise<void>;
+    saveResetCode({email,code,expiry}:SaveResetCodeProps): Promise<void>;
 }
 
 export interface UpdateUserRequest{
@@ -11,7 +12,8 @@ export interface UpdateUserRequest{
     toUpdateUser: UserData;
 }
 
-export interface ResetPasswordRequest{
+export interface SaveResetCodeProps{
     email: string;
-    toUpdatePassword: string;
+    code: string;
+    expiry: Date;
 }
