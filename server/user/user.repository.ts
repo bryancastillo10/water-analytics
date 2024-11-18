@@ -28,8 +28,11 @@ export class UserRepository implements IUserRepository {
         }
     };
 
-    async findUserbyEmail(email: string): Promise<UserData | null> {
-        throw new Error("Method not yet implemented");
+     async findUserByEmail(email: string): Promise<UserData | null> {
+        const user = await this.prisma.user.findUnique({
+            where: { email },
+        });
+        return user;
     }
 
       async saveResetCode({email,code,expiry}:SaveResetCodeProps){

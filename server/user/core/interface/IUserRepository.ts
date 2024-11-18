@@ -2,7 +2,7 @@ import { UserData } from "@/user/core/entity/user";
 
 export interface IUserRepository {
     updateUserProfile({ userId, toUpdateUser }: UpdateUserRequest): Promise<UserData>;
-    findUserbyEmail(email: string): Promise<UserData | null>;
+    findUserByEmail(email: string): Promise<UserData | null>;
     deleteUserProfile(userId: string): Promise<void>;
     saveResetCode({email,code,expiry}:SaveResetCodeProps): Promise<void>;
 }
