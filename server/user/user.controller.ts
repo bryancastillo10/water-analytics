@@ -5,6 +5,7 @@ export class UserController {
     constructor(private readonly userService: UserService) {
         this.updateUser = this.updateUser.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
+        this.requestResetPassword = this.requestResetPassword.bind(this);
     }
 
     async updateUser(req: Request, res: Response) {
@@ -26,6 +27,18 @@ export class UserController {
 
             res.status(200).json({ message: "You have deleted your account successfully"});
         } catch (error: any) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+    async requestResetPassword(req: Request, res: Response) {
+        try {
+            const email = req.body;
+            const message = await this.userService.requestResetPassword(email);
+
+            res.status(200).json({ message: message });
+            
+        }catch (error: any) {
             res.status(500).json({ error: error.message });
         }
     }

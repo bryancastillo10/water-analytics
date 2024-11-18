@@ -1,7 +1,7 @@
-import { UpdateUserRequest, ResetPasswordRequest } from "@/user/core/interface/IUser";
+import { UpdateUserRequest} from "@/user/core/interface/IUserRepository";
 import { UserRepository } from "@/user/user.repository";
 
-import { generateVerificationCode } from "@/user/core/utils/nodemailer";
+import { generateAndSendVerificationCode } from "@/user/core/utils/nodemailer";
 
 export class UserService {
     constructor(private readonly userRepository: UserRepository) {
@@ -17,20 +17,27 @@ export class UserService {
         return updatedUser;
     }
 
-    async updatePassword({email, toUpdatePassword}: ResetPasswordRequest) {
-        if (!email) {
-            throw new Error("User associated with that email is not found");
-        }
-
-        const code = generateVerificationCode();
-        console.log(code);
-        const newPassword = await this.userRepository.resetPasword({ email, toUpdatePassword });
-
-        return newPassword;
-    }
-
     async deleteUser(userId: string) {
             await this.userRepository.deleteUserProfile(userId);
         return;
+    }
+
+    async requestResetPassword(email:string) {
+        if (!email) {
+            throw new Error("Email is not found");
+        }
+
+        const user = await this.userRepository.findUserbyEmail(email);
+        if (!user) {
+            throw new Error("User with this email does not exist");
+        }
+
+        const {code, expiry} = await generateAndSendVerificationCode(email);
+
+        await this.userRepository.saveResetCode({email,code, expiry});
+
+        return {
+            message: "Verification code sent to your email"
+        };
     }
 }

@@ -26,6 +26,9 @@ model User{
   profilePic String
   role UserRole
 
+  resetCode String?
+  resetCodeExpiry DateTime?
+
   waterQuality WaterQuality?
   notes Notes[]
   sites Sites[]
