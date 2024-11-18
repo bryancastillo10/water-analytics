@@ -1,6 +1,6 @@
-// import { useState, useMemo } from "react";
-
-import { CodeInput } from "@/components/ui";
+import { useState } from "react";
+import { Envelope } from "@phosphor-icons/react";
+import { CodeInput, FormInput } from "@/components/ui";
 
 // enum STEP {
 //     EMAIL = 0,
@@ -10,10 +10,11 @@ import { CodeInput } from "@/components/ui";
 
 const ForgotPassword = () => {
     // const [step, setStep] = useState(STEP.EMAIL);
+    const [email, setEmail] = useState<string>("");
 
 
     // const stepBackward = () => {
-    //     setStep((val) => val - 1);
+    //     s etStep((val) => val - 1);
     // }
 
     // const stepForward = () => {
@@ -47,8 +48,17 @@ const ForgotPassword = () => {
           </h1>
           <p className="text-darkGray text-center">Test Page</p>
           <hr className="border border-neutral my-4" />
-          <div className="mt-4">
-            <CodeInput length={5} onComplete={handleCompletedCode}/>
+                  <div className="mt-4">
+                      <FormInput 
+                          id="email"
+                          type="email"
+                          label="Email"
+                          icon={Envelope}
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          validationMessage="Please enter your email"
+                      />
+                    <CodeInput length={5} onComplete={handleCompletedCode}/>
           </div>
         </div>
       </section>

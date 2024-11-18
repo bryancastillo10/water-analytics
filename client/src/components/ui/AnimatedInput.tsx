@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import { type Icon, Eye, EyeSlash } from "@phosphor-icons/react";
 
 interface InputProps {
@@ -8,7 +8,7 @@ interface InputProps {
   disabled?: boolean;
   required?: boolean;
   value: string | number;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   isPassword?: boolean;
   icon?: Icon;
   validationMessage?: string;
