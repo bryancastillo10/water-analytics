@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Envelope } from "@phosphor-icons/react";
-import { CodeInput, FormInput, ProgressBar } from "@/components/ui";
+import { FormInput, ProgressBar } from "@/components/ui";
 
 // enum STEP {
 //     EMAIL = 0,
@@ -35,18 +35,16 @@ const ForgotPassword = () => {
     //     return 'Back';
     // },[step]);
 
-    const handleCompletedCode = (code: string) => {
-        console.log(typeof code);
-    }
+
 
   return (
     <main className="bg-primary/50 w-full h-screen">
       <section className="flex flex-col justify-center items-center h-screen w-fit m-auto">
-        <div className="bg-light w-md rounded-2xl shadow-md p-8">
+        <div className="bg-light w-[440px] xl:w-[500px] rounded-2xl shadow-md p-8">
           <h1 className="font-secondary text-xl tracking-wider text-center text-nowrap text-primary mb-2">
             Forgot Password
           </h1>
-          <p className="text-darkGray text-center">Test Page</p>
+          <p className="text-darkGray text-center xl:text-balance">You can recover your account by providing as your e-mail address. We will send a 5-digit authentication code to verify the reset of your password</p>
           <hr className="border border-neutral my-4" />
                   <div className="mt-4">
                       <FormInput 
@@ -58,7 +56,7 @@ const ForgotPassword = () => {
                           onChange={(e) => setEmail(e.target.value)}
                           validationMessage="Please enter your email"
                       />
-                      <CodeInput length={5} onComplete={handleCompletedCode} />
+                     
                       
                       <ProgressBar step={1} totalSteps={3} />
           </div>
