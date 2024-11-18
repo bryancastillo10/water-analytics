@@ -5,6 +5,7 @@ const initialSignUp = {
     username: "",
     email: "",
     password: "",
+    confirmPassword:"",
     profilePicURL: "",
     role: null
 };

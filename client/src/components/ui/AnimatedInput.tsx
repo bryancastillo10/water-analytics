@@ -33,7 +33,7 @@ const AnimatedInput = ({
       };
     
   return (
-    <div className="relative my-10">
+    <div className="relative my-10 border">
       <input
         id={id}
         type={type === "password" ? (isVisible ? "text" : "password") : type}
@@ -42,7 +42,7 @@ const AnimatedInput = ({
         disabled={disabled}
         required={required}
         placeholder=" "
-        className={`peer w-full p-2 caret-secondary border  rounded-xl outline-none transition 
+        className={`peer w-full h-full p-2 caret-secondary border rounded-xl outline-none transition 
             disabled:opacity-50 disabled:cursor-not-allowed indent-2 bg-light/20 text-dark border-dark focus:border-secondary
             `}
       />
