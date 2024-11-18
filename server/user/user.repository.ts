@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { IUserRepository, ResetPasswordRequest, UpdateUserRequest } from "./core/interface/IUser";
+import { IUserRepository, SaveResetCodeProps, UpdateUserRequest } from "./core/interface/IUserRepository";
 import { UserData } from "@/user/core/entity/user";
 
 export class UserRepository implements IUserRepository {
@@ -28,15 +28,21 @@ export class UserRepository implements IUserRepository {
         }
     };
 
-    async resetPasword({ email, toUpdatePassword }: ResetPasswordRequest): Promise<UserData> {
-        const updatedUser = await this.prisma.user.update({
-            where: { id: email },
-            data: {
-                password: toUpdatePassword
-            }
+     async findUserByEmail(email: string): Promise<UserData | null> {
+        const user = await this.prisma.user.findUnique({
+            where: { email },
         });
+        return user;
+    }
 
-        return updatedUser;
+      async saveResetCode({email,code,expiry}:SaveResetCodeProps){
+        await this.prisma.user.update({
+            where: { email },
+            data: {
+                resetCode: code,
+                resetCodeExpiry: expiry,
+            },
+        });
     }
 
 }
