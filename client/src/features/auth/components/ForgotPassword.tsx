@@ -1,13 +1,8 @@
 import { useState } from "react";
-<<<<<<< HEAD
-import { Envelope } from "@phosphor-icons/react";
-import { CodeInput, FormInput, ProgressBar } from "@/components/ui";
-=======
 import { useNavigate } from "react-router-dom";
 import { Envelope, Lock, Key } from "@phosphor-icons/react";
 import { FormInput, ProgressBar, Button, CodeInput } from "@/components/ui";
 import AuthContainer from "./AuthContainer";
->>>>>>> c869548 (🟦 layout: reset password page)
 
 enum STEP {
     EMAIL = 0,
@@ -33,20 +28,6 @@ const ForgotPassword = () => {
    const handleCompletedCode = (code:string) => {
     console.log(code);
     }
-
-    // const actionLabel = useMemo(() => {
-    //     if (step = STEP.RESETPASSWORD) {
-    //         return 'Reset Password'
-    //     };
-    //     return 'Next';
-    // }, [step]);
-
-    // const secondaryActionLabel = useMemo(() => {
-    //     if (step = STEP.EMAIL) {
-    //         return undefined;
-    //     }
-    //     return 'Back';
-    // },[step]);
 
   let bodyContent = (
     <>
@@ -170,7 +151,6 @@ const ForgotPassword = () => {
   }
 
   return (
->>>>>>> c869548 (🟦 layout: reset password page)
     <AuthContainer
       title="Forgot User Password"
       caption="Reset your password by providing your user e-mail. A 5-digit authentication code would be sent to your e-mail upon request."
