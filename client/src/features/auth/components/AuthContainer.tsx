@@ -9,8 +9,8 @@ const AuthContainer = ({body,title,caption}:AuthContainerProps) => {
   return (
     <main className="bg-primary/50 w-full h-screen">
       <section className="flex flex-col justify-center items-center h-screen w-fit m-auto">
-        <div className="bg-light w-md rounded-2xl shadow-md p-8">
-          <h1 className="font-secondary text-xl tracking-wider text-center text-nowrap text-primary mb-2">
+        <div className="bg-light w-lg rounded-2xl shadow-md p-20">
+          <h1 className="font-secondary text-2xl tracking-wider text-center text-nowrap text-primary mb-2">
             {title}
           </h1>
                   <p className="text-darkGray text-center">{caption}</p>
