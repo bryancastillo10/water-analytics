@@ -1,8 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 
 import Providers from "@/app/Providers";
-import AppLayout from "@/components/layout/AppLayout";
+import PageNotFound from "@/app/PageNotFound";
 
+import AppLayout from "@/components/layout/AppLayout";
 import { ForgotPassword, SignIn, SignUp } from "@/features/auth";
 import { Dashboard, WaterQuality, Settings,Sites } from "@/features";
 
@@ -19,7 +20,7 @@ const App = () => {
           <Route path="sites" element={<Sites />} />
           <Route path="settings" element={<Settings />} />
         </Route>
-        <Route path="*" element={<p>Page is not Found</p>} />
+        <Route path="*" element={<PageNotFound/>} />
       </Routes>
     </Providers>
   );
