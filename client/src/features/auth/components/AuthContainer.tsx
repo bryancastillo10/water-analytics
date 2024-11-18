@@ -2,10 +2,16 @@
 interface AuthContainerProps{
     body: React.ReactNode;
     title: string;
-    caption: string;
+  caption: string;
+  captionAlignment?: string;
 }
 
-const AuthContainer = ({body,title,caption}:AuthContainerProps) => {
+const AuthContainer = ({
+  body,
+  title,
+  caption,
+  captionAlignment="text-center"
+}: AuthContainerProps) => {
   return (
     <main className="bg-primary/50 w-full h-screen">
       <section className="flex flex-col justify-center items-center h-screen w-fit m-auto">
@@ -13,7 +19,7 @@ const AuthContainer = ({body,title,caption}:AuthContainerProps) => {
           <h1 className="font-secondary text-2xl tracking-wider text-center text-nowrap text-primary mb-2">
             {title}
           </h1>
-          <p className="text-darkGray text-center xl:text-balance">{caption}</p>
+          <p className={`text-darkGray leading-tight ${captionAlignment}`}>{caption}</p>
           <hr className="border border-neutral my-4" />
           <div className="mt-4">{body}</div>
         </div>
@@ -22,4 +28,4 @@ const AuthContainer = ({body,title,caption}:AuthContainerProps) => {
   );
 }
 
-export default AuthContainer
+export default AuthContainer;

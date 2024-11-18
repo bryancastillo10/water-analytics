@@ -1,7 +1,7 @@
 
 interface ButtonProps {
   action?: () => void;
-  type: "submit" | "reset" | "button";
+  type?: "submit" | "reset" | "button";
   width?: string;
   loading?: boolean;
   variant?: string;
@@ -10,7 +10,7 @@ interface ButtonProps {
 
 const Button = ({
   action,
-  type,
+  type="button",
   width = "w-fit",
   loading,
   variant,
