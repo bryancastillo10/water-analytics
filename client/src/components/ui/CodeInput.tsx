@@ -30,7 +30,7 @@ const CodeInput = ({ length = 5, onComplete}: CodeInputProps) => {
     };
 
   return (
-    <div className="flex gap-2">
+    <div className="flex justify-center gap-2 my-8">
       {code.map((value, index) => (
         <input
           key={index}
