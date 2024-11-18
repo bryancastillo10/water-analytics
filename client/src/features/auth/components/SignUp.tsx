@@ -38,6 +38,16 @@ const SignIn = () => {
             value={signUpData.password}
             onChange={onChangeInput}
           />
+
+          <AnimatedInput
+            id="confirmPassword"
+            type="password"
+            label="confirm password"
+            isPassword
+            icon={Key}
+            value={signUpData.confirmPassword}
+            onChange={onChangeInput}
+          />
         <Button type="submit" width="w-full" variant="primary">
           Sign Up
         </Button>

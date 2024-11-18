@@ -35,9 +35,9 @@ const SignIn = () => {
       </form>
 
       <article className="mt-4 text-xs md:text-sm text-dark ">
-        <p className="cursor-pointer hover:underline hover:text-primary mb-2">
+        <Link to="forgot-password"><p className="cursor-pointer hover:underline hover:text-primary mb-2">
           Forgot your password?
-        </p>
+        </p></Link>
         <p>
           No account yet? &nbsp;
           <span className="italic text-darkGray hover:underline hover:text-primary">
