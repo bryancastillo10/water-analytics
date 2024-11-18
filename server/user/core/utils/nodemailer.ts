@@ -1,5 +1,7 @@
 import nodemailer from "nodemailer";
+import dotenv from "dotenv";
 
+dotenv.config();
 interface GenerateCodeProps{
     code: string;
     expiry: Date;
@@ -18,14 +20,14 @@ export const generateAndSendVerificationCode = async (email: string): Promise<Ge
         </p>
     `;
 
-    // Nodemailer transporter setup, needs to set up a SMTP server
+    // Set up a SMTP server
     const transporter = nodemailer.createTransport({
-        host: "smtp.example.com",
-        port: 587,
+        host: process.env.SMTP_SERVER as string,
+        port: parseInt(process.env.SMTP_PORT as string),
         secure: true,
         auth: {
-            user: "your-email@example.com",
-            pass: "your-email-password",
+            user: process.env.SMTP_EMAIL as string,
+            pass: process.env.SMTP_PASSWORD as string,
         },
     });
 
@@ -38,7 +40,8 @@ export const generateAndSendVerificationCode = async (email: string): Promise<Ge
     };
 
     try {
-        await transporter.sendMail(mailOptions);
+        const info = await transporter.sendMail(mailOptions);
+        console.log(`message ID: ${info.messageId}`)
         console.log(`Verification code sent to ${email}`);
     } catch (error) {
         console.error("Error sending email:", error);
