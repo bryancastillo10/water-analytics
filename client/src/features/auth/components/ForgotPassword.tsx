@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Envelope } from "@phosphor-icons/react";
-import { CodeInput, FormInput } from "@/components/ui";
+import { CodeInput, FormInput, ProgressBar } from "@/components/ui";
 
 // enum STEP {
 //     EMAIL = 0,
@@ -58,7 +58,9 @@ const ForgotPassword = () => {
                           onChange={(e) => setEmail(e.target.value)}
                           validationMessage="Please enter your email"
                       />
-                    <CodeInput length={5} onComplete={handleCompletedCode}/>
+                      <CodeInput length={5} onComplete={handleCompletedCode} />
+                      
+                      <ProgressBar step={1} totalSteps={3} />
           </div>
         </div>
       </section>
