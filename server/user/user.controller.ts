@@ -33,7 +33,7 @@ export class UserController {
 
     async requestResetPassword(req: Request, res: Response) {
         try {
-            const email = req.body;
+            const {email} = req.body;
             const message = await this.userService.requestResetPassword(email);
 
             res.status(200).json({ message: message });

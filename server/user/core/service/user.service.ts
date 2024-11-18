@@ -27,7 +27,7 @@ export class UserService {
             throw new Error("Email is not found");
         }
 
-        const user = await this.userRepository.findUserbyEmail(email);
+        const user = await this.userRepository.findUserByEmail(email);
         if (!user) {
             throw new Error("User with this email does not exist");
         }
