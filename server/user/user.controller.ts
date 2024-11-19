@@ -6,6 +6,7 @@ export class UserController {
         this.updateUser = this.updateUser.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
         this.requestResetPassword = this.requestResetPassword.bind(this);
+        this.verifyCodeForReset = this.verifyCodeForReset.bind(this);
     }
 
     async updateUser(req: Request, res: Response) {
@@ -47,9 +48,9 @@ export class UserController {
         try {
             const { email, code } = req.body;
 
-            const message = await this.userService.verifyCode({ email, code });
+            const isVerified = await this.userService.verifyCode({ email, code });
 
-            res.status(200).json({ message: message });
+            res.status(200).json({ isVerified});
         } catch (error: any) {
             res.status(500).json({ error: error.message });
         }

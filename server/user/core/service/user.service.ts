@@ -60,8 +60,6 @@ export class UserService {
             throw new Error("Verification code had expired, try to request again");
         }
 
-        return {
-            message: "Verification code has been validated. Proceed to reset your password"
-        } 
+        return true;
     }
 }
