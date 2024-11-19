@@ -1,7 +1,7 @@
 enum UserRole {
   ADMIN = "ADMIN",
   USER = "USER",
-  ANALYST="USER"
+  ANALYST="ANALYST"
 }
 
 export class SignInData {

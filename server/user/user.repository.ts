@@ -1,18 +1,21 @@
 import { PrismaClient } from "@prisma/client";
-import { IUserRepository, SaveResetCodeProps, UpdateUserRequest } from "./core/interface/IUserRepository";
+import { IUserRepository, SaveResetCodeProps, UpdateUserRequest, UpdatePasswordRepo } from "@/user/core/interface/IUserRepository";
 import { UserData } from "@/user/core/entity/user";
 
 export class UserRepository implements IUserRepository {
     private prisma = new PrismaClient();
 
     async updateUserProfile({ userId, toUpdateUser }: UpdateUserRequest): Promise<UserData> {
-        const updatedUser = await this.prisma.user.update({
+        const user = await this.prisma.user.update({
             where: { id: userId },
-            data: {
-                username: toUpdateUser.username,
-                email: toUpdateUser.email
-            },
+            data: toUpdateUser,
         });
+
+        const updatedUser: UserData = {
+            ...user,
+            resetCode: user.resetCode ?? undefined,
+            resetCodeExpiry: user.resetCodeExpiry ?? undefined
+        };
 
         return updatedUser;        
     };
@@ -32,7 +35,18 @@ export class UserRepository implements IUserRepository {
         const user = await this.prisma.user.findUnique({
             where: { email },
         });
-        return user;
+         
+         if (!user) {
+             return null;
+         } 
+         
+         const existingUser: UserData = {
+             ...user,
+             resetCode: user.resetCode ?? undefined,
+             resetCodeExpiry: user.resetCodeExpiry ?? undefined
+         };
+
+        return existingUser;
     }
 
       async saveResetCode({email,code,expiry}:SaveResetCodeProps){
@@ -43,6 +57,14 @@ export class UserRepository implements IUserRepository {
                 resetCodeExpiry: expiry,
             },
         });
+      }
+    
+    async updatePassword({ email, hashedPassword }: UpdatePasswordRepo):Promise<void> {
+        await this.prisma.user.update({
+            where: { email },
+            data: {
+                password: hashedPassword
+            }
+        })
     }
-
 }

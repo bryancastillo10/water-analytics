@@ -5,6 +5,7 @@ export interface IUserRepository {
     findUserByEmail(email: string): Promise<UserData | null>;
     deleteUserProfile(userId: string): Promise<void>;
     saveResetCode({email,code,expiry}:SaveResetCodeProps): Promise<void>;
+    updatePassword({ email,hashedPassword}: UpdatePasswordRepo): Promise<void>;
 }
 
 export interface UpdateUserRequest{
@@ -12,8 +13,22 @@ export interface UpdateUserRequest{
     toUpdateUser: UserData;
 }
 
-export interface SaveResetCodeProps{
+export interface ResetPasswordRequest{
     email: string;
     code: string;
+}
+
+
+export interface SaveResetCodeProps extends ResetPasswordRequest{
     expiry: Date;
+}
+
+export interface UpdatePasswordRepo {
+    email: string;
+    hashedPassword: string;
+}
+
+export interface UpdateUserPasswordProps extends Omit<ResetPasswordRequest, "code">{
+    newPassword: string;
+    confirmNewPassword: string;
 }
