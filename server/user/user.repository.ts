@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { IUserRepository, SaveResetCodeProps, UpdateUserRequest } from "./core/interface/IUserRepository";
+import { IUserRepository, SaveResetCodeProps, UpdateUserRequest, UpdatePasswordRepo } from "@/user/core/interface/IUserRepository";
 import { UserData } from "@/user/core/entity/user";
 
 export class UserRepository implements IUserRepository {
@@ -57,6 +57,14 @@ export class UserRepository implements IUserRepository {
                 resetCodeExpiry: expiry,
             },
         });
+      }
+    
+    async updatePassword({ email, hashedPassword }: UpdatePasswordRepo):Promise<void> {
+        await this.prisma.user.update({
+            where: { email },
+            data: {
+                password: hashedPassword
+            }
+        })
     }
-
 }
