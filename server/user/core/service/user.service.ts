@@ -1,4 +1,4 @@
-import { UpdateUserRequest} from "@/user/core/interface/IUserRepository";
+import { ResetPasswordRequest, UpdateUserRequest} from "@/user/core/interface/IUserRepository";
 import { UserRepository } from "@/user/user.repository";
 
 import { generateAndSendVerificationCode } from "@/user/core/utils/nodemailer";
@@ -39,5 +39,29 @@ export class UserService {
         return {
             message: "Verification code sent to your email"
         };
+    }
+
+    async verifyCode({email,code}:ResetPasswordRequest) {
+        if (!email || !code) {
+            throw new Error("Email and verification code are required for this request");
+        };
+        
+        const user = await this.userRepository.findUserByEmail(email);
+        if (!user) {
+            throw new Error("User associated with that email does not exist");
+        };
+
+        if (user.resetCode !== code) {
+            throw new Error("Invalid verification code");
+        }
+
+        const thisTime = new Date();
+        if (!user.resetCode || thisTime > new Date(user?.resetCodeExpiry!)) {
+            throw new Error("Verification code had expired, try to request again");
+        }
+
+        return {
+            message: "Verification code has been validated. Proceed to reset your password"
+        } 
     }
 }

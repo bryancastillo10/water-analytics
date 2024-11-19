@@ -6,13 +6,16 @@ export class UserRepository implements IUserRepository {
     private prisma = new PrismaClient();
 
     async updateUserProfile({ userId, toUpdateUser }: UpdateUserRequest): Promise<UserData> {
-        const updatedUser = await this.prisma.user.update({
+        const user = await this.prisma.user.update({
             where: { id: userId },
-            data: {
-                username: toUpdateUser.username,
-                email: toUpdateUser.email
-            },
+            data: toUpdateUser,
         });
+
+        const updatedUser: UserData = {
+            ...user,
+            resetCode: user.resetCode ?? undefined,
+            resetCodeExpiry: user.resetCodeExpiry ?? undefined
+        };
 
         return updatedUser;        
     };
@@ -32,7 +35,18 @@ export class UserRepository implements IUserRepository {
         const user = await this.prisma.user.findUnique({
             where: { email },
         });
-        return user;
+         
+         if (!user) {
+             return null;
+         } 
+         
+         const existingUser: UserData = {
+             ...user,
+             resetCode: user.resetCode ?? undefined,
+             resetCodeExpiry: user.resetCodeExpiry ?? undefined
+         };
+
+        return existingUser;
     }
 
       async saveResetCode({email,code,expiry}:SaveResetCodeProps){

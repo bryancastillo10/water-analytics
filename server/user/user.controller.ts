@@ -42,4 +42,16 @@ export class UserController {
             res.status(500).json({ error: error.message });
         }
     }
+
+    async verifyCodeForReset(req: Request, res: Response) {
+        try {
+            const { email, code } = req.body;
+
+            const message = await this.userService.verifyCode({ email, code });
+
+            res.status(200).json({ message: message });
+        } catch (error: any) {
+            res.status(500).json({ error: error.message });
+        }
+    }
 }
