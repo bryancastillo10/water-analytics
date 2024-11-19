@@ -1,6 +1,7 @@
 enum UserRole {
   ADMIN = "ADMIN",
-  GUEST = "GUEST"
+  USER = "USER",
+  ANALYST="USER"
 }
 
 export class SignInData {
@@ -14,5 +15,5 @@ export class SignUpData {
   password!: string;
   confirmPassword?: string;
   profilePicURL?: string;
-  role: UserRole = UserRole.GUEST;
+  role: UserRole = UserRole.USER;
 }

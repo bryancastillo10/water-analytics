@@ -21,7 +21,7 @@ export class AuthRepository implements IAuthRepository {
             username: newUser.username,
             password: newUser.password,
             email: newUser.email,
-            profilePic: newUser.profilePic,
+            profilePic: newUser.profilePic!,
             role: newUser.role,
         };
     }
@@ -48,7 +48,7 @@ export class AuthRepository implements IAuthRepository {
             username: user.username,
             password: user.password,
             email: user.email,
-            profilePic: user.profilePic,
+            profilePic: user.profilePic!,
             role: user.role,
         };
     }

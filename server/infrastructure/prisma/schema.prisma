@@ -4,87 +4,109 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
+generator client {
+  provider = "prisma-client-js"
+}
+
 enum UserRole {
   ADMIN
-  GUEST
+  USER
+  ANALYST
 }
 
-model User{
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  username String
-  email String @unique
-  password String
-  profilePic String
-  role UserRole
-
-  resetCode String?
+model User {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  username        String
+  email           String    @unique
+  password        String
+  profilePic   String?
+  role            UserRole
+  resetCode       String?
   resetCodeExpiry DateTime?
-
-  waterQuality WaterQuality?
-  notes Notes[]
-  sites Sites[]
+  
+  // User Relationships
+  sites           Site[]
+  notes           Note[]
+  thresholds      Threshold[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
-model WaterQuality {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @unique @db.ObjectId
-  pH Float
-  Temperature Float
-  totalCOD Int
-  solubleCOD Int
-  totalSolids Int
-  volatileSolids Int 
-  TKN Int 
-  FOG Int
-  Ammonia Int
-  Phosphate Int 
-  Nitrate Int 
+model Site {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  location    String
+  coordinates Json?    
+  sourceType  String   
+  
+  // Site Relationships
+  userId      String   @db.ObjectId
+  user        User     @relation(fields: [userId], references: [id])
+  measurements Measurement[]
 
-  user User @relation(fields: [userId], references: [id])
-  InfluentWaterData InfluentWaterData[]
-  EffluentWaterData EffluentWaterData[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
-model InfluentWaterData {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  waterQualityId String @unique @db.ObjectId
-  waterQuality WaterQuality @relation(fields:[waterQualityId], references: [id])
+model Measurement {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  timestamp DateTime @default(now())
+  
+  // Core Parameters
+  phLevel           Float?
+  suspendedSolids   Float?  // mg/L
+  totalCOD          Float?  // mg/L
+  fecalColiform     Float?  // MPN/100mL
+  
+  // Additional Parameters 
+  temperature       Float?  // °C
+  dissolvedOxygen   Float?  // mg/L
+  
+  // Nutrients
+  ammonia          Float?  // mg/L
+  nitrates         Float?  // mg/L
+  phosphates       Float?  // mg/L
+  
+  // Relationships
+  siteId    String   @db.ObjectId
+  site      Site     @relation(fields: [siteId], references: [id])
+
 }
 
-model EffluentWaterData {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  waterQualityId String @unique @db.ObjectId
-  waterQuality WaterQuality @relation(fields:[waterQualityId], references: [id])
+model Threshold {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  
+  // Parameter thresholds
+  parameter String   
+  minValue  Float?
+  maxValue  Float?
+  unit      String
+  
+  // Relationships
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-model Sites {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @unique @db.ObjectId
-  location String
-  description String
-  startDate DateTime?
-  endDate DateTime? 
-  imgURL String
+model Note {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String
+  isCompleted Boolean
 
-  user User @relation(fields: [userId],references: [id]) 
-}
-
-model Notes {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @unique @db.ObjectId
-  title String
-  category String 
-  content String
-  isCompleted Boolean 
-
-  user User @relation(fields: [userId], references: [id])
+  // Note Relationships
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
