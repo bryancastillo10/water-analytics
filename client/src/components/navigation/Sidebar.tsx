@@ -31,24 +31,27 @@ const SideBarRowItem = ({ name, icon: Icon,link, isSidebarExpanded }: sidebarIte
 // Sidebar parent component
 const Sidebar = ({ isSidebarExpanded, toggleSidebar }: NavigationProps) => {
   const currentYear = new Date().getFullYear();
+
   return (
     <nav
       className={`fixed xl:static z-40 flex flex-col transition-all duration-500 
-      overflow-hidden h-full shadow-lg  bg-light
-      ${isSidebarExpanded ? "w-0 md:w-14" :"w-48"}
+      overflow-hidden h-full shadow-lg bg-light
+      ${isSidebarExpanded ? "w-0 md:w-14" : "w-48"}
       `}
     >
-      <div className={`relative py-8 ${isSidebarExpanded ?"px-2":"px-4"}`}>
+      <div className={`relative py-8 ${isSidebarExpanded ? "px-2" : "px-4"} flex-grow`}>
         {/* Sidebar Header */}
         <div className="flex justify-start gap-2 items-center">
-          <img src={AppLogo} alt="logo" className={`${isSidebarExpanded ? "mt-8":"mt-0"} size-10`} />
-          {!isSidebarExpanded && (<h1 className="text-xl tracking-wider text-left font-secondary">Water Analytics</h1>)}
+          <img src={AppLogo} alt="logo" className={`${isSidebarExpanded ? "mt-8" : "mt-0"} size-10`} />
+          {!isSidebarExpanded && (
+            <h1 className="text-xl tracking-wider text-left font-secondary">Water Analytics</h1>
+          )}
         </div>
         <div className="absolute top-4 right-4 cursor-pointer hover:text-primary" onClick={toggleSidebar}>
-          {isSidebarExpanded ? <ArrowCircleRight size="24"/>: <ArrowCircleLeft size="24" />}
+          {isSidebarExpanded ? <ArrowCircleRight size="24" /> : <ArrowCircleLeft size="24" />}
         </div>
         {/* Sidebar Items */}
-        <ul className="h-full mt-10 ">
+        <ul className="h-full mt-10">
           {sidebarItems.map((items) => (
             <SideBarRowItem
               key={items.id}
@@ -58,17 +61,16 @@ const Sidebar = ({ isSidebarExpanded, toggleSidebar }: NavigationProps) => {
               icon={items.icon}
               isSidebarExpanded={isSidebarExpanded}
             />
-         ))}
+          ))}
         </ul>
-        
-        {/* Sidebar Footer */}
-        <div className={`${isSidebarExpanded ? "hidden" : "block"} mt-12 xl:mt-32`}>
-          <p className={`p-2 text-center text-medium ${isSidebarExpanded ? "block" : "hidden"}`}>&copy;</p>
-          <p className="text-xs text-dark">&copy; {currentYear} Water Analytics</p>
-        </div>
+      </div>
+
+      {/* Sidebar Footer */}
+      <div className={`p-4 text-center text-dark ${isSidebarExpanded ? "hidden" : "block"}`}>
+        <p className="text-xs">&copy; {currentYear} Water Analytics</p>
       </div>
     </nav>
   );
-}
+};
 
 export default Sidebar;
