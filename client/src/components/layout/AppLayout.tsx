@@ -20,12 +20,12 @@ const AppLayout = () => {
         isSidebarExpanded={isSidebarExpanded}
         toggleSidebar={toggleSidebar}
       />
-      <div className="flex-1 md:pl-12 xl:pl-0">
+      <div className="flex-1 flex flex-col md:pl-12 xl:pl-0">
         <Navbar
           isSidebarExpanded={isSidebarExpanded}
           toggleSidebar={toggleSidebar}
         />
-        <section className="py-3 px-6">
+        <section className="flex-1 overflow-auto py-3 px-6">
           <Outlet />
         </section>
       </div>
