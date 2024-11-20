@@ -1,10 +1,10 @@
-
+import DataTable from "@/features/waterquality/components/DataTable";
 
 const WaterQuality = () => {
   return (
-    <div>
-      <h1>Water Quality</h1>
-    </div>
+    <main>
+      <DataTable/>
+    </main>
   )
 }
 

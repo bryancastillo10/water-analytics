@@ -12,6 +12,7 @@
   "dependencies": {
     "@phosphor-icons/react": "^2.1.7",
     "@reduxjs/toolkit": "^2.3.0",
+    "@tanstack/react-table": "^8.20.5",
     "chart.js": "^4.4.6",
     "framer-motion": "^11.11.15",
     "react": "^18.3.1",
