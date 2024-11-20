@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { AuthService } from "@/auth/core/service/authService";
 
-import { generateTokenAndSetCookie } from "@/auth/utils/generateToken";
+import { generateTokenAndSetCookie } from "@/utils/generateToken";
 
 export class AuthController{
     constructor(private readonly authService: AuthService) {

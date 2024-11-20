@@ -41,7 +41,7 @@ model Site {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   location    String
-  coordinates Json?    
+  imageUrl String?   
   sourceType  String   
   
   // Site Relationships
@@ -56,10 +56,10 @@ model Site {
 
 model Measurement {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  timestamp DateTime @default(now())
+  date DateTime @default(now())
   
   // Core Parameters
-  phLevel           Float?
+  pH           Float?
   suspendedSolids   Float?  // mg/L
   totalCOD          Float?  // mg/L
   fecalColiform     Float?  // MPN/100mL
