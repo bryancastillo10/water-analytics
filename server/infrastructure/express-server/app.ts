@@ -4,6 +4,7 @@ import helmet from 'helmet';
 
 import authRoutes from "@/auth/auth.route";
 import userRoutes from "@/user/user.route";
+import measurementRoutes from "@/measurement/measurement.route";
 
 export const startApp = () => {
     const app = express();
@@ -17,6 +18,7 @@ export const startApp = () => {
     // Core Routes
     app.use("/api/auth", authRoutes);
     app.use("/api/user", userRoutes);
+    app.use("/api/data", measurementRoutes);
 
     return app
 }
