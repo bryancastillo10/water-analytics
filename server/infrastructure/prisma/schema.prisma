@@ -41,7 +41,7 @@ model Site {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   location    String
-  coordinates Json?    
+  imageUrl String?   
   sourceType  String   
   
   // Site Relationships

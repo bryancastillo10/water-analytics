@@ -1,8 +1,8 @@
 import { ResetPasswordRequest,  UpdateUserPasswordProps,  UpdateUserRequest} from "@/user/core/interface/IUserRepository";
 import { UserRepository } from "@/user/user.repository";
 
-import { generateAndSendVerificationCode } from "@/user/core/utils/nodemailer";
-import { toHashPassword } from "@/auth/utils/bcrypt";
+import { generateAndSendVerificationCode } from "@/utils/nodemailer";
+import { toHashPassword } from "@/utils/bcrypt";
 
 export class UserService {
     constructor(private readonly userRepository: UserRepository) {

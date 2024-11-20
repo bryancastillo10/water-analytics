@@ -2,7 +2,7 @@ import { SignUpData, SignInData } from "@/auth/core/entity/auth";
 import { IAuthResponse } from "@/auth/core/interface/IAuthRepository";
 import { AuthRepository } from "@/auth/auth.repository";
 
-import { toHashPassword, validatePassword } from "@/auth/utils/bcrypt";
+import { toHashPassword, validatePassword } from "@/utils/bcrypt";
 
 export class AuthService {
     constructor(private readonly authRepository: AuthRepository) {
