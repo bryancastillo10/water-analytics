@@ -3,11 +3,13 @@ import AnimatedInput from "./AnimatedInput";
 import CodeInput from "./CodeInput";
 import FormInput from "./FormInput";
 import ProgressBar from "./ProgressBar";
+import Toast from "./Toast";
 
 export {
     Button,
     AnimatedInput,
     CodeInput,
     FormInput,
-    ProgressBar
+    ProgressBar,
+    Toast
 };
