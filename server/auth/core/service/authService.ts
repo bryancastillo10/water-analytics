@@ -3,6 +3,7 @@ import { IAuthResponse } from "@/auth/core/interface/IAuthRepository";
 import { AuthRepository } from "@/auth/auth.repository";
 
 import { toHashPassword, validatePassword } from "@/utils/bcrypt";
+import {verifyToken} from "@/utils/verifyToken";
 
 export class AuthService {
     constructor(private readonly authRepository: AuthRepository) {
@@ -65,6 +66,23 @@ export class AuthService {
         });
 
         return newUser;
+    };
+
+    async validateUserToken(token:string) {
+        try {
+            const decoded = verifyToken(token);
+            const user = await this.authRepository.findByUserId(decoded.userId);
+             if (user) {
+            return {
+                user_id: user.id,
+                username: user.username,
+                email: user.email,
+            };
+        }
+
+        } catch (error) {
+            return null;
+        }
     }
 
 }
