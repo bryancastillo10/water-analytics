@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client";
 import { IAuthRepository, IAuthResponse } from "@/auth/core/interface/IAuthRepository";
 import { SignUpData } from "@/auth/core/entity/auth";
 
+const defaultProfilePic = "https://res.cloudinary.com/dzruafjwq/image/upload/v1732108249/default_sv3tzy.png";
+
 export class AuthRepository implements IAuthRepository {
     private prisma = new PrismaClient();
 
@@ -11,7 +13,7 @@ export class AuthRepository implements IAuthRepository {
                 username: signUpData.username,
                 email: signUpData.email,
                 password: signUpData.password,
-                profilePic: signUpData.profilePicURL || "",
+                profilePic: signUpData.profilePicURL || defaultProfilePic,
                 role: signUpData.role,
             },
         });
@@ -51,5 +53,21 @@ export class AuthRepository implements IAuthRepository {
             profilePic: user.profilePic!,
             role: user.role,
         };
+    }
+
+    async findByUserId(userId: string): Promise<IAuthResponse | null>{
+        const user = await this.prisma.user.findUnique({
+            where: { id: userId },
+            select: {
+                id: true,
+                username: true,
+                password:true,
+                email: true,
+                profilePic: true,
+                role: true,
+            }
+        })
+
+        return user ?? null; 
     }
 }

@@ -1,5 +1,5 @@
 // import { MeasurementRepository } from "@/measurement/measurement.repository";
-// import { MeasurementService } from "@/measurement/service/measurement.service";
+// import { MeasurementService } from "@/measurement/service/measurementService";
 // import { MeasurementController } from "@/measurement/measurement.controller";
 
 
