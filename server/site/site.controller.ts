@@ -22,10 +22,28 @@ export class SiteController{
     }
     
     async getSiteByUser(req: Request, res: Response) {
-        const userId = req.params.userId;
+        try {
+            const userId = req.params.userId;
+            const userSites = await this.siteService.getSiteByUser(userId);
+            res.status(200).json({ userSites });
+        } catch (error: any) {
+            res.status(500).json({ error: error.message });
+     }
+
      }
     
-    async updateSite(req: Request, res: Response) { }
+    async updateSite(req: Request, res: Response) { 
+        try {
+            
+        } catch (error: any) {
+            
+        }
+    }
     
-    async deleteSite(req: Request, res: Response) { }
+    async deleteSite(req: Request, res: Response) { 
+                try {
+                } catch (error: any) {
+                    
+                }
+    }
 }

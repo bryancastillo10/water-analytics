@@ -28,7 +28,17 @@ export class SiteService {
 
      }
     
-    async getSiteByUser() { }
+    async getSiteByUser(userId: string) {
+        if (!userId) {
+            throw new Error("User id was not found");
+        }
+        const userSites = await this.siteRepository.getSiteByUser(userId);
+        if (!userSites || null) {
+            throw new Error("No sites were found for the user");
+        }
+
+        return userSites;
+     }
     
     async updateSite() { }
 
