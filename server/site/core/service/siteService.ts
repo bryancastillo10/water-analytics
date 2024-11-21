@@ -1,3 +1,5 @@
+import { SiteRepository } from "@/site/site.repository";
+
 export class SiteService {
     constructor(private readonly siteRepository: SiteRepository) {
         

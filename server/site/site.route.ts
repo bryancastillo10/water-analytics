@@ -1,5 +1,5 @@
 import express from "express";
-import { protectRoute } from "@/site/site.config";
+import { protectRoute } from "@/auth/auth.config";
 import { siteController } from "@/site/site.config";
 
 const router = express.Router();
