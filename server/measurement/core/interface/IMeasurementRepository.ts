@@ -1,11 +1,11 @@
 import { MeasurementData } from "@/measurement/core/entity/measurement";
 
 export interface IMeasurementRepository{
-    createMeasurement({userId, data}: CreateMeasurementRequest): Promise<MeasurementData>;
+    createMeasurement({siteId, data}: CreateMeasurementRequest): Promise<MeasurementData>;
 };
 
 
 export interface CreateMeasurementRequest{
-    userId: string;
+    siteId: string;
     data: MeasurementData;
 };

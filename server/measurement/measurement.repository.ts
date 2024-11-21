@@ -7,7 +7,7 @@ export class MeasurementRepository implements IMeasurementRepository {
     private prisma = new PrismaClient();
 
   async createMeasurement({
-    userId,
+    siteId,
     data,
   }: CreateMeasurementRequest): Promise<MeasurementData> {
     throw new Error("Method not implemented.");

@@ -21,7 +21,7 @@ export const startApp = () => {
     // Core Routes
     app.use("/api/auth", authRoutes);
     app.use("/api/user", userRoutes);
-    app.use("/api/data", measurementRoutes);
+    app.use("/api/water-quality-data", measurementRoutes);
     app.use("/api/site", siteRoutes);
 
     return app
