@@ -1,8 +1,11 @@
 import { Request } from "express";
-interface SafeUser {
-    user_id: string;
+export interface SafeUser {
+    id: string;
     username: string;
+    password?: string;
     email: string;
+    profilePic: string;
+    role: string;
   }
 
 export interface CustomRequest extends Request {

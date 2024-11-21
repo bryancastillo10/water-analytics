@@ -1,5 +1,5 @@
 import { AuthService } from "@/auth/core/service/authService";
-import { CustomRequest } from "@/infrastructure/middleware/type";
+import { CustomRequest, SafeUser } from "@/infrastructure/middleware/type";
 import { Response, NextFunction } from "express";
 
 export class AuthMiddleware{
@@ -13,16 +13,18 @@ export class AuthMiddleware{
         try {
             const token = req.cookies.jwt;
             if(!token) {
-                return res.status(401).json({ error: "No token was provided" });
+                res.status(401).json({ error: "No token was provided" });
+                return;
             };
 
             const user = await this.authService.validateUserToken(token);
 
             if (!user) {
-                return res.status(401).json({ error: "Invalid or Expired token" });
+                res.status(401).json({ error: "Invalid or Expired token" });
+                return;
             };
 
-            req.user = user;
+            req.user = user as SafeUser;
             next();
 
         } catch (error) {
