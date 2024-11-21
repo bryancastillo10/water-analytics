@@ -12,8 +12,8 @@ export class MeasurementController {
   async createMeasurementBySite(req: Request, res: Response) {
       try {
           const siteId = req.params.siteId;
-          const data = req.body;
-          const newMeasurement = await this.measurementService.createMeasurementBySite({siteId, data});
+          const measurement = req.body;
+          const newMeasurement = await this.measurementService.createMeasurementBySite({siteId, measurement});
       res
         .status(201)
         .json({ message: "Water quality data has been added", data: newMeasurement });

@@ -1,18 +1,17 @@
 export class MeasurementData {
-    id!: string;
-    date!: Date;
+  id?: string;
+  siteId?: string;
+  date?: Date;
 
-    pH?: number;
-    suspendedSolids?: number;
-    totalCOD?: number;
-    fecalColiform?: number;
+  pH?: number;
+  temperature?: number;
+  dissolvedOxygen?: number;
 
-    temperature?: number;
-    dissolvedOxygen?: number;
+  totalCOD?: number;
+  suspendedSolids?: number;
+  fecalColiform?: number;
 
-    ammonia?: number;
-    nitrates?: number;
-    phosphates?: number;
-
-    siteId!: string;
+  ammonia?: number;
+  nitrates?: number;
+  phosphates?: number;
 }
