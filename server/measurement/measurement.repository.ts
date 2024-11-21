@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { MeasurementData } from "./core/entity/measurement";
-import { CreateMeasurementRequest, IMeasurementRepository } from "@/measurement/core/interface/IMeasurementRepository";
+import { CreateMeasurementRequest, IMeasurementRepository, UpdateMeasurementRequest } from "@/measurement/core/interface/IMeasurementRepository";
 
 export class MeasurementRepository implements IMeasurementRepository {
   private prisma = new PrismaClient();
@@ -9,23 +9,15 @@ export class MeasurementRepository implements IMeasurementRepository {
     siteId,
     measurement,
   }: CreateMeasurementRequest): Promise<MeasurementData> {
-    
-    try {
       const newMeasurement = await this.prisma.measurement.create({
         data: {
           siteId,
-          ...measurement,
+          ...measurement
         },
       });
-
-      console.log("Repository - Created Measurement:", newMeasurement);
-
       return newMeasurement as MeasurementData;
-    } catch (error) {
-      console.error("Repository - Creation Error:", error);
-      throw error;
-    }
-  }
+  };
+  
   async getMeasurementBySite(siteId: string): Promise<MeasurementData[]> {
     const measurements = await this.prisma.measurement.findMany({
       where: { siteId },
@@ -33,5 +25,28 @@ export class MeasurementRepository implements IMeasurementRepository {
     });
 
     return measurements as MeasurementData[];
+  };
+
+  async updateMeasurement({ measurementId, measurement }: UpdateMeasurementRequest): Promise<MeasurementData> {
+    const updatedMeasurement = await this.prisma.measurement.update({
+      where: { id: measurementId },
+      data: {
+        ...measurement
+      }
+    });
+    return updatedMeasurement as MeasurementData;
+  };
+
+  async deleteMeasurement(measurementId: string): Promise<void> {
+    try {
+       await this.prisma.measurement.delete({
+      where: { id: measurementId }
+    });
+    } catch (error: any) {
+      if (error.code == 'P2025') {
+        throw new Error("Measurement is not found in the database");
+      }
+      throw new Error("Failed to delete the selected measurement");
+    }
   }
 }

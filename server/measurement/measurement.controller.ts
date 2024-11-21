@@ -25,6 +25,8 @@ export class MeasurementController {
     async getMeasurementBySite(req: Request, res: Response) {
         try {
             const siteId = req.body;
+            const allSiteMeasurements = await this.measurementService.getMeasurementBySite(siteId);
+            res.status(200).json({ allSiteMeasurements });
         } catch (error: any) {
             res.status(500).json({ error: error.message });
         }
@@ -32,7 +34,10 @@ export class MeasurementController {
     
     async updateMeasurement(req: Request, res: Response) {
         try {
-            const measurementId = req.params.id;
+            const measurementId = req.params.measurementId;
+            const measurement = req.body;
+            const updatedMeasurement = await this.measurementService.updateMeasurement({ measurementId, measurement });
+            res.status(200).json({ message: "A measurement has been updated", measurement: updatedMeasurement });
         } catch (error: any) {
             res.status(500).json({ error: error.message });
         }
@@ -40,7 +45,10 @@ export class MeasurementController {
 
     async deleteMeasurement(req: Request, res: Response) {
         try {
-            const measurementId = req.params.id;
+            const measurementId = req.params.measurementId;
+            await this.measurementService.deleteMeasurement(measurementId);
+ 
+            res.status(200).json({ message: "Measurement has been deleted successfully" });
         } catch (error: any) {
             res.status(500).json({ error: error.message });
         }
