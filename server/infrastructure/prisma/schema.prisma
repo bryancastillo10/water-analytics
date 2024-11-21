@@ -19,6 +19,15 @@ enum UserRole {
   ANALYST
 }
 
+enum WaterSourceType {
+  DOMESTIC
+  INDUSTRIAL
+  AGRICULTURAL
+  GROUNDWATER
+  SURFACE
+  OTHERS
+}
+
 model User {
   id              String    @id @default(auto()) @map("_id") @db.ObjectId
   username        String
@@ -39,10 +48,11 @@ model User {
 
 model Site {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
+  siteName        String
   location    String
+  description String
   imageUrl String?   
-  sourceType  String   
+  sourceType  WaterSourceType 
   
   // Site Relationships
   userId      String   @db.ObjectId

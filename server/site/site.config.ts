@@ -1,12 +1,14 @@
-// import { SiteRepository } from "@/site/site.repository";
-// import { SiteService } from "@/site/service/siteService";
-// import { SiteController } from "@/site/site.controller";
-// import { AuthMiddleware } from "@/infrastructure/middleware/auth.middleware";
+import { SiteRepository } from "@/site/site.repository";
+import { SiteService } from "@/site/service/siteService";
+import { SiteController } from "@/site/site.controller";
 
-// const siteRepository = new SiteRepository();
+import { AuthMiddleware } from "@/infrastructure/middleware/auth.middleware";
+import { authService } from "@/auth/auth.config";
 
-// const siteService = new SiteService(siteRepository);
-// const middleware = new AuthMiddleware(siteService);
+const siteRepository = new SiteRepository();
 
-// export const siteController = new SiteController(siteService);
-// export const protectRoute = middleware.protectRoute;
+const siteService = new SiteService(siteRepository);
+const middleware = new AuthMiddleware(authService);
+
+export const siteController = new SiteController(siteService);
+export const protectRoute = middleware.protectRoute;

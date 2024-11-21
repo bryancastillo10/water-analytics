@@ -81,8 +81,9 @@ export class AuthService {
                 role:user.role
             };
         }
-
+            return null;
         } catch (error) {
+            console.error("Token validation failed:", error);
             return null;
         }
     }

@@ -1,11 +1,12 @@
 import express from "express";
-// import { siteController, protectRoute } from "@/site/site.config";
+import { protectRoute } from "@/site/site.config";
+import { siteController } from "@/site/site.config";
 
 const router = express.Router();
 
-router.post("/create");
-router.get("/getByUserId");
-router.put("/update/:id");
-router.delete("/delete/:id");
+router.post("/create", protectRoute, siteController.createSite);
+router.get("/user/:userId", protectRoute, siteController.getSiteByUser);
+router.put("/update/:id",protectRoute, siteController.updateSite);
+router.delete("/delete/:id",protectRoute, siteController.deleteSite);
 
 export default router;
