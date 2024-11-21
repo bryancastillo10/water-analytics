@@ -12,7 +12,7 @@ export class MeasurementController {
   async createMeasurementBySite(req: Request, res: Response) {
       try {
           const siteId = req.params.siteId;
-          const measurement = req.body;
+          const measurement = req.body.measurement;
           const newMeasurement = await this.measurementService.createMeasurementBySite({siteId, measurement});
       res
         .status(201)

@@ -14,32 +14,10 @@ export class MeasurementService {
       throw new Error("Site ID and the measurement data are required");
     }
 
-    // Type-safe numeric conversion function
-    const safeNumberConversion = (value: any): number | null => {
-      if (value === undefined || value === null) return null;
-      const converted = Number(value);
-      return !isNaN(converted) ? converted : null;
-    };
-
-
-    const processedMeasurement = {
-      date: measurement.date ? new Date(measurement.date) : new Date(),
-      pH: safeNumberConversion(measurement.pH),
-      temperature: safeNumberConversion(measurement.temperature),
-      dissolvedOxygen: safeNumberConversion(measurement.dissolvedOxygen),
-      totalCOD: safeNumberConversion(measurement.totalCOD),
-      suspendedSolids: safeNumberConversion(measurement.suspendedSolids),
-      fecalColiform: safeNumberConversion(measurement.fecalColiform),
-      ammonia: safeNumberConversion(measurement.ammonia),
-      nitrates: safeNumberConversion(measurement.nitrates),
-      phosphates: safeNumberConversion(measurement.phosphates),
-    };
-
-
     const newMeasurement =
       await this.measurementRepository.createMeasurementBySite({
         siteId,
-        measurement: processedMeasurement as MeasurementData,
+        measurement: measurement as MeasurementData,
       });
 
     return newMeasurement;

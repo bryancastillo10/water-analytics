@@ -9,23 +9,15 @@ export class MeasurementRepository implements IMeasurementRepository {
     siteId,
     measurement,
   }: CreateMeasurementRequest): Promise<MeasurementData> {
-    
-    try {
       const newMeasurement = await this.prisma.measurement.create({
         data: {
           siteId,
-          ...measurement,
+          ...measurement
         },
       });
-
-      console.log("Repository - Created Measurement:", newMeasurement);
-
       return newMeasurement as MeasurementData;
-    } catch (error) {
-      console.error("Repository - Creation Error:", error);
-      throw error;
-    }
-  }
+  };
+  
   async getMeasurementBySite(siteId: string): Promise<MeasurementData[]> {
     const measurements = await this.prisma.measurement.findMany({
       where: { siteId },
