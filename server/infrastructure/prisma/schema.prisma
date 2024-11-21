@@ -70,9 +70,9 @@ model Measurement {
   
   // Core Parameters
   pH           Float?
-  suspendedSolids   Float?  // mg/L
-  totalCOD          Float?  // mg/L
-  fecalColiform     Float?  // MPN/100mL
+  suspendedSolids   Int?  // mg/L
+  totalCOD          Int?  // mg/L
+  fecalColiform     Int?  // MPN/100mL
   
   // Additional Parameters 
   temperature       Float?  // °C

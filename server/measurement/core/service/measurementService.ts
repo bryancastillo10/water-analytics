@@ -1,7 +1,6 @@
 import { MeasurementRepository } from "@/measurement/measurement.repository";
-
-import { CreateMeasurementRequest } from "@/measurement/core/interface/IMeasurementRepository";
-import { MeasurementData } from "../entity/measurement";
+import { CreateMeasurementRequest, UpdateMeasurementRequest } from "@/measurement/core/interface/IMeasurementRepository";
+import { MeasurementData } from "@/measurement/core/entity/measurement";
 
 export class MeasurementService {
   constructor(private readonly measurementRepository: MeasurementRepository) {}
@@ -36,8 +35,16 @@ export class MeasurementService {
     return allSiteMeasurements;
   }
 
-  async updateMeasurement() {
-    throw new Error("Method not yet implemented");
+  async updateMeasurement({measurementId, measurement}:UpdateMeasurementRequest) {
+    if (!measurementId || !measurement) {
+      throw new Error("Measurement ID and its data, the measurement data, is required");
+    }
+
+    const updatedMeasurement = await this.measurementRepository.updateMeasurement({ measurementId, measurement });
+    if (!updatedMeasurement) {
+      throw new Error("Failed to update the selected measurement");
+    }
+    return updatedMeasurement;
   }
 
   async deleteMeasurement() {

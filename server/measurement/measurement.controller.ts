@@ -12,7 +12,7 @@ export class MeasurementController {
   async createMeasurementBySite(req: Request, res: Response) {
       try {
           const siteId = req.params.siteId;
-          const measurement = req.body.measurement;
+          const measurement = req.body;
           const newMeasurement = await this.measurementService.createMeasurementBySite({siteId, measurement});
       res
         .status(201)
@@ -34,7 +34,10 @@ export class MeasurementController {
     
     async updateMeasurement(req: Request, res: Response) {
         try {
-            const measurementId = req.params.id;
+            const measurementId = req.params.measurementId;
+            const measurement = req.body;
+            const updatedMeasurement = await this.measurementService.updateMeasurement({ measurementId, measurement });
+            res.status(200).json({ message: "A measurement has been updated", measurement: updatedMeasurement });
         } catch (error: any) {
             res.status(500).json({ error: error.message });
         }
