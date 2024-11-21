@@ -25,6 +25,8 @@ export class MeasurementController {
     async getMeasurementBySite(req: Request, res: Response) {
         try {
             const siteId = req.body;
+            const allSiteMeasurements = await this.measurementService.getMeasurementBySite(siteId);
+            res.status(200).json({ allSiteMeasurements });
         } catch (error: any) {
             res.status(500).json({ error: error.message });
         }
