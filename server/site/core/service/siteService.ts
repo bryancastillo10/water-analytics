@@ -10,7 +10,6 @@ export class SiteService {
             siteName,
             location,
             description,
-            imageUrl,
             sourceType
         } } = siteData;
 

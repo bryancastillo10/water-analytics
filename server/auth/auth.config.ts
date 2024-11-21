@@ -9,4 +9,4 @@ const authService = new AuthService(authRepository);
 const middleware = new AuthMiddleware(authService);
 
 export const authController = new AuthController(authService);
-export const protectRoute = middleware.protectRoute;
+export const protectRoute = middleware.protectRoute.bind(middleware);

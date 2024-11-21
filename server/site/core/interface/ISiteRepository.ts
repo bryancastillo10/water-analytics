@@ -1,9 +1,9 @@
 import { SiteData } from "@/site/core/entity/site";
-import { UserData } from "@/user/core/entity/user";
+
 
 export interface ISiteRepository {
-  createSite(data: CreateSiteRequest): Promise<SiteData>;
-  verifyUser(userId: string): Promise<UserData | null>;
+  createSite(siteData: CreateSiteRequest): Promise<SiteData>;
+  verifyUser(userId: string): Promise<boolean>;
   getSiteByUser(userId: string): Promise<SiteData[]>;
   updateSite(
     siteId: string,
