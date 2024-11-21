@@ -45,7 +45,10 @@ export class MeasurementController {
 
     async deleteMeasurement(req: Request, res: Response) {
         try {
-            const measurementId = req.params.id;
+            const measurementId = req.params.measurementId;
+            await this.measurementService.deleteMeasurement(measurementId);
+ 
+            res.status(200).json({ message: "Measurement has been deleted successfully" });
         } catch (error: any) {
             res.status(500).json({ error: error.message });
         }

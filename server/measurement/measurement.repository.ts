@@ -38,6 +38,15 @@ export class MeasurementRepository implements IMeasurementRepository {
   };
 
   async deleteMeasurement(measurementId: string): Promise<void> {
-    throw new Error("Method not yet implemented");
+    try {
+       await this.prisma.measurement.delete({
+      where: { id: measurementId }
+    });
+    } catch (error: any) {
+      if (error.code == 'P2025') {
+        throw new Error("Measurement is not found in the database");
+      }
+      throw new Error("Failed to delete the selected measurement");
+    }
   }
 }

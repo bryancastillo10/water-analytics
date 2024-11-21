@@ -47,7 +47,13 @@ export class MeasurementService {
     return updatedMeasurement;
   }
 
-  async deleteMeasurement() {
-    throw new Error("Method not yet implemented");
+  async deleteMeasurement(measurementId:string) {
+    if (!measurementId) {
+      throw new Error("Measurement ID is required");
+    }
+
+    await this.measurementRepository.deleteMeasurement(measurementId);
+
+    return;
   }
 }
