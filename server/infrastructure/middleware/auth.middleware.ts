@@ -1,5 +1,5 @@
 import { AuthService } from "@/auth/core/service/authService";
-import { CustomRequest } from "@/infrastructure/middleware/type";
+import { CustomRequest, SafeUser } from "@/infrastructure/middleware/type";
 import { Response, NextFunction } from "express";
 
 export class AuthMiddleware{
@@ -22,7 +22,7 @@ export class AuthMiddleware{
                 return res.status(401).json({ error: "Invalid or Expired token" });
             };
 
-            req.user = user;
+            req.user = user as SafeUser;
             next();
 
         } catch (error) {

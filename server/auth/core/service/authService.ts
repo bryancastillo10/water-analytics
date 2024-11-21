@@ -74,9 +74,11 @@ export class AuthService {
             const user = await this.authRepository.findByUserId(decoded.userId);
              if (user) {
             return {
-                user_id: user.id,
+                id: user.id,
                 username: user.username,
                 email: user.email,
+                profilePic: user.profilePic,
+                role:user.role
             };
         }
 
