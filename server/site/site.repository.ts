@@ -5,21 +5,22 @@ import { SiteData } from "@/site/core/entity/site";
 
 
 export class SiteRepository implements ISiteRepository {
-  private prisma = new PrismaClient();
-
-  createSite({ userId, siteData }: CreateSiteRequest): Promise<SiteData> {
+  createSite(data: CreateSiteRequest): Promise<SiteData> {
     throw new Error("Method not implemented.");
   }
   verifyUser(userId: string): Promise<UserData | null> {
     throw new Error("Method not implemented.");
   }
-  getSiteByUser(): Promise<SiteData | null> {
+  getSiteByUser(userId: string): Promise<SiteData[]> {
     throw new Error("Method not implemented.");
   }
-  updateSite({ userId, siteData }: CreateSiteRequest): Promise<SiteData> {
+  updateSite(siteId: string, siteData: Partial<SiteData>): Promise<SiteData | null> {
     throw new Error("Method not implemented.");
   }
-  deleteSite(): Promise<void> {
+  deleteSite(siteId: string): Promise<void> {
     throw new Error("Method not implemented.");
   }
+  private prisma = new PrismaClient();
+
+ 
 }
