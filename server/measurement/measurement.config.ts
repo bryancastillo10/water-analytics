@@ -1,10 +1,10 @@
-// import { MeasurementRepository } from "@/measurement/measurement.repository";
-// import { MeasurementService } from "@/measurement/service/measurementService";
-// import { MeasurementController } from "@/measurement/measurement.controller";
+import { MeasurementRepository } from "@/measurement/measurement.repository";
+import { MeasurementService } from "@/measurement/core/service/measurementService";
+import { MeasurementController } from "@/measurement/measurement.controller";
 
 
-// const measurementRepository = new MeasurementRepository();
+const measurementRepository = new MeasurementRepository();
 
-// const measurementService = new MeasurementService(measurementRepository);
+const measurementService = new MeasurementService(measurementRepository);
 
-// export const measurementController = new MeasurementController(measurementService);
+export const measurementController = new MeasurementController(measurementService);

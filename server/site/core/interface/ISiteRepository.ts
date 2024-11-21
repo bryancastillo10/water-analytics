@@ -16,3 +16,8 @@ export interface CreateSiteRequest {
   userId: string;
   siteData: Omit<SiteData, "id" | "userId" >;
 }
+
+export interface UpdateSiteRequest {
+  siteId: string;
+  siteData: Omit<SiteData, "id" | "userId">;
+}

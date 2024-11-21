@@ -1,28 +1,30 @@
 import { Request, Response } from "express";
-// import { MeasurementService } from "@/measurement/core/service/measurement.service";
+import { MeasurementService } from "@/measurement/core/service/measurementService";
 
-export class UserController {
-  // constructor(private readonly measurementService: MeasurementService) {
-  //     this.createMeasurement = this.createMeasurement.bind(this);
-  //     this.getAllMeasurement = this.getAllMeasurement.bind(this);
-  //     this.updateMeasurement = this.updateMeasurement.bind(this);
-  //     this.deleteMeasurement = this.deleteMeasurement.bind(this);
-  // }
+export class MeasurementController {
+  constructor(private readonly measurementService: MeasurementService) {
+      this.createMeasurementBySite = this.createMeasurementBySite.bind(this);
+      this.getMeasurementBySite = this.getMeasurementBySite.bind(this);
+      this.updateMeasurement = this.updateMeasurement.bind(this);
+      this.deleteMeasurement = this.deleteMeasurement.bind(this);
+  }
 
-  async createMeasurement(req: Request, res: Response) {
-    try {
-      const measurement = req.body;
+  async createMeasurementBySite(req: Request, res: Response) {
+      try {
+          const siteId = req.params.siteId;
+          const measurement = req.body;
+          const newMeasurement = await this.measurementService.createMeasurementBySite({siteId, measurement});
       res
         .status(201)
-        .json({ message: "Water quality has been added", data: measurement });
+        .json({ message: "Water quality data has been added", data: newMeasurement });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
   }
 
-    async getAllMeasurement(req: Request, res: Response) {
+    async getMeasurementBySite(req: Request, res: Response) {
         try {
-            const userId = req.body;
+            const siteId = req.body;
         } catch (error: any) {
             res.status(500).json({ error: error.message });
         }

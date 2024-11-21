@@ -22,10 +22,35 @@ export class SiteController{
     }
     
     async getSiteByUser(req: Request, res: Response) {
-        const userId = req.params.userId;
+        try {
+            const userId = req.params.userId;
+            const userSites = await this.siteService.getSiteByUser(userId);
+            res.status(200).json({ userSites });
+        } catch (error: any) {
+            res.status(500).json({ error: error.message });
+     }
+
      }
     
-    async updateSite(req: Request, res: Response) { }
+    async updateSite(req: Request, res: Response) { 
+        try {
+            const siteId = req.params.id;
+            const siteData = req.body;
+            const updatedSite = await this.siteService.updateSite({siteId,siteData});
+            res.status(200).json({ message:"Site has been updated successfully" ,updatedSite });
+        } catch (error: any) {
+            res.status(500).json({ error: error.message });
+        }
+    }
     
-    async deleteSite(req: Request, res: Response) { }
+    async deleteSite(req: Request, res: Response) { 
+        try {
+            const siteId = req.params.id;
+            const message = await this.siteService.deleteSite(siteId);
+
+            res.status(200).json({ message: message });
+            } catch (error: any) {
+               res.status(500).json({ error: error.message });
+        }
+    }
 }
