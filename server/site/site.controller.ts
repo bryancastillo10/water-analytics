@@ -34,9 +34,12 @@ export class SiteController{
     
     async updateSite(req: Request, res: Response) { 
         try {
-            
+            const siteId = req.params.id;
+            const siteData = req.body;
+            const updatedSite = await this.siteService.updateSite({siteId,siteData});
+            res.status(200).json({ updatedSite });
         } catch (error: any) {
-            
+            res.status(500).json({ error: error.message });
         }
     }
     
