@@ -37,16 +37,20 @@ export class SiteController{
             const siteId = req.params.id;
             const siteData = req.body;
             const updatedSite = await this.siteService.updateSite({siteId,siteData});
-            res.status(200).json({ updatedSite });
+            res.status(200).json({ message:"Site has been updated successfully" ,updatedSite });
         } catch (error: any) {
             res.status(500).json({ error: error.message });
         }
     }
     
     async deleteSite(req: Request, res: Response) { 
-                try {
-                } catch (error: any) {
-                    
-                }
+        try {
+            const siteId = req.params.id;
+            const message = await this.siteService.deleteSite(siteId);
+
+            res.status(200).json({ message: message });
+            } catch (error: any) {
+               res.status(500).json({ error: error.message });
+        }
     }
 }

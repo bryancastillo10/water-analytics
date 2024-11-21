@@ -56,5 +56,9 @@ export class SiteService {
     if (!siteId) {
       throw new Error("Site id was not found");
     }
+      await this.siteRepository.deleteSite(siteId);
+      return {
+          message: "Site has been deleted successfully"
+      }
   }
 }
