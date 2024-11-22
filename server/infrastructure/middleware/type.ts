@@ -11,3 +11,10 @@ export interface SafeUser {
 export interface CustomRequest extends Request {
     user?: SafeUser;
 }
+
+export interface ErrorResponseProps {
+  status: "fail" | "error";
+  message: string;
+  errors?: any[];
+  stack?: string;
+}
