@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { AuthService } from "@/auth/core/service/authService";
 
 import { generateTokenAndSetCookie } from "@/utils/generateToken";
@@ -10,7 +10,7 @@ export class AuthController{
         this.signOut = this.signOut.bind(this);
     }
     
-    async signIn(req: Request, res: Response) {
+    async signIn(req: Request, res: Response, next: NextFunction) {
         try {
             const signInData = req.body;
             const loggedUser = await this.authService.signIn(signInData);
@@ -18,13 +18,13 @@ export class AuthController{
             generateTokenAndSetCookie(loggedUser.id, res);
             res.status(200).json({ "message": "You have successfully signed in", user: loggedUser });
         }
-        catch (error:any) {
-             res.status(500).json({ error: error.message });
+        catch (error) {
+          next(error);
         }   
     }
 
     
-   async signUp(req: Request, res: Response) {
+   async signUp(req: Request, res: Response, next: NextFunction) {
     try {
       const signUpData = req.body;
       const newUser = await this.authService.signUp(signUpData);
@@ -35,18 +35,17 @@ export class AuthController{
         message: "New user has been created successfully",
         user: newUser 
       });
-    } catch (error: any) {
-      res.status(500).json({ error: error.message });
+    } catch (error) {
+      next(error);
     }
   }
 
-    async signOut(req: Request, res: Response) {
+    async signOut(req: Request, res: Response, next: NextFunction) {
        try {
         res.cookie("jwt", "", { maxAge: 0 });
         res.status(200).json({ message: "You have been logged out successfully" });
     } catch (error:any) {
-        console.error("Error LogOut controller", error.message);
-        res.status(500).json({ error: "Internal server error" });
+      next(error);
     }
     }
 }

@@ -1,8 +1,7 @@
+import { CreateSiteRequest, UpdateSiteRequest } from "@/site/core/interface/ISiteRepository";
 import { SiteRepository } from "@/site/site.repository";
-import {
-  CreateSiteRequest,
-  UpdateSiteRequest,
-} from "@/site/core/interface/ISiteRepository";
+
+import { NotFoundError, ValidationError } from "@/infrastructure/errors/customErrors";
 
 export class SiteService {
   constructor(private readonly siteRepository: SiteRepository) {}
@@ -13,16 +12,12 @@ export class SiteService {
     } = siteData;
 
     if (!siteName || !location || !description || !sourceType) {
-      throw new Error(
-        "siteName,location,description, and sourceType are required"
-      );
+      throw new ValidationError("siteName,location,description, and sourceType are required");
     }
 
     const isExistingUser = await this.siteRepository.verifyUser(userId);
     if (!isExistingUser) {
-      throw new Error(
-        "User is not found. The requested site cannot be created"
-      );
+      throw new NotFoundError("User not found. The requested site cannot be created");
     }
 
     const newSite = await this.siteRepository.createSite(siteData);
@@ -32,11 +27,12 @@ export class SiteService {
 
   async getSiteByUser(userId: string) {
     if (!userId) {
-      throw new Error("User id was not found");
+      throw new NotFoundError("User Id not found");
     }
+
     const userSites = await this.siteRepository.getSiteByUser(userId);
     if (!userSites || null) {
-      throw new Error("No sites were found for the user");
+      throw new NotFoundError("No sites were found for the user");
     }
 
     return userSites;
@@ -44,7 +40,7 @@ export class SiteService {
 
   async updateSite({ siteId, siteData }: UpdateSiteRequest) {
     if (!siteId) {
-      throw new Error("Site id was not found");
+      throw new NotFoundError("Site id was not found");
     }
 
       const updatedSite = await this.siteRepository.updateSite(siteId, siteData);
@@ -54,11 +50,11 @@ export class SiteService {
 
   async deleteSite(siteId: string) {
     if (!siteId) {
-      throw new Error("Site id was not found");
+      throw new NotFoundError("Site Id not found");
     }
       await this.siteRepository.deleteSite(siteId);
       return {
-          message: "Site has been deleted successfully"
+        message: "Site has been deleted successfully"
       }
   }
 }

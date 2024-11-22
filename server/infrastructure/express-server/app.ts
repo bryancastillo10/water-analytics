@@ -2,6 +2,7 @@ import express from 'express';
 import cors from "cors";
 import helmet from 'helmet';
 import cookieParser from "cookie-parser";
+import { errorHandler } from "@/infrastructure/middleware/errorHandler.middleware";
 
 import authRoutes from "@/auth/auth.route";
 import userRoutes from "@/user/user.route";
@@ -24,5 +25,8 @@ export const startApp = () => {
     app.use("/api/water-quality-data", measurementRoutes);
     app.use("/api/site", siteRoutes);
 
-    return app
+    // Error Handler Middleware
+    app.use(errorHandler);
+
+    return app;
 }
