@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent } from "react";
-import type { AuthSignIn } from "@/features/auth/api/interface";
+import type { SignInData } from "@/features/auth/api/interface";
 
 const initialSignIn = {
   email: "",
@@ -7,7 +7,7 @@ const initialSignIn = {
 };
 
 const useSignInForm = () => {
-  const [signInData, setSignInData] = useState<AuthSignIn>(initialSignIn);
+  const [signInData, setSignInData] = useState<SignInData>(initialSignIn);
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;

@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent } from "react";
-import type { AuthSignUp } from "@/features/auth/api/interface";
+import { UserRole, type SignUpData } from "@/features/auth/api/interface";
 
 const initialSignUp = {
     username: "",
@@ -7,11 +7,11 @@ const initialSignUp = {
     password: "",
     confirmPassword:"",
     profilePicURL: "",
-    role: null
+    role: UserRole.USER
 };
 
 const useSignUpForm = () => {
-  const [signUpData, setSignUpData] = useState<AuthSignUp>(initialSignUp);
+  const [signUpData, setSignUpData] = useState<SignUpData>(initialSignUp);
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
