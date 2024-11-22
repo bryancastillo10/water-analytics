@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import globalReducer from "./globalReducer";
+import rootReducer, { apis } from "@/lib/redux/reducer";
+
 import {
   persistReducer,
   FLUSH,
@@ -15,20 +16,17 @@ import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 /* Redux Persistence */
 const createNoopStorage = () => {
   return {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     getItem(_key: unknown) {
       return Promise.resolve(null);
     },
     setItem(_key: unknown, value: unknown) {
       return Promise.resolve(value);
     },
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     removeItem(_key: unknown) {
       return Promise.resolve();
     },
   };
 };
-
 
 const storage =
   typeof window === "undefined"
@@ -39,9 +37,11 @@ const persistConfig = {
   key: "root",
   storage,
   whitelist: ["global"],
+  blacklist:["api"]
 };
 
-const persistedReducer = persistReducer(persistConfig, globalReducer);
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 /* Redux Store */
 const store = configureStore({
@@ -50,8 +50,9 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        ignoredPaths: ['api'],
       },
-    }),
+    }).concat(apis.map((api)=> api.middleware))
 });
 
 export type RootState = ReturnType<typeof store.getState>;
