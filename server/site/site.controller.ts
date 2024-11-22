@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { SiteService } from "@/site/core/service/siteService";
 
 export class SiteController{
@@ -9,7 +9,7 @@ export class SiteController{
         this.deleteSite = this.deleteSite.bind(this);
     }
 
-    async createSite(req: Request, res: Response) { 
+    async createSite(req: Request, res: Response, next: NextFunction) { 
         try {
             const siteData = req.body;
             const newSite = await this.siteService.createSite(siteData);
@@ -17,40 +17,40 @@ export class SiteController{
             res.status(201).json({ message: "New site has been added", site: newSite });
 
         } catch (error:any) {
-            res.status(500).json({ error: error.message });
+            next(error);
         }
     }
     
-    async getSiteByUser(req: Request, res: Response) {
+    async getSiteByUser(req: Request, res: Response, next: NextFunction) {
         try {
             const userId = req.params.userId;
             const userSites = await this.siteService.getSiteByUser(userId);
             res.status(200).json({ userSites });
-        } catch (error: any) {
-            res.status(500).json({ error: error.message });
+        } catch (error) {
+            next(error);
      }
 
      }
     
-    async updateSite(req: Request, res: Response) { 
+    async updateSite(req: Request, res: Response, next: NextFunction) { 
         try {
             const siteId = req.params.id;
             const siteData = req.body;
             const updatedSite = await this.siteService.updateSite({siteId,siteData});
             res.status(200).json({ message:"Site has been updated successfully" ,updatedSite });
-        } catch (error: any) {
-            res.status(500).json({ error: error.message });
+        } catch (error) {
+            next(error);
         }
     }
     
-    async deleteSite(req: Request, res: Response) { 
+    async deleteSite(req: Request, res: Response, next: NextFunction) { 
         try {
             const siteId = req.params.id;
             const message = await this.siteService.deleteSite(siteId);
 
             res.status(200).json({ message: message });
-            } catch (error: any) {
-               res.status(500).json({ error: error.message });
+            } catch (error) {
+               next(error);
         }
     }
 }

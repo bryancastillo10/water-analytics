@@ -17,7 +17,7 @@ export class UserController {
             const updatedUser = await this.userService.updateUser({userId, toUpdateUser});
 
             res.status(200).json({ message: "Your profile has been updated successfully", user: updatedUser });
-        } catch (error: any) {
+        } catch (error) {
             next(error);
         }
     }
@@ -28,7 +28,7 @@ export class UserController {
             await this.userService.deleteUser(userId);
 
             res.status(200).json({ message: "You have deleted your account successfully"});
-        } catch (error: any) {
+        } catch (error) {
             next(error);
         }
     }
@@ -40,7 +40,7 @@ export class UserController {
 
             res.status(200).json({ message: message });
             
-        }catch (error: any) {
+        }catch (error) {
             next(error);
         }
     }
@@ -52,7 +52,7 @@ export class UserController {
             const isVerified = await this.userService.verifyCode({ email, code });
 
             res.status(200).json({ isVerified});
-        } catch (error: any) {
+        } catch (error) {
             next(error);
         }
     }
@@ -64,7 +64,7 @@ export class UserController {
             const message = await this.userService.updatePassword({ email, newPassword, confirmNewPassword });
 
             res.status(200).json({ message: message });
-        } catch (error: any) {
+        } catch (error) {
             next(error);
         }
     }

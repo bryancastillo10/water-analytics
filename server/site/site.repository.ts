@@ -1,13 +1,17 @@
 import { PrismaClient } from "@prisma/client";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+
+import { DatabaseError } from "@/infrastructure/errors/customErrors";
+
 import { CreateSiteRequest, ISiteRepository } from "@/site/core/interface/ISiteRepository";
 import { SiteData } from "@/site/core/entity/site";
-
 
 export class SiteRepository implements ISiteRepository {
   private prisma = new PrismaClient();
 
   async createSite(data: CreateSiteRequest): Promise<SiteData> {
-    const newSite = await this.prisma.site.create({
+    try {
+      const newSite = await this.prisma.site.create({
       data: {
         userId: data.userId,
         siteName: data.siteData.siteName,
@@ -19,35 +23,77 @@ export class SiteRepository implements ISiteRepository {
     });
 
     return newSite as SiteData;
+    }
+    catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        console.error(error.message);
+        throw new DatabaseError("Database error at createSite method");
+      }
+      throw Error;
+    }
   }
+
   async verifyUser(userId: string): Promise<boolean> {
-    const isExistingUser = await this.prisma.user.findUnique({
-      where: { id: userId },
-    });
-    return Boolean(isExistingUser);
+    try {
+      const isExistingUser = await this.prisma.user.findUnique({
+        where: { id: userId },
+      });
+      return Boolean(isExistingUser);
+    }
+    catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+         console.error(error.message);
+         throw new DatabaseError("Database error at verifyUser method");
+       }
+      throw Error;
+    }
   }
 
 
   async getSiteByUser(userId: string): Promise<SiteData[]> {
-    const userSites = await this.prisma.site.findMany({
+    try {
+      const userSites = await this.prisma.site.findMany({
       where: { userId },
-    });
-    return userSites as SiteData[];
+      });
+      return userSites as SiteData[];
+    }
+    catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+         console.error(error.message);
+         throw new DatabaseError("Database error at getSiteByUser method");
+       }
+      throw Error;
+    }
   }
-  async updateSite(
-    siteId: string,
-    siteData: Partial<SiteData>
-  ): Promise<SiteData | null> {
-    const updatedSite = await this.prisma.site.update({
+
+  async updateSite(siteId: string, siteData: Partial<SiteData>): Promise<SiteData | null> {
+    try {
+      const updatedSite = await this.prisma.site.update({
       where: { id: siteId },
       data: siteData,
-    });
+      });
+      
     return updatedSite as SiteData | null;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+         console.error(error.message);
+         throw new DatabaseError("Database error at updateSite method");
+       }
+      throw Error;
+    }
   }
 
   async deleteSite(siteId: string): Promise<void> {
-    await this.prisma.site.delete({
-      where: { id: siteId },
-    });
+    try {
+       await this.prisma.site.delete({
+         where: { id: siteId },
+       });
+    } catch (error) {
+       if (error instanceof PrismaClientKnownRequestError) {
+         console.error(error.message);
+         throw new DatabaseError("Database error at deleteSite method");
+       }
+      throw Error;
+    }
   }
 }
