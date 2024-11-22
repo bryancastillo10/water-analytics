@@ -1,35 +1,29 @@
-import { MeasurementRepository } from "@/measurement/measurement.repository";
 import { CreateMeasurementRequest, UpdateMeasurementRequest } from "@/measurement/core/interface/IMeasurementRepository";
-import { MeasurementData } from "@/measurement/core/entity/measurement";
+import { MeasurementRepository } from "@/measurement/measurement.repository";
+
+import { ValidationError, NotFoundError } from "@/infrastructure/errors/customErrors";
 
 export class MeasurementService {
   constructor(private readonly measurementRepository: MeasurementRepository) {}
 
-  async createMeasurementBySite({
-    siteId,
-    measurement,
-  }: CreateMeasurementRequest) {
+  async createMeasurementBySite({ siteId, measurement }: CreateMeasurementRequest) {
     if (!siteId || !measurement) {
-      throw new Error("Site ID and the measurement data are required");
+      throw new ValidationError("Site ID and the measurement data are required");
     }
 
-    const newMeasurement =
-      await this.measurementRepository.createMeasurementBySite({
-        siteId,
-        measurement: measurement as MeasurementData,
-      });
+    const newMeasurement = await this.measurementRepository.createMeasurementBySite({ siteId, measurement});
 
     return newMeasurement;
   }
 
   async getMeasurementBySite(siteId:string) {
     if (!siteId) {
-      throw new Error("Site is required");
+      throw new NotFoundError("Site is required");
     }
 
     const allSiteMeasurements = await this.measurementRepository.getMeasurementBySite(siteId);
     if (!allSiteMeasurements) {
-      throw new Error("Failed to get all the measurements of the site ID");
+      throw new NotFoundError("Failed to get all the measurements of the site ID");
     }
 
     return allSiteMeasurements;
@@ -37,19 +31,17 @@ export class MeasurementService {
 
   async updateMeasurement({measurementId, measurement}:UpdateMeasurementRequest) {
     if (!measurementId || !measurement) {
-      throw new Error("Measurement ID and its data, the measurement data, is required");
+      throw new ValidationError("Measurement ID and its data, the measurement data, is required");
     }
 
     const updatedMeasurement = await this.measurementRepository.updateMeasurement({ measurementId, measurement });
-    if (!updatedMeasurement) {
-      throw new Error("Failed to update the selected measurement");
-    }
+ 
     return updatedMeasurement;
   }
 
   async deleteMeasurement(measurementId:string) {
     if (!measurementId) {
-      throw new Error("Measurement ID is required");
+      throw new ValidationError("Measurement ID is required");
     }
 
     await this.measurementRepository.deleteMeasurement(measurementId);
