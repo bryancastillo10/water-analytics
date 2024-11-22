@@ -34,7 +34,7 @@ const Sidebar = ({ isSidebarExpanded, toggleSidebar }: NavigationProps) => {
 
   return (
     <nav
-      className={`fixed xl:static z-40 flex flex-col transition-all duration-500 
+      className={`fixed xl:static z-40 flex flex-col transform transition-width duration-500 
       overflow-hidden h-full shadow-lg bg-light
       ${isSidebarExpanded ? "w-0 md:w-14" : "w-48"}
       `}

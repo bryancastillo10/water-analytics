@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
-
 import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
 import { setIsSidebarExpanded } from "@/lib/redux/states/sidebarSlice";
 
 import Navbar from "@/components/navigation/Navbar";
 import Sidebar from "@/components/navigation/Sidebar";
+import Drawer from "@/components/navigation/Drawer";
 
 const AppLayout = () => {
   const dispatch = useAppDispatch()
@@ -25,7 +25,8 @@ const AppLayout = () => {
           isSidebarExpanded={isSidebarExpanded}
           toggleSidebar={toggleSidebar}
         />
-        <section className="flex-1 overflow-auto py-3 px-6">
+        <section className="flex-1 overflow-auto py-3 px-6">       
+          <Drawer/>
           <Outlet />
         </section>
       </div>
