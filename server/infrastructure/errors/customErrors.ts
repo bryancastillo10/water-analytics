@@ -32,3 +32,9 @@ export class NotFoundError extends AppError {
         super(404, `${resource} is not found`);
     }
 }
+
+export class DatabaseError extends AppError{
+    constructor(message: string = 'Database Query Error') {
+        super(500, message);
+    }
+}

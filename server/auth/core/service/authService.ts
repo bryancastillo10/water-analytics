@@ -1,4 +1,5 @@
 import { SignUpData, SignInData } from "@/auth/core/entity/auth";
+import { AuthenticationError, ValidationError } from "@/infrastructure/errors/customErrors";
 import { IAuthResponse } from "@/auth/core/interface/IAuthRepository";
 import { AuthRepository } from "@/auth/auth.repository";
 
@@ -14,13 +15,13 @@ export class AuthService {
         const user = await this.authRepository.findByEmail(email);
 
         if (!user) {
-            throw new Error("Cannot find an account with that email. Try again.");
+            throw new AuthenticationError("Cannot find an account with that email. Try again.");
         }
         
         const isPasswordMatched = await validatePassword(password, user.password as string);
     
         if (!isPasswordMatched) {
-            throw new Error("Invalid password. Please try again.");
+            throw new AuthenticationError("Invalid password. Please try again.");
         };
 
         return user;
@@ -31,30 +32,30 @@ export class AuthService {
     
         // Missing Fields Validation
         if (!username || !email || !password || !confirmPassword) {
-            throw new Error("All fields are required");
+            throw new ValidationError("All fields are required");
         }
 
         // Username validation
         const usernameRegex = /^[a-zA-Z0-9 ]{5,}$/;
         if (!usernameRegex.test(username)) {
-            throw new Error("Username must be greater than 5 alphanumeric characters.")
+            throw new ValidationError("Username must be greater than 5 alphanumeric characters.")
         }
 
         // Email address
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            throw new Error("Invalid email address")
+            throw new ValidationError("Invalid email address");
         }
 
         // Password and confirmPassword Comparison
         if (password !== confirmPassword) {
-            throw new Error("Password doesn't match")
+            throw new ValidationError("Password doesn't match");
         }
 
         // Existing User Validation
         const existingUser = await this.authRepository.findByEmail(email);
         if (existingUser) {
-            throw new Error("Email already used, please try another");
+            throw new ValidationError("Email already used, please try another");
         }
 
         // Password Hashing
@@ -83,8 +84,7 @@ export class AuthService {
         }
             return null;
         } catch (error) {
-            console.error("Token validation failed:", error);
-            return null;
+            throw new AuthenticationError("Invalid or expired token");
         }
     }
 

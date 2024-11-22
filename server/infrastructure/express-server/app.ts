@@ -25,6 +25,8 @@ export const startApp = () => {
     app.use("/api/water-quality-data", measurementRoutes);
     app.use("/api/site", siteRoutes);
 
+    // Error Handler Middleware
     app.use(errorHandler);
-    return app
+
+    return app;
 }
