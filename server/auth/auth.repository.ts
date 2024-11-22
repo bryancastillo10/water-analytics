@@ -34,7 +34,7 @@ export class AuthRepository implements IAuthRepository {
         } catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
                 console.error(error.message);
-                throw new Error("Databsae error at createUser method");
+                throw new DatabaseError("Database error at createUser method");
             }
             throw Error;
         }
@@ -69,7 +69,7 @@ export class AuthRepository implements IAuthRepository {
         } catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
                 console.error(error.message);
-                throw new Error("Databsae error at createUser method");
+                throw new DatabaseError("Database error at findByEmail method");
             }
             throw Error;
         }
@@ -93,7 +93,7 @@ export class AuthRepository implements IAuthRepository {
         } catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
                 console.error(error.message);
-                throw new Error("Databsae error at createUser method");
+                throw new DatabaseError("Database error findByUserId method");
             }
             throw Error;
         }

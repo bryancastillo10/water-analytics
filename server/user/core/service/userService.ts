@@ -1,6 +1,7 @@
 import { ResetPasswordRequest,  UpdateUserPasswordProps,  UpdateUserRequest} from "@/user/core/interface/IUserRepository";
 import { UserRepository } from "@/user/user.repository";
 
+import { NotFoundError, ValidationError, AuthenticationError } from "@/infrastructure/errors/customErrors";
 import { generateAndSendVerificationCode } from "@/utils/nodemailer";
 import { toHashPassword } from "@/utils/bcrypt";
 
@@ -10,7 +11,7 @@ export class UserService {
 
     async updateUser({userId, toUpdateUser}: UpdateUserRequest) {
         if (!userId) {
-            throw new Error("User id is not found");
+            throw new NotFoundError("User id is not found");
         }
 
         const updatedUser = await this.userRepository.updateUserProfile({userId, toUpdateUser});
@@ -19,18 +20,21 @@ export class UserService {
     }
 
     async deleteUser(userId: string) {
+        if (!userId) {
+            throw new NotFoundError("User id is not found");
+        }
             await this.userRepository.deleteUserProfile(userId);
         return;
     }
 
     async requestResetPassword(email:string) {
         if (!email) {
-            throw new Error("Email is not found");
+            throw new NotFoundError("Email is not found");
         }
 
         const user = await this.userRepository.findUserByEmail(email);
         if (!user) {
-            throw new Error("User with this email does not exist");
+            throw new NotFoundError("User with this email does not exist");
         }
 
         const {code, expiry} = await generateAndSendVerificationCode(email);
@@ -44,21 +48,21 @@ export class UserService {
 
     async verifyCode({email,code}:ResetPasswordRequest) {
         if (!email || !code) {
-            throw new Error("Email and verification code are required for this request");
+            throw new ValidationError("Email and verification code are required for this request");
         };
         
         const user = await this.userRepository.findUserByEmail(email);
         if (!user) {
-            throw new Error("User associated with that email does not exist");
+            throw new NotFoundError("User associated with that email does not exist");
         };
 
         if (user.resetCode !== code) {
-            throw new Error("Invalid verification code");
+            throw new ValidationError("Invalid verification code");
         }
 
         const thisTime = new Date();
         if (!user.resetCode || thisTime > new Date(user?.resetCodeExpiry!)) {
-            throw new Error("Verification code had expired, try to request again");
+            throw new AuthenticationError("Verification code had expired, try to request again");
         }
 
         return true;
@@ -67,16 +71,16 @@ export class UserService {
     async updatePassword({ email, newPassword, confirmNewPassword }:UpdateUserPasswordProps) {
         const user = await this.userRepository.findUserByEmail(email);
         if (!user) {
-            throw new Error("User associated with that email does not exist");
+            throw new NotFoundError("User associated with that email does not exist");
         };
 
         if (newPassword !== confirmNewPassword) {
-            throw new Error("Passwords doesn't match. Try to type it again");
+            throw new ValidationError("Passwords doesn't match. Try to type it again");
         }
 
         const hashedPassword = await toHashPassword(newPassword);
         if (!hashedPassword) {
-            throw new Error("Hashing of new password failed");
+            throw new AuthenticationError("Hashing of new password failed");
         }
         
         await this.userRepository.updatePassword({email,hashedPassword});
