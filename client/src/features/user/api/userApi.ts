@@ -13,14 +13,14 @@ export const userApi = createApi({
     reducerPath: "userApi",
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_BASE_URL,
-        credentials:'include'
+        credentials: 'include'
     }),
     endpoints: (build) => ({
         updateUser: build.mutation<UserProfile, UpdateUserRequest>({
-            query: ({id,...data}) => ({
+            query: ({ id, ...data }) => ({
                 url: `user/update/${id}`,
                 method: "PUT",
-                body:data
+                body: data
             })
         }),
         deleteUser: build.mutation<{ id: string }, void>({
@@ -48,7 +48,15 @@ export const userApi = createApi({
                 url: "user/reset-password",
                 method: "PUT",
                 body: data
-            }) 
+            })
         })
     })
-})
+});
+
+export const {
+    useUpdateUserMutation,
+    useDeleteUserMutation,
+    useRequestPasswordResetMutation,
+    useVerifyCodeMutation,
+    useUpdatePasswordMutation
+} = userApi;

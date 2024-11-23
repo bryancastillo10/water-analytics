@@ -10,7 +10,7 @@ export const sitesApi = createApi({
     reducerPath: "sitesApi",
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_BASE_URL,
-        credentials:'include'
+        credentials: 'include'
     }),
     endpoints: (build) => ({
         createSite: build.mutation<MutateSiteResponse, SiteData>({
@@ -36,8 +36,15 @@ export const sitesApi = createApi({
             query: (id) => ({
                 url: `site/delete/${id}`,
                 method: "DELETE"
-            })              
+            })
         })
 
     })
-})
+});
+
+export const {
+    useCreateSiteMutation,
+    useGetSiteByUserQuery,
+    useUpdateSiteMutation,
+    useDeleteSiteMutation
+} = sitesApi;
