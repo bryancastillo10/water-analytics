@@ -9,6 +9,7 @@ import drawerReducer from "@/lib/redux/states/drawerSlice";
 import { authApi } from "@/features/auth/api/authApi";
 import { userApi } from "@/features/user/api/userApi";
 import { sitesApi } from "@/features/sites/api/sitesApi";
+import { measurementApi } from "@/features/waterquality/api/measurementApi";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -16,9 +17,10 @@ const rootReducer = combineReducers({
   drawer: drawerReducer,
   [authApi.reducerPath]: authApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
-  [sitesApi.reducerPath]: sitesApi.reducer
+  [sitesApi.reducerPath]: sitesApi.reducer,
+  [measurementApi.reducerPath]: measurementApi.reducer
 });
 
-export const apis = [authApi, userApi, sitesApi];
+export const apis = [authApi, userApi, sitesApi, measurementApi];
 
 export default rootReducer;
