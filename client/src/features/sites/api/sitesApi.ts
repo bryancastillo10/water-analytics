@@ -9,32 +9,32 @@ import type {
 export const sitesApi = createApi({
     reducerPath: "sitesApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_API_BASE_URL,
+        baseUrl: import.meta.env.VITE_API_BASE_URL + "site",
         credentials: 'include'
     }),
     endpoints: (build) => ({
         createSite: build.mutation<MutateSiteResponse, SiteData>({
             query: (data) => ({
-                url: "site/create",
+                url: "/create",
                 method: "POST",
                 body: data
             })
         }),
         getSiteByUser: build.query<{ id: string }, SiteData>({
             query: (id) => ({
-                url: `site/user/${id}`
+                url: `/user/${id}`
             })
         }),
         updateSite: build.mutation<MutateSiteResponse, UpdateSiteRequest>({
             query: ({ id, site }) => ({
-                url: `site/update/${id}`,
+                url: `/update/${id}`,
                 method: "PUT",
                 body: site
             })
         }),
         deleteSite: build.mutation<{ id: string }, DeleteSiteResponse>({
             query: (id) => ({
-                url: `site/delete/${id}`,
+                url: `/delete/${id}`,
                 method: "DELETE"
             })
         })
