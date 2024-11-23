@@ -24,7 +24,7 @@ export class MeasurementController {
 
     async getMeasurementBySite(req: Request, res: Response, next: NextFunction) {
         try {
-            const siteId = req.body;
+            const siteId = req.params.siteId;
             const allSiteMeasurements = await this.measurementService.getMeasurementBySite(siteId);
             res.status(200).json({ allSiteMeasurements });
         } catch (error) {

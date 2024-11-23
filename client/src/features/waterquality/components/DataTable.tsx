@@ -58,12 +58,6 @@ const columns: ColumnDef<Measurement, any>[] = [
     header: "Phosphates (mg/L)",
     cell: (info) => info.getValue()?.toFixed(2) ?? "-",
   }),
-  columnHelper.accessor("siteId", {
-    header: "Site",
-    cell: (info) => (
-      <span className="text-ellipsis overflow-hidden">{info.getValue()}</span>
-    ),
-  }),
   columnHelper.accessor("actions", {
     header: "Actions",
     cell: () => (

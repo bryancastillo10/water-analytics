@@ -10,7 +10,6 @@ export interface Measurement {
   ammonia: number | null;
   nitrates: number | null;
   phosphates: number | null;
-  siteId: string;
   actions?: {
     update?: () => void;
     delete?: () => void;
@@ -38,7 +37,6 @@ export const generateMockData = (count: number = 24): Measurement[] => {
       ammonia: 1 + Math.random() * 2,
       nitrates: 5 + Math.random() * 5,
       phosphates: 0.5 + Math.random() * 1.5,
-      siteId: `Area ${Math.floor(Math.random() * 3) + 1}`,
     });
   }
 

@@ -9,7 +9,7 @@ import type {
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_BASE_URL,
+    baseUrl: import.meta.env.VITE_API_BASE_URL + "auth",
     credentials:'include',
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as { auth: { token: string } })?.auth?.token;
@@ -22,21 +22,21 @@ export const authApi = createApi({
   endpoints: (build) => ({
     signUp: build.mutation<SignInResponse, SignUpData>({
       query: (data) => ({
-        url: "auth/signup",
+        url: "/signup",
         method: "POST",
         body: data,
       }),
     }),
     signIn: build.mutation<SignUpResponse, SignInData>({
       query: (data) => ({
-        url: "/auth/signin",
+        url: "/signin",
         method: "POST",
         body: data,
       }),
     }),
       signOut: build.mutation<{ message: string }, void>({
           query: () => ({
-            url: "/auth/signout",
+            url: "/signout",
             method: "POST",  
           }),
     })
