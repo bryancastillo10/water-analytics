@@ -36,7 +36,7 @@ const FormInput = ({
     <div className="relative flex flex-col my-3">
       <label className="my-2 flex items-center gap-2">
         {Icon && <Icon size="20" color="#040710" />}
-        <span className="text-base">{label}</span>
+        <span className="text-sm text-dark">{label}</span>
       </label>
       <input
         id={id}

@@ -28,7 +28,7 @@ const CustomSelect = ({
           className={`bg-white ${width} px-2 py-1 flex flex-col justify-between items-center border rounded-md
                     ${isSelectOpened ? "border-primary": "border-dark/20"}
                     `}>
-          <div className="flex justify-between items-center w-full px-3 border-transparent focus:border-primary">
+          <div className="flex justify-between items-center w-full px-3 text-sm text-dark border-transparent focus:border-primary">
               <p>{selectedOption ?? label}</p>
               <CaretDown size="20" className={`transform ${isSelectOpened ? "rotate-180": "rotate-0"}`} />
           </div>
