@@ -25,7 +25,7 @@ const SiteCard = () => {
             <span className="text-sm">Laguna, Philippines</span>
           </div>
 
-          <SiteTag/>
+          <SiteTag variant="surface"/>
         </div>
 
         <p className="text-sm text-darkGray text-balance mt-2 line-clamp-3">

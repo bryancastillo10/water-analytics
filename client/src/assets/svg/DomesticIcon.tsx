@@ -6,6 +6,8 @@ const DomesticIcon = ({fill}:SVGAssetProps) => {
       <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 64 64"
+          width="20px"
+          height="20px"
           fill={fill}
       >
           <g id="_27-Faucet"
