@@ -1,3 +1,4 @@
+import { ImageSquare } from "@phosphor-icons/react";
 interface ImagePreviewProps {
   imageUrl: string | null;
 }
@@ -12,8 +13,11 @@ const ImagePreview = ({ imageUrl }: ImagePreviewProps) => {
           alt="uploaded-img-preview"
           className="h-full w-auto object-contain rounded-md"
         />
-      ) : (
-        <span className="text-darkGray">No Image Uploaded</span>
+          ) : (
+        <div className="grid grid-cols-1 place-items-center">
+            <span className="flex"><ImageSquare size="20"/> ...</span>
+            <span className="text-darkGray">No Image was uploaded</span>
+        </div>
       )}
     </div>
   );
