@@ -1,12 +1,19 @@
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { List, Moon } from "@phosphor-icons/react";
 
 import { sidebarItems } from "@/components/navigation/sidebarItems";
-import {type NavigationProps} from "@/components/navigation/Sidebar";
+import AvatarPopOver from "@/components/navigation/AvatarPopOver";
+import { type NavigationProps } from "@/components/navigation/Sidebar";
 
-const Navbar = ({isSidebarExpanded, toggleSidebar}: NavigationProps) => {
+const Navbar = ({ isSidebarExpanded, toggleSidebar }: NavigationProps) => {
+  const [isPopOverOpen, setIsPopOverOpen] = useState<boolean>(false);
+
+  const togglePopOver = () => {
+    setIsPopOverOpen(!isPopOverOpen);
+  }
+
   const location = useLocation();
-
 
   const currentPage = sidebarItems.find(
     (item) => location.pathname === `/role${item.link}` || location.pathname === "/dashboard"
@@ -38,13 +45,15 @@ const Navbar = ({isSidebarExpanded, toggleSidebar}: NavigationProps) => {
           </div>
           <hr className="h-10 border border-light" />
 
-          <div className="flex items-center gap-x-3">      
+          <div className="relative flex items-center gap-x-3">      
           {/* Avatar */}
-          <img
-            className="size-10 rounded-full"
-            src="https://i.pravatar.cc/150?img=55"
-            alt="avatar"
-            />
+            <img
+              onClick={togglePopOver}
+              className="size-10 rounded-full cursor-pointer duration-300 ease-in-out hover:scale-90"
+              src="https://i.pravatar.cc/150?img=55"
+              alt="avatar"
+              />
+           {isPopOverOpen && <AvatarPopOver/>}
           </div>
         </div>
       </section>

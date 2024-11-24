@@ -4,6 +4,7 @@ import CodeInput from "./CodeInput";
 import FormInput from "./FormInput";
 import ProgressBar from "./ProgressBar";
 import Toast from "./Toast";
+import CustomSelect from "./CustomSelect";
 
 export {
     Button,
@@ -11,5 +12,6 @@ export {
     CodeInput,
     FormInput,
     ProgressBar,
-    Toast
+    Toast,
+    CustomSelect
 };
