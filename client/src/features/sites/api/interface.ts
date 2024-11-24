@@ -1,4 +1,4 @@
-enum WaterSourceType {
+export enum WaterSourceType {
     DOMESTIC = "DOMESTIC",
     INDUSTRIAL = "INDUSTRIAL",
     AGRICULTURAL = "AGRICULTURAL",
