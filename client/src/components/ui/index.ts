@@ -2,6 +2,7 @@ import Button from "./Button";
 import AnimatedInput from "./AnimatedInput";
 import CodeInput from "./CodeInput";
 import FormInput from "./FormInput";
+import FormTextarea from "./FormTextArea";
 import ProgressBar from "./ProgressBar";
 import Toast from "./Toast";
 import CustomSelect from "./CustomSelect";
@@ -13,6 +14,7 @@ export {
     AnimatedInput,
     CodeInput,
     FormInput,
+    FormTextarea,
     ProgressBar,
     Toast,
     CustomSelect,

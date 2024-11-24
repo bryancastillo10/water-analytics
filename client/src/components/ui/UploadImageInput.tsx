@@ -1,11 +1,13 @@
+import type { Icon } from '@phosphor-icons/react';
 import type{ ChangeEvent } from 'react';
 
 interface UploadImageInputProps {
     onImageSelect: (file: File | null) => void;
     label: string;
+    icon?: Icon;
   }
   
-const UploadImageInput = ({ onImageSelect,label }: UploadImageInputProps) => {
+const UploadImageInput = ({ onImageSelect,label,icon:Icon }: UploadImageInputProps) => {
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0] || null;
       onImageSelect(file);
@@ -13,7 +15,10 @@ const UploadImageInput = ({ onImageSelect,label }: UploadImageInputProps) => {
   
   return (
     <div className="flex flex-col items-start my-2">
-          <label className="text-sm text-dark mb-1">{label}</label>
+      <label className="flex items-center gap-2 mb-1">
+      {Icon && <Icon size="18" color="#040710" />}
+      <span className="text-sm text-dark">{label}</span>
+      </label>
     <input
       type="file"
       accept="image/*"
