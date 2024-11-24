@@ -1,10 +1,18 @@
-
+import SiteCard from "@/features/sites/components/SiteCard";
+import { Button } from "@/components/ui";
 
 const Sites = () => {
   return (
-    <div>
-      <h1>Monitoring Sites Page</h1>
-    </div>
+    <section>
+      <div className="ml-10 xl:ml-0 my-4">
+        <Button variant="primary">Add More Sites</Button>
+      </div>
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 place-items-center xl:place-items-start">
+        <SiteCard />
+        <SiteCard />
+        <SiteCard />
+      </div>
+      </section>
   )
 }
 
