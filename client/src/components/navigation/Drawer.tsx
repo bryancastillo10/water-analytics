@@ -22,7 +22,7 @@ const Drawer = () => {
                   <X size="20" /> 
               </div>
             </div>
-          <div className="mt-4">
+          <div className="mt-4 overflow-y-auto overflow-x-hidden">
             {BodyComponent && <BodyComponent/>}
         </div>
       </div>

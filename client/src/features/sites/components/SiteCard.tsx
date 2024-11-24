@@ -1,8 +1,9 @@
-import { MapPin, DropSimple, PencilSimpleLine,TrashSimple } from "@phosphor-icons/react";
+import { MapPin, PencilSimpleLine, TrashSimple } from "@phosphor-icons/react";
+import SiteTag from "@/features/sites/components/SiteTag";
 
 const SiteCard = () => {
   return (
-<div className="w-80 bg-light relative rounded-xl shadow-md overflow-hidden group">
+  <div className="w-80 bg-light relative rounded-xl shadow-md overflow-hidden group">
     <div className="p-4">
       <div className="flex flex-col gap-4">
         <div className="bg-neutral/40 h-48 rounded-lg">
@@ -24,10 +25,7 @@ const SiteCard = () => {
             <span className="text-sm">Laguna, Philippines</span>
           </div>
 
-          <div className="flex items-center gap-2 bg-primary text-white text-sm px-3 py-1 rounded-full w-fit">
-            <DropSimple className="size-4" weight="fill" />
-            <span>Surface Water</span>
-          </div>
+          <SiteTag variant="surface"/>
         </div>
 
         <p className="text-sm text-darkGray text-balance mt-2 line-clamp-3">

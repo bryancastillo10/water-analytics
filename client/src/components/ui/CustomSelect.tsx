@@ -1,4 +1,4 @@
-import { CaretDown, MagnifyingGlass } from "@phosphor-icons/react";
+import { CaretDown, MagnifyingGlass, type Icon } from "@phosphor-icons/react";
 import { useState } from "react";
 
 interface SelectProps{
@@ -7,6 +7,7 @@ interface SelectProps{
     width?: string;
     placeholder?: string;
     label?: string;
+    icon?:Icon;
 }
 
 const CustomSelect = ({
@@ -14,6 +15,7 @@ const CustomSelect = ({
     onChangeValue,
     width = "w-full",
     label = "Select Options",
+    icon:Icon,
     placeholder = "Search for Options"  
 }: SelectProps) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -28,8 +30,11 @@ const CustomSelect = ({
           className={`bg-white ${width} px-2 py-1 flex flex-col justify-between items-center border rounded-md
                     ${isSelectOpened ? "border-primary": "border-dark/20"}
                     `}>
-          <div className="flex justify-between items-center w-full px-3 border-transparent focus:border-primary">
-              <p>{selectedOption ?? label}</p>
+          <div className="flex justify-between items-center w-full px-2 text-sm text-dark border-transparent focus:border-primary">
+            <p className="flex items-center gap-x-1">
+              {Icon && <Icon size="18" color="#040710" />}
+              <span>{selectedOption ?? label}</span>
+            </p>
               <CaretDown size="20" className={`transform ${isSelectOpened ? "rotate-180": "rotate-0"}`} />
           </div>
         </div>
