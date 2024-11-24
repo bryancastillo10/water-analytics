@@ -1,4 +1,5 @@
-import { FormInput, CustomSelect, UploadImageInput} from "@/components/ui"
+import { useState } from "react";
+import { FormInput, CustomSelect, UploadImageInput, ImagePreview } from "@/components/ui"
 import { WaterSourceType } from "@/features/sites/api/interface";
 import { formatEnumWaterSource } from "../utils/formatWaterSource";
 
@@ -8,9 +9,24 @@ import { formatEnumWaterSource } from "../utils/formatWaterSource";
 const AddSiteForm = () => {
   const SourceOptions = formatEnumWaterSource(Object.values(WaterSourceType));
 
+  // const [image, setImage] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  const handleImageSelect = (file: File | null) => {
+    // setImage(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setPreviewUrl(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setPreviewUrl(null);
+    }
+  };
+
   return (
-    <div className="">
-      <div className="grid grid-cols-2 items-center gap-x-4">
+    <div className="grid grid-cols-2 items-center gap-x-4">
           <FormInput
               id="siteName"
               label="Site Name"
@@ -25,17 +41,15 @@ const AddSiteForm = () => {
               onChange={()=>{}}
               validationMessage="Describe the place (city, country, etc..)"
             />
-      </div>
-      <div className="grid grid-cols-2 items-center gap-x-4">
             <CustomSelect
               options={SourceOptions}
               onChangeValue={(selected) => console.log(selected)}
             />
             <UploadImageInput
               label="Site Photo"
-              onImageSelect={()=>{}}
+              onImageSelect={handleImageSelect}
             />
-      </div>
+            <ImagePreview imageUrl={previewUrl} />
     </div>
   )
 }

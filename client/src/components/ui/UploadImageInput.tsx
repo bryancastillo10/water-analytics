@@ -13,7 +13,7 @@ const UploadImageInput = ({ onImageSelect,label }: UploadImageInputProps) => {
   
   return (
     <div className="flex flex-col items-start my-2">
-          <label className="text-sm font-medium text-dark mb-1">{label}</label>
+          <label className="text-sm text-dark mb-1">{label}</label>
     <input
       type="file"
       accept="image/*"
