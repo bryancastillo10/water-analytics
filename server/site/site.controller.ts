@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { SiteService } from "@/site/core/service/siteService";
+import { uploadImage } from "@/utils/cloudinary";
 
 export class SiteController{
     constructor(private readonly siteService: SiteService) {
@@ -11,7 +12,15 @@ export class SiteController{
 
     async createSite(req: Request, res: Response, next: NextFunction) { 
         try {
-            const siteData = req.body;
+            const siteData = JSON.parse(req.body.siteData);
+            const { file } = req;
+
+            let imageURL: string | null = null;
+            if (file) {
+                imageURL = await uploadImage(file.path);
+            }
+            siteData.imageURL = imageURL;
+            
             const newSite = await this.siteService.createSite(siteData);
 
             res.status(201).json({ message: "New site has been added", site: newSite });

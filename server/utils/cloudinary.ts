@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
+import fs from "fs";
 
 // Configuration
 cloudinary.config({
@@ -16,7 +17,8 @@ cloudinary.config({
  * @returns The secure URL of the uploaded image.
  * @throws Error if the upload fails.
  */
-export const uploadImage = async (filePath: string, folder?: string): Promise<string> => {
+
+export const uploadImage = async (filePath: string, folder: string = "site"): Promise<string> => {
   try {
     const result = await cloudinary.uploader.upload(filePath, {
       folder: folder || "default", 
@@ -30,6 +32,10 @@ export const uploadImage = async (filePath: string, folder?: string): Promise<st
           fetch_format: "auto",
         },
       ],
+    });
+
+    fs.unlink(filePath, (error) => {
+      if (error) console.error("Error deleting the local file:", error);
     });
 
     return result.secure_url;
