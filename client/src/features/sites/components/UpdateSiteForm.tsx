@@ -3,7 +3,7 @@ import { mockSiteData } from "@/features/sites/api/mockData";
 import { Image, MapPin, Signpost, Drop, Notepad } from "@phosphor-icons/react";
 
 import { FormInput, CustomSelect, UploadImageInput, FormTextarea, ImagePreview, FormButtons } from "@/components/ui";
-import { sourceOptions } from "@/features/sites/utils/formatWaterSource";
+import { sourceOptions, formatStringSource } from "@/features/sites/utils/formatWaterSource";
 
 interface UpdateSiteFormProps{
   id: string;
@@ -24,7 +24,6 @@ const UpdateSiteForm = ({ id }: UpdateSiteFormProps) => {
     }
   };
 
-  const sourceValue = `${siteData?.sourceType?.charAt(0)?.toUpperCase() ?? ''}${siteData?.sourceType?.slice(1)?.toLowerCase() ?? ''}`;
 
   return (
     <form>
@@ -47,7 +46,7 @@ const UpdateSiteForm = ({ id }: UpdateSiteFormProps) => {
         />
         <CustomSelect
               label="Water Source Type"
-              value={sourceValue}
+              value={formatStringSource(siteData?.sourceType!)}
               icon={Drop}
               placeholder="Search for the type"
               options={sourceOptions}
