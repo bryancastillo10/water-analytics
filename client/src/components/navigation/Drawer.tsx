@@ -9,7 +9,7 @@ const Drawer = () => {
   const onClose = () => {
     dispatch(closeDrawer());
   }
-  const { isOpenDrawer, title, body: BodyComponent } = useAppSelector((state) => state.drawer);
+  const { isOpenDrawer, title, body: BodyComponent, bodyProps } = useAppSelector((state) => state.drawer);
   return (
     <>
     {isOpenDrawer && <div onClick={onClose} className="fixed inset-0 z-40 backdrop-blur-[1px]"/>}
@@ -23,7 +23,7 @@ const Drawer = () => {
               </div>
             </div>
           <div className="mt-4 overflow-y-auto overflow-x-hidden">
-            {BodyComponent && <BodyComponent/>}
+          {BodyComponent && <BodyComponent {...bodyProps} />}
         </div>
       </div>
       </>

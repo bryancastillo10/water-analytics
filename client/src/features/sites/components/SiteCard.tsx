@@ -1,7 +1,22 @@
 import { MapPin, PencilSimpleLine, TrashSimple } from "@phosphor-icons/react";
 import SiteTag from "@/features/sites/components/SiteTag";
+import useDrawer from "@/hook/useDrawer";
+
+import UpdateSiteForm from "@/features/sites/components/UpdateSiteForm";
+import DeleteSiteForm from "@/features/sites/components/DeleteSiteForm";
 
 const SiteCard = () => {
+  const { handleOpenDrawer } = useDrawer();
+  const id = "sampleid_123";
+
+  const updateSite = (id: string) => {
+    handleOpenDrawer("Edit Monitoring Site Info", UpdateSiteForm, {id});
+  }
+
+  const deleteSite = (id:string) => {
+    handleOpenDrawer("Delete Site Confirmation", DeleteSiteForm, {id});
+  }
+
   return (
   <div className="w-80 bg-light relative rounded-xl shadow-md overflow-hidden group">
     <div className="p-4">
@@ -35,8 +50,10 @@ const SiteCard = () => {
     </div>
         <div className="absolute top-0 right-0 flex flex-col gap-y-4 opacity-0 group-hover:opacity-100
         rounded-bl-md px-2 py-2 bg-neutral/80 text-primary font-bold">
-        <PencilSimpleLine size="14"/>
-        <TrashSimple size="14"/>
+        <div onClick={()=>updateSite(id)} className="hover:scale-110 cursor-pointer">
+          <PencilSimpleLine size="14" />
+        </div>
+        <TrashSimple onClick={()=> deleteSite(id)} className="hover:scale-110 cursor-pointer" size="14"/>
     </div>
   </div>
   )
