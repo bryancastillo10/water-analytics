@@ -11,12 +11,22 @@ export interface SiteData {
     siteName: string;
     location: string;
     description: string;
+    imageURL: string;
     sourceType: WaterSourceType;
+}
+
+export interface SiteDataWithFile extends Omit<SiteData, 'imageURL'>{
+    imageFile: File | null;
+}
+
+export interface CreateSiteResponse extends SiteData {
+    id: string;
+    userId: string;
 }
 
 export interface UpdateSiteRequest {
     id: string;
-    site: SiteData
+    site: FormData;
 }
 
 export interface DeleteSiteResponse{

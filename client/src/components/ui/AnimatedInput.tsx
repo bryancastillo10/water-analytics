@@ -1,5 +1,24 @@
 import { useState, type ChangeEvent } from "react";
-import { type Icon, Eye, EyeSlash } from "@phosphor-icons/react";
+import { type Icon, Eye, EyeSlash, Info } from "@phosphor-icons/react";
+
+
+interface ToolTipProps {
+  message: string;
+  show: boolean;
+}
+
+
+const Tooltip = ({ message, show }: ToolTipProps) =>{ 
+  return (
+    <div
+    className={`absolute bg-primary text-white flex items-center h-12 w-[70%] max-w-fit 
+    rounded-md z-40 bottom-10 right-2 py-4 px-2 transition-opacity duration-300 ease-in-out 
+    ${show ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+  >
+    <p className="text-xs text-pretty">{message}</p>
+  </div>
+  )}
+;
 
 interface InputProps {
   id: string;
@@ -14,6 +33,7 @@ interface InputProps {
   validationMessage?: string;
 }
 
+
 const AnimatedInput = ({
   id,
   type = "text",
@@ -27,13 +47,14 @@ const AnimatedInput = ({
   validationMessage,
 }: InputProps) => {
       const [isVisible, setIsVisible] = useState<boolean>(false);
+      const [showInfo, setShowInfo] = useState<boolean>(false);
 
       const toggleVisible = () => {
         setIsVisible(!isVisible);
       };
     
   return (
-    <div className="relative my-10 border">
+    <div className="relative flex items-start gap-x-1 my-8">
       <input
         id={id}
         type={type === "password" ? (isVisible ? "text" : "password") : type}
@@ -62,15 +83,20 @@ const AnimatedInput = ({
       {isPassword && (
         <div
           onClick={toggleVisible}
-          className="absolute z-10 top-2.5 right-4 cursor-pointer"
+          className={`absolute z-10 top-2.5 ${validationMessage ? "right-8" :"right-4"} cursor-pointer`}
         >
           {isVisible ? <EyeSlash size="24" /> : <Eye size="24" />}
         </div>
       )}
       {validationMessage && (
-        <div className="mt-1">
-          <p className="indent-2 text-xs">{validationMessage}</p>
-        </div>
+        <>
+          <Info
+            className="cursor-grab hover:text-primary"
+            onMouseEnter={() => setShowInfo(true)}
+            onMouseLeave={()=> setShowInfo(false)}
+            size="24" />
+          <Tooltip message={validationMessage} show={showInfo} />
+        </>
       )}
     </div>
   );

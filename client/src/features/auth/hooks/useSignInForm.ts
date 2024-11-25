@@ -15,6 +15,7 @@ const useSignInForm = () => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
+    console.log(signInData);
     e.preventDefault();
   };
 

@@ -8,7 +8,7 @@ interface ProviderProps{
 }
 const Providers = ({children}:ProviderProps) => {
     return (
-      <BrowserRouter>
+      <BrowserRouter future={{v7_startTransition: true, v7_relativeSplatPath: true,}}>
         <CustomToastProvider>
           <ReduxProvider store={store}>{children}</ReduxProvider>
         </CustomToastProvider>

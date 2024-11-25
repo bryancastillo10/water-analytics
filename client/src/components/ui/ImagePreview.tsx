@@ -5,7 +5,7 @@ interface ImagePreviewProps {
 
 const ImagePreview = ({ imageUrl }: ImagePreviewProps) => {
   return (
-      <div className="mt-4 w-full h-40 flex items-center justify-center
+      <div className="mt-4 w-full min-w-fit h-40 flex items-center justify-center
      border border-dashed border-neutral rounded-md bg-secondary/10">
       {imageUrl ? (
         <img

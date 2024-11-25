@@ -4,6 +4,7 @@ import { useState } from "react";
 interface SelectProps{
     options: string[];
     onChangeValue: (selection: string) => void;
+    value?: string | null;
     width?: string;
     placeholder?: string;
     label?: string;
@@ -15,29 +16,29 @@ const CustomSelect = ({
     onChangeValue,
     width = "w-full",
     label = "Select Options",
+    value,
     icon:Icon,
     placeholder = "Search for Options"  
 }: SelectProps) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isSelectOpened, setIsSelectOpened] = useState<boolean>(false);
   const [inputValue, setInputvalue] = useState<string>("");
     
   const openSelections = () => setIsSelectOpened(!isSelectOpened);
     return (
         <div className="flex flex-col relative">
-        <div
-          onClick={openSelections}
-          className={`bg-white ${width} px-2 py-1 flex flex-col justify-between items-center border rounded-md
-                    ${isSelectOpened ? "border-primary": "border-dark/20"}
-                    `}>
-          <div className="flex justify-between items-center w-full px-2 text-sm text-dark border-transparent focus:border-primary">
-            <p className="flex items-center gap-x-1">
-              {Icon && <Icon size="18" color="#040710" />}
-              <span>{selectedOption ?? label}</span>
-            </p>
-              <CaretDown size="20" className={`transform ${isSelectOpened ? "rotate-180": "rotate-0"}`} />
+          <div
+            onClick={openSelections}
+            className={`bg-white ${width} px-2 py-1 flex flex-col justify-between items-center border rounded-md
+                      ${isSelectOpened ? "border-primary": "border-dark/20"}
+                      `}>
+            <div className="flex justify-between items-center w-full px-2 text-sm text-dark border-transparent focus:border-primary">
+              <p className="flex items-center gap-x-1">
+                {Icon && <Icon size="18" color="#040710" />}
+                <span>{value ?? label}</span>
+              </p>
+                <CaretDown size="20" className={`transform ${isSelectOpened ? "rotate-180": "rotate-0"}`} />
+            </div>
           </div>
-        </div>
         <ul 
           className={`absolute top-full mt-1 ${width}  bg-light overflow-y-auto z-50 border border-dark/20 rounded-md
             ${isSelectOpened ? "max-h-60" : "max-h-0 hidden"}`}
@@ -57,11 +58,10 @@ const CustomSelect = ({
             <li
               key={opt}
               className={`text-sm p-2 hover:bg-primary hover:text-light
-                ${opt === selectedOption ? "bg-primary text-light" : null}
+                ${opt === value ? "bg-primary text-light" : null}
                 ${!opt.toLowerCase().startsWith(inputValue) ? "hidden" : "block" }
               `}
               onClick={() => {
-                setSelectedOption(opt);
                 setInputvalue("");
                 setIsSelectOpened(false);
                 onChangeValue(opt);

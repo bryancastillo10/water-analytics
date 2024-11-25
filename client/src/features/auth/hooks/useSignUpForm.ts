@@ -1,13 +1,11 @@
 import { useState, type ChangeEvent } from "react";
-import { UserRole, type SignUpData } from "@/features/auth/api/interface";
+import {  type SignUpData } from "@/features/auth/api/interface";
 
 const initialSignUp = {
     username: "",
     email: "",
     password: "",
     confirmPassword:"",
-    profilePicURL: "",
-    role: UserRole.USER
 };
 
 const useSignUpForm = () => {
@@ -19,6 +17,7 @@ const useSignUpForm = () => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
+    console.log(signUpData);
     e.preventDefault();
   };
 
