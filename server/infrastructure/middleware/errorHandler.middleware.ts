@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
 import { PrismaClientKnownRequestError, PrismaClientValidationError } from "@prisma/client/runtime/library";
 import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
+import multer from "multer";
 
 import { ErrorResponseProps } from "@/infrastructure/middleware/type";
 import { AppError } from "@/infrastructure/errors/customErrors";
@@ -47,6 +48,16 @@ export const errorHandler: ErrorRequestHandler = (
     errorResponse = {
       status: "fail",
       message: "Invalid data provided",
+    };
+    res.status(400).json(errorResponse);
+    return;
+  }
+
+  // Multer Errors
+  if (error instanceof multer.MulterError) {
+    errorResponse = {
+      status: "fail",
+      message: error.message
     };
     res.status(400).json(errorResponse);
     return;
