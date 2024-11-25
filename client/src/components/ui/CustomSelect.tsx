@@ -4,6 +4,7 @@ import { useState } from "react";
 interface SelectProps{
     options: string[];
     onChangeValue: (selection: string) => void;
+    value?: string | null;
     width?: string;
     placeholder?: string;
     label?: string;
@@ -15,10 +16,11 @@ const CustomSelect = ({
     onChangeValue,
     width = "w-full",
     label = "Select Options",
+    value,
     icon:Icon,
     placeholder = "Search for Options"  
 }: SelectProps) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<string | null>(value as string);
   const [isSelectOpened, setIsSelectOpened] = useState<boolean>(false);
   const [inputValue, setInputvalue] = useState<string>("");
     

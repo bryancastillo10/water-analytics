@@ -24,6 +24,8 @@ const UpdateSiteForm = ({ id }: UpdateSiteFormProps) => {
     }
   };
 
+  const sourceValue = `${siteData?.sourceType?.charAt(0)?.toUpperCase() ?? ''}${siteData?.sourceType?.slice(1)?.toLowerCase() ?? ''}`;
+
   return (
     <form>
       <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-x-4">
@@ -45,6 +47,7 @@ const UpdateSiteForm = ({ id }: UpdateSiteFormProps) => {
         />
         <CustomSelect
               label="Water Source Type"
+              value={sourceValue}
               icon={Drop}
               placeholder="Search for the type"
               options={sourceOptions}
