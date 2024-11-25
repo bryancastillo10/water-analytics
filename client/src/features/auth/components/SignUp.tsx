@@ -10,7 +10,7 @@ const SignIn = () => {
 
   const SignUpFormBody = (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="">
           <AnimatedInput
             id="username"
             type="text"
@@ -18,8 +18,9 @@ const SignIn = () => {
             icon={User}
             value={signUpData.username}
             onChange={onChangeInput}
+            validationMessage="Username must be greater than 5 alphanumeric characters"
           />
-
+      
           <AnimatedInput
             id="email"
             type="email"
@@ -27,6 +28,7 @@ const SignIn = () => {
             icon={EnvelopeSimple}
             value={signUpData.email}
             onChange={onChangeInput}
+            validationMessage="A valid email address format (your_email@domain.com)"
           />
 
           <AnimatedInput
@@ -37,6 +39,7 @@ const SignIn = () => {
             icon={Key}
             value={signUpData.password}
             onChange={onChangeInput}
+            validationMessage="Any strong password"
           />
 
           <AnimatedInput
@@ -47,6 +50,7 @@ const SignIn = () => {
             icon={Key}
             value={signUpData.confirmPassword}
             onChange={onChangeInput}
+            validationMessage="Re-type the password for confirmation"
           />
         <Button type="submit" width="w-full" variant="primary">
           Sign Up
