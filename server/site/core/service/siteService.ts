@@ -6,10 +6,8 @@ import { NotFoundError, ValidationError } from "@/infrastructure/errors/customEr
 export class SiteService {
   constructor(private readonly siteRepository: SiteRepository) {}
   async createSite(siteData: CreateSiteRequest) {
-    const {
-      userId,
-      siteData: { siteName, location, description, sourceType },
-    } = siteData;
+    const { userId, siteData: nestedData } = siteData;
+    const { siteName, location, description, sourceType, imageUrl } = nestedData;
 
     if (!siteName || !location || !description || !sourceType) {
       throw new ValidationError("siteName,location,description, and sourceType are required");
@@ -19,8 +17,8 @@ export class SiteService {
     if (!isExistingUser) {
       throw new NotFoundError("User not found. The requested site cannot be created");
     }
-
-    const newSite = await this.siteRepository.createSite(siteData);
+    
+    const newSite = await this.siteRepository.createSite({userId, siteData: nestedData});
 
     return newSite;
   }

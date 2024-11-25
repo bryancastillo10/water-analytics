@@ -12,16 +12,17 @@ export class SiteController{
 
     async createSite(req: Request, res: Response, next: NextFunction) { 
         try {
-            const siteData = JSON.parse(req.body.siteData);
+            const rawData = JSON.parse(req.body.siteData);
             const { file } = req;
 
-            let imageURL: string | null = null;
             if (file) {
-                imageURL = await uploadImage(file.path);
+                const imageURL = await uploadImage(file.path);
+                rawData.siteData.imageUrl = imageURL;
+            } else {
+                rawData.siteData.imageUrl = null;
             }
-            siteData.imageURL = imageURL;
             
-            const newSite = await this.siteService.createSite(siteData);
+            const newSite = await this.siteService.createSite(rawData);
 
             res.status(201).json({ message: "New site has been added", site: newSite });
 

@@ -12,12 +12,14 @@ import siteRoutes from "@/site/site.route";
 export const startApp = () => {
     const app = express();
 
-    // Middlewares
+    // Security Middleware
     app.use(helmet());
     app.use(cors());
-    app.use(express.json());
+
+    // Body Parser Middleware
     app.use(cookieParser());
     app.use(express.urlencoded({ extended: true }));
+    app.use(express.json());
 
     // Core Routes
     app.use("/api/auth", authRoutes);
