@@ -1,18 +1,9 @@
-import { useAppDispatch } from "@/lib/redux/hooks";
-import { closeDrawer } from "@/lib/redux/states/drawerSlice";
-
 import { useState } from "react";
 import { Image,MapPin, Signpost, Drop, Notepad } from "@phosphor-icons/react";
-import { FormInput, CustomSelect, UploadImageInput, ImagePreview, FormTextarea, Button } from "@/components/ui"
-import { WaterSourceType } from "@/features/sites/api/interface";
-import { formatEnumWaterSource } from "../utils/formatWaterSource";
-
-
+import { FormInput, CustomSelect, UploadImageInput, ImagePreview, FormTextarea, FormButtons } from "@/components/ui";
+import { sourceOptions } from "@/features/sites/utils/formatWaterSource";
 
 const AddSiteForm = () => {
-  const SourceOptions = formatEnumWaterSource(Object.values(WaterSourceType));
-  const dispatch = useAppDispatch();
-
   // const [image, setImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
@@ -35,12 +26,8 @@ const AddSiteForm = () => {
     }
   };
 
-  const handleCloseDrawer = () => {
-    dispatch(closeDrawer());
-  }
-
   return (
-    <form>
+    <form onSubmit={()=>{}}>
     <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-x-4">
           <FormInput
               id="siteName"
@@ -62,7 +49,7 @@ const AddSiteForm = () => {
               label="Water Source Type"
               icon={Drop}
               placeholder="Search for the type"
-              options={SourceOptions}
+              options={sourceOptions}
               onChangeValue={(selected) => console.log(selected)}
             />
             <UploadImageInput
@@ -70,7 +57,7 @@ const AddSiteForm = () => {
               icon={Image}
               onImageSelect={handleImageSelect}
             />
-          <FormTextarea
+            <FormTextarea
               id="description"
               label="Description"
               icon={Notepad}
@@ -80,10 +67,7 @@ const AddSiteForm = () => {
             />
             <ImagePreview imageUrl={previewUrl} />
     </div>
-          <div className="mt-4 w-full flex justify-evenly gap-4">
-              <Button action={handleCloseDrawer} width="w-full" variant="outline">Cancel</Button>
-              <Button width="w-full" variant="primary">Add</Button>
-          </div>
+    <FormButtons primaryBtnLabel="Add"/>
     </form>
   )
 }
