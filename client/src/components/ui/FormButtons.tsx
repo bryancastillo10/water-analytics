@@ -14,7 +14,7 @@ const FormButtons = ({ primaryBtnLabel = "Submit" }: FormButtonsProps) => {
   return (
     <div className="mt-4 w-full flex justify-evenly gap-4">
         <Button action={handleCloseDrawer} width="w-full" variant="outline">Cancel</Button>
-        <Button width="w-full" variant="primary">{primaryBtnLabel}</Button>
+        <Button type="submit" width="w-full" variant="primary">{primaryBtnLabel}</Button>
     </div>
   )
 }
