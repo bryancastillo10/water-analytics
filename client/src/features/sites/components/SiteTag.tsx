@@ -1,33 +1,34 @@
 import { IndustrialIcon, DomesticIcon, AgricultureIcon, GroundwaterIcon, SurfaceWaterIcon, OtherIcons } from "@/assets/svg";
+import { WaterSourceType } from "@/features/sites/api/interface";
 
 
 export const tagVariants = {
-  industrial: {
+  [WaterSourceType.INDUSTRIAL]: {
       name:"Industrial",
       color: "bg-amber-500",
       icon: IndustrialIcon
   },
-  domestic: {
+  [WaterSourceType.DOMESTIC]: {
   name: "Domestic",
   color: "bg-indigo-500",
   icon:DomesticIcon
   },
-  agriculture: {
+ [WaterSourceType.AGRICULTURAL]: {
   name: "Agriculture",
   color: "bg-emerald-500",
   icon:AgricultureIcon
   },
-  groundwater: {
+  [WaterSourceType.GROUNDWATER]: {
     name: "Groundwater",
     color: "bg-stone-500",
     icon: GroundwaterIcon
   },
-  surface: {
+  [WaterSourceType.SURFACE]: {
     name: "Surface Water",
     color: "bg-primary",
     icon: SurfaceWaterIcon
   },
-  other: {
+  [WaterSourceType.OTHERS]: {
     name: "Other Source",
     color: "bg-cyan-700",
     icon:OtherIcons
@@ -41,7 +42,7 @@ interface SiteTagProps{
 }
 
 const SiteTag = ({variant}:SiteTagProps) => {
-  const { color, name, icon: Icon } = tagVariants[variant] || tagVariants["other"];
+  const { color, name, icon: Icon } = tagVariants[variant] || tagVariants[WaterSourceType.OTHERS];
   return (
     <div className={`flex items-center gap-2 text-light ${color} text-sm px-3 py-1 rounded-full w-fit`}>
         <Icon fill="#F6F5F4" />

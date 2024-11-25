@@ -11,7 +11,13 @@ export interface SiteData {
     siteName: string;
     location: string;
     description: string;
+    imageURL: string;
     sourceType: WaterSourceType;
+}
+
+export interface CreateSiteResponse extends SiteData {
+    id: string;
+    userId: string;
 }
 
 export interface UpdateSiteRequest {

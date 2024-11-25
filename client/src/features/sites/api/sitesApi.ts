@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type {
     SiteData,
+    CreateSiteResponse,
     MutateSiteResponse,
     UpdateSiteRequest,
-    DeleteSiteResponse
+    DeleteSiteResponse,
 } from "@/features/sites/api/interface";
 
 export const sitesApi = createApi({
@@ -13,7 +14,7 @@ export const sitesApi = createApi({
         credentials: 'include'
     }),
     endpoints: (build) => ({
-        createSite: build.mutation<MutateSiteResponse, SiteData>({
+        createSite: build.mutation<MutateSiteResponse, CreateSiteResponse>({
             query: (data) => ({
                 url: "/create",
                 method: "POST",

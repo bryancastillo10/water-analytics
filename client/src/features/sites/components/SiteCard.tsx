@@ -1,13 +1,19 @@
 import { MapPin, PencilSimpleLine, TrashSimple } from "@phosphor-icons/react";
-import SiteTag from "@/features/sites/components/SiteTag";
 import useDrawer from "@/hook/useDrawer";
 
+import SiteTag from "@/features/sites/components/SiteTag";
 import UpdateSiteForm from "@/features/sites/components/UpdateSiteForm";
 import DeleteSiteForm from "@/features/sites/components/DeleteSiteForm";
 
-const SiteCard = () => {
+import type { CreateSiteResponse } from "@/features/sites/api/interface";
+
+interface SiteCardProps{
+  siteData: CreateSiteResponse;
+}
+
+const SiteCard = ({siteData}:SiteCardProps) => {
   const { handleOpenDrawer } = useDrawer();
-  const id = "sampleid_123";
+  const { id, siteName, location, description, imageURL, sourceType } = siteData;
 
   const updateSite = (id: string) => {
     handleOpenDrawer("Edit Monitoring Site Info", UpdateSiteForm, {id});
@@ -18,13 +24,13 @@ const SiteCard = () => {
   }
 
   return (
-  <div className="w-80 bg-light relative rounded-xl shadow-md overflow-hidden group">
+  <div className="w-80 min-h-full bg-light relative rounded-xl shadow-md overflow-hidden group">
     <div className="p-4">
       <div className="flex flex-col gap-4">
         <div className="bg-neutral/40 h-48 rounded-lg">
             <div className="relative w-full h-48 overflow-hidden rounded-lg">
             <img
-                src="https://res.cloudinary.com/dzruafjwq/image/upload/v1732410427/surface_water_pshwl0.jpg"
+                src={imageURL}
                 alt="site-photo"
                 className="w-full h-full rounded-lg object-cover transition-translate duration-300 hover:translate-y-4 hover:translate-x-4 "
             />
@@ -33,18 +39,18 @@ const SiteCard = () => {
 
         <div className="space-y-3">
       
-          <h1 className="text-xl font-semibold text-dark">Laguna de Bay</h1>
+            <h1 className="text-xl font-semibold text-dark">{siteName}</h1>
 
           <div className="flex items-center gap-2 text-dark/70">
             <MapPin className="size-4" />
-            <span className="text-sm">Laguna, Philippines</span>
+              <span className="text-sm">{location}</span>
           </div>
 
-          <SiteTag variant="surface"/>
+            <SiteTag variant={sourceType} />
         </div>
 
-        <p className="text-sm text-darkGray text-balance mt-2 line-clamp-3">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi, provident quos inventore obcaecati laborum nulla illum itaque totam voluptatibus delectus repellat tempora consectetur, recusandae quibusdam sequi molestiae sunt incidunt rerum?
+        <p className="text-sm text-darkGray text-pretty mt-2 line-clamp-3">
+          {description}
         </p>
       </div>
     </div>
