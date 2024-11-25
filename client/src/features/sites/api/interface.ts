@@ -15,6 +15,10 @@ export interface SiteData {
     sourceType: WaterSourceType;
 }
 
+export interface SiteDataWithFile extends Omit<SiteData, 'imageURL'>{
+    imageFile: File | null;
+}
+
 export interface CreateSiteResponse extends SiteData {
     id: string;
     userId: string;
@@ -22,7 +26,7 @@ export interface CreateSiteResponse extends SiteData {
 
 export interface UpdateSiteRequest {
     id: string;
-    site: SiteData
+    site: FormData;
 }
 
 export interface DeleteSiteResponse{

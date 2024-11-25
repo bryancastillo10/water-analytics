@@ -1,56 +1,39 @@
-import { useState } from "react";
 import { Image,MapPin, Signpost, Drop, Notepad } from "@phosphor-icons/react";
 import { FormInput, CustomSelect, UploadImageInput, ImagePreview, FormTextarea, FormButtons } from "@/components/ui";
+
 import { sourceOptions } from "@/features/sites/utils/formatWaterSource";
+import useAddSiteForm from "@/features/sites/hooks/useAddSiteForm";
 
 const AddSiteForm = () => {
-  // const [image, setImage] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const { addSiteData, previewUrl, onChangeInput, onChangeSelect, handleImageSelect, handleSubmit } = useAddSiteForm();
 
-  const [description, setDescription] = useState("");
-
-  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setDescription(e.target.value);
-  };
-
-  const handleImageSelect = (file: File | null) => {
-    // setImage(file);
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setPreviewUrl(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setPreviewUrl(null);
-    }
-  };
 
   return (
-    <form onSubmit={()=>{}}>
+    <form onSubmit={handleSubmit}>
     <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-x-4">
           <FormInput
               id="siteName"
               label="Site Name"
               icon={Signpost}
-              value={""}
-              onChange={()=>{}}
+              value={addSiteData.siteName}
+              onChange={onChangeInput}
               validationMessage="Preferred name of the monitoring site"
             />
             <FormInput
               id="location"
               label="Location"
               icon={MapPin}
-              value={""}
-              onChange={()=>{}}
+              value={addSiteData.location}
+              onChange={onChangeInput}
               validationMessage="Describe the place (city, country, etc..)"
             />
             <CustomSelect
               label="Water Source Type"
               icon={Drop}
               placeholder="Search for the type"
+              value={addSiteData.sourceType}
               options={sourceOptions}
-              onChangeValue={(selected) => console.log(selected)}
+              onChangeValue={(val)=> onChangeSelect("sourceType",val)}
             />
             <UploadImageInput
               label="Site Photo"
@@ -61,9 +44,9 @@ const AddSiteForm = () => {
               id="description"
               label="Description"
               icon={Notepad}
-              value={description}
-              onChange={handleTextareaChange}
-              validationMessage={description.length > 200 ? "Too long!" : "Write a short description about the site"}
+              value={addSiteData.description}
+              onChange={onChangeInput}
+              validationMessage={addSiteData.description.length > 200 ? "Too long!" : "Write a short description about the site"}
             />
             <ImagePreview imageUrl={previewUrl} />
     </div>
