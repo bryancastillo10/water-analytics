@@ -6,7 +6,7 @@ const initialSiteData = {
     location: "",
     description: "",
     imageURL: "",
-    sourceType:""
+    sourceType:"Water Source Type"
 }
 
 
