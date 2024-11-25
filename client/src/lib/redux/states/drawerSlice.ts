@@ -1,17 +1,17 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { ComponentType } from "react";
+// import type { ComponentType } from "react";
 
 interface DrawerState{
     isOpenDrawer: boolean;
     title: string;
-    body: ComponentType<any> | null;
-    bodyProps?: object;
+    componentName: string | null;
+    bodyProps?: Record<string,any>;
 }
 
 const initialState: DrawerState = {
     isOpenDrawer: false,
     title: "",
-    body: null,
+    componentName:"",
     bodyProps: {}
 }
 
@@ -21,18 +21,18 @@ export const drawerSlice = createSlice({
     reducers: {
         openDrawer(state, action: PayloadAction<{
             title: string;
-            body: ComponentType<any>;
+            componentName: string;
             bodyProps: object;
         }>) {
             state.isOpenDrawer = true;
             state.title = action.payload.title;
-            state.body = action.payload.body;
+            state.componentName = action.payload.componentName;
             state.bodyProps = action.payload.bodyProps;
         },
         closeDrawer(state) {
             state.isOpenDrawer = false;
             state.title = "";
-            state.body = null;
+            state.componentName = null;
         }
     }
 });

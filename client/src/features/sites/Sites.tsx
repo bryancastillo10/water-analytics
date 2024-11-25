@@ -5,12 +5,11 @@ import { Button } from "@/components/ui";
 
 import useDrawer from "@/hook/useDrawer";
 
-import AddSiteForm from "@/features/sites/components/AddSiteForm";
 const Sites = () => {
   const { handleOpenDrawer } = useDrawer();
 
   const addSite = () => {
-    handleOpenDrawer("Add Monitoring Site", AddSiteForm);
+    handleOpenDrawer("Add Monitoring Site", "AddSiteForm");
   }
   
   return (

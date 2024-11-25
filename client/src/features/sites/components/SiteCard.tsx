@@ -2,9 +2,6 @@ import { MapPin, PencilSimpleLine, TrashSimple } from "@phosphor-icons/react";
 import useDrawer from "@/hook/useDrawer";
 
 import SiteTag from "@/features/sites/components/SiteTag";
-import UpdateSiteForm from "@/features/sites/components/UpdateSiteForm";
-import DeleteSiteForm from "@/features/sites/components/DeleteSiteForm";
-
 import type { CreateSiteResponse } from "@/features/sites/api/interface";
 
 interface SiteCardProps{
@@ -16,11 +13,11 @@ const SiteCard = ({siteData}:SiteCardProps) => {
   const { id, siteName, location, description, imageURL, sourceType } = siteData;
 
   const updateSite = (id: string) => {
-    handleOpenDrawer("Edit Monitoring Site Info", UpdateSiteForm, {id});
+    handleOpenDrawer("Edit Monitoring Site Info", "UpdateSiteForm", {id});
   }
 
   const deleteSite = (id:string) => {
-    handleOpenDrawer("Delete Site Confirmation", DeleteSiteForm, {id});
+    handleOpenDrawer("Delete Site Confirmation", "DeleteSiteForm", {id});
   }
 
   return (
