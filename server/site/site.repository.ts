@@ -7,6 +7,7 @@ import { CreateSiteRequest, ISiteRepository } from "@/site/core/interface/ISiteR
 import { SiteData } from "@/site/core/entity/site";
 
 export class SiteRepository implements ISiteRepository {
+  private readonly fallback_img = "https://res.cloudinary.com/dzruafjwq/image/upload/v1732538346/ocean_iwsix1.jpg";
   private prisma = new PrismaClient();
 
   async createSite(data: CreateSiteRequest): Promise<SiteData> {
@@ -17,7 +18,7 @@ export class SiteRepository implements ISiteRepository {
         siteName: data.siteData.siteName,
         location: data.siteData.location,
         description: data.siteData.description,
-        imageUrl: data.siteData.imageUrl,
+        imageUrl: data.siteData.imageUrl || this.fallback_img,
         sourceType: data.siteData.sourceType,
       },
     });

@@ -14,7 +14,7 @@ export interface ISiteRepository {
 
 export interface CreateSiteRequest {
   userId: string;
-  siteData: Omit<SiteData, "id" | "userId" >;
+  siteData: Omit<SiteData, "id" | "userId">;
 }
 
 export interface UpdateSiteRequest {
