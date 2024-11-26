@@ -2,7 +2,7 @@ import { X } from "@phosphor-icons/react";
 import { closeDrawer } from "@/lib/redux/states/drawerSlice";
 import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
 
-import { siteFormsMap } from "@/lib/mappings/formMappings";
+import { drawerForms } from "@/lib/mappings/formMappings";
 
 const Drawer = () => {
   const dispatch = useAppDispatch();
@@ -12,7 +12,7 @@ const Drawer = () => {
   }
   const { isOpenDrawer, title, componentName, bodyProps } = useAppSelector((state) => state.drawer);
 
-  const BodyComponent = componentName ? siteFormsMap[componentName] : null;
+  const BodyComponent = componentName ? drawerForms[componentName] : null;
   return (
     <>
     {isOpenDrawer && <div onClick={onClose} className="fixed inset-0 z-40 backdrop-blur-[1px]"/>}
