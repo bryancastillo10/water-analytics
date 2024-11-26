@@ -1,7 +1,8 @@
-import { useState } from "react";
 import { Image, MapPin, Signpost, Drop, Notepad } from "@phosphor-icons/react";
 
 import { mockSiteData } from "@/features/sites/api/mockData";
+import useUpdateSiteForm from "@/features/sites/hooks/useUpdateSiteForm";
+
 import { sourceOptions, formatStringSource } from "@/features/sites/utils/formatWaterSource";
 
 import { FormInput, CustomSelect, UploadImageInput, FormTextarea, ImagePreview } from "@/components/ui";
@@ -12,47 +13,35 @@ interface UpdateSiteFormProps{
 }
 
 const UpdateSiteForm = ({ id }: UpdateSiteFormProps) => {
-  const siteData = mockSiteData.find((data) => data.id === id);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(siteData?.imageURL!);
-  
-  const handleImageSelect = (file: File | null) => {
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setPreviewUrl(null);
-    }
-  };
-
+  const siteData = mockSiteData.find((data) => data.id === id)!;
+  const { updateSiteData, previewUrl, onChangeInput, onChangeSelect, handleImageSelect, handleSubmit } = useUpdateSiteForm(siteData);
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-x-4">
         <FormInput
           id="siteName"
           label="Site Name"
           icon={Signpost}
-          value={siteData?.siteName!}
-          onChange={() => { }}
+          value={updateSiteData?.siteName}
+          onChange={onChangeInput}
           validationMessage="Preferred name of the monitoring site"
         />
         <FormInput
           id="location"
           label="Location"
           icon={MapPin}
-          value={siteData?.location!}
-          onChange={()=>{}}
+          value={updateSiteData?.location}
+          onChange={onChangeInput}
           validationMessage="Describe the place (city, country, etc..)"
         />
         <CustomSelect
               label="Water Source Type"
-              value={formatStringSource(siteData?.sourceType!)}
+              value={formatStringSource(updateSiteData?.sourceType)}
               icon={Drop}
               placeholder="Search for the type"
               options={sourceOptions}
-              onChangeValue={() => console.log()}
+              onChangeValue={(val) => onChangeSelect("sourceType", val)}
         />
         <UploadImageInput
               label="Site Photo"
@@ -63,8 +52,8 @@ const UpdateSiteForm = ({ id }: UpdateSiteFormProps) => {
             id="description"
             label="Description"
             icon={Notepad}
-            value={siteData?.description!}
-            onChange={(selectedSourceTypeValue)=>{console.log(selectedSourceTypeValue)}}
+            value={updateSiteData?.description}
+            onChange={onChangeInput}
             validationMessage={siteData?.description.length! > 200 ? "Too long!" : "Write a short description about the site"}
         />
         <ImagePreview imageUrl={previewUrl} />
