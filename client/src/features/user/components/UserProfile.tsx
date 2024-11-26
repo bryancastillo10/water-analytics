@@ -1,4 +1,4 @@
-import { User, EnvelopeSimple, Pencil, WarningCircle, Image} from "@phosphor-icons/react";
+import { User, EnvelopeSimple, PencilSimpleLine, WarningCircle} from "@phosphor-icons/react";
 
 import TextHeader from "@/components/common/TextHeader";
 import { Button } from "@/components/ui";
@@ -8,8 +8,17 @@ import useDrawer from "@/hook/useDrawer";
 const UserProfile = () => {
   const { handleOpenDrawer } = useDrawer();
   const userId = "sample_userId";
-  const updateUserDrawer = (id:string) => {
+  
+  const updateUserDrawer = (id: string) => {
     handleOpenDrawer("Edit Your Profile", "UpdateUserForm", {id});
+  };
+
+  const updateProfilePictureDrawer = () => {
+    handleOpenDrawer("Update Your Profile Picture", "UpdateProfilePicture");
+  };
+
+  const deleteUserDrawer = () => {
+    handleOpenDrawer("Delete Account Confirmation", "DeleteAccountConfirmation");
   };
 
 
@@ -34,7 +43,7 @@ const UserProfile = () => {
                 <h2 className="text-lg font-semibold">Username</h2>
               </div>
               <div className="hidden group-hover:flex hover:text-primary items-center  cursor-pointer">
-                <Pencil size={20} onClick={()=>updateUserDrawer(userId)} />
+                <PencilSimpleLine size={20} onClick={()=>updateUserDrawer(userId)} />
               </div>
             </div>
             <p className="text-primary text-base mt-1">username123</p>
@@ -48,12 +57,12 @@ const UserProfile = () => {
           </div>
         </div>
         <div className="mt-4 flex items-center justify-center xl:justify-start gap-4 w-full ">
-          <Button fontSize="text-sm" variant="outline">
+          <Button action={()=>updateProfilePictureDrawer()} fontSize="text-sm" variant="outline">
             <span className="flex items-center gap-1">
-              <Image size="14"/> Change Avatar
+              <PencilSimpleLine size="14"/> Update Photo
             </span>
           </Button>
-          <Button fontSize="text-sm" variant="danger">
+          <Button action={()=> deleteUserDrawer()} fontSize="text-sm" variant="danger">
             <span className="flex items-center gap-1">
               <WarningCircle size="14"/> Delete Account
             </span>

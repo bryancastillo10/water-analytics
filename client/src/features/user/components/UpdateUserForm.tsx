@@ -24,7 +24,7 @@ const UpdateUserForm = () => {
                 validationMessage="Account email address"
                 />
           </div>
-              <FormButtons primaryBtnLabel="Update Profile" />
+              <FormButtons primaryBtnLabel="Save" />
     </form>
   )
 }
