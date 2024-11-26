@@ -1,5 +1,5 @@
 import DashboardCard from "@/features/dashboard/components/DashboardCard"
-import { statisticsCard } from "./api/mockData"
+import { statisticsCard } from "../api/mockData"
 
 const Dashboard = () => {
   return (

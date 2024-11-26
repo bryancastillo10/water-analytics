@@ -1,5 +1,6 @@
-import { Image,MapPin, Signpost, Drop, Notepad } from "@phosphor-icons/react";
-import { FormInput, CustomSelect, UploadImageInput, ImagePreview, FormTextarea, FormButtons } from "@/components/ui";
+import { Image, MapPin, Signpost, Drop, Notepad } from "@phosphor-icons/react";
+import { FormInput, CustomSelect, UploadImageInput, ImagePreview, FormTextarea } from "@/components/ui";
+import { FormButtons } from "@/components/layout";
 
 import { sourceOptions } from "@/features/sites/utils/formatWaterSource";
 import useAddSiteForm from "@/features/sites/hooks/useAddSiteForm";
