@@ -4,6 +4,7 @@ interface ButtonProps {
   type?: "submit" | "reset" | "button";
   width?: string;
   loading?: boolean;
+  fontSize?: string;
   variant?: string;
   children: React.ReactNode
 }
@@ -12,6 +13,7 @@ const Button = ({
   action,
   type="button",
   width = "w-fit",
+  fontSize="text-base",
   loading,
   variant,
   children
@@ -22,6 +24,8 @@ const Button = ({
           return "border border-transparent bg-primary text-white hover:bg-primary/70";
         case "outline":
           return "border text-primary border-primary hover:border-primary  hover:bg-primary hover:text-white";
+        case "danger":
+          return "border border-transparent text-white bg-rose-500 hover:bg-rose-700";
         default:
           return "bg-cyan-600 text-slate-100  hover:bg-teal-500/90 p-0";
       }
@@ -30,7 +34,7 @@ const Button = ({
     <button
       onClick={action}
       type={type}
-      className={`${width} font-semibold px-3 py-1 rounded-xl
+      className={`${width} ${fontSize} font-semibold px-3 py-1 rounded-xl
         duration-500 ease-in-out
         ${getBtnStyle(variant!)}`}
     >

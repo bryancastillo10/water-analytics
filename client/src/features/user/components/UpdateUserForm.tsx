@@ -6,25 +6,25 @@ import { FormButtons } from "@/components/layout";
 const UpdateUserForm = () => {
   return (
       <form>
-          <div className="grid grid-cols-2 gap-4">
-          <FormInput
-              id="username"
-              label="Username"
-              icon={User}
-              value={"username123"}
-              onChange={()=>{}}
-              validationMessage="Username in at least 5 alphanumeric characters"
-            />
+          <div className="flex flex-col gap-4 w-fit flex-grow">
             <FormInput
-              id="email"
-              label="Email"
-              icon={EnvelopeSimple}
-              value={"your_email@domain.com"}
-              onChange={()=>{}}
-              validationMessage="Account email address"
-            />
+                id="username"
+                label="Username"
+                icon={User}
+                value={"username123"}
+                onChange={()=>{}}
+                validationMessage="Username must be at least 5 alphanumeric characters"
+                />
+                <FormInput
+                id="email"
+                label="Email"
+                icon={EnvelopeSimple}
+                value={"your_email@domain.com"}
+                onChange={()=>{}}
+                validationMessage="Account email address"
+                />
           </div>
-          <FormButtons primaryBtnLabel="Update Profile"/>
+              <FormButtons primaryBtnLabel="Update Profile" />
     </form>
   )
 }
