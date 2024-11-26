@@ -30,8 +30,13 @@ const SiteInfoRow = ({title, value ,icon:Icon}: SiteInfoRowProps) => {
 const DeleteSiteForm = ({ id }: DeleteSiteFormProps) => {
   const siteData = mockSiteData.find((data) => data.id === id);
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("to Delete ID", id);
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <h1 className="text-xl my-2">Are you sure you want to delete this site?</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-4">
         <div className="col-span-2">
@@ -53,21 +58,3 @@ const DeleteSiteForm = ({ id }: DeleteSiteFormProps) => {
 }
 
 export default DeleteSiteForm;
-
-
-{/* <div className="flex items-center gap-4">
-          <h1>Site Name:</h1>
-          <p className="text-primary font-semibold">{siteData?.siteName}</p>
-        </div>
-        <div className="flex items-center gap-4">
-          <h1>Location:</h1>
-          <p className="text-primary font-semibold">{siteData?.location}</p>
-        </div>
-        <div className="flex items-center gap-4">
-          <h1>Water Source Type:</h1>
-          <p className="text-primary font-semibold">{siteData?.sourceType}</p>
-        </div>
-        <div className="flex flex-col place-items-start w-[50%] gap-4">
-          <h1>Description:</h1>
-          <p className="text-primary font-semibold">{siteData?.description}</p>
-        </div> */}
