@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { mockSiteData } from "@/features/sites/api/mockData";
 import { Image, MapPin, Signpost, Drop, Notepad } from "@phosphor-icons/react";
 
-import { FormInput, CustomSelect, UploadImageInput, FormTextarea, ImagePreview, FormButtons } from "@/components/ui";
+import { mockSiteData } from "@/features/sites/api/mockData";
 import { sourceOptions, formatStringSource } from "@/features/sites/utils/formatWaterSource";
+
+import { FormInput, CustomSelect, UploadImageInput, FormTextarea, ImagePreview } from "@/components/ui";
+import { FormButtons } from "@/components/layout";
 
 interface UpdateSiteFormProps{
   id: string;

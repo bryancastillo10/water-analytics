@@ -1,7 +1,10 @@
-import { ImagePreview, FormButtons } from "@/components/ui";
 import { MapPin, Signpost, Drop, Notepad, type Icon } from "@phosphor-icons/react";
+
 import { mockSiteData } from "@/features/sites/api/mockData";
 import { formatStringSource } from "@/features/sites/utils/formatWaterSource";
+
+import { ImagePreview } from "@/components/ui";
+import { FormButtons } from "@/components/layout";
 
 interface SiteInfoRowProps{
   title: string;

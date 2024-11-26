@@ -3,8 +3,6 @@ import AnimatedInput from "./AnimatedInput";
 import CodeInput from "./CodeInput";
 import FormInput from "./FormInput";
 import FormTextarea from "./FormTextArea";
-import FormButtons from "./FormButtons";
-import ProgressBar from "./ProgressBar";
 import Toast from "./Toast";
 import CustomSelect from "./CustomSelect";
 import UploadImageInput from "./UploadImageInput";
@@ -16,8 +14,6 @@ export {
     CodeInput,
     FormInput,
     FormTextarea,
-    FormButtons,
-    ProgressBar,
     Toast,
     CustomSelect,
     UploadImageInput,

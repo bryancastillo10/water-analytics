@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Envelope, Lock, Key } from "@phosphor-icons/react";
-import { FormInput, ProgressBar, Button, CodeInput } from "@/components/ui";
+import { ProgressBar } from "@/components/common";
+import { FormInput, Button, CodeInput } from "@/components/ui";
 import AuthContainer from "./AuthContainer";
 
 enum STEP {
