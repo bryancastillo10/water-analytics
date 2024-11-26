@@ -1,7 +1,16 @@
+import { User, EnvelopeSimple, Pencil } from "@phosphor-icons/react";
+
 import TextHeader from "@/components/common/TextHeader";
-import { User, Envelope, Pencil } from "@phosphor-icons/react/dist/ssr";
+import useDrawer from "@/hook/useDrawer";
 
 const UserProfile = () => {
+  const { handleOpenDrawer } = useDrawer();
+  const userId = "sample_userId";
+  const updateUserDrawer = (id:string) => {
+    handleOpenDrawer("Edit Your Profile", "UpdateUserForm", {id});
+  };
+
+
   return (
     <section className="px-6 py-4">
       <TextHeader text="User Profile" />
@@ -15,23 +24,23 @@ const UserProfile = () => {
                 />
             </div>
             {/* User Details */}
-        <div className="col-span-2 flex flex-col justify-between bg-neutral text-dark  rounded-lg p-4">
-          <div className="flex items-center justify-between mb-4">
+        <div className="col-span-2 flex group flex-col justify-between bg-neutral/20 rounded-md p-4">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-x-2">
               <User size={24} />
-              <h2 className="text-xl font-semibold ">Username</h2>
+              <h2 className="text-lg font-semibold">Username</h2>
             </div>
-            <div className="flex items-center cursor-pointer">
-              <Pencil size={20} />
+            <div className="hidden group-hover:flex hover:text-primary items-center  cursor-pointer">
+              <Pencil size={20} onClick={()=>updateUserDrawer(userId)} />
             </div>
           </div>
-          <p className=" text-lg">username123</p>
+          <p className="text-primary text-base mt-1">username123</p>
           <div className="mt-4">
           <div className="flex items-center gap-x-2">
-              <Envelope size={24}  />
-              <h2 className="text-xl font-semibold ">Email</h2>
+              <EnvelopeSimple size={24}  />
+              <h2 className="text-lg font-semibold">Email</h2>
             </div>
-            <p className="">your_email@domain.com</p>
+            <p className="text-primary text-base mt-1">your_email@domain.com</p>
           </div>
         </div>
       </div>

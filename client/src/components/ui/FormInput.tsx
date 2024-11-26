@@ -46,7 +46,7 @@ const FormInput = ({
         value={value}
         onChange={onChange}
         className="rounded-xl p-2 h-8 border border-neutral 
-        focus:border-secondary focus:ring-secondary focus:outline-none"
+        focus:border-primary focus:ring-primary focus:outline-none"
       />
       {isPassword && (
         <div
