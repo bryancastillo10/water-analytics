@@ -6,7 +6,8 @@ import type {
     ResetPwResponse,
     VerifyCodeRequest,
     VerifyCodeResponse,
-    UpdatePasswordRequest
+    UpdatePasswordRequest,
+    DeleteUserRequest
 } from "@/features/user/api/interface";
 
 export const userApi = createApi({
@@ -23,10 +24,11 @@ export const userApi = createApi({
                 body: data
             })
         }),
-        deleteUser: build.mutation<{ id: string }, void>({
-            query: (id) => ({
+        deleteUser: build.mutation<void, DeleteUserRequest>({
+            query: ({id, username}) => ({
                 url: `/delete/${id}`,
                 method: "DELETE",
+                body: username
             })
         }),
         requestPasswordReset: build.mutation<ResetPwResponse, ResetPwRequest>({

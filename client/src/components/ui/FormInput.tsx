@@ -1,5 +1,6 @@
 import { useState, type ChangeEvent } from "react";
 import { type Icon, Eye, EyeSlash } from "@phosphor-icons/react";
+import { useAppSelector } from "@/lib/redux/hooks";
 
 interface FormInputProps {
   id: string;
@@ -27,6 +28,7 @@ const FormInput = ({
   validationMessage,
 }: FormInputProps) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const theme = useAppSelector((state) => state.theme.isDarkMode);
 
   const toggleVisible = () => {
     setIsVisible(!isVisible);
@@ -35,8 +37,8 @@ const FormInput = ({
   return (
     <div className="relative flex flex-col my-3">
       <label className="my-2 flex items-center gap-2">
-        {Icon && <Icon size="18" color="#040710" />}
-        <span className="text-sm text-dark">{label}</span>
+        {Icon && <Icon size="18" color={theme ? "#F6F5F4":"#040710"} />}
+        <span className="text-sm">{label}</span>
       </label>
       <input
         id={id}
@@ -45,8 +47,9 @@ const FormInput = ({
         required={required}
         value={value}
         onChange={onChange}
-        className="rounded-xl p-2 h-8 border border-neutral 
-        focus:border-primary focus:ring-primary focus:outline-none"
+        className={`rounded-xl p-2 h-8 border border-neutral focus:border-primary focus:ring-primary focus:outline-none
+          ${theme ? "bg-darkGray text-light":"bg-[#fffff] text-dark"}
+        `}
       />
       {isPassword && (
         <div

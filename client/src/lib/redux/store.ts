@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import rootReducer, { apis } from "@/lib/redux/reducer";
+import rootReducer, { apis, apiReducerPaths } from "@/lib/redux/reducer";
 
 import {
   persistReducer,
@@ -33,13 +33,11 @@ const storage =
     ? createNoopStorage()
     : createWebStorage("local");
 
-const persistConfig = {
-  key: "root",
-  storage,
-  whitelist: ["global"],
-  blacklist:["api"]
+    const persistConfig = {
+      key: "root",
+      storage,
+      blacklist: apiReducerPaths
 };
-
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

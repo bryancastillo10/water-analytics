@@ -1,5 +1,4 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-// import type { ComponentType } from "react";
 
 interface DrawerState{
     isOpenDrawer: boolean;
@@ -16,7 +15,7 @@ const initialState: DrawerState = {
 }
 
 export const drawerSlice = createSlice({
-    name: 'drawerToggle',
+    name: 'drawer',
     initialState,
     reducers: {
         openDrawer(state, action: PayloadAction<{

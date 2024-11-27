@@ -4,6 +4,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 import userReducer from "@/lib/redux/states/userSlice"; 
 import sidebarReducer from "@/lib/redux/states/sidebarSlice";
 import drawerReducer from "@/lib/redux/states/drawerSlice";
+import themeReducer from "@/lib/redux/states/themeSlice";
 
 // API from RTK-Query
 import { authApi } from "@/features/auth/api/authApi";
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   sidebar: sidebarReducer,
   drawer: drawerReducer,
+  theme: themeReducer,
   [authApi.reducerPath]: authApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
   [sitesApi.reducerPath]: sitesApi.reducer,
@@ -22,5 +24,6 @@ const rootReducer = combineReducers({
 });
 
 export const apis = [authApi, userApi, sitesApi, measurementApi];
+export const apiReducerPaths = apis.map(api => api.reducerPath);
 
 export default rootReducer;

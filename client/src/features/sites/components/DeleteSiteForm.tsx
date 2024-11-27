@@ -1,4 +1,5 @@
 import { MapPin, Signpost, Drop, Notepad, type Icon } from "@phosphor-icons/react";
+import { useAppSelector } from "@/lib/redux/hooks";
 
 import { mockSiteData } from "@/features/sites/api/mockData";
 import { formatStringSource } from "@/features/sites/utils/formatWaterSource";
@@ -17,17 +18,21 @@ interface DeleteSiteFormProps{
 }
 
 
-const SiteInfoRow = ({title, value ,icon:Icon}: SiteInfoRowProps) => {
+const SiteInfoRow = ({ title, value, icon: Icon }: SiteInfoRowProps) => {
+  const theme = useAppSelector((state) => state.theme.isDarkMode);
+  
   return (
     <div className="grid grid-cols-2 items-center mb-2">
       <h1 className="flex items-center gap-x-2"><Icon size="20" />{title}</h1>
-      <p className="text-primary font-semibold text-pretty">{value}</p>
+      <p className={`${theme ? "text-secondary":"text-primary"} font-semibold text-pretty`}>{value}</p>
     </div>
   )
 };
 
 
 const DeleteSiteForm = ({ id }: DeleteSiteFormProps) => {
+  const theme = useAppSelector((state) => state.theme.isDarkMode);
+
   const siteData = mockSiteData.find((data) => data.id === id);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -45,7 +50,7 @@ const DeleteSiteForm = ({ id }: DeleteSiteFormProps) => {
           <SiteInfoRow title="Water Source" icon={Drop} value={formatStringSource(siteData?.sourceType!)} />
           <div className="flex flex-col items-start mt-4">
             <h1 className="flex items-center gap-x-2 mb-2"><Notepad size="20" />Description</h1>
-            <p className="text-primary">{siteData?.description}</p>
+            <p className={theme ? "text-secondary":"text-primary"}>{siteData?.description}</p>
         </div>
         </div>     
         <div className="col-span-1">
