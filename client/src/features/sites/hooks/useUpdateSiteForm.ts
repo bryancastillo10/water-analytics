@@ -26,14 +26,12 @@ const useUpdateSiteForm = (initialSiteData: SiteData) => {
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
-                setUpdateSiteData((prevData) => ({ ...prevData, imageURL: reader.result as string }));
                 setPreviewUrl(reader.result as string);
             };
             reader.readAsDataURL(file);
             setImgFile(file);
         } else {
             setImgFile(null);
-            setUpdateSiteData((prevData) => ({ ...prevData, imageURL: "" }));
             setPreviewUrl(null);
         }
     };

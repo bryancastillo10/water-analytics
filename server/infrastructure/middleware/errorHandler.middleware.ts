@@ -4,7 +4,7 @@ import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import multer from "multer";
 
 import { ErrorResponseProps } from "@/infrastructure/middleware/type";
-import { AppError } from "@/infrastructure/errors/customErrors";
+import { AppError, CloudinaryError } from "@/infrastructure/errors/customErrors";
 import { handlePrismaError } from "@/utils/handlePrismaError";
 
 export const errorHandler: ErrorRequestHandler = (
@@ -81,6 +81,16 @@ export const errorHandler: ErrorRequestHandler = (
     res.status(401).json(errorResponse);
     return;
   }
+
+  // Cloudinary Errors 
+  if (error instanceof CloudinaryError) {
+    errorResponse = {
+        status: "error",
+        message: error.message,
+    };
+    res.status(500).json(errorResponse);
+    return;
+}
 
   // Validation Errors
   if (error.name === "ValidationError") {

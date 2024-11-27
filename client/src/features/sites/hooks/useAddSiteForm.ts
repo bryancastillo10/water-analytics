@@ -5,7 +5,6 @@ const initialSiteData = {
     siteName: "",
     location: "",
     description: "",
-    imageURL: "",
     sourceType:"Water Source Type"
 }
 
@@ -30,14 +29,11 @@ const useAddSiteForm = () => {
           setImgFile(file);
             const reader = new FileReader();
           reader.onload = () => {
-            setAddSiteData((prevData) => ({ ...prevData, imageURL: reader.result as string }));
             setPreviewUrl(reader.result as string);
           };
           reader.readAsDataURL(file);
         } else {
-          setImgFile(null);
-          setAddSiteData((prevData) => ({ ...prevData, imageURL: "" }));
-        }
+          setImgFile(null);        }
     };
     
     const prepareMultiFormData = () => {

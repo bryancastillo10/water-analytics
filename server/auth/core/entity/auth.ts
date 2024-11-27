@@ -1,8 +1,4 @@
-enum UserRole {
-  ADMIN = "ADMIN",
-  USER = "USER",
-  ANALYST="ANALYST"
-}
+import { UserRole } from "@prisma/client";
 
 export class SignInData {
   email!: string;
@@ -15,5 +11,5 @@ export class SignUpData {
   password!: string;
   confirmPassword?: string;
   profilePicURL?: string;
-  role: UserRole = UserRole.USER;
+  role: UserRole = UserRole.PUBLIC;
 }

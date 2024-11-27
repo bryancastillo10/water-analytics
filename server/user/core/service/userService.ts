@@ -1,4 +1,4 @@
-import { ResetPasswordRequest,  UpdateUserPasswordProps,  UpdateUserRequest} from "@/user/core/interface/IUserRepository";
+import { DeleteUserRequest, ResetPasswordRequest,  UpdateUserPasswordProps,  UpdateUserRequest} from "@/user/core/interface/IUserRepository";
 import { UserRepository } from "@/user/user.repository";
 
 import { NotFoundError, ValidationError, AuthenticationError } from "@/infrastructure/errors/customErrors";
@@ -19,10 +19,16 @@ export class UserService {
         return updatedUser;
     }
 
-    async deleteUser(userId: string) {
+    async deleteUser({userId, username}:DeleteUserRequest) {
         if (!userId) {
             throw new NotFoundError("User id is not found");
         }
+        
+        const validateUsername = await this.userRepository.findUserByUsername(username);
+        if (!validateUsername) {
+            throw new ValidationError("Username does not match any existing username");
+        };
+
             await this.userRepository.deleteUserProfile(userId);
         return;
     }

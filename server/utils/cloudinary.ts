@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
+import { CloudinaryError } from "@/infrastructure/errors/customErrors";
 
 // Configuration
 cloudinary.config({
@@ -18,7 +19,19 @@ cloudinary.config({
  * @throws Error if the upload fails.
  */
 
-export const uploadImage = async (filePath: string, folder: string = "site"): Promise<string> => {
+
+interface uploadImageProps{
+  filePath: string;
+  folder: string;
+  deleteLocalFile: boolean;
+}
+
+
+export const uploadImage = async ({
+  filePath,
+  folder = "sites",
+  deleteLocalFile=true
+}: uploadImageProps): Promise<string> => {
   try {
     const result = await cloudinary.uploader.upload(filePath, {
       folder: folder || "default", 
@@ -34,13 +47,14 @@ export const uploadImage = async (filePath: string, folder: string = "site"): Pr
       ],
     });
 
-    fs.unlink(filePath, (error) => {
-      if (error) console.error("Error deleting the local file:", error);
-    });
+    if (deleteLocalFile) {
+      fs.unlink(filePath, (error) => {
+          if (error) console.error("Error deleting the local file:", error);
+      });
+  }
 
     return result.secure_url;
   } catch (error) {
-    console.error("Error uploading image to Cloudinary:", error);
-    throw new Error("Failed to upload image.");
+    throw new CloudinaryError("Failed to upload image to Cloudinary");
   }
 };

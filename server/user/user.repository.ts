@@ -71,6 +71,26 @@ export class UserRepository implements IUserRepository {
             }
             throw Error;
         }
+    };
+    
+    async findUserByUsername(username: string): Promise<UserData | null> {
+      try {
+          const user = await this.prisma.user.findUnique({
+          where: { username },
+          });
+        
+          if(!user){
+            return null;
+          }
+          return user as UserData;
+         }
+      catch (error) {
+        if (error instanceof PrismaClientKnownRequestError) {
+          console.error(error.message);
+          throw new DatabaseError("Database error at findUserByUsername method");
+        }
+        throw Error;
+      }
     }
 
     async saveResetCode({ email, code, expiry }: SaveResetCodeProps) {

@@ -38,3 +38,9 @@ export class DatabaseError extends AppError{
         super(500, message);
     }
 }
+
+export class CloudinaryError extends AppError {
+    constructor(message: string = "Cloudinary Upload Error") {
+        super(500, message);
+    }
+}

@@ -16,7 +16,11 @@ export class SiteController{
             const { file } = req;
 
             if (file) {
-                const imageURL = await uploadImage(file.path);
+                const imageURL = await uploadImage({
+                    filePath: file.path,
+                    folder: "sites",
+                    deleteLocalFile: true
+                });
                 rawData.siteData.imageUrl = imageURL;
             } else {
                 rawData.siteData.imageUrl = null;
