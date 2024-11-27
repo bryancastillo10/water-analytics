@@ -36,12 +36,12 @@ export class SiteService {
     return userSites;
   }
 
-  async updateSite({ siteId, siteData }: UpdateSiteRequest) {
+  async updateSite({ siteId, site }: UpdateSiteRequest) {
     if (!siteId) {
       throw new NotFoundError("Site id was not found");
     }
 
-      const updatedSite = await this.siteRepository.updateSite(siteId, siteData);
+      const updatedSite = await this.siteRepository.updateSite(siteId, site);
       
       return updatedSite;
   }

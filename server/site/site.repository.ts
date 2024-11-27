@@ -67,11 +67,11 @@ export class SiteRepository implements ISiteRepository {
     }
   }
 
-  async updateSite(siteId: string, siteData: Partial<SiteData>): Promise<SiteData | null> {
+  async updateSite(siteId: string, site: Partial<SiteData>): Promise<SiteData | null> {
     try {
       const updatedSite = await this.prisma.site.update({
       where: { id: siteId },
-      data: siteData,
+      data: site,
       });
       
     return updatedSite as SiteData | null;

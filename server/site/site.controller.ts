@@ -49,9 +49,24 @@ export class SiteController{
     async updateSite(req: Request, res: Response, next: NextFunction) { 
         try {
             const siteId = req.params.id;
-            const siteData = req.body;
-            const updatedSite = await this.siteService.updateSite({siteId,siteData});
-            res.status(200).json({ message:"Site has been updated successfully" ,updatedSite });
+            const site = JSON.parse(req.body.siteData);
+            const { file } = req;
+
+            if (file) {
+                const imageURL = await uploadImage({
+                    filePath: file.path,
+                    folder: "sites",
+                    deleteLocalFile: true
+                });
+                site.siteData.imageUrl = imageURL;
+            } else {
+                site.siteData.imageUrl = null;
+            }
+            
+            const updatedSite = await this.siteService.updateSite({ siteId, site });
+
+            res.status(200).json({ message: "Site has been updated successfully", site: updatedSite });
+
         } catch (error) {
             next(error);
         }

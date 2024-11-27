@@ -7,7 +7,7 @@ export interface ISiteRepository {
   getSiteByUser(userId: string): Promise<SiteData[]>;
   updateSite(
     siteId: string,
-    siteData: Partial<SiteData>
+    site: Partial<SiteData>
   ): Promise<SiteData | null>;
   deleteSite(siteId: string): Promise<void>;
 }
@@ -19,5 +19,5 @@ export interface CreateSiteRequest {
 
 export interface UpdateSiteRequest {
   siteId: string;
-  siteData: Omit<SiteData, "id" | "userId">;
+  site: Omit<SiteData, "id" | "userId">;
 }
