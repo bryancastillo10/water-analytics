@@ -1,5 +1,6 @@
 import { type ChangeEvent } from "react";
 import { type Icon } from "@phosphor-icons/react";
+import { useAppSelector } from "@/lib/redux/hooks";
 
 interface FormTextareaProps {
   id: string;
@@ -22,6 +23,7 @@ const FormTextarea = ({
   icon: Icon,
   validationMessage,
 }: FormTextareaProps) => {
+  const theme = useAppSelector((state) => state.theme.isDarkMode);
   return (
     <div className="relative flex flex-col my-3">
       <label className="my-2 flex items-center gap-2">
@@ -34,8 +36,9 @@ const FormTextarea = ({
         required={required}
         value={value}
         onChange={onChange}
-        className="rounded-xl p-2 h-40 border border-neutral 
-        focus:border-secondary focus:ring-secondary focus:outline-none resize-none"
+        className={`rounded-xl p-2 h-40 border border-neutral focus:border-secondary focus:ring-secondary focus:outline-none resize-none
+                ${theme ? "bg-darkGray text-light": "bg-light"}    
+        `}
       />
       <div className="my-2">
         <p className="text-xs">{validationMessage}</p>
