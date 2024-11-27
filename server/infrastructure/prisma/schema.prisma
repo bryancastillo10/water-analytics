@@ -15,7 +15,7 @@ generator client {
 
 enum UserRole {
   ADMIN
-  USER
+  PUBLIC
   ANALYST
 }
 
