@@ -4,11 +4,14 @@ import useDrawer from "@/hook/useDrawer";
 import SiteTag from "@/features/sites/components/SiteTag";
 import type { CreateSiteResponse } from "@/features/sites/api/interface";
 
+import { useAppSelector } from "@/lib/redux/hooks";
 interface SiteCardProps{
   siteData: CreateSiteResponse;
 }
 
-const SiteCard = ({siteData}:SiteCardProps) => {
+const SiteCard = ({ siteData }: SiteCardProps) => {
+  const theme = useAppSelector((state) => state.theme.isDarkMode);
+
   const { handleOpenDrawer } = useDrawer();
   const { id, siteName, location, description, imageURL, sourceType } = siteData;
 
@@ -21,7 +24,7 @@ const SiteCard = ({siteData}:SiteCardProps) => {
   }
 
   return (
-  <div className="w-80 min-h-full bg-light relative rounded-xl shadow-md overflow-hidden group">
+  <div className={`w-80 min-h-full group relative rounded-xl shadow-md overflow-hidden ${theme ? "bg-darkGray":"bg-light"}`}>
     <div className="p-4">
       <div className="flex flex-col gap-4">
         <div className="bg-neutral/40 h-48 rounded-lg">
@@ -36,9 +39,9 @@ const SiteCard = ({siteData}:SiteCardProps) => {
 
         <div className="space-y-3">
       
-            <h1 className="text-xl font-semibold text-dark">{siteName}</h1>
+            <h1 className="text-xl font-semibold ">{siteName}</h1>
 
-          <div className="flex items-center gap-2 text-dark/70">
+          <div className="flex items-center gap-2">
             <MapPin className="size-4" />
               <span className="text-sm">{location}</span>
           </div>
@@ -46,13 +49,13 @@ const SiteCard = ({siteData}:SiteCardProps) => {
             <SiteTag variant={sourceType} />
         </div>
 
-        <p className="text-sm text-darkGray text-pretty mt-2 line-clamp-3">
+        <p className={`text-sm text-pretty mt-2 line-clamp-3 ${theme ? "text-neutral":"text-darkGray"}`}>
           {description}
         </p>
       </div>
     </div>
-        <div className="absolute top-0 right-0 flex flex-col gap-y-4 opacity-0 group-hover:opacity-100
-        rounded-bl-md px-2 py-2 bg-neutral/80 text-primary font-bold">
+        <div className={`absolute top-0 right-0 flex flex-col gap-y-4 opacity-0 group-hover:opacity-100
+        rounded-bl-md px-2 py-2  text-primary font-bold ${theme ? "bg-neutral":"bg-neutral/80"}`}>
         <div onClick={()=>updateSite(id)} className="hover:scale-110 cursor-pointer">
           <PencilSimpleLine size="14" />
         </div>

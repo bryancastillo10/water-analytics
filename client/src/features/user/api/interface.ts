@@ -8,6 +8,11 @@ export interface UpdateUserRequest extends UserProfile{
     id: string;
 }
 
+export interface DeleteUserRequest{
+    id: string;   
+    username: string;
+}
+
 // Password Reset Feature
 export interface ResetPwRequest{
     email: string;
