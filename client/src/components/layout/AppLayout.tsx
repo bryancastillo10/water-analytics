@@ -1,6 +1,8 @@
 import { Outlet } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
+
 import { setIsSidebarExpanded } from "@/lib/redux/states/sidebarSlice";
+import { setIsDarkMode } from "@/lib/redux/states/themeSlice";
 
 import Navbar from "@/components/navigation/Navbar";
 import Sidebar from "@/components/navigation/Sidebar";
@@ -14,8 +16,14 @@ const AppLayout = () => {
     dispatch(setIsSidebarExpanded(!isSidebarExpanded));
   };
 
+  const theme = useAppSelector((state) => state.theme.isDarkMode);
+
+  const toggleTheme = () => {
+    dispatch(setIsDarkMode(!theme));
+  }
+
   return (
-    <main className="flex bg-light w-full h-screen">
+    <main className={`flex ${theme ? "bg-dark text-light": "bg-light text-dark"} w-full h-screen`}>
       <Sidebar
         isSidebarExpanded={isSidebarExpanded}
         toggleSidebar={toggleSidebar}
@@ -23,7 +31,9 @@ const AppLayout = () => {
       <div className="flex-1 flex flex-col md:pl-12 xl:pl-0">
         <Navbar
           isSidebarExpanded={isSidebarExpanded}
+          theme={theme}
           toggleSidebar={toggleSidebar}
+          toggleTheme={toggleTheme}
         />
         <section className="flex-1 overflow-auto py-3 px-6">       
           <Drawer/>

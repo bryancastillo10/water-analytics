@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { List, Moon } from "@phosphor-icons/react";
+import { List, Moon, Sun } from "@phosphor-icons/react";
 
 import { sidebarItems } from "@/components/navigation/sidebarItems";
 import AvatarPopOver from "@/components/navigation/AvatarPopOver";
 import { type NavigationProps } from "@/components/navigation/Sidebar";
 
-const Navbar = ({ isSidebarExpanded, toggleSidebar }: NavigationProps) => {
+const Navbar = ({
+  isSidebarExpanded,
+  theme,
+  toggleSidebar,
+  toggleTheme
+}: NavigationProps) => {
   const [isPopOverOpen, setIsPopOverOpen] = useState<boolean>(false);
 
   const togglePopOver = () => {
@@ -34,8 +39,8 @@ const Navbar = ({ isSidebarExpanded, toggleSidebar }: NavigationProps) => {
         {/* Right Side */}
         <div className="flex items-center gap-x-3">
           {/* Theme Toggle */}
-          <div className="cursor-pointer hover:scale-90">
-            <Moon size="28" weight="fill"/>
+          <div onClick={toggleTheme} className="cursor-pointer hover:scale-90">
+            {theme ? <Sun size="28" weight="fill" />: <Moon size="28" weight="fill"/>}
           </div>
 
           {/* Username Greetings */}

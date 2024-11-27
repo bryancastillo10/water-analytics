@@ -6,6 +6,8 @@ import { ArrowCircleLeft, ArrowCircleRight } from "@phosphor-icons/react";
 export interface NavigationProps{
   isSidebarExpanded: boolean;
   toggleSidebar: () => void;
+  theme?: boolean;
+  toggleTheme?: () => void;
 }
 
 // Sidebar children component
