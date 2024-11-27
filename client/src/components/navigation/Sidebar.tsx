@@ -11,7 +11,7 @@ export interface NavigationProps{
 }
 
 // Sidebar children component
-const SideBarRowItem = ({ name, icon: Icon,link, isSidebarExpanded }: sidebarItemsProps) => {
+const SideBarRowItem = ({ name, icon: Icon,link, isSidebarExpanded, theme }: sidebarItemsProps) => {
   const location = useLocation();
   
   const isActive = location.pathname === `/role${link}` || location.pathname === "/dashboard";
@@ -21,8 +21,8 @@ const SideBarRowItem = ({ name, icon: Icon,link, isSidebarExpanded }: sidebarIte
       <li className={`${isActive ? "bg-primary" : null} 
       ${isSidebarExpanded ? "my-4 w-fit":"w-full my-3 gap-2"}
       flex justify-start  items-center p-2  rounded-2xl`}>
-      <Icon size="28" color={isActive ? "#F4F3F2" : "#040710"} />
-      {isSidebarExpanded ? null: <span className={`${isActive ? "text-white font-semibold" : "text-dark"}`}>
+        <Icon size="28" color={isActive ? "#F4F3F2" : theme ? "#13b6f6":"#040710"} />
+      {isSidebarExpanded ? null: <span className={`${isActive ? "text-white font-semibold" : theme ? "text-secondary":"text-dark"}`}>
         {name}
         </span>} 
       </li>
@@ -31,13 +31,14 @@ const SideBarRowItem = ({ name, icon: Icon,link, isSidebarExpanded }: sidebarIte
 };
 
 // Sidebar parent component
-const Sidebar = ({ isSidebarExpanded, toggleSidebar }: NavigationProps) => {
+const Sidebar = ({ isSidebarExpanded, toggleSidebar, theme }: NavigationProps) => {
   const currentYear = new Date().getFullYear();
 
   return (
     <nav
       className={`fixed xl:static z-40 flex flex-col transform transition-width duration-500 
-      overflow-hidden h-full shadow-lg bg-light
+      overflow-hidden h-full shadow-lg 
+      ${theme ? "bg-darkGray text-secondary":"bg-light text-dark"}
       ${isSidebarExpanded ? "w-0 md:w-14" : "w-48"}
       `}
     >
@@ -62,13 +63,14 @@ const Sidebar = ({ isSidebarExpanded, toggleSidebar }: NavigationProps) => {
               link={items.link}
               icon={items.icon}
               isSidebarExpanded={isSidebarExpanded}
+              theme={theme!}
             />
           ))}
         </ul>
       </div>
 
       {/* Sidebar Footer */}
-      <div className={`p-4 text-center text-dark ${isSidebarExpanded ? "hidden" : "block"}`}>
+      <div className={`p-4 text-center  ${isSidebarExpanded ? "hidden" : "block"}`}>
         <p className="text-xs">&copy; {currentYear} Water Analytics</p>
       </div>
     </nav>

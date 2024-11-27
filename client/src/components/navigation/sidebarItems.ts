@@ -12,6 +12,7 @@ export interface sidebarItemsProps {
     icon: Icon;
     link: string;
     isSidebarExpanded?: boolean;
+    theme?: boolean;
 }
 export const sidebarItems: sidebarItemsProps[] = [
     {

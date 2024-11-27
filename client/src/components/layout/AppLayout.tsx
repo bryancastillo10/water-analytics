@@ -23,10 +23,11 @@ const AppLayout = () => {
   }
 
   return (
-    <main className={`flex ${theme ? "bg-dark text-light": "bg-light text-dark"} w-full h-screen`}>
+    <main className={`flex ${theme ? "bg-dark text-light": "bg-light text-dark"} duration-500 ease-in-out w-full h-screen`}>
       <Sidebar
         isSidebarExpanded={isSidebarExpanded}
         toggleSidebar={toggleSidebar}
+        theme={theme}
       />
       <div className="flex-1 flex flex-col md:pl-12 xl:pl-0">
         <Navbar
