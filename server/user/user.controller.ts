@@ -8,6 +8,7 @@ export class UserController {
         this.requestResetPassword = this.requestResetPassword.bind(this);
         this.verifyCodeForReset = this.verifyCodeForReset.bind(this);
         this.resetPassword = this.resetPassword.bind(this);
+        this.updateProfilePicture = this.updateProfilePicture.bind(this);
     }
 
     async updateUser(req: Request, res: Response, next: NextFunction) {
@@ -81,7 +82,7 @@ export class UserController {
                 return;
             }
 
-            const profPicUrl = await this.userService.updateProfilePicture(userId,file);
+            const profPicUrl = await this.userService.updateProfilePicture(userId, file);
 
             res.status(200).json({ "message": "Profile picture has been updated", profPicUrl: profPicUrl });
         } catch (error) {

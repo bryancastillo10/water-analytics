@@ -102,13 +102,16 @@ export class UserService {
             throw new NotFoundError("Image file not found");
         }
 
+
         const imageUrl = await uploadImage({
             filePath: file.path,
             folder: "profile-picture",
             deleteLocalFile: true
         });
 
-        const updatedProfile = this.userRepository.updateProfilePicture({userId, imageUrl});
+
+        const updatedProfile = this.userRepository.updateProfilePicture({ userId, imageUrl });
+        
 
         return updatedProfile;
     }

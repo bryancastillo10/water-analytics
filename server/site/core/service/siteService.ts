@@ -56,7 +56,9 @@ export class SiteService {
       throw new NotFoundError("Site id was not found");
     }
 
-    let imageUrl = rawData.imageUrl;
+    const { siteData } = rawData;
+
+    let imageUrl = siteData.imageUrl;
     if (file) {
        imageUrl = await uploadImage({
           filePath: file.path,
@@ -65,9 +67,8 @@ export class SiteService {
        });
     }
     
-    const site = { ...rawData, imageUrl }
-
-    const updatedSite = await this.siteRepository.updateSite(siteId, site);
+    
+    const updatedSite = await this.siteRepository.updateSite(siteId, siteData);
       
       return updatedSite;
   }

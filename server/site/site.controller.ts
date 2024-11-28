@@ -39,7 +39,7 @@ export class SiteController{
             const siteId = req.params.id;
             const rawData = req.body;
             const { file } = req;
-
+          
             const updatedSite = await this.siteService.updateSite({ siteId, rawData, file });
 
             res.status(200).json({ message: "Site has been updated successfully", site: updatedSite });
