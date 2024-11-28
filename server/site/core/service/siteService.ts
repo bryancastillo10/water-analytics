@@ -2,12 +2,15 @@ import { CreateSiteRequest, UpdateSiteRequest } from "@/site/core/interface/ISit
 import { SiteRepository } from "@/site/site.repository";
 
 import { NotFoundError, ValidationError } from "@/infrastructure/errors/customErrors";
+import { uploadImage } from "@/utils/cloudinary";
 
 export class SiteService {
-  constructor(private readonly siteRepository: SiteRepository) {}
-  async createSite(siteData: CreateSiteRequest) {
-    const { userId, siteData: nestedData } = siteData;
-    const { siteName, location, description, sourceType, imageUrl } = nestedData;
+  constructor(private readonly siteRepository: SiteRepository) { }
+  
+  async createSite({ rawData, file }: CreateSiteRequest) {
+    
+    const { userId, siteData: nestedData } = rawData;
+    const { siteName, location, description, sourceType } = nestedData;
 
     if (!siteName || !location || !description || !sourceType) {
       throw new ValidationError("siteName,location,description, and sourceType are required");
@@ -17,8 +20,20 @@ export class SiteService {
     if (!isExistingUser) {
       throw new NotFoundError("User not found. The requested site cannot be created");
     }
-    
-    const newSite = await this.siteRepository.createSite({userId, siteData: nestedData});
+
+    let imageUrl: string = "";
+    if (file) {
+        imageUrl = await uploadImage({
+            filePath: file.path,
+            folder: "sites",
+            deleteLocalFile: true
+        });
+    }
+  
+    const newSite = await this.siteRepository.createSite({
+      userId,
+      siteData: { ...nestedData, imageUrl }
+    });
 
     return newSite;
   }
@@ -36,12 +51,23 @@ export class SiteService {
     return userSites;
   }
 
-  async updateSite({ siteId, siteData }: UpdateSiteRequest) {
+  async updateSite({ siteId, rawData, file }: UpdateSiteRequest) {
     if (!siteId) {
       throw new NotFoundError("Site id was not found");
     }
 
-      const updatedSite = await this.siteRepository.updateSite(siteId, siteData);
+    let imageUrl = rawData.imageUrl;
+    if (file) {
+       imageUrl = await uploadImage({
+          filePath: file.path,
+          folder: "sites",
+          deleteLocalFile: true
+       });
+    }
+    
+    const site = { ...rawData, imageUrl }
+
+    const updatedSite = await this.siteRepository.updateSite(siteId, site);
       
       return updatedSite;
   }

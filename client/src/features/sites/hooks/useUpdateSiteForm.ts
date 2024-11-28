@@ -43,7 +43,9 @@ const useUpdateSiteForm = (initialSiteData: SiteData) => {
         formData.append("description", updateSiteData.description);
         formData.append("sourceType", updateSiteData.sourceType);
         if (imgFile) {
-          formData.append("image", imgFile);
+          formData.append("sitePhoto", imgFile);
+        } else if (updateSiteData.imageURL) {
+            formData.append("imageUrl", updateSiteData.imageURL)
         }
         return formData;
       };

@@ -43,7 +43,7 @@ const useAddSiteForm = () => {
         formData.append("description", addSiteData.description);
         formData.append("sourceType", addSiteData.sourceType);
         if (imgFile) {
-          formData.append("image", imgFile);
+          formData.append("sitePhoto", imgFile);
         }
         return formData;
     };
