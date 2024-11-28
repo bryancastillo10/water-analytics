@@ -28,5 +28,6 @@ export interface CreateSiteQuery {
 
 export interface UpdateSiteRequest {
   siteId: string;
-  site: Partial<SiteDataInput>; 
+  rawData: SiteDataInput;
+  file?: FileInput;
 }

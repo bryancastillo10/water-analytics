@@ -51,12 +51,23 @@ export class SiteService {
     return userSites;
   }
 
-  async updateSite({ siteId, site }: UpdateSiteRequest) {
+  async updateSite({ siteId, rawData, file }: UpdateSiteRequest) {
     if (!siteId) {
       throw new NotFoundError("Site id was not found");
     }
 
-      const updatedSite = await this.siteRepository.updateSite(siteId, site);
+    let imageUrl = rawData.imageUrl;
+    if (file) {
+       imageUrl = await uploadImage({
+          filePath: file.path,
+          folder: "sites",
+          deleteLocalFile: true
+       });
+    }
+    
+    const site = { ...rawData, imageUrl }
+
+    const updatedSite = await this.siteRepository.updateSite(siteId, site);
       
       return updatedSite;
   }
