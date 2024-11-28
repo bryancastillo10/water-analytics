@@ -1,5 +1,6 @@
 import UserProfile from "@/features/user/components/UserProfile";
 import AppSettings from "@/features/user/components/AppSettings";
+import ThresholdSettings from "../components/ThresholdSettings";
 
 const Settings = () => {
   return (
@@ -9,7 +10,7 @@ const Settings = () => {
         <AppSettings/>
       </div>
       <div className="">
-        <div className="h-[35vh] bg-sky-500">Treshold Settings</div>
+        <ThresholdSettings/>
       </div>
    </main>
   )
