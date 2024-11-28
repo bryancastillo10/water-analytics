@@ -1,9 +1,10 @@
-import { DeleteUserRequest, ResetPasswordRequest,  UpdateUserPasswordProps,  UpdateUserRequest} from "@/user/core/interface/IUserRepository";
+import { DeleteUserRequest, FileInput, ResetPasswordRequest,  UpdateUserPasswordProps,  UpdateUserRequest} from "@/user/core/interface/IUserRepository";
 import { UserRepository } from "@/user/user.repository";
 
 import { NotFoundError, ValidationError, AuthenticationError } from "@/infrastructure/errors/customErrors";
 import { generateAndSendVerificationCode } from "@/utils/nodemailer";
 import { toHashPassword } from "@/utils/bcrypt";
+import { uploadImage } from "@/utils/cloudinary";
 
 export class UserService {
     constructor(private readonly userRepository: UserRepository) {
@@ -94,5 +95,21 @@ export class UserService {
         return {
             message: "Password has been updated successfully",
         }
+    }
+
+    async updateProfilePicture(userId: string, file: FileInput) {
+        if (!file) {
+            throw new NotFoundError("Image file not found");
+        }
+
+        const imageUrl = await uploadImage({
+            filePath: file.path,
+            folder: "profile-picture",
+            deleteLocalFile: true
+        });
+
+        const updatedProfile = this.userRepository.updateProfilePicture({userId, imageUrl});
+
+        return updatedProfile;
     }
 }

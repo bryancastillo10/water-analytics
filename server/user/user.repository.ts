@@ -3,7 +3,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 import { DatabaseError } from "@/infrastructure/errors/customErrors";
 
-import { IUserRepository, SaveResetCodeProps, UpdateUserRequest, UpdatePasswordRepo } from "@/user/core/interface/IUserRepository";
+import { IUserRepository, SaveResetCodeProps, UpdateUserRequest, UpdatePasswordRepo, UpdateProfilePicRequest } from "@/user/core/interface/IUserRepository";
 import { UserData } from "@/user/core/entity/user";
 
 export class UserRepository implements IUserRepository {
@@ -128,5 +128,24 @@ export class UserRepository implements IUserRepository {
             }
             throw Error;  
         }
+    }
+  
+  async updateProfilePicture({ userId, imageUrl }: UpdateProfilePicRequest) {
+    try {
+      const updatedUser = await this.prisma.user.update({
+        where: { id: userId },
+        data: {
+          profilePic: imageUrl
+        }
+        });
+      return updatedUser.profilePic as string;
+      }
+      catch (error) {
+        if (error instanceof PrismaClientKnownRequestError) {
+          console.error(error.message);
+          throw new DatabaseError("Database error at updateProfilePicture method");
+        }
+        throw Error;  
+    }
     }
 }

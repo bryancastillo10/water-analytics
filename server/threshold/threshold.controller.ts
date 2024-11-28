@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { ThresholdService } from "./core/service/thresholdService";
+import { ThresholdService } from "@/threshold/core/service/thresholdService";
 
 
 export class ThresholdController {
@@ -12,7 +12,13 @@ export class ThresholdController {
 
     async createThreshold(req: Request, res: Response, next: NextFunction) {
         try {
-            
+            const {userId} = req.params;
+            const threshold  = req.body;
+
+
+            const newThreshold = await this.thresholdService.createThreshold({userId, threshold});
+
+            res.status(201).json({ "message": "A new parameter threshold was created", threshold: newThreshold });
         } catch (error) {
             next(error);
         }
@@ -20,7 +26,11 @@ export class ThresholdController {
 
     async getThreshold(req: Request, res: Response, next: NextFunction) {
         try {
-            
+            const { userId } = req.params;
+
+            const allUserThreshold = await this.thresholdService.getThreshold(userId);
+
+            res.status(200).json(allUserThreshold);
         } catch (error) {
             next(error);
         }
