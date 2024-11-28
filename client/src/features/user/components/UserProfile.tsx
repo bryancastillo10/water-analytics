@@ -1,4 +1,5 @@
 import { User, EnvelopeSimple, PencilSimpleLine, WarningCircle} from "@phosphor-icons/react";
+import { useAppSelector } from "@/lib/redux/hooks";
 
 import TextHeader from "@/components/common/TextHeader";
 import { Button } from "@/components/ui";
@@ -6,6 +7,8 @@ import useDrawer from "@/hook/useDrawer";
 
 
 const UserProfile = () => {
+  const theme = useAppSelector((state) => state.theme.isDarkMode);
+
   const { handleOpenDrawer } = useDrawer();
   const userId = "sample_userId";
   
@@ -46,13 +49,13 @@ const UserProfile = () => {
                 <PencilSimpleLine size={20} onClick={()=>updateUserDrawer(userId)} />
               </div>
             </div>
-            <p className="text-primary text-base mt-1">username123</p>
+            <p className={`${theme ? "text-secondary" :"text-primary"} text-base mt-1`}>username123</p>
             <div className="mt-4">
             <div className="flex items-center gap-x-2">
                 <EnvelopeSimple size={24}  />
                 <h2 className="text-lg font-semibold">Email</h2>
               </div>
-              <p className="text-primary text-base mt-1">your_email@domain.com</p>
+              <p className={`${theme ? "text-secondary" :"text-primary"} text-base mt-1`}>your_email@domain.com</p>
             </div>
           </div>
         </div>

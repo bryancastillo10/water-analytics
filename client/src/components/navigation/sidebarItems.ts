@@ -3,6 +3,7 @@ import {
     GridFour,
     MapPin,
     Gear,
+    NoteBlank,
     type Icon
 } from "@phosphor-icons/react";
 
@@ -35,6 +36,12 @@ export const sidebarItems: sidebarItemsProps[] = [
     },
     {
         id: 4,
+        name: "Notes",
+        icon: NoteBlank,
+        link:"/notes"
+    },
+    {
+        id: 5,
         name: "Settings",
         icon: Gear,
         link:"/settings"

@@ -18,6 +18,7 @@ const App = () => {
           <Route index path="dashboard" element={<Dashboard />} />
           <Route path="data-table" element={<WaterQuality />} />
           <Route path="sites" element={<Sites />} />
+          <Route path="notes" element={<p>Taking Notes Here</p>} />
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<PageNotFound/>} />
