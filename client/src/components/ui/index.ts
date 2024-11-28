@@ -7,6 +7,7 @@ import Toast from "./Toast";
 import CustomSelect from "./CustomSelect";
 import UploadImageInput from "./UploadImageInput";
 import ImagePreview from "./ImagePreview";
+import Switch from "./Switch";
 
 export {
     Button,
@@ -17,5 +18,6 @@ export {
     Toast,
     CustomSelect,
     UploadImageInput,
-    ImagePreview
+    ImagePreview,
+    Switch
 };
