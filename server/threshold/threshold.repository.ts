@@ -2,8 +2,8 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 import { DatabaseError } from "@/infrastructure/errors/customErrors";
-import { CreateThresholdRequest, IThresholdRepository } from "./core/interface/IThresholdRepository";
-import { ThresholdData } from "./core/entity/threshold";
+import { CreateThresholdRequest, IThresholdRepository } from "@/threshold/core/interface/IThresholdRepository";
+import { ThresholdData } from "@/threshold/core/entity/threshold";
 
 export class ThresholdRepository implements IThresholdRepository {
     private prisma = new PrismaClient();
@@ -28,7 +28,7 @@ export class ThresholdRepository implements IThresholdRepository {
 
     async createThreshold({userId, threshold}: CreateThresholdRequest): Promise<ThresholdData> {
         try {
-            const { parameter, minValue, maxValue, unit } = threshold;
+            const { parameter, minValue, maxValue, unit = "NA" } = threshold;
             const newThreshold = await this.prisma.threshold.create({
                 data: {
                     parameter,
@@ -59,7 +59,20 @@ export class ThresholdRepository implements IThresholdRepository {
 
 
     async getThreshold(userId: string): Promise<ThresholdData[]> {
-        throw new Error("Method not implemented.");
+        try {
+            const userThreshold = await this.prisma.threshold.findMany({
+                where: { userId }
+            });
+
+            return userThreshold as ThresholdData[];
+        }
+        catch (error) {
+            if (error instanceof PrismaClientKnownRequestError) {
+                console.error(error.message); 
+                throw new DatabaseError("Database error at createThreshold method");
+              }
+             throw Error;
+        }
     }
     async updateThreshold(thresholdId: string, threshold: Partial<ThresholdData>): Promise<ThresholdData | null> {
         throw new Error("Method not implemented.");

@@ -1,7 +1,7 @@
 import { ThresholdRepository } from "@/threshold/threshold.repository";
 
 import {CreateThresholdRequest} from "@/threshold/core/interface/IThresholdRepository";
-import { ValidationError } from "@/infrastructure/errors/customErrors";
+import { NotFoundError, ValidationError } from "@/infrastructure/errors/customErrors";
 
 export class ThresholdService {
     constructor(private readonly thresholdRepository: ThresholdRepository) {
@@ -9,11 +9,12 @@ export class ThresholdService {
     }
 
     async createThreshold({ userId, threshold }: CreateThresholdRequest) {
-        const { parameter, minValue, maxValue, unit } = threshold;
+        const { parameter, minValue, maxValue} = threshold;
 
-        if (!parameter || minValue === undefined || maxValue === undefined || !unit) {
+        if (!parameter || minValue === undefined || maxValue === undefined ) {
             throw new ValidationError("Threshold data was not found. Parameter, Min Value, Max Value, and Unit are required");
         }
+
         if (!userId) {
             throw new ValidationError("No user id was found");
         }
@@ -23,14 +24,29 @@ export class ThresholdService {
             throw new ValidationError("The user is not auhorized to create a threshold. Admin privileges only");
         }
 
-        const newThreshold = await this.thresholdRepository.createThreshold({userId, threshold});
+        const thresholdWithUnit = {
+            ...threshold,
+            unit: threshold.unit ?? "NA"
+          };
+
+        const newThreshold = await this.thresholdRepository.createThreshold({userId, threshold: thresholdWithUnit});
 
         return newThreshold;
 
     }
 
-    async getThreshold() {
-        throw new Error("Method not yet implemented");
+    async getThreshold(userId: string) {
+        if (!userId) {
+            throw new ValidationError("No user id was found");
+        }
+
+        const allUserThreshold = await this.thresholdRepository.getThreshold(userId);
+        if (!allUserThreshold) {
+            throw new NotFoundError("Failed to fetch the user threshold");
+        }
+
+        return allUserThreshold;
+        
     }
 
     async updateThreshold() {

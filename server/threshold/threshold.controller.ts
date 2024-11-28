@@ -26,7 +26,11 @@ export class ThresholdController {
 
     async getThreshold(req: Request, res: Response, next: NextFunction) {
         try {
-            
+            const { userId } = req.params;
+
+            const allUserThreshold = await this.thresholdService.getThreshold(userId);
+
+            res.status(200).json(allUserThreshold);
         } catch (error) {
             next(error);
         }
