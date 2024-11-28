@@ -28,6 +28,6 @@ export interface CreateSiteRepo {
 
 export interface UpdateSiteRequest {
   siteId: string;
-  rawData: SiteDataInput;
+  rawData: {siteData: SiteDataInput};
   file?: FileInput;
 }
