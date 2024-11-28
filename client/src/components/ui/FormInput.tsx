@@ -54,7 +54,7 @@ const FormInput = ({
       {isPassword && (
         <div
           onClick={toggleVisible}
-          className="absolute z-10 top-12 right-4 cursor-pointer"
+          className="absolute z-10 top-[42px] right-4 cursor-pointer"
         >
           {isVisible ? <EyeSlash size="20" /> : <Eye size="20" />}
         </div>
