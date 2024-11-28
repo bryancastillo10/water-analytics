@@ -3,14 +3,14 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 import { DatabaseError } from "@/infrastructure/errors/customErrors";
 
-import { CreateSiteRequest, ISiteRepository } from "@/site/core/interface/ISiteRepository";
+import { CreateSiteQuery, ISiteRepository } from "@/site/core/interface/ISiteRepository";
 import { SiteData } from "@/site/core/entity/site";
 
 export class SiteRepository implements ISiteRepository {
   private readonly fallback_img = "https://res.cloudinary.com/dzruafjwq/image/upload/v1732538346/ocean_iwsix1.jpg";
   private prisma = new PrismaClient();
 
-  async createSite(data: CreateSiteRequest): Promise<SiteData> {
+  async createSite(data: CreateSiteQuery): Promise<SiteData> {
     try {
       const newSite = await this.prisma.site.create({
       data: {

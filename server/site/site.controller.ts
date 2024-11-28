@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { SiteService } from "@/site/core/service/siteService";
-import { uploadImage } from "@/utils/cloudinary";
+
 
 export class SiteController{
     constructor(private readonly siteService: SiteService) {
@@ -14,20 +14,8 @@ export class SiteController{
         try {
             const rawData = JSON.parse(req.body.siteData);
             const { file } = req;
-
-            if (file) {
-                const imageURL = await uploadImage({
-                    filePath: file.path,
-                    folder: "sites",
-                    deleteLocalFile: true
-                });
-                rawData.siteData.imageUrl = imageURL;
-            } else {
-                rawData.siteData.imageUrl = null;
-            }
-            
-            const newSite = await this.siteService.createSite(rawData);
-
+            const newSite = await this.siteService.createSite({rawData, file});
+ 
             res.status(201).json({ message: "New site has been added", site: newSite });
 
         } catch (error:any) {
@@ -52,20 +40,21 @@ export class SiteController{
             const site = JSON.parse(req.body.siteData);
             const { file } = req;
 
-            if (file) {
-                const imageURL = await uploadImage({
-                    filePath: file.path,
-                    folder: "sites",
-                    deleteLocalFile: true
-                });
-                site.siteData.imageUrl = imageURL;
-            } else {
-                site.siteData.imageUrl = null;
-            }
+            // if (file) {
+            //     const imageURL = await uploadImage({
+            //         filePath: file.path,
+            //         folder: "sites",
+            //         deleteLocalFile: true
+            //     });
+            //     site.siteData.imageUrl = imageURL;
+            // } else {
+            //     site.siteData.imageUrl = null;
+            // }
+            console.log(file);
             
-            const updatedSite = await this.siteService.updateSite({ siteId, site });
+            // const updatedSite = await this.siteService.updateSite({ siteId, site });
 
-            res.status(200).json({ message: "Site has been updated successfully", site: updatedSite });
+            res.status(200).json({ message: "Site has been updated successfully", site: site });
 
         } catch (error) {
             next(error);
