@@ -1,5 +1,5 @@
 import TextHeader from "@/components/common/TextHeader"
-import { sampleThresholds } from "@/features/user/api/mockData"
+import { sampleThresholds } from "@/features/thresholds/api/mockData"
 import { PencilSimpleLine, TrashSimple } from "@phosphor-icons/react"
 
 
