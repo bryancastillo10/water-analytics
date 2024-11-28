@@ -8,6 +8,7 @@ import authRoutes from "@/auth/auth.route";
 import userRoutes from "@/user/user.route";
 import measurementRoutes from "@/measurement/measurement.route";
 import siteRoutes from "@/site/site.route";
+import thresholdRoutes from "@/threshold/threshold.route";
 
 export const startApp = () => {
     const app = express();
@@ -26,6 +27,7 @@ export const startApp = () => {
     app.use("/api/user", userRoutes);
     app.use("/api/water-quality-data", measurementRoutes);
     app.use("/api/site", siteRoutes);
+    app.use("/api/threshold", thresholdRoutes)
 
     // Error Handler Middleware
     app.use(errorHandler);
