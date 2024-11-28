@@ -1,7 +1,7 @@
 import { SiteData } from "@/site/core/entity/site";
 
 export interface ISiteRepository {
-  createSite(data: CreateSiteQuery): Promise<SiteData>;
+  createSite(data: CreateSiteRepo): Promise<SiteData>;
   verifyUser(userId: string): Promise<boolean>;
   getSiteByUser(userId: string): Promise<SiteData[]>;
   updateSite(siteId: string, site: Partial<SiteDataInput>): Promise<SiteData | null>;
@@ -21,7 +21,7 @@ export interface CreateSiteRequest {
   file?: FileInput;
 }
 
-export interface CreateSiteQuery {
+export interface CreateSiteRepo {
   userId: string;
   siteData: SiteDataInput;
 }

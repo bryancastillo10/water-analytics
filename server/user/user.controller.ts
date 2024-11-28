@@ -69,4 +69,23 @@ export class UserController {
             next(error);
         }
     }
+
+
+    async updateProfilePicture(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { file } = req;
+            const userId = req.params.id;
+
+            if (!file) {
+                res.status(400).json({ message: "No file uploaded" });
+                return;
+            }
+
+            const profPicUrl = await this.userService.updateProfilePicture(userId,file);
+
+            res.status(200).json({ "message": "Profile picture has been updated", profPicUrl: profPicUrl });
+        } catch (error) {
+            next(error);
+        }
+    }
 }

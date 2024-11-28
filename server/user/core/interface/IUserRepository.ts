@@ -6,8 +6,11 @@ export interface IUserRepository {
     findUserByUsername(username: string): Promise<UserData | null>;
     deleteUserProfile(userId:string): Promise<void>;
     saveResetCode({email,code,expiry}:SaveResetCodeProps): Promise<void>;
-    updatePassword({ email,hashedPassword}: UpdatePasswordRepo): Promise<void>;
+    updatePassword({ email, hashedPassword }: UpdatePasswordRepo): Promise<void>;
+    updateProfilePicture({userId, imageUrl}:UpdateProfilePicRequest):Promise<string>;
 }
+
+export type FileInput = { path: string }; 
 
 export interface UpdateUserRequest{
     userId: string;
@@ -37,4 +40,9 @@ export interface UpdateUserPasswordProps extends Omit<ResetPasswordRequest, "cod
 export interface DeleteUserRequest{
     userId: string;
     username: string;
+}
+
+export interface UpdateProfilePicRequest{
+    userId: string;
+    imageUrl: string;
 }
