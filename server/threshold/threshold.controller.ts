@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import { CustomRequest } from "@/infrastructure/middleware/type";
 import { ThresholdService } from "@/threshold/core/service/thresholdService";
 
 
@@ -10,9 +11,13 @@ export class ThresholdController {
         this.deleteThreshold = this.deleteThreshold.bind(this);
     }
 
-    async createThreshold(req: Request, res: Response, next: NextFunction) {
+    async createThreshold(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            const {userId} = req.params;
+            const userId = req.user?.id;
+            if (!userId) {
+                throw new Error("User ID is undefined. Ensure auth middleware is applied");
+            }
+            
             const threshold = req.body;
             
             const newThreshold = await this.thresholdService.createThreshold({userId, threshold});
@@ -23,9 +28,12 @@ export class ThresholdController {
         }
     }
 
-    async getThreshold(req: Request, res: Response, next: NextFunction) {
+    async getThreshold(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            const { userId } = req.params;
+            const userId = req.user?.id;
+            if (!userId) {
+                throw new Error("User ID is undefined. Ensure auth middleware is applied");
+            }
 
             const allUserThreshold = await this.thresholdService.getThreshold(userId);
 

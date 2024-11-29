@@ -4,8 +4,8 @@ import { thresholdController } from "@/threshold/threshold.config";
 
 const router = express.Router();
 
-router.post("/user/:userId", protectRoute, thresholdController.createThreshold);
-router.get("/user/:userId", protectRoute, thresholdController.getThreshold);
+router.post("/create", protectRoute, thresholdController.createThreshold);
+router.get("/get", protectRoute, thresholdController.getThreshold);
 router.put("/update/:id", protectRoute, thresholdController.updateThreshold);
 router.delete("/delete/:id", protectRoute, thresholdController.deleteThreshold);
 

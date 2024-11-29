@@ -6,7 +6,7 @@ import { siteController } from "@/site/site.config";
 const router = express.Router();
 
 router.post("/create", protectRoute,upload.single("sitePhoto"),siteController.createSite);
-router.get("/getByUser", protectRoute, siteController.getSiteByUser);
+router.get("/get", protectRoute, siteController.getSiteByUser);
 router.put("/update/:id",protectRoute,upload.single("sitePhoto"), siteController.updateSite);
 router.delete("/delete/:id",protectRoute, siteController.deleteSite);
 
