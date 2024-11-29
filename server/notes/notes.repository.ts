@@ -19,7 +19,7 @@ export class NotesRepository implements INotesRepository{
                 }
             });
 
-            return newNotes as NotesData;
+            return newNotes ;
         }
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
@@ -29,13 +29,29 @@ export class NotesRepository implements INotesRepository{
              throw Error;
         }
     }
-    getNotesByUser(userId: string): Promise<NotesData[]> {
+
+    async getNotesByUser(userId: string): Promise<NotesData[]> {
+        try {
+     
+            const allNotes = await this.prisma.note.findMany({
+                where: { userId }
+            });
+
+            return allNotes as NotesData[];
+        }
+        catch (error) {
+            if (error instanceof PrismaClientKnownRequestError) {
+                console.error(error.message);
+                throw new DatabaseError("Database error at createNotes method");
+              }
+             throw Error;
+        }
+        
+    }
+    async updateNotes(notesId: string, notes: Partial<NotesDataInput>): Promise<NotesData | null> {
         throw new Error("Method not implemented.");
     }
-    updateNotes(notesId: string, notes: Partial<NotesDataInput>): Promise<NotesData | null> {
-        throw new Error("Method not implemented.");
-    }
-    deleteNotes(notesId: string): Promise<void> {
+    async deleteNotes(notesId: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
     

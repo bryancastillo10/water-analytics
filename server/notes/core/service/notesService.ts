@@ -1,7 +1,7 @@
 import { NotesRepository } from "@/notes/notes.repository";
 
 import { CreateNotesRequest, UpdateNotesRequest } from "@/notes/core/interface/INotesRepository";
-import { ValidationError } from "@/infrastructure/errors/customErrors";
+import { ValidationError, NotFoundError } from "@/infrastructure/errors/customErrors";
 
 export class NotesService{
     constructor(private readonly notesRepository: NotesRepository) {
@@ -23,7 +23,16 @@ export class NotesService{
     }
 
     async getNotesByUser(userId: string) {
-        
+        if (!userId) {
+            throw new ValidationError("User id was not found");
+        }
+
+        const userNotes = await this.notesRepository.getNotesByUser(userId);
+        if (!userNotes || null) {
+            throw new NotFoundError("No sites were found for the user");
+          }
+
+        return userNotes;
     }
 
     async updateNotes({notesId, notesData}: UpdateNotesRequest) {

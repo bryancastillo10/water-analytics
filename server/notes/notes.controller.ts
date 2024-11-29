@@ -27,9 +27,15 @@ export class NotesController {
         }
     }
 
-    async getNotesByUser(req: Request, res: Response, next: NextFunction) {
+    async getNotesByUser(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            const allNotesByUser = "Notes Data";
+            const userId = req.user?.id;
+            if (!userId) {
+                throw new Error("User ID is undefined. Ensure auth middleware is applied");
+            }
+
+            const allNotesByUser = await this.notesService.getNotesByUser(userId);
+
             res.status(200).json({ notes: allNotesByUser });
         }
         catch (error) {
