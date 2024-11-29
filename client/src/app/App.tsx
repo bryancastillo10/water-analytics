@@ -5,7 +5,7 @@ import PageNotFound from "@/app/PageNotFound";
 
 import AppLayout from "@/components/layout/AppLayout";
 import { ForgotPassword, SignIn, SignUp } from "@/features/auth";
-import { Dashboard, WaterQuality, Settings,Sites } from "@/features";
+import { DashboardPage, DataTable, Sites, NotesPage, Settings } from "@/components/pages";
 
 const App = () => {
   return (
@@ -15,10 +15,10 @@ const App = () => {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/role" element={<AppLayout />}>
-          <Route index path="dashboard" element={<Dashboard />} />
-          <Route path="data-table" element={<WaterQuality />} />
+          <Route index path="dashboard" element={<DashboardPage />} />
+          <Route path="data-table" element={<DataTable />} />
           <Route path="sites" element={<Sites />} />
-          <Route path="notes" element={<p>Taking Notes Here</p>} />
+          <Route path="notes" element={<NotesPage/>} />
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<PageNotFound/>} />

@@ -1,8 +1,8 @@
 import CustomSelect from "@/components/ui/CustomSelect";
-import DataTable from "@/features/waterquality/components/DataTable";
+import WaterQualityTable from "@/features/waterquality/components/WaterQualityTable";
 
 
-const WaterQuality = () => {
+const DataTable = () => {
   const options = [
     "Domestic",
     "Industrial",
@@ -15,9 +15,9 @@ const WaterQuality = () => {
   return (
     <main>
       <CustomSelect width="w-[300px]" options={options} onChangeValue={(selection) => {console.log(selection)}} />
-      <DataTable/>
+      <WaterQualityTable/>
     </main>
   )
 }
 
-export default WaterQuality;
+export default DataTable;
