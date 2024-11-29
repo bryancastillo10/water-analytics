@@ -1,6 +1,6 @@
 import { ThresholdRepository } from "@/threshold/threshold.repository";
 
-import {CreateThresholdRequest} from "@/threshold/core/interface/IThresholdRepository";
+import {CreateThresholdRequest, UpdateThresholdRequest} from "@/threshold/core/interface/IThresholdRepository";
 import { NotFoundError, ValidationError } from "@/infrastructure/errors/customErrors";
 
 export class ThresholdService {
@@ -49,8 +49,19 @@ export class ThresholdService {
         
     }
 
-    async updateThreshold() {
-        throw new Error("Method not yet implemented");
+    async updateThreshold({thresholdId,values}:UpdateThresholdRequest) {
+        if (!thresholdId) {
+            throw new ValidationError("Threshold id was not found");
+        }
+        const validKeys = ["minValue", "maxValue"];
+        const isValid = Object.keys(values).every((key) => validKeys.includes(key));
+        if (!isValid) {
+            throw new ValidationError("The request must include minValue and maxValue only");
+        }
+        
+        const updatedThreshold = this.thresholdRepository.updateThreshold({ thresholdId, values });
+
+        return updatedThreshold;
     }
 
     async deleteThreshold() {
