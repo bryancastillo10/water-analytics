@@ -4,7 +4,8 @@ import { IAuthResponse } from "@/auth/core/interface/IAuthRepository";
 import { AuthRepository } from "@/auth/auth.repository";
 
 import { toHashPassword, validatePassword } from "@/utils/bcrypt";
-import {verifyToken} from "@/utils/verifyToken";
+import { verifyToken } from "@/utils/verifyToken";
+import { seedUserData } from "@/seed/seed";
 
 export class AuthService {
     constructor(private readonly authRepository: AuthRepository) {
@@ -66,6 +67,9 @@ export class AuthService {
             profilePicURL: "",
         });
 
+        // Seed Data
+        await seedUserData(newUser.id);
+        
         return newUser;
     };
 

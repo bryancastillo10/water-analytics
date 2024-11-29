@@ -1,0 +1,45 @@
+[
+    {
+      "siteName": "Marikina River",
+      "location": "Marikina, NCR, Philippines",
+      "description": "Major river system running through Metro Manila, crucial for domestic water supply",
+      "imageUrl": "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410419/domestic_water_tuqrjj.jpg",
+      "sourceType": "DOMESTIC"
+    },
+    {
+      "siteName": "Laguna Industrial Park Water Treatment Facility",
+      "location": "Santa Rosa, Laguna, Philippines",
+      "description": "Central water treatment facility serving multiple manufacturing plants",
+      "imageUrl": "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410434/industrial_water_aqag7u.jpg",
+      "sourceType": "INDUSTRIAL"
+    },
+    {
+      "siteName": "National Irrigation Administration Canal",
+      "location": "Nueva Ecija, Philippines",
+      "description": "Irrigation system supporting rice fields in Central Luzon",
+      "imageUrl": "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410415/agricultural_iwabd7.jpg",
+      "sourceType": "AGRICULTURAL"
+    },
+    {
+      "siteName": "Ogallala Aquifer Well Site",
+      "location": "Nebraska, USA",
+      "description": "Deep groundwater well tapping into the Ogallala Aquifer system",
+      "imageUrl": "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410432/groundwater_x81rgn.jpg",
+      "sourceType": "GROUNDWATER"
+    },
+    {
+      "siteName": "Lake Ontario Monitoring Station",
+      "location": "Toronto, Ontario, Canada",
+      "description": "Water quality monitoring station for one of the Great Lakes",
+      "imageUrl": "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410427/surface_water_pshwl0.jpg",
+      "sourceType": "SURFACE"
+    },
+    {
+      "siteName": "Rainwater Harvesting Facility",
+      "location": "Vancouver, British Columbia, Canada",
+      "description": "Modern rainwater collection and treatment system for sustainable water usage",
+      "imageUrl": "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410407/others_jbme5z.jpg",
+      "sourceType": "OTHERS"
+    }
+  ]
+  
