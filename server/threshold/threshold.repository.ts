@@ -1,12 +1,34 @@
 import { PrismaClient } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
-import { DatabaseError } from "@/infrastructure/errors/customErrors";
-import { CreateThresholdRequest, IThresholdRepository } from "@/threshold/core/interface/IThresholdRepository";
+import { DatabaseError, ValidationError } from "@/infrastructure/errors/customErrors";
+import { CreateThresholdRequest, IThresholdRepository, UpdateThresholdRequest } from "@/threshold/core/interface/IThresholdRepository";
 import { ThresholdData } from "@/threshold/core/entity/threshold";
+
 
 export class ThresholdRepository implements IThresholdRepository {
     private prisma = new PrismaClient();
+
+    async findUserByThreshold(thresholdId: string): Promise<string>{
+        try {
+            const threshold = await this.prisma.threshold.findUnique({
+                where: { id: thresholdId },
+                select: {userId: true}
+            })
+            if (!threshold) {
+                throw new ValidationError("Threshold not found");
+            }
+    
+            return threshold.userId;
+        }
+        catch (error) {
+            if (error instanceof PrismaClientKnownRequestError) {
+                console.error(error.message);
+                throw new DatabaseError("Database error at getSiteByUser method");
+              }
+             throw Error;
+        }
+    };
 
     async verifyUserRole(userId: string): Promise<boolean> {
         try {
@@ -14,8 +36,12 @@ export class ThresholdRepository implements IThresholdRepository {
                 where: { id: userId }
             });
 
+            if (!user) {
+                throw new ValidationError("User not found");
+            }
+    
             const isUserVerified = user?.role === "ADMIN" || user?.role === "ANALYST";
-            return isUserVerified
+            return isUserVerified;
         }
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
@@ -74,12 +100,36 @@ export class ThresholdRepository implements IThresholdRepository {
              throw Error;
         }
     }
-    async updateThreshold(thresholdId: string, threshold: Partial<ThresholdData>): Promise<ThresholdData | null> {
-        throw new Error("Method not implemented.");
-    }
+    async updateThreshold({ thresholdId, values }: UpdateThresholdRequest): Promise<ThresholdData | null> {
+        try {
+            const updatedThreshold = await this.prisma.threshold.update({
+                where: { id: thresholdId },
+                data: values
+            })
 
+            return updatedThreshold as ThresholdData;
+        }
+        catch (error) {
+            if (error instanceof PrismaClientKnownRequestError) {
+                console.error(error.message);
+                throw new DatabaseError("Database error at createThreshold method");
+            }
+            throw Error;
+        }
+    }
     async deleteThreshold(thresholdId: string): Promise<void> {
-        throw new Error("Method not implemented.");
+        try {
+            await this.prisma.threshold.delete({
+                where: { id: thresholdId }
+            });
+        }
+        catch (error) {
+            if (error instanceof PrismaClientKnownRequestError) {
+                console.error(error.message);
+                throw new DatabaseError("Database error at createThreshold method");
+            }
+            throw Error;
+        }
     }
     
 }
