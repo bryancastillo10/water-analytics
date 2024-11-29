@@ -64,7 +64,17 @@ export class ThresholdService {
         return updatedThreshold;
     }
 
-    async deleteThreshold() {
-        throw new Error("Method not yet implemented");
+    async deleteThreshold(thresholdId:string) {
+        if (!thresholdId) {
+            throw new ValidationError("Threshold id was not found");
+        }
+
+        const userId = await this.thresholdRepository.findUserByThreshold(thresholdId);
+        const isUserVerified = await this.thresholdRepository.verifyUserRole(userId);
+        if (!isUserVerified) {
+            throw new ValidationError("The user is not auhorized to create a threshold. Admin privileges only");
+        }
+
+        await this.thresholdRepository.deleteThreshold(thresholdId);
     }
 }

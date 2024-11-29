@@ -51,7 +51,12 @@ export class ThresholdController {
 
     async deleteThreshold(req: Request, res: Response, next: NextFunction) {
         try {
-            
+            const thresholdId = req.params.id;
+
+            await this.thresholdService.deleteThreshold(thresholdId);
+
+            res.status(200).json({ "message": "Threshold value has been deleted" });
+
         } catch (error) {
             next(error);
         }

@@ -2,6 +2,7 @@ import { ThresholdData } from "@/threshold/core/entity/threshold";
 
 export interface IThresholdRepository{
     createThreshold(threshold: CreateThresholdRequest): Promise<ThresholdData>;
+    findUserByThreshold(thresholdId: string): Promise<string>;
     verifyUserRole(userId: string): Promise<boolean>;
     getThreshold(userId: string): Promise<ThresholdData[]>;
     updateThreshold({thresholdId,values}:UpdateThresholdRequest): Promise<ThresholdData | null>;
