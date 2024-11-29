@@ -50,6 +50,10 @@ export class NotesService{
     }
 
     async deleteNotes(notesId : string) {
-        
+        if (!notesId) {
+            throw new ValidationError("Notes id was not found");
+        }
+
+        await this.notesRepository.deleteNotes(notesId);
     }
 }

@@ -59,7 +59,11 @@ export class NotesController {
 
     async deleteNotes(req: Request, res: Response, next: NextFunction) {
         try {
-            res.status(200).json({ "message": "Notes has been deleted successfully" });
+            const notesId = req.params.id;
+
+            await this.notesService.deleteNotes(notesId);
+
+            res.status(200).json({ "message": "Notes has been deleted" });
         }
         catch (error) {
             next(error);

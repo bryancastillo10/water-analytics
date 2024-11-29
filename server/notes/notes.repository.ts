@@ -66,7 +66,18 @@ export class NotesRepository implements INotesRepository{
         }
     }
     async deleteNotes(notesId: string): Promise<void> {
-        throw new Error("Method not implemented.");
+        try {
+            await this.prisma.note.delete({
+                where: { id: notesId }
+            });   
+        }
+        catch (error) {
+            if (error instanceof PrismaClientKnownRequestError) {
+                console.error(error.message);
+                throw new DatabaseError("Database error at createNotes method");
+              }
+             throw Error;
+        }
     }
     
 }
