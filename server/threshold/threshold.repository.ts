@@ -1,11 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
-import { DatabaseError } from "@/infrastructure/errors/customErrors";
+import { DatabaseError, ValidationError } from "@/infrastructure/errors/customErrors";
 import { CreateThresholdRequest, IThresholdRepository, UpdateThresholdRequest } from "@/threshold/core/interface/IThresholdRepository";
 import { ThresholdData } from "@/threshold/core/entity/threshold";
 
-import { ValidationError } from "@/infrastructure/errors/customErrors";
+
 export class ThresholdRepository implements IThresholdRepository {
     private prisma = new PrismaClient();
 
