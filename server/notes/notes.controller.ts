@@ -45,7 +45,12 @@ export class NotesController {
 
     async updateNotes(req: Request, res: Response, next: NextFunction) {
         try {
-            res.status(200).json({ "message": "Notes has been updated" });
+            const notesId = req.params.id;
+            const notesData = req.body;
+
+            const updatedNotes = await this.notesService.updateNotes(notesId, notesData);
+
+            res.status(200).json({ "message": "Notes has been updated", notes: updatedNotes });
         }
         catch (error) {
             next(error);

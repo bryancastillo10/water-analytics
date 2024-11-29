@@ -45,11 +45,25 @@ export class NotesRepository implements INotesRepository{
                 throw new DatabaseError("Database error at createNotes method");
               }
              throw Error;
-        }
-        
+        }     
     }
+
     async updateNotes(notesId: string, notes: Partial<NotesDataInput>): Promise<NotesData | null> {
-        throw new Error("Method not implemented.");
+        try {
+            const updatedNotes = await this.prisma.note.update({
+                where: { id: notesId },
+                data: { ...notes }
+            })
+
+            return updatedNotes;
+        }
+        catch (error) {
+            if (error instanceof PrismaClientKnownRequestError) {
+                console.error(error.message);
+                throw new DatabaseError("Database error at createNotes method");
+              }
+             throw Error;
+        }
     }
     async deleteNotes(notesId: string): Promise<void> {
         throw new Error("Method not implemented.");

@@ -13,8 +13,3 @@ export interface CreateNotesRequest{
     userId: string;
     notesData: NotesData;
 }
-
-export interface UpdateNotesRequest{
-    notesId: string;
-    notesData: Partial<NotesData>;
-}
