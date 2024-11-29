@@ -1,14 +1,23 @@
 import { Request, Response, NextFunction } from "express";
 import { NotesService } from "@/notes/core/service/notesService";
+import { CustomRequest } from "@/infrastructure/middleware/type";
 
 export class NotesController {
     constructor(private readonly notesService: NotesService) {
         this.createNotes = this.createNotes.bind(this);
+        this.getNotesByUser = this.getNotesByUser.bind(this);
+        this.updateNotes = this.updateNotes.bind(this);
+        this.deleteNotes = this.deleteNotes.bind(this);
     }
 
-    async createNotes(req: Request, res: Response, next: NextFunction) {
+    async createNotes(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            res.status(201).json({ "message": "Notes has been created successfully" });
+            const userId = req.user?.id!;
+            const notesData = req.body;
+
+            const newNotes = await this.notesService.createNotes({userId, notesData});
+
+            res.status(201).json({ "message": "Notes has been created successfully", notes: newNotes });
         }
         catch (error) {
             next(error);

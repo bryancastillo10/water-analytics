@@ -4,5 +4,5 @@ export class NotesData {
     
     title!: string;
     content!: string;
-    isCompleted!: string;
+    isCompleted!: boolean;
 }
