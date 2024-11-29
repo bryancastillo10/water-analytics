@@ -22,7 +22,7 @@ export class AuthRepository implements IAuthRepository {
                 role: signUpData.role,
               },
             });
-
+          
             return {
               id: newUser.id,
               username: newUser.username,
