@@ -7,9 +7,9 @@ import { uploadImage } from "@/utils/cloudinary";
 export class SiteService {
   constructor(private readonly siteRepository: SiteRepository) { }
   
-  async createSite({ rawData, file }: CreateSiteRequest) {
+  async createSite({ userId, rawData, file }: CreateSiteRequest) {
     
-    const { userId, siteData: nestedData } = rawData;
+    const { siteData: nestedData } = rawData;
     const { siteName, location, description, sourceType } = nestedData;
 
     if (!siteName || !location || !description || !sourceType) {

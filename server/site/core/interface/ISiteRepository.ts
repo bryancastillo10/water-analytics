@@ -14,6 +14,7 @@ export type FileInput = { path: string };
 
 
 export interface CreateSiteRequest {
+  userId: string;
   rawData: {
     userId: string;
     siteData: SiteDataInput;

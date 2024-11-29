@@ -12,8 +12,11 @@ export class NotesController {
 
     async createNotes(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            const userId = req.user?.id!;
+            const userId = req.user?.id;
             const notesData = req.body;
+            if (!userId) {
+                throw new Error("User ID is undefined. Ensure auth middleware is applied");
+            }
 
             const newNotes = await this.notesService.createNotes({userId, notesData});
 
