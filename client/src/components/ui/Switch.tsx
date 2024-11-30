@@ -13,7 +13,7 @@ const Switch = ({isOn,toggleSwitch}:SwitchProps) => {
           `}
           onClick={toggleSwitch}>
           <div
-              className={`absolute top-1 transform left-2 size-6 rounded-full duration-300 ease-in-out hover:animate-pulse
+              className={`absolute top-1 transform transition-all left-2 size-6 rounded-full duration-300 ease-in-out hover:animate-pulse
                     ${isOn ? "translate-x-6 bg-secondary": "translate-x-0 bg-primary"}
               `} />
           {isOn ? <Sun size="18" className="absolute left-2 top-2 text-secondary duration-300 ease-in-out" />

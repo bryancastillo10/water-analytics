@@ -1,49 +1,55 @@
 import TextHeader from '@/components/common/TextHeader';
-import { Switch, Button } from '@/components/ui';
-import { Palette, ShieldCheck, Bell } from '@phosphor-icons/react';
+import { Switch } from '@/components/ui';
+import SettingItem from '@/features/user/components/SettingItem';
+
+import { Palette, Bell, Info, PaperPlane } from '@phosphor-icons/react';
 
 import { useAppSelector, useAppDispatch } from '@/lib/redux/hooks';
 import { setIsDarkMode } from '@/lib/redux/states/themeSlice';
-import useDrawer from '@/hook/useDrawer';
+
 
 const AppSettings = () => {
   const dispatch = useAppDispatch();
   const theme = useAppSelector((state) => state.theme.isDarkMode);
-  const { handleOpenDrawer } = useDrawer();
-  
-  const resetPasswordDrawer = () => {
-    handleOpenDrawer("Reset Your Password", "ResetPasswordForm");
-  };
 
-   const toggleSwitch = () => {
-        dispatch(setIsDarkMode(!theme));
-    }
+  const toggleSwitch = () => {
+    dispatch(setIsDarkMode(!theme));
+  }
+
   return (
-    <section className="px-6 py-4">
-        <TextHeader text="App Settings" />
-        <section className="grid grid-cols-3 place-items-start gap-y-3">
-                <div className="col-span-2 flex items-center gap-2">
-                    <Palette size="24"/> 
-                    <h1 className="text-lg font-semibold">Theme</h1>
-              </div>
-              <div className="my-2">
-                  <Switch isOn={theme} toggleSwitch={toggleSwitch} />
-              </div>
-            <div className="col-span-2 flex items-center gap-2">
-                <ShieldCheck size="24"/> 
-                <h1 className="text-lg font-semibold">Reset Password</h1>
-              </div>
-              <div className=" my-2">
-                  <Button action={resetPasswordDrawer} variant="primary">Reset</Button>
-              </div>
-            <div className="col-span-2 flex items-center gap-2">
-                <Bell size="24"/> 
-                  <h1 className="text-lg font-semibold">Email Notifications</h1>
-            </div>
-            
-        
-        </section>
+    <section className="px-6 py-6">
+      <TextHeader text="App Settings" />
+      <div className="grid grid-cols-1  gap-6 mt-4">
+      <div className="flex items-center justify-between p-4 rounded-lg shadow-md">
+        <div className="flex items-center gap-4 overflow-hidden">
+          <div className={`p-2 rounded-full ${theme ? "bg-darkGray text-secondary": "bg-primary text-light"}`}>
+            <Palette size={24} />
+          </div>
+            <span className="font-semibold text-sm overflow-hidden">Theme</span>
+          </div>
+          <div><Switch isOn={theme} toggleSwitch={toggleSwitch} /></div>
+        </div>
+        <SettingItem
+          icon={Bell}
+          label="Email Notifications"
+          btnLabel="Manage"
+          action={()=>{}}
+        />
+        <SettingItem
+          icon={PaperPlane}
+          label="Newsletter Subscription"
+          btnLabel="Subscribe"
+          action={()=>{}}
+        />
+        <SettingItem
+          icon={Info}
+          label="App Info"
+          btnLabel="View"
+          action={()=>{}}
+        />
+      </div>
     </section>
+
   )
 }
 
