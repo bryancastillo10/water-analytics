@@ -7,6 +7,8 @@ import UpdateProfilePicture from "@/features/user/components/UpdateProfilePictur
 import DeleteAccountConfirmation from "@/features/user/components/DeleteAccountConfirmation";
 import ResetPasswordForm from "@/features/user/components/ResetPasswordForm";
 
+import UpdateThresholdForm from "@/features/thresholds/components/UpdateThresholdForm";
+
 export const drawerForms: Record<string, React.ComponentType<any>> = {
     // Site
     AddSiteForm,
@@ -17,5 +19,8 @@ export const drawerForms: Record<string, React.ComponentType<any>> = {
     UpdateUserForm,
     UpdateProfilePicture,
     DeleteAccountConfirmation,
-    ResetPasswordForm
+    ResetPasswordForm,
+
+    // Threshold
+    UpdateThresholdForm
 };

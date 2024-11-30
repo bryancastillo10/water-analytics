@@ -17,7 +17,7 @@ const Sites = () => {
       <div className="ml-10 xl:ml-0 my-4">
         <Button action={addSite} variant="primary">Add More Sites</Button>
       </div>
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 place-items-center xl:place-items-start">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 place-items-center xl:place-items-start">
         {mockSiteData.map((site) => (
           <SiteCard key={site.id} siteData={site} />
         ))}

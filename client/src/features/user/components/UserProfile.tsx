@@ -59,7 +59,7 @@ const UserProfile = () => {
             </div>
           </div>
         </div>
-        <div className="mt-4 flex items-center justify-center xl:justify-start gap-4 w-full ">
+        <div className="mt-4 flex flex-col md:flex-row items-center justify-center xl:justify-start gap-4 w-full ">
           <Button action={()=>updateProfilePictureDrawer()} fontSize="text-sm" variant="outline">
             <span className="flex items-center gap-1">
               <PencilSimpleLine size="14"/> Update Photo
