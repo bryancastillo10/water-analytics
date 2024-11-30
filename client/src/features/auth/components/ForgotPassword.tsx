@@ -5,7 +5,7 @@ import { ProgressBar } from "@/components/common";
 import { FormInput, Button, CodeInput } from "@/components/ui";
 import AuthContainer from "./AuthContainer";
 
-enum STEP {
+export enum STEP {
     EMAIL = 0,
     VALIDATION = 1,
     RESETPASSWORD=2

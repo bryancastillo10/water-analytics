@@ -1,7 +1,7 @@
-import DashboardCard from "@/features/dashboard/components/DashboardCard"
-import { statisticsCard } from "../api/mockData"
+import DashboardCard from "@/features/dashboard/components/DashboardCard";
+import { statisticsCard } from "@/features/dashboard/api/mockData";
 
-const Dashboard = () => {
+const DashboardPage = () => {
   return (
     <main className="">
       <div className="grid gap-y-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-4 sm:place-items-center xl:place-items-start gap-8">
@@ -49,4 +49,4 @@ const Dashboard = () => {
   );
 }
 
-export default Dashboard
+export default DashboardPage;
