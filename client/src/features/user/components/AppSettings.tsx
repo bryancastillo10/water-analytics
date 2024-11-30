@@ -4,10 +4,16 @@ import { Palette, ShieldCheck, Bell } from '@phosphor-icons/react';
 
 import { useAppSelector, useAppDispatch } from '@/lib/redux/hooks';
 import { setIsDarkMode } from '@/lib/redux/states/themeSlice';
+import useDrawer from '@/hook/useDrawer';
 
 const AppSettings = () => {
   const dispatch = useAppDispatch();
   const theme = useAppSelector((state) => state.theme.isDarkMode);
+  const { handleOpenDrawer } = useDrawer();
+  
+  const resetPasswordDrawer = () => {
+    handleOpenDrawer("Reset Your Password", "ResetPasswordForm");
+  };
 
    const toggleSwitch = () => {
         dispatch(setIsDarkMode(!theme));
@@ -28,7 +34,7 @@ const AppSettings = () => {
                 <h1 className="text-lg font-semibold">Reset Password</h1>
               </div>
               <div className=" my-2">
-                  <Button variant="primary">Reset</Button>
+                  <Button action={resetPasswordDrawer} variant="primary">Reset</Button>
               </div>
             <div className="col-span-2 flex items-center gap-2">
                 <Bell size="24"/> 
