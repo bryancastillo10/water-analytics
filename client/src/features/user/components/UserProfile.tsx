@@ -1,4 +1,4 @@
-import { User, EnvelopeSimple, PencilSimpleLine, WarningCircle} from "@phosphor-icons/react";
+import { User, EnvelopeSimple, PencilSimpleLine, WarningCircle, ShieldCheck} from "@phosphor-icons/react";
 import { useAppSelector } from "@/lib/redux/hooks";
 
 import TextHeader from "@/components/common/TextHeader";
@@ -19,6 +19,10 @@ const UserProfile = () => {
   const updateProfilePictureDrawer = () => {
     handleOpenDrawer("Update Your Profile Picture", "UpdateProfilePicture");
   };
+
+  const resetPasswordDrawer = () => {
+    handleOpenDrawer("Reset Your Password","ResetPasswordForm")
+  }
 
   const deleteUserDrawer = () => {
     handleOpenDrawer("Delete Account Confirmation", "DeleteAccountConfirmation");
@@ -63,6 +67,11 @@ const UserProfile = () => {
           <Button action={()=>updateProfilePictureDrawer()} fontSize="text-sm" variant="outline">
             <span className="flex items-center gap-1">
               <PencilSimpleLine size="14"/> Update Photo
+            </span>
+        </Button>
+        <Button action={()=>resetPasswordDrawer()} fontSize="text-sm" variant="outline">
+            <span className="flex items-center gap-1">
+              <ShieldCheck size="14"/> Reset Password
             </span>
           </Button>
           <Button action={()=> deleteUserDrawer()} fontSize="text-sm" variant="danger">
