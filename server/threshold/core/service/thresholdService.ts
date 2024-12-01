@@ -9,9 +9,9 @@ export class ThresholdService {
     }
 
     async createThreshold({ userId, threshold }: CreateThresholdRequest) {
-        const { parameter, minValue, maxValue} = threshold;
+        const { parameter, value } = threshold;
 
-        if (!parameter || minValue === undefined || maxValue === undefined ) {
+        if (!parameter || value === undefined ) {
             throw new ValidationError("Threshold data was not found. Parameter, Min Value, Max Value, and Unit are required");
         }
 
@@ -27,7 +27,12 @@ export class ThresholdService {
         const thresholdWithUnit = {
             ...threshold,
             unit: threshold.unit ?? "NA"
-          };
+        };
+        
+        if (value === null) {
+            throw new ValidationError("null value cannot be processed");
+        }
+        
 
         const newThreshold = await this.thresholdRepository.createThreshold({userId, threshold: thresholdWithUnit});
 
@@ -49,17 +54,21 @@ export class ThresholdService {
         
     }
 
-    async updateThreshold({thresholdId,values}:UpdateThresholdRequest) {
+    async updateThreshold({thresholdId,value}:UpdateThresholdRequest) {
         if (!thresholdId) {
             throw new ValidationError("Threshold id was not found");
         }
-        const validKeys = ["minValue", "maxValue"];
-        const isValid = Object.keys(values).every((key) => validKeys.includes(key));
+        const validKey = ["value"];
+        const isValid = Object.keys(value).every((key) => validKey.includes(key));
         if (!isValid) {
-            throw new ValidationError("The request must include minValue and maxValue only");
+            throw new ValidationError("The request must include only the value");
+        }
+
+        if (value === null) {
+            throw new ValidationError("null value cannot be processed");
         }
         
-        const updatedThreshold = this.thresholdRepository.updateThreshold({ thresholdId, values });
+        const updatedThreshold = this.thresholdRepository.updateThreshold({ thresholdId, value });
 
         return updatedThreshold;
     }

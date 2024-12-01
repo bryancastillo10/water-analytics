@@ -54,13 +54,12 @@ export class ThresholdRepository implements IThresholdRepository {
 
     async createThreshold({userId, threshold}: CreateThresholdRequest): Promise<ThresholdData> {
         try {
-            const { parameter, minValue, maxValue, unit = "NA" } = threshold;
+            const { parameter, value, unit = "NA" } = threshold;
             const newThreshold = await this.prisma.threshold.create({
                 data: {
                     parameter,
                     userId,
-                    minValue,
-                    maxValue,
+                    value,
                     unit
                 }
             });
@@ -69,8 +68,7 @@ export class ThresholdRepository implements IThresholdRepository {
                 id: newThreshold.id,
                 userId: newThreshold.userId,
                 parameter: newThreshold.parameter,
-                minValue: newThreshold.minValue!,
-                maxValue: newThreshold.maxValue!,
+                value: newThreshold.value || 0,
                 unit: newThreshold.unit
             };
             }
@@ -100,11 +98,11 @@ export class ThresholdRepository implements IThresholdRepository {
              throw Error;
         }
     }
-    async updateThreshold({ thresholdId, values }: UpdateThresholdRequest): Promise<ThresholdData | null> {
+    async updateThreshold({ thresholdId, value }: UpdateThresholdRequest): Promise<ThresholdData | null> {
         try {
             const updatedThreshold = await this.prisma.threshold.update({
                 where: { id: thresholdId },
-                data: values
+                data: {value: value}
             })
 
             return updatedThreshold as ThresholdData;
