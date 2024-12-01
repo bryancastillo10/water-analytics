@@ -16,7 +16,7 @@ const ThresholdSettings = () => {
     handleOpenDrawer("Edit your threshold values", "UpdateThresholdForm", {thresholdData: sampleThresholds});
   }
 
-  const colHeaders = ["Parameter", "Unit", "Min Value", "Max Value"];
+  const colHeaders = ["Parameter", "Unit", "Value"];
   const getThresholdValues = (index: number, threshold:IThresholdData ) =>{
     switch (index) {
       case 0:
@@ -24,9 +24,7 @@ const ThresholdSettings = () => {
       case 1:
         return threshold.unit;
       case 2:
-        return threshold.minValue;
-      case 3:
-        return threshold.maxValue;
+        return threshold.value;
       default:
         return threshold.parameter;
       }
@@ -37,7 +35,7 @@ const ThresholdSettings = () => {
           <TextHeader text="Threshold Settings" />
           <div className="w-fit relative border mt-4 border-neutral rounded-t-xl">
           {/* Table Header */}
-            <div className={`hidden md:grid grid-cols-4  gap-4 rounded-t-xl text-center font-semibold tracking-wider
+            <div className={`hidden md:grid grid-cols-3  gap-4 rounded-t-xl text-center font-semibold tracking-wider
               ${theme ? "bg-darkGray text-secondary":"bg-primary text-light"}
               `}>
                 {colHeaders.map((col) => <p key={col}  className="px-1 py-2">{col}</p>)}
