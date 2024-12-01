@@ -1,49 +1,33 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useResetPassword, {STEP} from "@/features/auth/hooks/useResetPassword";
 import { Envelope, Lock, Key } from "@phosphor-icons/react";
+
 import { ProgressBar } from "@/components/common";
 import { FormInput, Button, CodeInput } from "@/components/ui";
-import AuthContainer from "./AuthContainer";
-
-export enum STEP {
-    EMAIL = 0,
-    VALIDATION = 1,
-    RESETPASSWORD=2
-}
+import AuthContainer from "@/features/auth/components/AuthContainer";
 
 const ForgotPassword = () => {
-  const [step, setStep] = useState(STEP.EMAIL);
   const navigate = useNavigate();
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [confirmPw, setConfirmPw] = useState<string>("");
-
-    const stepBackward = () => {
-        setStep((val) => val - 1);
-    }
-
-    const stepForward = () => {
-        setStep((val) => val + 1);
-    }
-  
-   const handleCompletedCode = (code:string) => {
-    console.log(code);
-    }
+  const {
+    step,
+    resetData,
+    stepForward,
+    stepBackward,
+    onResetDataChange,
+    handleEmailSubmit,
+    handleCodeVerification,
+    handlePasswordReset,
+} = useResetPassword();
 
   let bodyContent = (
     <>
-       <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            stepForward();
-          }}
-        >
+       <form onSubmit={handleEmailSubmit}>
         <FormInput
           id="email"
           label="Email"
           icon={Envelope}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={resetData.email}
+          onChange={(e) => onResetDataChange("email", e.target.value)}
           validationMessage="your.email@domain.com"
         />
         <div className="flex items-center justify-between gap-x-2">
@@ -67,10 +51,9 @@ const ForgotPassword = () => {
          <form
           onSubmit={(e) => {
             e.preventDefault();
-            stepForward();
           }}
         >
-          <CodeInput length={5} onComplete={handleCompletedCode} />
+          <CodeInput length={5} onComplete={(code)=> handleCodeVerification(code)} />
           <div className="flex items-center justify-between gap-x-2">
             <Button
               action={stepBackward}
@@ -100,19 +83,14 @@ const ForgotPassword = () => {
   if (step === STEP.RESETPASSWORD) {
     bodyContent = (
       <>
-         <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            stepForward();
-          }}
-        >
+         <form onSubmit={handlePasswordReset}>
           <FormInput
             id="password"
             label="New Password"
             isPassword
             icon={Lock}
-            value={email}
-            onChange={(e) => setPassword(e.target.value)}
+            value={resetData.password}
+            onChange={(e) => onResetDataChange("password", e.target.value)}
             validationMessage="Alphanumeric characters"
           />
 
@@ -121,8 +99,8 @@ const ForgotPassword = () => {
             label="Confirm Password"
             isPassword
             icon={Key}
-            value={email}
-            onChange={(e) => setConfirmPw(e.target.value)}
+            value={resetData.confirmPassword}
+            onChange={(e) => onResetDataChange("confirmPassword", e.target.value)}
             validationMessage="Re-type for password confirmation"
           />
           <div className="flex items-center justify-between gap-x-2">

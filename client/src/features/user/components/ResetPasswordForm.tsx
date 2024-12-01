@@ -1,45 +1,30 @@
-import { useState } from "react";
 import { Envelope,ArrowLeft, Lock, Key } from "@phosphor-icons/react";
 
 import { ProgressBar } from "@/components/common";
 import { Button,FormInput, CodeInput } from "@/components/ui";
 import { FormButtons } from "@/components/layout";
 
-import {STEP} from "@/features/auth/components/ForgotPassword";
+import useResetPassword, {STEP} from "@/features/auth/hooks/useResetPassword";
 
 const ResetPasswordForm = () => {
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [confirmPw, setConfirmPw] = useState<string>("");
-  
-    const [step, setStep] = useState(STEP.EMAIL);
-
-    const stepBackward = () => {
-        setStep((val) => val - 1);
-    }
-
-    const stepForward = () => {
-        setStep((val) => val + 1);
-    }
-
-    const handleCompletedCode = (code:string) => {
-        console.log(code);
-        }
+    const {
+        step,
+        resetData,
+        stepBackward,
+        onResetDataChange,
+        handleEmailSubmit,
+        handleCodeVerification,
+        handlePasswordReset,
+    } = useResetPassword();
 
     let bodyContent = (
-        <form
-            onSubmit=
-            {(e) => {
-                e.preventDefault();
-                stepForward();
-            }}
-        >
+        <form onSubmit={handleEmailSubmit}>
             <FormInput
                 id="email"
                 label="Email"
                 icon={Envelope}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={resetData.email}
+                onChange={(e) => onResetDataChange("email", e.target.value)}
                 validationMessage="your.email@domain.com"
             />
             <div className="my-8">
@@ -54,10 +39,9 @@ const ResetPasswordForm = () => {
             <form
                 onSubmit={(e) => {
                 e.preventDefault();
-                stepForward();
               }}
             >
-            <CodeInput length={5} onComplete={handleCompletedCode} />
+            <CodeInput length={5} onComplete={(code)=> handleCodeVerification(code)} />
             <div className="my-8">
                 <Button 
                     action={stepBackward} 
@@ -73,14 +57,14 @@ const ResetPasswordForm = () => {
 
     if (step === STEP.RESETPASSWORD) {
         bodyContent = (
-            <form>
+            <form onSubmit={handlePasswordReset}>
             <FormInput
                 id="password"
                 label="New Password"
                 isPassword
                 icon={Lock}
-                value={email}
-                onChange={(e) => setPassword(e.target.value)}
+                value={resetData.password}
+                onChange={(e)=> onResetDataChange("password",e.target.value)}
                 validationMessage="Alphanumeric characters"
             />
 
@@ -89,8 +73,8 @@ const ResetPasswordForm = () => {
                 label="Confirm Password"
                 isPassword
                 icon={Key}
-                value={email}
-                onChange={(e) => setConfirmPw(e.target.value)}
+                value={resetData.confirmPassword}
+                onChange={(e)=> onResetDataChange("confirmPassword",e.target.value)}
                 validationMessage="Re-type for password confirmation"
                 />
                 <div className="my-8">

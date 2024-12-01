@@ -8,6 +8,7 @@ import DeleteAccountConfirmation from "@/features/user/components/DeleteAccountC
 import ResetPasswordForm from "@/features/user/components/ResetPasswordForm";
 
 import UpdateThresholdForm from "@/features/thresholds/components/UpdateThresholdForm";
+import DeleteThresholdForm from "@/features/thresholds/components/DeleteThresholdForm";
 
 export const drawerForms: Record<string, React.ComponentType<any>> = {
     // Site
@@ -22,5 +23,6 @@ export const drawerForms: Record<string, React.ComponentType<any>> = {
     ResetPasswordForm,
 
     // Threshold
-    UpdateThresholdForm
+    UpdateThresholdForm,
+    DeleteThresholdForm
 };
