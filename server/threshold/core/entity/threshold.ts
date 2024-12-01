@@ -3,7 +3,6 @@ export class ThresholdData {
     userId!: string;
 
     parameter!: string;  
-    minValue!: number;
-    maxValue!: number;
+    value!: number;
     unit!: string;  
 }

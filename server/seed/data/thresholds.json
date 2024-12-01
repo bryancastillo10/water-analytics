@@ -1,56 +1,47 @@
 [
     {
       "parameter": "pH",
-      "minValue": 6.5,
-      "maxValue": 8.5,
+      "value": 6.5,
       "unit": ""
     },
     {
-      "parameter": "suspendedSolids",
-      "minValue": 0,
-      "maxValue": 500,
+      "parameter": "Total Suspended Solids",
+      "value": 200,
       "unit": "mg/L"
     },
     {
-      "parameter": "totalCOD",
-      "minValue": 0,
-      "maxValue": 150,
+      "parameter": "Total COD",
+      "value": 100,
       "unit": "mg/L"
     },
     {
-      "parameter": "fecalColiform",
-      "minValue": 0,
-      "maxValue": 1000,
+      "parameter": "Fecal Coliform",
+      "value": 1000,
       "unit": "MPN/100mL"
     },
     {
-      "parameter": "temperature",
-      "minValue": 0,
-      "maxValue": 35,
+      "parameter": "Temperature",
+      "value": 35,
       "unit": "°C"
     },
     {
-      "parameter": "dissolvedOxygen",
-      "minValue": 4.0,
-      "maxValue": 10.0,
+      "parameter": "Dissolved Oxygen",
+      "value": 10.0,
       "unit": "mg/L"
     },
     {
-      "parameter": "ammonia",
-      "minValue": 0,
-      "maxValue": 5.0,
+      "parameter": "Ammonia as N",
+      "value": 5,
       "unit": "mg/L"
     },
     {
-      "parameter": "nitrates",
-      "minValue": 0,
-      "maxValue": 10.0,
+      "parameter": "Nitrates as N",
+      "value": 10.0,
       "unit": "mg/L"
     },
     {
-      "parameter": "phosphates",
-      "minValue": 0,
-      "maxValue": 1.0,
+      "parameter": "Phosphates as P",
+      "value": 1,
       "unit": "mg/L"
     }
   ]

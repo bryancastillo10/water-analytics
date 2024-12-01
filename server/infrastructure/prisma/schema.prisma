@@ -94,8 +94,7 @@ model Threshold {
   
   // Parameter thresholds
   parameter String   
-  minValue  Float?
-  maxValue  Float?
+  value  Float?
   unit      String
   
   // Relationships
