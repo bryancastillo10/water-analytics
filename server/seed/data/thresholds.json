@@ -30,17 +30,17 @@
       "unit": "mg/L"
     },
     {
-      "parameter": "Ammonia Nitrogen",
+      "parameter": "Ammonia as N",
       "value": 5,
       "unit": "mg/L"
     },
     {
-      "parameter": "Nitrates",
+      "parameter": "Nitrates as N",
       "value": 10.0,
       "unit": "mg/L"
     },
     {
-      "parameter": "Phosphates",
+      "parameter": "Phosphates as P",
       "value": 1,
       "unit": "mg/L"
     }
