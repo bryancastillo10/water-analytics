@@ -5,7 +5,7 @@ import PageNotFound from "@/app/PageNotFound";
 
 import AppLayout from "@/components/layout/AppLayout";
 import { ForgotPassword, SignIn, SignUp } from "@/features/auth";
-import { DashboardPage, DataTable, Sites, NotesPage, Settings } from "@/components/pages";
+import { DashboardPage, DataTablePage, Sites, NotesPage, Settings } from "@/components/pages";
 
 const App = () => {
   return (
@@ -16,7 +16,7 @@ const App = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/role" element={<AppLayout />}>
           <Route index path="dashboard" element={<DashboardPage />} />
-          <Route path="data-table" element={<DataTable />} />
+          <Route path="data-table" element={<DataTablePage />} />
           <Route path="sites" element={<Sites />} />
           <Route path="notes" element={<NotesPage/>} />
           <Route path="settings" element={<Settings />} />

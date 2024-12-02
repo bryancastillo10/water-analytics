@@ -1,25 +1,29 @@
-interface MeasurementData {
-    date?: Date;
-    pH?: number;
-    temperature?: number;
-    dissolvedOxygen?: number;
-    totalCOD?: number;
-    suspendedSolids?: number;
-    fecalColiform?: number;
-    ammonia?: number;
-    nitrates?: number;
-    phosphates?: number;
+export interface IMeasurementData {
+    id: string;
+    siteName: string;
+    location: string;
+    date: string;
+    pH: number | null;
+    suspendedSolids: number | null;
+    totalCOD: number | null;
+    fecalColiform: number | null;
+    temperature: number | null;
+    dissolvedOxygen: number | null;
+    ammonia: number | null;
+    nitrates: number | null;
+    phosphates: number | null;
 }
+  
 
 // Create
 export interface MutateMeasurementRequest{
     id: string;
-    data: MeasurementData;
+    data: IMeasurementData;
 }
 
 export interface CreateMeasurementResponse{
     message: string;
-    data: MeasurementData;
+    data: IMeasurementData;
 }
 
 // Get
@@ -28,13 +32,13 @@ export interface GetMeasurementRequest{
 }
 
 export interface GetMeasurementResponse{
-    allSiteMeasurements: MeasurementData[];
+    allSiteMeasurements: IMeasurementData[];
 }
 
 // Update
 export interface UpdateMeasurementResponse{
     message: string;
-    measurement: MeasurementData;
+    measurement: IMeasurementData;
 }
 
 // Delete

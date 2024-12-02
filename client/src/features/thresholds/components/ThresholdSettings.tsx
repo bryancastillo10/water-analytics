@@ -32,30 +32,41 @@ const ThresholdSettings = () => {
 
 
   return (
-    <section className="px-6 py-4">
+    <section className="px-6 py-4 w-full xl:w-[50%]">
           <TextHeader text="Threshold Settings" />
-          <table className=" table-cell xl:table-caption w-full border-collapse">
-            <thead className="relative group">
-            <PencilSimpleLine 
-                onClick={updateThreshold}
-                size="28" 
-                className={`absolute opacity-0 group-hover:opacity-100 cursor-pointer duration-300 ease-in-out
-                rounded-full p-1 hover:scale-110 -top-6 right-0  ${theme ? "bg-secondary":"bg-neutral"}`}/>
-            {table.getHeaderGroups().map((headerGroup) => (
+          <table className="table-auto xl:table-fixed w-full border-collapse mt-4 relative group">
+          <thead>
+            <tr>
+              <th>
+                <div
+                  onClick={updateThreshold} 
+                  className={`flex items-center gap-x-2 absolute opacity-0 group-hover:opacity-100 cursor-pointer duration-300 ease-in-out
+                      border border-dashed -top-10 right-0
+                      rounded-full p-2 hover:scale-110  ${theme ? "border-light" : "border-dark"}`}
+                >
+                  <PencilSimpleLine size="20" />
+                  <span className="text-sm hidden xl:block">Edit</span>
+                </div>
+              </th>
+            </tr>
+              {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                    <th key={header.id} className="border bg-primary text-light border-neutral text-left px-3 py-2">
-                    <div {...{
-                      className: header.column.getCanSort() ? "cursor-pointer hover:text-neutral" : "",
-                      onClick: header.column.getToggleGroupingHandler()
-                    }}>
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext())}
-                      {{
-                        asc: <ArrowUp />,
-                        desc: <ArrowDown/>
-                      }[header.column.getIsSorted() as string] ?? null}
+                  {headerGroup.headers.map((header) => (
+                    <th
+                      key={header.id}
+                      className="border bg-primary text-light border-neutral text-left px-3 py-2"
+                    >
+                      <div
+                        {...{
+                          className: header.column.getCanSort() ? "cursor-pointer hover:text-neutral" : "",
+                          onClick: header.column.getToggleGroupingHandler(),
+                        }}
+                      >
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {{
+                          asc: <ArrowUp />,
+                          desc: <ArrowDown />,
+                        }[header.column.getIsSorted() as string] ?? null}
                       </div>
                     </th>
                   ))}
