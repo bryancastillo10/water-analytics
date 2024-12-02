@@ -3,6 +3,7 @@ import { useReactTable, getCoreRowModel, flexRender } from "@tanstack/react-tabl
 
 import { ArrowUp, ArrowDown, PencilSimpleLine, TrashSimple } from "@phosphor-icons/react";
 import { useAppSelector } from "@/lib/redux/hooks";
+import useDrawer from "@/hook/useDrawer";
 
 import { waterQualityColumns } from "@/features/waterquality/lib/waterQualityTableConfig";
 import type { IMeasurementData } from "@/features/waterquality/api/interface";
@@ -15,6 +16,16 @@ interface WaterQualityTableProps {
 const WaterQualityTable = ({ data }: WaterQualityTableProps) => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);
   const [hoveredRow, setHoveredRow] = useState<number | null>(null);
+
+  const { handleOpenDrawer } = useDrawer();
+  
+  const updateMeasurementDrawer = (id:string) => {
+    handleOpenDrawer("Edit your Water Quality Data", "UpdateMeasurementData", {id})
+  };
+
+  const deleteMeasurementDrawer = (id:string) => {
+    handleOpenDrawer("Delete this Water Quality Data", "DeleteMeasurementData", {id})
+  };
  
   const waterTable = useReactTable({
     data,
@@ -68,12 +79,14 @@ const WaterQualityTable = ({ data }: WaterQualityTableProps) => {
               (<div className="absolute right-0 top-0 border border-neutral border-dashed
                     flex items-center gap-2 p-2 rounded-xl">
                 <PencilSimpleLine
+                  onClick={()=>updateMeasurementDrawer(row.original.id)}
                   weight="fill"
                   size="20"
                   className="hover:scale-110 duration-150 ease-in-out cursor-pointer"
                   color={theme ? "#F6F5F4": "#006da3"}
                 />
                 <TrashSimple
+                  onClick={()=>deleteMeasurementDrawer(row.original.id)}
                   weight="fill"
                   size="20"
                   className="hover:scale-110 duration-150 ease-in-out cursor-pointer"
