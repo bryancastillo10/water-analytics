@@ -1,12 +1,8 @@
-import { useState } from "react";
-import { useReactTable, getCoreRowModel, flexRender } from "@tanstack/react-table";
+import { flexRender } from "@tanstack/react-table";
+import { CaretUp, CaretDown, PencilSimpleLine, TrashSimple } from "@phosphor-icons/react";
 
-import { ArrowUp, ArrowDown, PencilSimpleLine, TrashSimple } from "@phosphor-icons/react";
-import { useAppSelector } from "@/lib/redux/hooks";
-import useDrawer from "@/hook/useDrawer";
-
-import { waterQualityColumns } from "@/features/waterquality/lib/waterQualityTableConfig";
 import type { IMeasurementData } from "@/features/waterquality/api/interface";
+import useWaterQualityTable from "@/features/waterquality/hook/useWaterQualityTable";
 
 
 interface WaterQualityTableProps {
@@ -14,25 +10,14 @@ interface WaterQualityTableProps {
 }
 
 const WaterQualityTable = ({ data }: WaterQualityTableProps) => {
-  const theme = useAppSelector((state) => state.theme.isDarkMode);
-  const [hoveredRow, setHoveredRow] = useState<number | null>(null);
-
-  const { handleOpenDrawer } = useDrawer();
-  
-  const updateMeasurementDrawer = (id:string) => {
-    handleOpenDrawer("Edit your Water Quality Data", "UpdateMeasurementData", {id})
-  };
-
-  const deleteMeasurementDrawer = (id:string) => {
-    handleOpenDrawer("Delete this Water Quality Data", "DeleteMeasurementData", {id})
-  };
- 
-  const waterTable = useReactTable({
-    data,
-    columns: waterQualityColumns,
-    debugTable:true,
-    getCoreRowModel: getCoreRowModel()
-  });
+  const {
+    theme,
+    waterTable,
+    updateMeasurementDrawer,
+    deleteMeasurementDrawer,
+    hoveredRow,
+    setHoveredRow
+  } = useWaterQualityTable({data});
 
   return (
     <table className="min-w-full table-auto border-collapse">
@@ -42,15 +27,15 @@ const WaterQualityTable = ({ data }: WaterQualityTableProps) => {
             {headerGroup.headers.map((header) => (
               <th key={header.id} className="border border-primary bg-primary text-light text-left px-3 py-2">
                 <div {...{
-                      className: header.column.getCanSort() ? "cursor-pointer hover:text-neutral" : "",
+                      className: header.column.getCanSort() ? "cursor-pointer select-none hover:text-neutral" : "",
                       onClick: header.column.getToggleGroupingHandler()
                     }}>
                       {flexRender(
                         header.column.columnDef.header,
                         header.getContext())}
                       {{
-                        asc: <ArrowUp />,
-                        desc: <ArrowDown/>
+                        asc: <CaretUp size="24" color="#F6F5F4" />,
+                        desc: <CaretDown size="24" color="#F6F5F4"/>
                       }[header.column.getIsSorted() as string] ?? null}
                 </div>
               </th>
@@ -61,7 +46,7 @@ const WaterQualityTable = ({ data }: WaterQualityTableProps) => {
       <tbody>
         {waterTable.getRowModel().rows.map((row, rowIndex) => (
           <tr
-            className="relative hover:bg-neutral"
+            className={`relative ${theme ? "hover:bg-darkGray":"hover:bg-neutral"}`}
             key={row.id}
             onMouseEnter={() => setHoveredRow(rowIndex)}
             onMouseLeave={() => setHoveredRow(null)}
@@ -76,8 +61,8 @@ const WaterQualityTable = ({ data }: WaterQualityTableProps) => {
             ))}
             <td colSpan={100}>
               { hoveredRow === rowIndex &&
-              (<div className="absolute right-0 top-0 border border-neutral border-dashed
-                    flex items-center gap-2 p-2 rounded-xl">
+              (<div className={`absolute right-0 top-0 
+                    flex items-center gap-2 p-2 rounded-xl ${theme ? "bg-secondary/80": "bg-light/80"}`}>
                 <PencilSimpleLine
                   onClick={()=>updateMeasurementDrawer(row.original.id)}
                   weight="fill"

@@ -37,9 +37,10 @@ const DataTablePage = () => {
               <TextHeader text={siteName} />
               <p className="flex ixtems-center gap-2 text-sm"><MapPin />{location}</p>
             </div>
-            <div className="rounded-full cursor-pointer p-2 duration-300 ease-in-out hover:scale-110 hover:bg-neutral/40 border border-primary border-dashed">
+            <div
+              onClick={()=> addMeasurementDrawer(siteName)}
+              className="rounded-full cursor-pointer p-2 duration-300 ease-in-out hover:scale-110 hover:bg-neutral/40 border border-primary border-dashed">
               <Plus
-                onClick={()=> addMeasurementDrawer(siteName)}
                 className="font-bold text-secondary"
                 size="20"
               />
