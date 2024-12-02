@@ -34,13 +34,17 @@ const ThresholdSettings = () => {
   return (
     <section className="px-6 py-4">
           <TextHeader text="Threshold Settings" />
-          <table className=" table-cell xl:table-caption w-full border-collapse">
+          <table className=" table-cell xl:table-fixed w-full border-collapse">
             <thead className="relative group">
-            <PencilSimpleLine 
-                onClick={updateThreshold}
-                size="28" 
-                className={`absolute opacity-0 group-hover:opacity-100 cursor-pointer duration-300 ease-in-out
-                rounded-full p-1 hover:scale-110 -top-6 right-0  ${theme ? "bg-secondary":"bg-neutral"}`}/>
+              <div className={`flex items-center gap-x-2 absolute opacity-0 group-hover:opacity-100 cursor-pointer duration-300 ease-in-out
+                    border border-dashed 
+                    rounded-full p-2 hover:scale-110 -top-6 right-0 ${theme ? "border-light" : "border-dark"}`}>
+                <PencilSimpleLine 
+                    onClick={updateThreshold}
+                    size="20" 
+                 />
+                <span className="text-sm hidden xl:block">Edit</span>
+              </div>
             {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
