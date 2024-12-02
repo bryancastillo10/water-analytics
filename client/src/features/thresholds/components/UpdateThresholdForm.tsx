@@ -58,7 +58,7 @@ const UpdateThresholdForm = ({thresholdData}:UpdateThresholdFormProps) => {
   
 
   return (
-    <form className="p-6 space-y-4 rounded-lg shadow-md">
+    <form className="p-6 space-y-4 rounded-lg shadow-md" onSubmit={()=>{}}>
       <table className="table-fixed border-collapse w-full">
           <thead>
           {updateTable.getHeaderGroups().map((headerGroup) => (
@@ -77,7 +77,7 @@ const UpdateThresholdForm = ({thresholdData}:UpdateThresholdFormProps) => {
           {updateTable.getRowModel().rows.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <td className="border border-neutral text-left px-3 py-2">
+                  <td key={cell.id} className="border border-neutral text-left px-3 py-2">
                     {flexRender(
                     cell.column.columnDef.cell,
                     cell.getContext()

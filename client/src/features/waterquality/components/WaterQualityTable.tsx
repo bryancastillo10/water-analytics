@@ -29,7 +29,7 @@ const WaterQualityTable = ({ data }: WaterQualityTableProps) => {
         {waterTable.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <th key={header.id} className="border bg-primary text-light border-neutral text-left px-3 py-2">
+              <th key={header.id} className="bg-primary text-light text-left px-3 py-2">
                 <div {...{
                       className: header.column.getCanSort() ? "cursor-pointer hover:text-neutral" : "",
                       onClick: header.column.getToggleGroupingHandler()
