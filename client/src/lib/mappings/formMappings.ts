@@ -11,6 +11,8 @@ import UpdateThresholdForm from "@/features/thresholds/components/UpdateThreshol
 import DeleteThresholdForm from "@/features/thresholds/components/DeleteThresholdForm";
 
 import AddMeasurementData from "@/features/waterquality/components/AddMeasurementData";
+import UpdateMeasurementData from "@/features/waterquality/components/UpdateMeasurementData";
+import DeleteMeasurementData from "@/features/waterquality/components/DeleteMeasurementData";
 
 export const drawerForms: Record<string, React.ComponentType<any>> = {
     // Site
@@ -20,6 +22,8 @@ export const drawerForms: Record<string, React.ComponentType<any>> = {
 
     // Measurements
     AddMeasurementData,
+    UpdateMeasurementData,
+    DeleteMeasurementData,
 
     // User
     UpdateUserForm,
