@@ -15,7 +15,7 @@ interface WaterQualityTableProps {
 const WaterQualityTable = ({ data }: WaterQualityTableProps) => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);
   const [hoveredRow, setHoveredRow] = useState<number | null>(null);
-
+ 
   const waterTable = useReactTable({
     data,
     columns: waterQualityColumns,
@@ -29,7 +29,7 @@ const WaterQualityTable = ({ data }: WaterQualityTableProps) => {
         {waterTable.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <th key={header.id} className="bg-primary text-light text-left px-3 py-2">
+              <th key={header.id} className="border border-primary bg-primary text-light text-left px-3 py-2">
                 <div {...{
                       className: header.column.getCanSort() ? "cursor-pointer hover:text-neutral" : "",
                       onClick: header.column.getToggleGroupingHandler()

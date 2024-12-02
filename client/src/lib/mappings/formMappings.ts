@@ -10,11 +10,16 @@ import ResetPasswordForm from "@/features/user/components/ResetPasswordForm";
 import UpdateThresholdForm from "@/features/thresholds/components/UpdateThresholdForm";
 import DeleteThresholdForm from "@/features/thresholds/components/DeleteThresholdForm";
 
+import AddMeasurementData from "@/features/waterquality/components/AddMeasurementData";
+
 export const drawerForms: Record<string, React.ComponentType<any>> = {
     // Site
     AddSiteForm,
     UpdateSiteForm,
     DeleteSiteForm,
+
+    // Measurements
+    AddMeasurementData,
 
     // User
     UpdateUserForm,
