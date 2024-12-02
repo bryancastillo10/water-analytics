@@ -1,44 +1,35 @@
-export interface Measurement {
-  id: string;
-  timestamp: string | undefined;
-  phLevel: number | null;
-  suspendedSolids: number | null;
-  totalCOD: number | null;
-  fecalColiform: number | null;
-  temperature: number | null;
-  dissolvedOxygen: number | null;
-  ammonia: number | null;
-  nitrates: number | null;
-  phosphates: number | null;
-  actions?: {
-    update?: () => void;
-    delete?: () => void;
-  }
-}
+import { mockSiteData } from "@/features/sites/api/mockData";
+import type { IMeasurementData } from "@/features/waterquality/api/interface";
 
-export const generateMockData = (count: number = 24): Measurement[] => {
-  const mockData: Measurement[] = [];
+export const generateMockMeasurements = (
+  siteData: typeof mockSiteData,
+  count: number = 10
+): IMeasurementData[] => {
+  const measurements: IMeasurementData[] = [];
   const today = new Date();
-  today.setHours(0, 0, 0, 0);
 
-  for (let i = 0; i < count; i++) {
-    const date = new Date(today);
-    date.setDate(date.getDate() - (count - 1 - i) * 5); 
+  siteData.forEach((site) => {
+    for (let i = 0; i < count; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - i * 5);
 
-    mockData.push({
-      id: `mock${i + 1}`,
-      timestamp: date.toISOString().split("T")[0], 
-      phLevel: 6 + Math.random() * 3,
-      suspendedSolids: 100 + Math.random() * 150,
-      totalCOD: 200 + Math.random() * 300,
-      fecalColiform: 1000 + Math.random() * 2000,
-      temperature: 20 + Math.random() * 10,
-      dissolvedOxygen: 4 + Math.random() * 4,
-      ammonia: 1 + Math.random() * 2,
-      nitrates: 5 + Math.random() * 5,
-      phosphates: 0.5 + Math.random() * 1.5,
-    });
-  }
+      measurements.push({
+        id: `measurement_${site.id}_${i + 1}`,
+        siteName: site.siteName,
+        location: site.location,
+        date: date.toISOString(),
+        pH: 6 + Math.random() * 3,
+        suspendedSolids: Math.floor(100 + Math.random() * 150),
+        totalCOD: Math.floor(200 + Math.random() * 300),
+        fecalColiform: Math.floor(1000 + Math.random() * 2000),
+        temperature: parseFloat((20 + Math.random() * 10).toFixed(2)),
+        dissolvedOxygen: parseFloat((4 + Math.random() * 4).toFixed(2)),
+        ammonia: parseFloat((1 + Math.random() * 2).toFixed(2)),
+        nitrates: parseFloat((5 + Math.random() * 5).toFixed(2)),
+        phosphates: parseFloat((0.5 + Math.random() * 1.5).toFixed(2)),
+      });
+    }
+  });
 
-  return mockData;
+  return measurements;
 };
