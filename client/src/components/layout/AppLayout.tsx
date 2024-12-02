@@ -23,7 +23,7 @@ const AppLayout = () => {
   }
 
   return (
-    <main className={`flex ${theme ? "bg-dark text-light": "bg-light text-dark"} duration-500 ease-in-out w-full h-screen`}>
+    <main className={`flex ${theme ? "bg-dark text-light": "bg-light text-dark"} overflow-x-auto  duration-500 ease-in-out w-full h-screen`}>
       <Sidebar
         isSidebarExpanded={isSidebarExpanded}
         toggleSidebar={toggleSidebar}
