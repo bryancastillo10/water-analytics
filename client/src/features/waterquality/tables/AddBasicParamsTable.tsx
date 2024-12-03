@@ -1,30 +1,13 @@
-import { useMemo, useState, type ChangeEvent } from "react";
+import { useMemo } from "react";
 import { useReactTable, createColumnHelper, getCoreRowModel, flexRender } from "@tanstack/react-table";
 import { FormNumberInput } from "@/components/ui";
 
-import type { IBasicParams } from "@/features/waterquality/tables/interface";
+import type { AddParamsTableProps, IBasicParams } from "@/features/waterquality/tables/interface";
 
-const initBasicParams = {
-    pH: null,
-    temperature: null,
-    dissolvedOxygen:null
-}
 
 const columnHelper = createColumnHelper<IBasicParams>();
 
-type UpdateBasicParamsFunction<T extends IBasicParams> = (key: keyof T) => (e: ChangeEvent<HTMLInputElement>) => void;
-  
-const AddBasicParamsTable = () => {     
-    const [basicParamsData, setBasicParamsData] = useState<IBasicParams>(initBasicParams);
-
-     const onChangeInput:UpdateBasicParamsFunction<IBasicParams> = (key: keyof IBasicParams) => (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value ? parseFloat(e.target.value) : null;
-        setBasicParamsData((prev) => ({
-            ...prev,
-            [key]: value,
-        }))
-    };
-
+const AddBasicParamsTable = ({paramsData, onChangeInput}: AddParamsTableProps<IBasicParams>) => {     
     const columns = useMemo(() => [
         columnHelper.accessor("pH", {
             header: () => "pH Level",
@@ -64,7 +47,7 @@ const AddBasicParamsTable = () => {
         }),
     ] ,[]) 
     
-    const data = useMemo(() => [basicParamsData], [basicParamsData]);
+    const data = useMemo(() => [paramsData], [paramsData]);
     const basicParamsTable = useReactTable({
         data,
         columns,

@@ -1,29 +1,13 @@
-import { useMemo, useState, type ChangeEvent } from "react";
+import { useMemo } from "react";
 import { useReactTable, createColumnHelper, getCoreRowModel, flexRender } from "@tanstack/react-table";
 import { FormNumberInput } from "@/components/ui";
 
-import type { INutrientParams } from "@/features/waterquality/tables/interface";
-
-const initNutrientParams = {
-    ammonia: null,
-    nitrates: null,
-    phosphates:null
-}
+import type { INutrientParams, AddParamsTableProps } from "@/features/waterquality/tables/interface";
 
 const columnHelper = createColumnHelper<INutrientParams>();
 
 
-const AddNutrientTable = () => {     
-    const [nutrientParamsData, setNutrientParamsData] = useState<INutrientParams>(initNutrientParams);
-    
-    const onChangeInput = (key: keyof INutrientParams) => (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value ? parseFloat(e.target.value) : null;
-        setNutrientParamsData((prev) => ({
-            ...prev,
-            [key]: value,
-        }))
-    };
-
+const AddNutrientTable = ({paramsData, onChangeInput}:AddParamsTableProps<INutrientParams>) => {     
     const columns = useMemo(() => [
         columnHelper.accessor("ammonia", {
             header: () => <>NH<sub>3</sub> as N</>,
@@ -63,7 +47,7 @@ const AddNutrientTable = () => {
         }),
     ] ,[]) 
     
-    const data = useMemo(() => [nutrientParamsData], [nutrientParamsData]);
+    const data = useMemo(() => [paramsData], [paramsData]);
     const nutrientParamsTable = useReactTable({
         data,
         columns,
