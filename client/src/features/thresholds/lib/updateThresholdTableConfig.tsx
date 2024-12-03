@@ -5,8 +5,8 @@ import type { IThresholdData } from "@/features/thresholds/api/interface";
 const columnHelper = createColumnHelper<IThresholdData>();
 
 export const updateThresholdColumnsConfig = (
-  paramsValue: Record<string, number>, 
-  onChangeValue: (id: string, value: number) => void
+  paramsValue: Record<string, string>, 
+  onChangeValue: (parameter: string) => (e: React.ChangeEvent<HTMLInputElement>) => void
 ) => [
   columnHelper.accessor("parameter", {
     header: () => "Parameter",
@@ -19,12 +19,12 @@ export const updateThresholdColumnsConfig = (
   columnHelper.accessor("value", {
     header: () => "Value",
     cell: ({ row }) => {
-      const { id } = row.original;
+      const { parameter } = row.original;
       return (
         <FormNumberInput
-          id={id}
-          value={paramsValue[id]!}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeValue(id, parseFloat(e.target.value) || parseFloat(""))}
+          id={ parameter }
+          value={paramsValue[parameter]!}
+          onChange={onChangeValue(parameter)}
         />
       )
     }

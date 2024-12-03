@@ -1,28 +1,14 @@
-import { useMemo, useState, type ChangeEvent } from "react";
+import { useMemo } from "react";
 import { useReactTable, createColumnHelper, getCoreRowModel, flexRender } from "@tanstack/react-table";
 import { FormNumberInput } from "@/components/ui";
 
-import type { IOrgIndicatorParams } from "@/features/waterquality/tables/interface";
+import type { AddParamsTableProps, IOrgIndicatorParams } from "@/features/waterquality/tables/interface";
 
-const initOrgIndParams = {
-    totalCOD: null,
-    suspendedSolids: null,
-    fecalColiform:null
-}
 
 const columnHelper = createColumnHelper<IOrgIndicatorParams>();
 
 
-const AddOrgIndTable = () => {     
-    const [orgIndParamsData, setOrgIndParamsData] = useState<IOrgIndicatorParams>(initOrgIndParams);
-
-    const onChangeInput = (key: keyof IOrgIndicatorParams) => (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value ? parseFloat(e.target.value) : null;
-        setOrgIndParamsData((prev) => ({
-            ...prev,
-            [key]: value,
-        }))
-    };
+const AddOrgIndTable = ({paramsData, onChangeInput}:AddParamsTableProps<IOrgIndicatorParams>) => {     
 
     const columns = useMemo(() => [
         columnHelper.accessor("totalCOD", {
@@ -63,7 +49,7 @@ const AddOrgIndTable = () => {
         }),
     ] ,[]) 
     
-    const data = useMemo(() => [orgIndParamsData], [orgIndParamsData]);
+    const data = useMemo(() => [paramsData], [paramsData]);
     const orgIndParamsTable = useReactTable({
         data,
         columns,

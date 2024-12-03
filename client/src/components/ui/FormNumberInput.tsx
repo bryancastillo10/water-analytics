@@ -3,7 +3,7 @@ import { type ChangeEvent } from "react";
 interface FormNumberInputProps{
   id: string;
   label?: string;
-  value: number | null;
+  value: string | null;
   onChange: (e:ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -13,7 +13,6 @@ const FormNumberInput = ({
   value,
   onChange,
 }: FormNumberInputProps) => {
-
 
   return (
     <div className="flex items-center gap-2">
