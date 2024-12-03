@@ -18,3 +18,13 @@ export interface INutrientParams {
     nitrates: number | null;
     phosphates: number | null;
 };
+
+import AddBasicParamsTable from "./AddBasicParamsTable";
+import AddNutrientTable from "./AddNutrientTable";
+import AddOrgIndTable from "./AddOrgIndTable";
+
+export {
+    AddBasicParamsTable,
+    AddNutrientTable,
+    AddOrgIndTable
+}

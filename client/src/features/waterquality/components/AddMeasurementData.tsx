@@ -4,7 +4,7 @@ import { CalendarBlank, Drop, Hexagon, Plant } from "@phosphor-icons/react";
 import { FormButtons } from "@/components/layout";
 import { FormInput } from "@/components/ui";
 
-import AddBasicParamsTable from "@/features/waterquality/forms/AddBasicParamsTable";
+import {AddBasicParamsTable, AddOrgIndTable, AddNutrientTable } from "@/features/waterquality/tables/interface";
 import TextHeader from "@/components/common/TextHeader";
 
 const AddMeasurementData = () => {
@@ -30,12 +30,12 @@ const AddMeasurementData = () => {
         <Hexagon size="28"/>
         <TextHeader text="Organic Pollution Indicators" fontSize="text-lg"/>
       </div>
-      <AddBasicParamsTable />
+      <AddOrgIndTable />
       <div className="flex items-center gap-4 my-3">
         <Plant size="28"/>
         <TextHeader text="Nutrient Polution Indicators" fontSize="text-lg"/>
       </div>
-        <AddBasicParamsTable />
+        <AddNutrientTable />
 
       <FormButtons primaryBtnLabel="Add" />
      

@@ -2,7 +2,7 @@ import { useMemo, useState, type ChangeEvent } from "react";
 import { useReactTable, createColumnHelper, getCoreRowModel, flexRender } from "@tanstack/react-table";
 import { FormNumberInput } from "@/components/ui";
 
-import type { IBasicParams } from "@/features/waterquality/forms/interface";
+import type { IBasicParams } from "@/features/waterquality/tables/interface";
 
 const initBasicParams = {
     pH: null,
@@ -42,7 +42,7 @@ const AddBasicParamsTable = () => {
             cell: ({row}) => {
                 return(
                 <FormNumberInput
-                id = "pH"
+                id = "temperature"
                 value={row.original.temperature}
                 onChange={onChangeInput("temperature")}
             />
@@ -54,7 +54,7 @@ const AddBasicParamsTable = () => {
             cell: ({row}) => {
                 return(
                 <FormNumberInput
-                id = "pH"
+                id = "dissolvedOxygen"
                 value={row.original.dissolvedOxygen}
                 onChange={onChangeInput("dissolvedOxygen")}
             />
