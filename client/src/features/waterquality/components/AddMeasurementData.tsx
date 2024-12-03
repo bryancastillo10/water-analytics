@@ -4,6 +4,7 @@ import { CalendarBlank } from "@phosphor-icons/react";
 import { FormButtons } from "@/components/layout";
 import { FormInput } from "@/components/ui";
 
+import AddBasicParamsTable from "@/features/waterquality/forms/AddBasicParamsTable";
 
 const AddMeasurementData = () => {
   
@@ -19,7 +20,10 @@ const AddMeasurementData = () => {
           onChange={()=>{}}
           />   
       </div>
-      <FormButtons primaryBtnLabel="Add"/>
+      <AddBasicParamsTable />
+    
+      <FormButtons primaryBtnLabel="Add" />
+     
     </form>
   )
 }

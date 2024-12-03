@@ -3,7 +3,7 @@ import { type ChangeEvent } from "react";
 interface FormNumberInputProps{
   id: string;
   label?: string;
-  value: number;
+  value: number | null;
   onChange: (e:ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -25,7 +25,7 @@ const FormNumberInput = ({
         <input
           type="number"
           id={id}
-          value={value}
+          value={value || ""}
           onChange={onChange}
           className="rounded-xl w-16 p-2 h-8 border border-neutral focus:outline-none focus:border-primary
           bg-[#ffffff] text-dark"
