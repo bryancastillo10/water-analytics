@@ -14,7 +14,6 @@ const FormNumberInput = ({
   onChange,
 }: FormNumberInputProps) => {
 
-
   return (
     <div className="flex items-center gap-2">
       {label &&
