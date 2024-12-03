@@ -12,11 +12,12 @@ const initBasicParams = {
 
 const columnHelper = createColumnHelper<IBasicParams>();
 
-
+type UpdateBasicParamsFunction<T extends IBasicParams> = (key: keyof T) => (e: ChangeEvent<HTMLInputElement>) => void;
+  
 const AddBasicParamsTable = () => {     
     const [basicParamsData, setBasicParamsData] = useState<IBasicParams>(initBasicParams);
 
-    const onChangeInput = (key: keyof IBasicParams) => (e: ChangeEvent<HTMLInputElement>) => {
+     const onChangeInput:UpdateBasicParamsFunction<IBasicParams> = (key: keyof IBasicParams) => (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value ? parseFloat(e.target.value) : null;
         setBasicParamsData((prev) => ({
             ...prev,
@@ -70,8 +71,6 @@ const AddBasicParamsTable = () => {
         getCoreRowModel: getCoreRowModel()
     });
 
-
-    console.log(basicParamsData);
   return (     
     <table className="table-fixed border-collapse w-full">
       <thead>

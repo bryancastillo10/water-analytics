@@ -14,11 +14,11 @@ const columnHelper = createColumnHelper<INutrientParams>();
 
 
 const AddNutrientTable = () => {     
-    const [basicParamsData, setBasicParamsData] = useState<INutrientParams>(initNutrientParams);
-
+    const [nutrientParamsData, setNutrientParamsData] = useState<INutrientParams>(initNutrientParams);
+    
     const onChangeInput = (key: keyof INutrientParams) => (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value ? parseFloat(e.target.value) : null;
-        setBasicParamsData((prev) => ({
+        setNutrientParamsData((prev) => ({
             ...prev,
             [key]: value,
         }))
@@ -63,19 +63,17 @@ const AddNutrientTable = () => {
         }),
     ] ,[]) 
     
-    const data = useMemo(() => [basicParamsData], [basicParamsData]);
-    const basicParamsTable = useReactTable({
+    const data = useMemo(() => [nutrientParamsData], [nutrientParamsData]);
+    const nutrientParamsTable = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel()
     });
 
-
-    console.log(basicParamsData);
   return (     
     <table className="table-fixed border-collapse w-full">
       <thead>
-        {basicParamsTable.getHeaderGroups().map((headerGroup) => (
+        {nutrientParamsTable.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
               <th 
@@ -92,7 +90,7 @@ const AddNutrientTable = () => {
         ))}
       </thead>
       <tbody>
-        {basicParamsTable.getRowModel().rows.map((row) => (
+        {nutrientParamsTable.getRowModel().rows.map((row) => (
           <tr key={row.id}>
             {row.getVisibleCells().map((cell) => (
               <td 

@@ -14,11 +14,11 @@ const columnHelper = createColumnHelper<IOrgIndicatorParams>();
 
 
 const AddOrgIndTable = () => {     
-    const [basicParamsData, setBasicParamsData] = useState<IOrgIndicatorParams>(initOrgIndParams);
+    const [orgIndParamsData, setOrgIndParamsData] = useState<IOrgIndicatorParams>(initOrgIndParams);
 
     const onChangeInput = (key: keyof IOrgIndicatorParams) => (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value ? parseFloat(e.target.value) : null;
-        setBasicParamsData((prev) => ({
+        setOrgIndParamsData((prev) => ({
             ...prev,
             [key]: value,
         }))
@@ -63,19 +63,18 @@ const AddOrgIndTable = () => {
         }),
     ] ,[]) 
     
-    const data = useMemo(() => [basicParamsData], [basicParamsData]);
-    const basicParamsTable = useReactTable({
+    const data = useMemo(() => [orgIndParamsData], [orgIndParamsData]);
+    const orgIndParamsTable = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel()
     });
 
 
-    console.log(basicParamsData);
   return (     
     <table className="table-fixed border-collapse w-full">
       <thead>
-        {basicParamsTable.getHeaderGroups().map((headerGroup) => (
+        {orgIndParamsTable.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
               <th 
@@ -92,7 +91,7 @@ const AddOrgIndTable = () => {
         ))}
       </thead>
       <tbody>
-        {basicParamsTable.getRowModel().rows.map((row) => (
+        {orgIndParamsTable.getRowModel().rows.map((row) => (
           <tr key={row.id}>
             {row.getVisibleCells().map((cell) => (
               <td 
