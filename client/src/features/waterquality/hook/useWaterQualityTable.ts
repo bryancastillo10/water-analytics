@@ -4,7 +4,7 @@ import { useReactTable, getCoreRowModel, type SortingState } from "@tanstack/rea
 import useDrawer from "@/hook/useDrawer";
 import { useAppSelector } from "@/lib/redux/hooks";
 
-import { waterQualityColumns } from "@/features/waterquality/lib/waterQualityTableConfig";
+import { waterQualityColumns } from "@/features/waterquality/lib/viewWQTableConfig";
 import type { IMeasurementData } from "@/features/waterquality/api/interface";
 
 const useWaterQualityTable = ({data}: {data:IMeasurementData[]}) => {   

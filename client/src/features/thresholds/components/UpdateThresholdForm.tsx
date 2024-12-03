@@ -1,9 +1,9 @@
 import {  flexRender } from "@tanstack/react-table";
 
 import type { IThresholdData } from "@/features/thresholds/api/interface";
-import { FormButtons } from "@/components/layout";
-import useUpdateThreshold from "../hooks/useUpdateThreshold";
+import useUpdateThreshold from "@/features/thresholds/hooks/useUpdateThreshold";
 
+import { FormButtons } from "@/components/layout";
 
 interface UpdateThresholdFormProps{
   thresholdData: IThresholdData[];
