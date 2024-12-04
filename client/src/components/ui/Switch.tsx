@@ -9,7 +9,7 @@ const Switch = ({isOn,toggleSwitch}:SwitchProps) => {
   return (
       <div
           className={`h-8 w-16 rounded-3xl shadow-lg  cursor-pointer relative
-          ${isOn ? "bg-darkGray":"bg-neutral"}
+          ${isOn ? "bg-primary/40":"bg-neutral"}
           `}
           onClick={toggleSwitch}>
           <div

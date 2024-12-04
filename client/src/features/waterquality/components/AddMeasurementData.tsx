@@ -19,7 +19,6 @@ const AddMeasurementData = () => {
     handleNutrientParamsChange,
   } = useAddWQData();
 
-  console.log("Add",basicParamsData);
   return (
     <form>
       <div className="grid grid-cols-1 w-[50%]">

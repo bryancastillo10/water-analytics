@@ -1,7 +1,11 @@
-import { useState, useMemo, type ChangeEvent } from "react";
+import { useState, useMemo, useEffect, type ChangeEvent } from "react";
+import { FormSubheader } from "@/components/common";
+import { FormInput } from "@/components/ui";
+import { FormButtons } from "@/components/layout";
+import { CalendarBlank, Drop, Hexagon, Plant } from "@phosphor-icons/react";
 import type { IMeasurementData } from "@/features/waterquality/api/interface";
 import type { IBasicParams, IOrgIndicatorParams, INutrientParams } from "@/features/waterquality/tables/interface";
-import AddBasicParamsTable from "@/features/waterquality/tables/BasicParamsTable";
+import { BasicParamsTable, OrgIndParamsTable, NutrientParamsTable } from "@/features/waterquality/tables";
 
 interface UpdateMeasurementProps{
   id: string;
@@ -47,11 +51,22 @@ const UpdateMeasurementData = ({ id, data }: UpdateMeasurementProps) => {
       }
   }, [findMeasurement]);
 
-
+  const [sampleDate, setSampleDate] = useState<Date | null>(null);
   const [basicParamsData, setBasicParamsData] = useState<IBasicParams>(basicParamsToUpdate as IBasicParams);
   const [orgIndParamsData, setOrgIndParamsData] = useState<IOrgIndicatorParams>(orgIndParamsToUpdate as IOrgIndicatorParams);
   const [nutrientParamsData, setNutrientParamsData] = useState<INutrientParams>(nutrientParamsToUpdate as INutrientParams);
 
+  useEffect(() => {
+    if (findMeasurement?.date) {
+      setSampleDate(new Date(findMeasurement.date));
+    }
+  }, [findMeasurement]);
+
+  const onDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newDate = new Date(e.target.value);
+    setSampleDate(newDate);
+  };
+  
   const onChangeInput = <T extends IBasicParams | IOrgIndicatorParams | INutrientParams>(
     setState: React.Dispatch<React.SetStateAction<T>>
     ) => (key: keyof T) => (e: ChangeEvent<HTMLInputElement>) => {
@@ -66,18 +81,37 @@ const UpdateMeasurementData = ({ id, data }: UpdateMeasurementProps) => {
   const handleOrgIndParamsChange = onChangeInput(setOrgIndParamsData);
   const handleNutrientParamsChange = onChangeInput(setNutrientParamsData);
 
-  console.log("Update", basicParamsData);
+  
 
   return (
-   <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">Update Measurement</h2>
-            <div className="space-y-2">
-              <AddBasicParamsTable
-                paramsData={basicParamsData}
-                onChangeInput={handleBasicParamsChange}
-              />
-            </div>
-    </div>
+    <form onSubmit={()=> {}}>
+      <div className="grid grid-cols-1 w-[50%]">
+        <FormInput
+          id="date"
+          type="date"
+          label="Sampling Date"
+          icon={CalendarBlank}
+          value={sampleDate?.toISOString()?.split('T')[0] ?? ''}
+          onChange={onDateChange}
+          />   
+      </div>
+      <FormSubheader icon={Drop} text="Basic Water Quality Parameters" />
+      <BasicParamsTable
+        paramsData={basicParamsData}
+        onChangeInput={handleBasicParamsChange}
+      />
+      <FormSubheader icon={Hexagon} text="Organic Pollution Indicators" />
+      <OrgIndParamsTable
+        paramsData={orgIndParamsData}
+        onChangeInput={handleOrgIndParamsChange}
+      />
+      <FormSubheader icon={Plant} text="Nutrient Pollution Indicators" />
+      <NutrientParamsTable 
+        paramsData={nutrientParamsData}
+        onChangeInput={handleNutrientParamsChange}  
+      />
+      <FormButtons primaryBtnLabel="Update" /> 
+    </form>
   )
 }
 
