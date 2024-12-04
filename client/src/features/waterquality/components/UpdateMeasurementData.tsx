@@ -7,7 +7,7 @@ import { FormButtons } from "@/components/layout";
 
 import { BasicParamsTable, OrgIndParamsTable, NutrientParamsTable } from "@/features/waterquality/tables";
 import type { IMeasurementData } from "@/features/waterquality/api/interface";
-import useUpdateWQData from "@/features/waterquality/hook/useUpdateWQData";
+import useUpdateWQDataForm from "@/features/waterquality/hook/useUpdateWQDataForm";
 
 interface UpdateMeasurementProps{
   id: string;
@@ -34,7 +34,7 @@ const UpdateMeasurementData = ({ id, data }: UpdateMeasurementProps) => {
     handleBasicParamsChange,
     handleOrgIndParamsChange,
     handleNutrientParamsChange
-  } = useUpdateWQData(findMeasurement);
+  } = useUpdateWQDataForm(findMeasurement);
 
 
   return (

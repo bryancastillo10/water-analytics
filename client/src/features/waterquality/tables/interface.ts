@@ -1,4 +1,4 @@
-export interface AddParamsTableProps<T> {
+export interface ParamsTableProps<T> {
     paramsData: T;
     onChangeInput: (key: keyof T) => (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

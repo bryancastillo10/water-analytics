@@ -2,12 +2,12 @@ import { useMemo } from "react";
 import { useReactTable, createColumnHelper, getCoreRowModel, flexRender } from "@tanstack/react-table";
 import { FormNumberInput } from "@/components/ui";
 
-import type { AddParamsTableProps, IBasicParams } from "@/features/waterquality/tables/interface";
+import type { ParamsTableProps, IBasicParams } from "@/features/waterquality/tables/interface";
 
 
 const columnHelper = createColumnHelper<IBasicParams>();
 
-const BasicParamsTable = ({paramsData, onChangeInput}: AddParamsTableProps<IBasicParams>) => {     
+const BasicParamsTable = ({paramsData, onChangeInput}: ParamsTableProps<IBasicParams>) => {     
     const columns = useMemo(() => [
         columnHelper.accessor("pH", {
             header: () => "pH Level",

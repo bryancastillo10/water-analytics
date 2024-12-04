@@ -2,13 +2,13 @@ import { useMemo } from "react";
 import { useReactTable, createColumnHelper, getCoreRowModel, flexRender } from "@tanstack/react-table";
 import { FormNumberInput } from "@/components/ui";
 
-import type { AddParamsTableProps, IOrgIndicatorParams } from "@/features/waterquality/tables/interface";
+import type { ParamsTableProps, IOrgIndicatorParams } from "@/features/waterquality/tables/interface";
 
 
 const columnHelper = createColumnHelper<IOrgIndicatorParams>();
 
 
-const OrgIndParamsTable = ({paramsData, onChangeInput}:AddParamsTableProps<IOrgIndicatorParams>) => {     
+const OrgIndParamsTable = ({paramsData, onChangeInput}: ParamsTableProps<IOrgIndicatorParams>) => {     
 
     const columns = useMemo(() => [
         columnHelper.accessor("totalCOD", {
