@@ -23,14 +23,3 @@ export interface INutrientParams {
     nitrates: string | null;
     phosphates: string | null;
 };
-
-import type React from "react";
-import AddBasicParamsTable from "./AddBasicParamsTable";
-import AddNutrientTable from "./AddNutrientTable";
-import AddOrgIndTable from "./AddOrgIndTable";
-
-export {
-    AddBasicParamsTable,
-    AddNutrientTable,
-    AddOrgIndTable
-}

@@ -4,7 +4,7 @@ import { FormButtons } from "@/components/layout";
 import { FormSubheader } from "@/components/common";
 import { FormInput } from "@/components/ui";
 
-import {AddBasicParamsTable, AddOrgIndTable, AddNutrientTable } from "@/features/waterquality/tables/interface";
+import { BasicParamsTable, OrgIndParamsTable, NutrientParamsTable } from "@/features/waterquality/tables";
 import useAddWQData from "@/features/waterquality/hook/useAddWQData";
 
 const AddMeasurementData = () => {
@@ -32,17 +32,17 @@ const AddMeasurementData = () => {
           />   
       </div>
       <FormSubheader icon={Drop} text="Basic Water Quality Parameters" />
-      <AddBasicParamsTable
+      <BasicParamsTable
         paramsData={basicParamsData}
         onChangeInput={handleBasicParamsChange}
       />
       <FormSubheader icon={Hexagon} text="Organic Pollution Indicators" />
-      <AddOrgIndTable
+      <OrgIndParamsTable
         paramsData={orgIndParamsData}
         onChangeInput={handleOrgIndParamsChange}
       />
       <FormSubheader icon={Plant} text="Nutrient Pollution Indicators" />
-      <AddNutrientTable 
+      <NutrientParamsTable 
         paramsData={nutrientParamsData}
         onChangeInput={handleNutrientParamsChange}  
       />

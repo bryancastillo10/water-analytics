@@ -1,14 +1,71 @@
+import { useMemo } from "react";
+import { CalendarBlank, Drop, Hexagon, Plant } from "@phosphor-icons/react";
+
+import { FormSubheader } from "@/components/common";
+import { FormInput } from "@/components/ui";
+import { FormButtons } from "@/components/layout";
+
+import { BasicParamsTable, OrgIndParamsTable, NutrientParamsTable } from "@/features/waterquality/tables";
+import type { IMeasurementData } from "@/features/waterquality/api/interface";
+import useUpdateWQData from "@/features/waterquality/hook/useUpdateWQData";
 
 interface UpdateMeasurementProps{
-    id: string;
+  id: string;
+  data: IMeasurementData[];
 }
 
-const UpdateMeasurementData = ({id}:UpdateMeasurementProps) => {
+const UpdateMeasurementData = ({ id, data }: UpdateMeasurementProps) => {
+  const findMeasurement = useMemo(() => {
+    return data.find(measurement => measurement.id === id);
+  }, [id, data]);
+
+  if (!findMeasurement) {
+    return (
+      <div className="text-lg"> No Measurement Was Found with the ID</div>
+    )
+  };
+
+  const {
+    sampleDate,
+    onDateChange,
+    basicParamsData,
+    orgIndParamsData,
+    nutrientParamsData,
+    handleBasicParamsChange,
+    handleOrgIndParamsChange,
+    handleNutrientParamsChange
+  } = useUpdateWQData(findMeasurement);
+
+
   return (
-    <div>
-      <h1>To Update Your Measurements Here</h1>
-          <p>{id}</p>
-    </div>
+    <form onSubmit={()=> {}}>
+      <div className="grid grid-cols-1 w-[50%]">
+        <FormInput
+          id="date"
+          type="date"
+          label="Sampling Date"
+          icon={CalendarBlank}
+          value={sampleDate?.toISOString()?.split('T')[0] ?? ''}
+          onChange={onDateChange}
+          />   
+      </div>
+      <FormSubheader icon={Drop} text="Basic Water Quality Parameters" />
+      <BasicParamsTable
+        paramsData={basicParamsData}
+        onChangeInput={handleBasicParamsChange}
+      />
+      <FormSubheader icon={Hexagon} text="Organic Pollution Indicators" />
+      <OrgIndParamsTable
+        paramsData={orgIndParamsData}
+        onChangeInput={handleOrgIndParamsChange}
+      />
+      <FormSubheader icon={Plant} text="Nutrient Pollution Indicators" />
+      <NutrientParamsTable 
+        paramsData={nutrientParamsData}
+        onChangeInput={handleNutrientParamsChange}  
+      />
+      <FormButtons primaryBtnLabel="Update" /> 
+    </form>
   )
 }
 

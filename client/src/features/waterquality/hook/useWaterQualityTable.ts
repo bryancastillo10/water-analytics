@@ -15,11 +15,11 @@ const useWaterQualityTable = ({data}: {data:IMeasurementData[]}) => {
     const theme = useAppSelector((state) => state.theme.isDarkMode);
   
     const updateMeasurementDrawer = (id:string) => {
-      handleOpenDrawer("Edit your Water Quality Data", "UpdateMeasurementData", {id})
+      handleOpenDrawer("Edit your Water Quality Data", "UpdateMeasurementData", {id , data})
     };
   
     const deleteMeasurementDrawer = (id:string) => {
-      handleOpenDrawer("Delete this Water Quality Data", "DeleteMeasurementData", {id})
+      handleOpenDrawer("Delete this Water Quality Data", "DeleteMeasurementData", {id, data})
     };
 
     const addMeasurementDrawer = (siteName: string) => {
