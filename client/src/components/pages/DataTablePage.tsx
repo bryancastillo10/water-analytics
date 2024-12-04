@@ -6,31 +6,35 @@ import useDrawer from "@/hook/useDrawer";
 import { generateMockMeasurements } from "@/features/waterquality/api/mockData";
 import { mockSiteData } from "@/features/sites/api/mockData";
 import WaterQualityTable from "@/features/waterquality/components/WaterQualityTable";
+import type { IMeasurementData } from "@/features/waterquality/api/interface";
 
 const DataTablePage = () => {
   const { handleOpenDrawer } = useDrawer();
 
   const mockMeasurements = generateMockMeasurements(mockSiteData, 5);
 
-  const groupedMeasurements = mockMeasurements.reduce((acc, measurement) => {
-    const { siteName, location } = measurement;
-    if (!acc[siteName]) {
-      acc[siteName] = { location, data: [] };
-    }
 
-    acc[siteName].data.push(measurement);
+  const groupMeasurementsBySite = (
+    measurements: IMeasurementData[]
+  ): Record<string, { location: string; data: IMeasurementData[] }> => {
+    return measurements.reduce((acc, measurement) => {
+      const { siteName, location } = measurement;
+      if (!acc[siteName]) {
+        acc[siteName] = { location, data: [] };
+      }
+      acc[siteName].data.push(measurement);
+      return acc;
+    }, {} as Record<string, { location: string; data: IMeasurementData[] }>);
+  };
 
-    return acc;
-  }, {} as Record<string, { location: string, data: typeof mockMeasurements }>);
-
-
+  const groupedMeasurements = Object.entries(groupMeasurementsBySite(mockMeasurements));
   const addMeasurementDrawer = (siteName:string) => {
     handleOpenDrawer("Add Water Quality Data to " + siteName , "AddMeasurementData");
   }
 
   return (
     <main className="flex flex-col w-full">
-      {Object.entries(groupedMeasurements).map(([siteName, {location,data}]) => (
+      {groupedMeasurements.map(([siteName, {location,data}]) => (
         <div key={siteName} className="mb-8">
           <div className="flex justify-between items-center gap-x-4">
             <div className="flex flex-col">

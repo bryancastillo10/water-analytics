@@ -17,8 +17,8 @@ const WaterQualityTable = ({ data }: WaterQualityTableProps) => {
     deleteMeasurementDrawer,
     hoveredRow,
     setHoveredRow
-  } = useWaterQualityTable({data});
-
+  } = useWaterQualityTable({ data });
+  
   return (
     <table className="min-w-full table-auto border-collapse">
       <thead className="relative group">
