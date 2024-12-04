@@ -2,12 +2,12 @@ import { useMemo } from "react";
 import { useReactTable, createColumnHelper, getCoreRowModel, flexRender } from "@tanstack/react-table";
 import { FormNumberInput } from "@/components/ui";
 
-import type { INutrientParams, AddParamsTableProps } from "@/features/waterquality/tables/interface";
+import type { INutrientParams, ParamsTableProps } from "@/features/waterquality/tables/interface";
 
 const columnHelper = createColumnHelper<INutrientParams>();
 
 
-const NutrientParamsTable = ({paramsData, onChangeInput}:AddParamsTableProps<INutrientParams>) => {     
+const NutrientParamsTable = ({paramsData, onChangeInput}:ParamsTableProps<INutrientParams>) => {     
     const columns = useMemo(() => [
         columnHelper.accessor("ammonia", {
             header: () => <>NH<sub>3</sub> as N</>,
