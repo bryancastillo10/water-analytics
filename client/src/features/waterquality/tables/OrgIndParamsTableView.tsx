@@ -1,21 +1,20 @@
 import { useMemo } from "react";
 import { useReactTable, flexRender, getCoreRowModel } from "@tanstack/react-table";
 
-import { viewBasicParamsTable } from "@/features/waterquality/lib/viewWQTableConfig";
-import type { IBasicParams, ParamsTableProps } from "@/features/waterquality/tables/interface";
+import { viewOrgIndParamsTable } from "@/features/waterquality/lib/viewWQTableConfig";
+import type { IOrgIndicatorParams, ParamsTableProps } from "@/features/waterquality/tables/interface";
 
-const BasicParamsTableView = ({paramsData}: Partial<ParamsTableProps<IBasicParams>>) => {
+const OrgIndParamsTableView = ({ paramsData }: Partial<ParamsTableProps<IOrgIndicatorParams>>) => {
     const data = useMemo(() => (paramsData ? [paramsData] : []), [paramsData]);
-    const basicParamsTable = useReactTable({
+    const orgIndParamsTable = useReactTable({
         data,
-        columns: viewBasicParamsTable,
+        columns: viewOrgIndParamsTable,
         getCoreRowModel: getCoreRowModel()
     });
-
-  return (
+    return (
         <table className="table-fixed border-collapse w-full">
             <thead>
-            {basicParamsTable.getHeaderGroups().map((headerGroup) => (
+            {orgIndParamsTable.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                     <th 
@@ -32,7 +31,7 @@ const BasicParamsTableView = ({paramsData}: Partial<ParamsTableProps<IBasicParam
             ))}
             </thead>
             <tbody>
-            {basicParamsTable.getRowModel().rows.map((row) => (
+            {orgIndParamsTable.getRowModel().rows.map((row) => (
                 <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
                     <td 
@@ -48,8 +47,8 @@ const BasicParamsTableView = ({paramsData}: Partial<ParamsTableProps<IBasicParam
                 </tr>
             ))}
             </tbody>
-    </table>
+      </table>
   )
 }
 
-export default BasicParamsTableView;
+export default OrgIndParamsTableView
