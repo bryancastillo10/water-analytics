@@ -1,7 +1,7 @@
 import { useState, useMemo, type ChangeEvent } from "react";
 import type { IMeasurementData } from "@/features/waterquality/api/interface";
 import type { IBasicParams, IOrgIndicatorParams, INutrientParams } from "@/features/waterquality/tables/interface";
-import AddBasicParamsTable from "@/features/waterquality/tables/AddBasicParamsTable";
+import AddBasicParamsTable from "@/features/waterquality/tables/BasicParamsTable";
 
 interface UpdateMeasurementProps{
   id: string;
