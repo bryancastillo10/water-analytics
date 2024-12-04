@@ -7,7 +7,7 @@ import type { AddParamsTableProps, IBasicParams } from "@/features/waterquality/
 
 const columnHelper = createColumnHelper<IBasicParams>();
 
-const AddBasicParamsTable = ({paramsData, onChangeInput}: AddParamsTableProps<IBasicParams>) => {     
+const BasicParamsTable = ({paramsData, onChangeInput}: AddParamsTableProps<IBasicParams>) => {     
     const columns = useMemo(() => [
         columnHelper.accessor("pH", {
             header: () => "pH Level",
@@ -94,4 +94,4 @@ const AddBasicParamsTable = ({paramsData, onChangeInput}: AddParamsTableProps<IB
   ); 
 };  
 
-export default AddBasicParamsTable;
+export default BasicParamsTable;

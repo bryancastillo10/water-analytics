@@ -2,45 +2,47 @@ import { useMemo } from "react";
 import { useReactTable, createColumnHelper, getCoreRowModel, flexRender } from "@tanstack/react-table";
 import { FormNumberInput } from "@/components/ui";
 
-import type { INutrientParams, AddParamsTableProps } from "@/features/waterquality/tables/interface";
-
-const columnHelper = createColumnHelper<INutrientParams>();
+import type { AddParamsTableProps, IOrgIndicatorParams } from "@/features/waterquality/tables/interface";
 
 
-const AddNutrientTable = ({paramsData, onChangeInput}:AddParamsTableProps<INutrientParams>) => {     
+const columnHelper = createColumnHelper<IOrgIndicatorParams>();
+
+
+const OrgIndParamsTable = ({paramsData, onChangeInput}:AddParamsTableProps<IOrgIndicatorParams>) => {     
+
     const columns = useMemo(() => [
-        columnHelper.accessor("ammonia", {
-            header: () => <>NH<sub>3</sub> as N</>,
+        columnHelper.accessor("totalCOD", {
+            header: () => "Total COD",
             cell: ({row}) => {
                 return(
                 <FormNumberInput
-                id = "ammonia"
-                value={row.original.ammonia}
-                onChange={onChangeInput("ammonia")}
+                id = "totalCOD"
+                value={row.original.totalCOD}
+                onChange={onChangeInput("totalCOD")}
             />
             )
             }     
         }),
-        columnHelper.accessor("nitrates", {
-            header: () => <>NO<sub>3</sub><sup>-</sup> as N</>,
+        columnHelper.accessor("suspendedSolids", {
+            header: () => "Suspended Solids",
             cell: ({row}) => {
                 return(
                 <FormNumberInput
-                id = "nitrates"
-                value={row.original.nitrates}
-                onChange={onChangeInput("nitrates")}
+                id = "suspendedSolids"
+                value={row.original.suspendedSolids}
+                onChange={onChangeInput("suspendedSolids")}
             />
             )
             }     
         }),
-        columnHelper.accessor("phosphates", {
-            header: () => <>PO<sub>4</sub><sup>3-</sup> as P</>,
+        columnHelper.accessor("fecalColiform", {
+            header: () => "Fecal Coliform",
             cell: ({row}) => {
                 return(
                 <FormNumberInput
-                id = "phosphates"
-                value={row.original.phosphates}
-                onChange={onChangeInput("phosphates")}
+                id = "fecalColiform"
+                value={row.original.fecalColiform}
+                onChange={onChangeInput("fecalColiform")}
             />
             )
             }     
@@ -48,16 +50,17 @@ const AddNutrientTable = ({paramsData, onChangeInput}:AddParamsTableProps<INutri
     ] ,[]) 
     
     const data = useMemo(() => [paramsData], [paramsData]);
-    const nutrientParamsTable = useReactTable({
+    const orgIndParamsTable = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel()
     });
 
+
   return (     
     <table className="table-fixed border-collapse w-full">
       <thead>
-        {nutrientParamsTable.getHeaderGroups().map((headerGroup) => (
+        {orgIndParamsTable.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
               <th 
@@ -74,7 +77,7 @@ const AddNutrientTable = ({paramsData, onChangeInput}:AddParamsTableProps<INutri
         ))}
       </thead>
       <tbody>
-        {nutrientParamsTable.getRowModel().rows.map((row) => (
+        {orgIndParamsTable.getRowModel().rows.map((row) => (
           <tr key={row.id}>
             {row.getVisibleCells().map((cell) => (
               <td 
@@ -94,4 +97,4 @@ const AddNutrientTable = ({paramsData, onChangeInput}:AddParamsTableProps<INutri
   ); 
 };  
 
-export default AddNutrientTable;
+export default OrgIndParamsTable;
