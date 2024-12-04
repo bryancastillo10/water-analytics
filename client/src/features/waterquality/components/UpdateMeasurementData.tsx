@@ -1,11 +1,13 @@
-import { useState, useMemo, useEffect, type ChangeEvent } from "react";
+import { useMemo } from "react";
+import { CalendarBlank, Drop, Hexagon, Plant } from "@phosphor-icons/react";
+
 import { FormSubheader } from "@/components/common";
 import { FormInput } from "@/components/ui";
 import { FormButtons } from "@/components/layout";
-import { CalendarBlank, Drop, Hexagon, Plant } from "@phosphor-icons/react";
-import type { IMeasurementData } from "@/features/waterquality/api/interface";
-import type { IBasicParams, IOrgIndicatorParams, INutrientParams } from "@/features/waterquality/tables/interface";
+
 import { BasicParamsTable, OrgIndParamsTable, NutrientParamsTable } from "@/features/waterquality/tables";
+import type { IMeasurementData } from "@/features/waterquality/api/interface";
+import useUpdateWQData from "@/features/waterquality/hook/useUpdateWQData";
 
 interface UpdateMeasurementProps{
   id: string;
@@ -23,65 +25,17 @@ const UpdateMeasurementData = ({ id, data }: UpdateMeasurementProps) => {
     )
   };
 
-  const basicParamsToUpdate = useMemo(() => {
-    return {
-      id: findMeasurement.id,
-      pH: findMeasurement.pH,
-      temperature: findMeasurement.temperature,
-      dissolvedOxygen: findMeasurement.dissolvedOxygen
-    };
-  }, [findMeasurement]);
+  const {
+    sampleDate,
+    onDateChange,
+    basicParamsData,
+    orgIndParamsData,
+    nutrientParamsData,
+    handleBasicParamsChange,
+    handleOrgIndParamsChange,
+    handleNutrientParamsChange
+  } = useUpdateWQData(findMeasurement);
 
-
-  const orgIndParamsToUpdate = useMemo(() => {
-    return {
-        id: findMeasurement.id,
-        totalCOD: findMeasurement.totalCOD,
-        suspendedSolids: findMeasurement.suspendedSolids,
-        fecalColiform: findMeasurement.fecalColiform
-    }    
-  }, [findMeasurement]);
-
-  const nutrientParamsToUpdate = useMemo(() => {
-      return {
-          id: findMeasurement.id,
-          ammonia: findMeasurement.ammonia,
-          nitrates: findMeasurement.nitrates,
-          phosphates: findMeasurement.phosphates
-      }
-  }, [findMeasurement]);
-
-  const [sampleDate, setSampleDate] = useState<Date | null>(null);
-  const [basicParamsData, setBasicParamsData] = useState<IBasicParams>(basicParamsToUpdate as IBasicParams);
-  const [orgIndParamsData, setOrgIndParamsData] = useState<IOrgIndicatorParams>(orgIndParamsToUpdate as IOrgIndicatorParams);
-  const [nutrientParamsData, setNutrientParamsData] = useState<INutrientParams>(nutrientParamsToUpdate as INutrientParams);
-
-  useEffect(() => {
-    if (findMeasurement?.date) {
-      setSampleDate(new Date(findMeasurement.date));
-    }
-  }, [findMeasurement]);
-
-  const onDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newDate = new Date(e.target.value);
-    setSampleDate(newDate);
-  };
-  
-  const onChangeInput = <T extends IBasicParams | IOrgIndicatorParams | INutrientParams>(
-    setState: React.Dispatch<React.SetStateAction<T>>
-    ) => (key: keyof T) => (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setState((prev) => ({
-            ...prev,
-            [key]: value
-        }))
-    };
-  
-  const handleBasicParamsChange = onChangeInput(setBasicParamsData);
-  const handleOrgIndParamsChange = onChangeInput(setOrgIndParamsData);
-  const handleNutrientParamsChange = onChangeInput(setNutrientParamsData);
-
-  
 
   return (
     <form onSubmit={()=> {}}>
