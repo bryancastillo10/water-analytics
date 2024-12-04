@@ -5,7 +5,7 @@ import { FormSubheader } from "@/components/common";
 import { FormInput } from "@/components/ui";
 
 import { BasicParamsTable, OrgIndParamsTable, NutrientParamsTable } from "@/features/waterquality/tables";
-import useAddWQData from "@/features/waterquality/hook/useAddWQData";
+import useAddWQDataForm from "@/features/waterquality/hook/useAddWQDataForm";
 
 const AddMeasurementData = () => {
   const {
@@ -17,7 +17,7 @@ const AddMeasurementData = () => {
     handleBasicParamsChange,
     handleOrgIndParamsChange,
     handleNutrientParamsChange,
-  } = useAddWQData();
+  } = useAddWQDataForm();
 
   return (
     <form>

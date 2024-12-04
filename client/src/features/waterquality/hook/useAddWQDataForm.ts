@@ -19,7 +19,7 @@ const initBasicParams = {
     nitrates: null,
     phosphates:null
   }
-const useAddWQData = () => {
+const useAddWQDataForm = () => {
     const [sampleDate, setSampleDate] = useState<Date | null>(null);
     const [basicParamsData, setBasicParamsData] = useState<IBasicParams>(initBasicParams);
     const [orgIndParamsData, setOrgIndParamsData] = useState<IOrgIndicatorParams>(initOrgIndParams);
@@ -63,4 +63,4 @@ const useAddWQData = () => {
     }
 }
 
-export default useAddWQData;
+export default useAddWQDataForm;
