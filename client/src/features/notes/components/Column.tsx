@@ -99,6 +99,40 @@ const Column = ({
   const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
     setActive(false);
     clearHighlights();
+    
+    const cardId = e.dataTransfer.getData("cardId");
+    const indicators = getIndicators();
+
+    const { element } = getNearestIndicator({ e, indicators });
+    
+    if (element instanceof HTMLElement) {
+      const before = element.dataset.before || "-1";
+
+      if (before !== cardId) {
+        let copy = [...card];
+
+        let cardTransfer = copy.find((c) => c.id === cardId);
+        if (!cardTransfer) return;
+
+        cardTransfer = { ...cardTransfer, column };
+
+        copy = copy.filter((c) => c.id !== cardId);
+
+        const moveBack = before === "-1";
+
+        if (moveBack) {
+          copy.push(cardTransfer);
+        } else {
+          const insertAtIndex = copy.findIndex((element) =>
+            element.id === before);
+          if (insertAtIndex === undefined) return;
+
+          copy.splice(insertAtIndex, 0, cardTransfer);
+        }
+
+        setCard(copy);
+      }  
+    }
 
   };
   return (
