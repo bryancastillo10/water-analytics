@@ -1,11 +1,15 @@
+import { TextHeader } from "@/components/common";
+import KanbanBoard from "@/features/notes/components/KanbanBoard";
 
 const NotesPage = () => {
   return (
     <main>
-          <h1 className="font-semibold text-2xl tracking-wider">Notes Page Here</h1>
-          <p className="mt-2 ">Take some notes</p>
+      <TextHeader text="Task Board" />
+      <div className="w-full h-screen">
+        <KanbanBoard />
+      </div> 
     </main>
   )
 }
 
-export default NotesPage;
+export default NotesPage
