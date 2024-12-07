@@ -8,6 +8,7 @@ import GroundwaterIcon from "./GroundwaterIcon";
 import AgricultureIcon from "./AgricultureIcon";
 import SurfaceWaterIcon from "./SurfaceWaterIcon";
 import OtherIcons from "./OtherIcons";
+import Spinner from "./Spinner";
 
 export {
     IndustrialIcon,
@@ -15,5 +16,6 @@ export {
     GroundwaterIcon,
     AgricultureIcon,
     SurfaceWaterIcon,
-    OtherIcons
+    OtherIcons,
+    Spinner
 }
