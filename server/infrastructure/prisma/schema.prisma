@@ -109,7 +109,8 @@ model Note {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   title     String
   content   String
-  isCompleted Boolean
+  colors    Json
+  position  Json
 
   // Note Relationships
   userId    String   @db.ObjectId

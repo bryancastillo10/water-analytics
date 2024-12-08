@@ -1,8 +1,16 @@
 export class NotesData {
     id!: string;
-    userId!: string;
-    
     title!: string;
     content!: string;
-    isCompleted!: boolean;
-}
+    colors!: {
+      id: string;
+      colorHeader: string;
+      colorBody: string;
+      colorText: string;
+    };
+    position!: {
+      x: number;
+      y: number;
+    };
+  }
+  
