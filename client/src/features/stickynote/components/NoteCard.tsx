@@ -1,20 +1,93 @@
+import { useRef, useEffect, useState } from "react";
 import { TrashSimple } from "@phosphor-icons/react";
 import { Spinner } from "@/assets/svg";
 
 import type { INotesData } from "@/features/stickynote/api/interface";
+import { autoGrow, handleZIndex, setNewOffset } from "@/features/stickynote/utils";
 
 interface NoteCardProps {
   note: INotesData;
 }
 
 const NoteCard = ({ note }: NoteCardProps) => {
-  let position = JSON.parse(note.position);
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const [position, setPosition] = useState(JSON.parse(note.position));
+
+  let mouseStartPos = { x: 0, y: 0 };
+
+  const mouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (e.target instanceof HTMLElement && e.target.id === "card-header") {
+        // setSelectedNote(note);
+        mouseStartPos.x = e.clientX;
+        mouseStartPos.y = e.clientY;
+
+        handleZIndex(cardRef);
+
+        document.addEventListener("mousemove", mouseMove);
+        document.addEventListener("mouseup", mouseUp);
+    }
+  };
+  
+  const mouseMove = (e: MouseEvent) => {
+    // 1 to calculate the movement direction
+    let mouseMoveDirection = {
+        x: mouseStartPos.x - e.clientX,
+        y: mouseStartPos.y - e.clientY
+    };
+
+    // 2 to update the starting position on the next move
+    mouseStartPos.x = e.clientX;
+    mouseStartPos.y = e.clientY;
+
+    const newPosition = setNewOffset({
+        card: cardRef,
+        mouseMoveDir: mouseMoveDirection
+    });
+    setPosition(newPosition);
+
+    // 3 to update the actual card in reference to the change in the position coords
+    if (cardRef.current) {
+        setPosition({
+            x: cardRef.current.offsetLeft - mouseMoveDirection.x,
+            y: cardRef.current.offsetTop - mouseMoveDirection.y
+        });
+    }
+};
+
+    // Mouse Up
+    const mouseUp = () => {
+        document.removeEventListener("mousemove", mouseMove);
+        document.removeEventListener("mouseup", mouseUp);
+    
+        setNewOffset({ card: cardRef });
+        // const newPosition =
+        // setSaving(true);
+        // saveData("position", newPosition, note.$id, setSaving)
+        //     .then((success) => {
+        //         if (success) {
+        //             setSavedSuccess(true);
+        //             if (savedSuccessTimer.current) {
+        //                 clearTimeout(savedSuccessTimer.current);
+        //             }
+        //             savedSuccessTimer.current = window.setTimeout(() => {
+        //                 setSavedSuccess(false);
+        //             }, 1000); 
+        //         }
+        //     });
+    };
+
+
+  useEffect(() => {
+    autoGrow(textAreaRef);
+  }, []);
 
   const colors = JSON.parse(note.colors);
   const body = JSON.parse(note.content);
   return (
     <article
-      className="w-[450px] rounded-md shadow-md cursor-grab bg-lightYellow text-dark"
+      ref={cardRef}
+      className="w-[450px] absolute rounded-md shadow-md cursor-grab bg-lightYellow text-dark"
       style={{
         backgroundColor: colors.colorBody,
         left: `${position.x}px`,
@@ -23,6 +96,8 @@ const NoteCard = ({ note }: NoteCardProps) => {
     >
       {/* Note Header */}
       <div
+        onMouseDown={mouseDown}
+        id="card-header"
         className="flex justify-between items-center bg-[#FDD89B] rounded-l-md rounded-r-md px-4 py-3"
         style={{ backgroundColor: colors.colorHeader }}
       >
@@ -41,7 +116,10 @@ const NoteCard = ({ note }: NoteCardProps) => {
       {/* Note Body */}
       <div className="p-[1em]">
         <textarea
+          ref={textAreaRef}
           className="bg-inherit w-full h-full text-base resize-none focus:bg-inehirt focus:outline-none"
+          onInput={() => autoGrow(textAreaRef)}
+          onFocus={()=> handleZIndex(cardRef)}
           defaultValue={body}
         />
       </div>

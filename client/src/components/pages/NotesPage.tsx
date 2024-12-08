@@ -8,7 +8,7 @@ const NotesPage = () => {
   return (
     <main>
       <TextHeader text="Sticky Notes Board" />
-      <div className="w-full h-screen border">
+      <div className="w-full h-screen border mt-2 relative overflow-auto bg-neutral/40">
         {notes.map((note) => (
           <NoteCard
             key={note.id}
