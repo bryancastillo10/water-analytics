@@ -14,12 +14,17 @@ export class NotesRepository implements INotesRepository{
                 data: {
                     title: notesData.title,
                     content: notesData.content,
-                    isCompleted: Boolean(notesData.isCompleted),
+                    colors: notesData.colors,
+                    position: notesData.position,
                     userId: userId,
                 }
             });
 
-            return newNotes ;
+            return {
+                ...newNotes,
+                colors: newNotes.colors as NotesData["colors"],
+                position: newNotes.position as NotesData["position"],
+              };
         }
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
@@ -37,7 +42,11 @@ export class NotesRepository implements INotesRepository{
                 where: { userId }
             });
 
-            return allNotes as NotesData[];
+            return allNotes.map((note) => ({
+                ...note,
+                colors: note.colors as NotesData["colors"],
+                position: note.position as NotesData["position"],
+            }));
         }
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
@@ -55,7 +64,11 @@ export class NotesRepository implements INotesRepository{
                 data: { ...notes }
             })
 
-            return updatedNotes;
+            return {
+                ...updatedNotes,
+                colors: updatedNotes.colors as NotesData["colors"],
+                position: updatedNotes.position as NotesData["position"],
+              };
         }
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
