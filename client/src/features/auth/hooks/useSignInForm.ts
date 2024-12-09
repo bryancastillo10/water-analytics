@@ -7,7 +7,7 @@ import { useAppDispatch } from "@/lib/redux/hooks";
 import { useSignInMutation } from "@/features/auth/api/authApi";
 import type { SignInData } from "@/features/auth/api/interface";
 
-import { useToast } from "@/app/CustomToastProvider";
+import { useToast } from "@/hook/useToast";
 
 const initialSignIn = {
   email: "",
