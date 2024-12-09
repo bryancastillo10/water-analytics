@@ -1,17 +1,16 @@
 import { Navigate } from "react-router-dom";
 import type { UserState } from "@/lib/redux/states/userSlice";
 
-interface AuthRedirectProps {
+interface ProtectedRouterProps {
   user: UserState;
   children: React.ReactNode;
 }
 
-const AuthRedirect = ({ user, children }: AuthRedirectProps) => {
-  if (user.user_id) {
-    const rolePath = `/${user.role.toLocaleLowerCase() || "public"}/dashboard`; 
-    return <Navigate to={rolePath} replace />;
+const ProtectedRoute = ({ user, children }: ProtectedRouterProps) => {
+  if (!user.user_id) {
+    return <Navigate to="/" replace />;
   }
   return <>{children}</>; 
 };
 
-export default AuthRedirect;
+export default ProtectedRoute;

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { X } from "@phosphor-icons/react";
 
 export interface ToastProps{
@@ -8,6 +9,7 @@ export interface ToastProps{
 }
 
 const Toast = ({ status, message, isVisible, onClose }: ToastProps) => {
+  const [show, setShow] = useState<boolean>(false);
   const getStatusStyle = (status: string) => {
     switch (status) {
       case "success":
@@ -19,23 +21,31 @@ const Toast = ({ status, message, isVisible, onClose }: ToastProps) => {
     }
   };
 
+  useEffect(() => {
+    if (isVisible) {
+        const timer = setTimeout(() => {
+            setShow(true);
+        }, 200);
+        return () => clearTimeout(timer);
+    } else {
+        setShow(false);
+    }
+    return;
+}, [isVisible]);
+
+
   return (
     <div
       className={`
         fixed z-50 flex justify-between items-center gap-x-4
-        min-w-[35%] mx-auto px-4 py-3 rounded-lg shadow-md
-        text-sm font-medium
-        left-1/2 top-2
-        transition-all duration-300 ease-in-out
+        min-w-[35%] mx
+        -auto px-4 py-3 rounded-lg shadow-md
+        text-sm font-medium -top-[100%] left-[35%]
+        transition-all duration-500 ease-in-out
         ${getStatusStyle(status)}
-        transform opacity-0 translate-y-[-50%]
-        ${isVisible ? "translate-y-0 opacity-100" : ""}
+        transform opacity-0 
+        ${show ? "top-[1rem] opacity-100" : ""}
       `}
-      style={{
-        transform: `translateX(-50%) ${
-          isVisible ? "translateY(0)" : "translateY(-50%)"
-        }`,
-      }}
     >
       {message}
       <X

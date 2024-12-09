@@ -1,4 +1,6 @@
 import { useLocation, Link } from "react-router-dom";
+import { useAppSelector } from "@/lib/redux/hooks";
+
 import AppLogo from "@/assets/water.png";
 import { sidebarItems, type sidebarItemsProps } from "@/components/navigation/sidebarItems";
 import { ArrowCircleLeft, ArrowCircleRight } from "@phosphor-icons/react";
@@ -12,12 +14,14 @@ export interface NavigationProps{
 
 // Sidebar children component
 const SideBarRowItem = ({ name, icon: Icon,link, isSidebarExpanded, theme }: sidebarItemsProps) => {
+  const user = useAppSelector((state) => state.user);
   const location = useLocation();
+  const role = user.role.toLowerCase();
   
-  const isActive = location.pathname === `/role${link}` || location.pathname === "/dashboard";
+  const isActive = location.pathname === `/${role}${link}` || location.pathname === "/dashboard";
 
   return (
-      <Link to={`/role${link}`}>
+      <Link to={`/${role}${link}`}>
       <li className={`${isActive ? "bg-primary" : null} 
       ${isSidebarExpanded ? "my-4 w-fit":"w-full my-3 gap-2"}
       flex justify-start  items-center p-2  rounded-2xl`}>
