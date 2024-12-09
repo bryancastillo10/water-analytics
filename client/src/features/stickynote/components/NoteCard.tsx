@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { TrashSimple } from "@phosphor-icons/react";
 import { Spinner } from "@/assets/svg";
 
@@ -7,22 +7,23 @@ import { autoGrow, handleZIndex, setNewOffset } from "@/features/stickynote/util
 
 interface NoteCardProps {
   note: INotesData;
+  containerRef: React.MutableRefObject<HTMLDivElement | null>;
 }
 
-const NoteCard = ({ note }: NoteCardProps) => {
+const NoteCard = ({ note, containerRef }: NoteCardProps) => {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
-  const [position, setPosition] = useState(JSON.parse(note.position));
+  const [position, setPosition] = useState<{ x: number; y: number }>(
+    JSON.parse(note.position)
+  );
+  const mouseStartPos = useRef({ x: 0, y: 0 });
 
-  let mouseStartPos = { x: 0, y: 0 };
-
-  const mouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const mouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target instanceof HTMLElement && e.target.id === "card-header") {
         // setSelectedNote(note);
-        mouseStartPos.x = e.clientX;
-        mouseStartPos.y = e.clientY;
+        mouseStartPos.current = { x: e.clientX, y: e.clientY };
 
-        handleZIndex(cardRef);
+        handleZIndex(cardRef, containerRef);
 
         document.addEventListener("mousemove", mouseMove);
         document.addEventListener("mouseup", mouseUp);
@@ -32,27 +33,19 @@ const NoteCard = ({ note }: NoteCardProps) => {
   const mouseMove = (e: MouseEvent) => {
     // 1 to calculate the movement direction
     let mouseMoveDirection = {
-        x: mouseStartPos.x - e.clientX,
-        y: mouseStartPos.y - e.clientY
+        x: mouseStartPos.current.x - e.clientX,
+        y: mouseStartPos.current.y - e.clientY
     };
 
     // 2 to update the starting position on the next move
-    mouseStartPos.x = e.clientX;
-    mouseStartPos.y = e.clientY;
-
+    mouseStartPos.current = { x: e.clientX, y: e.clientY };
     const newPosition = setNewOffset({
         card: cardRef,
-        mouseMoveDir: mouseMoveDirection
+        mouseMoveDir: mouseMoveDirection,
+        containerRef: containerRef
     });
     setPosition(newPosition);
 
-    // 3 to update the actual card in reference to the change in the position coords
-    if (cardRef.current) {
-        setPosition({
-            x: cardRef.current.offsetLeft - mouseMoveDirection.x,
-            y: cardRef.current.offsetTop - mouseMoveDirection.y
-        });
-    }
 };
 
     // Mouse Up
@@ -60,7 +53,7 @@ const NoteCard = ({ note }: NoteCardProps) => {
         document.removeEventListener("mousemove", mouseMove);
         document.removeEventListener("mouseup", mouseUp);
     
-        setNewOffset({ card: cardRef });
+        // setNewOffset({ card: cardRef, containerRef });
         // const newPosition =
         // setSaving(true);
         // saveData("position", newPosition, note.$id, setSaving)
@@ -86,6 +79,7 @@ const NoteCard = ({ note }: NoteCardProps) => {
   const body = JSON.parse(note.content);
   return (
     <article
+      data-card="card"
       ref={cardRef}
       className="w-[450px] absolute rounded-md shadow-md cursor-grab bg-lightYellow text-dark"
       style={{
@@ -119,7 +113,10 @@ const NoteCard = ({ note }: NoteCardProps) => {
           ref={textAreaRef}
           className="bg-inherit w-full h-full text-base resize-none focus:bg-inehirt focus:outline-none"
           onInput={() => autoGrow(textAreaRef)}
-          onFocus={()=> handleZIndex(cardRef)}
+          onFocus={() => {
+            handleZIndex(cardRef, containerRef);
+            autoGrow(textAreaRef);
+          }}
           defaultValue={body}
         />
       </div>
