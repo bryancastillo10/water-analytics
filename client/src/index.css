@@ -19,3 +19,17 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+.grid-style-light {
+  background-image: linear-gradient(#C2C2C2 0.1em, transparent 0.1em),
+        linear-gradient(90deg, #C2C2C2 0.1em, transparent 0.1em);
+  background-size: 4em 4em;
+  height: 100vh;
+}
+
+.grid-style-dark {
+  background-image: linear-gradient(#006da3 0.1em, transparent 0.1em),
+        linear-gradient(90deg, #006da3 0.1em, transparent 0.1em);
+  background-size: 4em 4em;
+  height: 100vh;
+}
