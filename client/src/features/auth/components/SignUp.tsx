@@ -4,9 +4,15 @@ import { Link } from "react-router-dom";
 import { AnimatedInput, Button } from "@/components/ui";
 import useSignUpForm from "@/features/auth/hooks/useSignUpForm";
 import AuthContainer from "@/features/auth/components/AuthContainer";
+import AgreementCheckBox from "@/features/auth/components/AgreementCheckBox";
 
 const SignIn = () => {
-  const { signUpData, onChangeInput, handleSubmit } = useSignUpForm();
+  const { signUpData,
+          isChecked, 
+          onChangeInput, 
+          handleAgreement, 
+          handleSubmit 
+        } = useSignUpForm();
 
   const SignUpFormBody = (
     <>
@@ -52,7 +58,11 @@ const SignIn = () => {
             onChange={onChangeInput}
             validationMessage="Re-type the password for confirmation"
           />
-        <Button type="submit" width="w-full" variant="primary">
+        <AgreementCheckBox
+            isChecked={isChecked}
+            onCheck={handleAgreement}
+        />
+        <Button disabled={!isChecked} type="submit" width="w-full" variant="primary">
           Sign Up
         </Button>
       </form>

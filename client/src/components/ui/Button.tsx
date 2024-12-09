@@ -16,7 +16,7 @@ const Button = ({
   width = "w-fit",
   fontSize="text-base",
   loading,
-  disabled = false,
+  disabled,
   variant,
   children
 }: ButtonProps) => {
@@ -37,7 +37,7 @@ const Button = ({
       onClick={action}
       disabled={disabled}
       type={type}
-      className={`${width} ${fontSize} font-semibold px-3 py-1 rounded-xl
+      className={`${width} ${fontSize} font-semibold px-3 py-1 rounded-xl disabled:bg-neutral
         duration-500 ease-in-out
         ${getBtnStyle(variant!)}`}
     >
