@@ -14,6 +14,8 @@ import AddMeasurementData from "@/features/waterquality/components/AddMeasuremen
 import UpdateMeasurementData from "@/features/waterquality/components/UpdateMeasurementData";
 import DeleteMeasurementData from "@/features/waterquality/components/DeleteMeasurementData";
 
+import AddNotesForm from "@/features/stickynote/components/AddNotesForm";
+
 export const drawerForms: Record<string, React.ComponentType<any>> = {
     // Site
     AddSiteForm,
@@ -30,6 +32,9 @@ export const drawerForms: Record<string, React.ComponentType<any>> = {
     UpdateProfilePicture,
     DeleteAccountConfirmation,
     ResetPasswordForm,
+
+    // Notes
+    AddNotesForm,
 
     // Threshold
     UpdateThresholdForm,
