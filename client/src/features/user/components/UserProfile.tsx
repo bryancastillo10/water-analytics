@@ -34,11 +34,19 @@ const UserProfile = () => {
       <TextHeader text="User Profile" />
         <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Profile Picture  */}
-                <div className="grid place-items-center md:place-items-start">
+                <div 
+                className="relative grid place-items-center md:place-items-start group"
+                >
                   <img
-                  className="shadow-md object-cover size-[150px] rounded-full"
+                  className="shadow-md object-cover size-[150px] rounded-full duration-300 ease-out group-hover:scale-110"
                   src="https://i.pravatar.cc/150?img=55"
                   alt="avatar"
+                  />
+                <PencilSimpleLine 
+                  onClick={()=>updateProfilePictureDrawer()}
+                  className="absolute hidden group-hover:block right-10 bottom-0 cursor-pointer border border-dashed 
+                  hover:border-primary hover:text-primary rounded-full p-1" 
+                  size="28"
                   />
         </div>
               {/* User Details */}
@@ -64,11 +72,6 @@ const UserProfile = () => {
           </div>
         </div>
         <div className="mt-4 flex flex-col md:flex-row items-center justify-center xl:justify-start gap-4 w-full ">
-          <Button action={()=>updateProfilePictureDrawer()} fontSize="text-sm" variant="outline">
-            <span className="flex items-center gap-1">
-              <PencilSimpleLine size="14"/> Update Photo
-            </span>
-        </Button>
         <Button action={()=>resetPasswordDrawer()} fontSize="text-sm" variant="outline">
             <span className="flex items-center gap-1">
               <ShieldCheck size="14"/> Reset Password
