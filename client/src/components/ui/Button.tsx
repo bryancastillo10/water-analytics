@@ -3,7 +3,8 @@ interface ButtonProps {
   action?: () => void;
   type?: "submit" | "reset" | "button";
   width?: string;
-  loading?: boolean;
+  loading?: boolean; 
+  disabled?: boolean;
   fontSize?: string;
   variant?: string;
   children: React.ReactNode
@@ -15,6 +16,7 @@ const Button = ({
   width = "w-fit",
   fontSize="text-base",
   loading,
+  disabled,
   variant,
   children
 }: ButtonProps) => {
@@ -33,15 +35,16 @@ const Button = ({
   return (
     <button
       onClick={action}
+      disabled={disabled}
       type={type}
-      className={`${width} ${fontSize} font-semibold px-3 py-1 rounded-xl
+      className={`${width} ${fontSize} font-semibold px-3 py-1 rounded-xl disabled:bg-neutral
         duration-500 ease-in-out
         ${getBtnStyle(variant!)}`}
     >
       {loading ? (
         <div className="flex justify-center items-center gap-0.5">
           <svg
-            className="animate-spin size-4 mr-2 border-white border-t-outline border-2 rounded-full"
+            className="animate-spin size-4 mr-2 border-white border-t-outline border-t-darkGray border-2 rounded-full"
             viewBox="0 0 24 24"
           />
           <span className="font-semibold text-base">Loading . . .</span>

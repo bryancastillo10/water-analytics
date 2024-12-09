@@ -4,9 +4,19 @@ import { Link } from "react-router-dom";
 import { AnimatedInput, Button } from "@/components/ui";
 import useSignUpForm from "@/features/auth/hooks/useSignUpForm";
 import AuthContainer from "@/features/auth/components/AuthContainer";
+import AgreementCheckBox from "@/features/auth/components/AgreementCheckBox";
 
 const SignIn = () => {
-  const { signUpData, onChangeInput, handleSubmit } = useSignUpForm();
+  const {
+      signUpData,
+      isChecked,
+      isOpen,
+      onChangeInput,
+      handleAgreement,
+      handleSubmit,
+      handleOpenModal,
+      handleCloseModal
+        } = useSignUpForm();
 
   const SignUpFormBody = (
     <>
@@ -52,7 +62,12 @@ const SignIn = () => {
             onChange={onChangeInput}
             validationMessage="Re-type the password for confirmation"
           />
-        <Button type="submit" width="w-full" variant="primary">
+        <AgreementCheckBox
+            isChecked={isChecked}
+            onCheck={handleAgreement}
+            handleOpenModal={handleOpenModal}
+        />
+        <Button disabled={!isChecked} type="submit" width="w-full" variant="primary">
           Sign Up
         </Button>
       </form>
@@ -73,6 +88,8 @@ const SignIn = () => {
       title="Water Analytics App"
       caption="Register A New Account"
       body={SignUpFormBody}
+      isOpenModal={isOpen}
+      handleCloseModal={handleCloseModal}
     />
   );
 };

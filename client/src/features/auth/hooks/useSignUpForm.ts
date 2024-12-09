@@ -10,7 +10,13 @@ const initialSignUp = {
 
 const useSignUpForm = () => {
   const [signUpData, setSignUpData] = useState<SignUpData>(initialSignUp);
-
+  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+    
+  const handleAgreement = () => {
+    setIsChecked(!isChecked);
+  };
+  
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setSignUpData({ ...signUpData, [id]: value });
@@ -21,7 +27,24 @@ const useSignUpForm = () => {
     e.preventDefault();
   };
 
-  return { signUpData, onChangeInput, handleSubmit };
+  const handleOpenModal = () => {
+      setIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+      setIsOpen(false);
+  };
+
+  return {
+    signUpData,
+    isChecked,
+    isOpen,
+    onChangeInput,
+    handleAgreement,
+    handleSubmit,
+    handleOpenModal,
+    handleCloseModal
+  };
 };
 
 export default useSignUpForm;
