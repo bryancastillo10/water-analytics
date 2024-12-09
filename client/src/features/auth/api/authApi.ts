@@ -20,14 +20,14 @@ export const authApi = createApi({
     },
   }),
   endpoints: (build) => ({
-    signUp: build.mutation<SignInResponse, SignUpData>({
+    signUp: build.mutation<SignUpResponse, SignUpData>({
       query: (data) => ({
         url: "/signup",
         method: "POST",
         body: data,
       }),
     }),
-    signIn: build.mutation<SignUpResponse, SignInData>({
+    signIn: build.mutation<SignInResponse, SignInData>({
       query: (data) => ({
         url: "/signin",
         method: "POST",

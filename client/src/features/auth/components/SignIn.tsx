@@ -6,7 +6,7 @@ import useSignInForm from "@/features/auth/hooks/useSignInForm";
 import AuthContainer from "@/features/auth/components/AuthContainer";
 
 const SignIn = () => {
-  const { signInData, onChangeInput, handleSubmit } = useSignInForm();
+  const { signInData, isLoading, onChangeInput, handleSubmit } = useSignInForm();
 
   const SignInFormBody = (
     <>
@@ -29,7 +29,12 @@ const SignIn = () => {
           value={signInData.password}
           onChange={onChangeInput}
         />
-        <Button type="submit" width="w-full" variant="primary">
+        <Button
+          loading={isLoading}
+          type="submit"
+          width="w-full"
+          variant="primary"
+        >
           Sign In
         </Button>
       </form>

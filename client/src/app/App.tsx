@@ -14,12 +14,10 @@ import ProtectedRoute from "@/app/ProtectedRoute";
 import type { UserRole } from "@/app/routes/userRole";
 
 const App = () => {
-  const user = useAppSelector((state) => state.user);
+  const authUser = useAppSelector((state) => state.user);
 
-  const userRoutes = roleRoutes[user.role as UserRole] || [];
-
+  const userRoutes = roleRoutes[authUser.role as UserRole] || roleRoutes.public;
   return (
-
       <Routes>
 
         {/* Public Routes */}
@@ -30,8 +28,8 @@ const App = () => {
         <Route/>
         
         {/* Role Based Routes */}
-        <Route path={`${user.role}/*`} element={
-          <ProtectedRoute user={user}>
+        <Route path={`${authUser.role || "public"}/*`} element={
+          <ProtectedRoute user={authUser}>
             <AppLayout/>
           </ProtectedRoute>}>
           {userRoutes.map((route) => (
