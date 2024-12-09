@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback } from "react";
+import { createContext, useState, useCallback } from "react";
 import Toast, { type ToastProps } from "@/components/ui/Toast";
 
 interface ToastContextType {
@@ -6,7 +6,7 @@ interface ToastContextType {
   hideToast: () => void;
 }
 
-const ToastContext = createContext<ToastContextType | null>(null);
+export const ToastContext = createContext<ToastContextType | null>(null);
 
 const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -39,14 +39,6 @@ const ToastProvider = ({ children }: { children: React.ReactNode }) => {
           {isVisible && <Toast {...toastProps} isVisible={isVisible} />}
     </ToastContext.Provider>
   );
-};
-
-export const useToast = () => {
-  const context = useContext(ToastContext);
-  if (!context) {
-    throw new Error("useToast must be used within the CustomToastProvider");
-  }
-  return context;
 };
 
 export default ToastProvider;

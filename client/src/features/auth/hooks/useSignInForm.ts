@@ -1,5 +1,13 @@
 import { useState, type ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { setUser } from "@/lib/redux/states/userSlice";
+
+import { useAppDispatch } from "@/lib/redux/hooks";
+import { useSignInMutation } from "@/features/auth/api/authApi";
 import type { SignInData } from "@/features/auth/api/interface";
+
+import { useToast } from "@/hook/useToast";
 
 const initialSignIn = {
   email: "",
@@ -8,18 +16,47 @@ const initialSignIn = {
 
 const useSignInForm = () => {
   const [signInData, setSignInData] = useState<SignInData>(initialSignIn);
+  const [signIn, { isLoading }] = useSignInMutation();
+
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const { showToast } = useToast();
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setSignInData({ ...signInData, [id]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    console.log(signInData);
-    e.preventDefault();
+
+  const callSignIn = async () => {
+    try {
+      const res = await signIn(signInData).unwrap();
+      const userData = res.user;
+
+      const userRole = userData.role.toLowerCase();
+      showToast({
+        status: "success",
+        message: "Sign In Successful"
+      });
+      dispatch(setUser(userData));
+      navigate(`/${userRole}/dashboard`);
+    }
+    catch (error) {
+      showToast({
+        status: "error",
+        message: "Failed to sign in. Try again!"
+      })
+    }
   };
 
-  return {signInData, onChangeInput, handleSubmit }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    callSignIn();
+  };
+
+  return {signInData, isLoading, onChangeInput, handleSubmit }
 }
 
 export default useSignInForm;
