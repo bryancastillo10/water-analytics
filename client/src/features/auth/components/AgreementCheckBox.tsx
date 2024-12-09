@@ -1,9 +1,10 @@
 interface AgreementCheckBoxProps{
     isChecked: boolean;
     onCheck: () => void;
+    handleOpenModal: () => void;
 }
 
-const AgreementCheckBox = ({ isChecked, onCheck }: AgreementCheckBoxProps) => {
+const AgreementCheckBox = ({ isChecked, onCheck, handleOpenModal }: AgreementCheckBoxProps) => {
 
 
     return (
@@ -34,8 +35,9 @@ const AgreementCheckBox = ({ isChecked, onCheck }: AgreementCheckBoxProps) => {
         </div>
         <label>
             <span 
+                onClick={handleOpenModal}
                 className="hover:underline text-darkGray hover:text-primary cursor-pointer">
-                    Read this first </span>before signing up
+                    Read this first&nbsp;</span>before signing up
         </label>
       </div>
     )
