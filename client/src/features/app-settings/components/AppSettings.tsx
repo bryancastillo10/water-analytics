@@ -1,6 +1,7 @@
 import TextHeader from '@/components/common/TextHeader';
 import { Switch } from '@/components/ui';
-import SettingItem from '@/features/user/components/SettingItem';
+import SettingItem from '@/features/app-settings/components/SettingItem';
+import useDrawer from '@/hook/useDrawer';
 
 import { Palette, Bell, Info, PaperPlane } from '@phosphor-icons/react';
 
@@ -10,10 +11,15 @@ import { setIsDarkMode } from '@/lib/redux/states/themeSlice';
 
 const AppSettings = () => {
   const dispatch = useAppDispatch();
+  const { handleOpenDrawer } = useDrawer();
   const theme = useAppSelector((state) => state.theme.isDarkMode);
 
   const toggleSwitch = () => {
     dispatch(setIsDarkMode(!theme));
+  };
+
+  const appInfoDrawer = () => {
+    handleOpenDrawer("Details About This Web App","AppInfoForm")
   }
 
   return (
@@ -45,7 +51,7 @@ const AppSettings = () => {
           icon={Info}
           label="App Info"
           btnLabel="View"
-          action={()=>{}}
+          action={appInfoDrawer}
         />
       </div>
     </section>

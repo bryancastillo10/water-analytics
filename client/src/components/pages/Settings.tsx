@@ -1,5 +1,5 @@
 import UserProfile from "@/features/user/components/UserProfile";
-import AppSettings from "@/features/user/components/AppSettings";
+import AppSettings from "@/features/app-settings/components/AppSettings";
 import ThresholdSettings from "@/features/thresholds/components/ThresholdSettings";
 
 const Settings = () => {
@@ -9,7 +9,7 @@ const Settings = () => {
         <UserProfile/>
         <AppSettings/>
       </div>
-      <div className="">
+      <div>
         <ThresholdSettings/>
       </div>
    </main>
