@@ -5,7 +5,7 @@ export interface IThresholdRepository{
     findUserByThreshold(thresholdId: string): Promise<string>;
     verifyUserRole(userId: string): Promise<boolean>;
     getThreshold(userId: string): Promise<ThresholdData[]>;
-    updateThreshold({thresholdId,value}:UpdateThresholdRequest): Promise<ThresholdData | null>;
+    updateThreshold(updates:UpdateThresholdRequest[]): Promise<ThresholdData[]>;
     deleteThreshold(thresholdId: string): Promise<void>;
 };
 
@@ -19,4 +19,4 @@ export interface CreateThresholdRequest{
 export interface UpdateThresholdRequest {
         thresholdId: string;
         value: number;
-}
+}[]

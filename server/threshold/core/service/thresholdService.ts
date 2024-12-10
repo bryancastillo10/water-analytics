@@ -54,21 +54,23 @@ export class ThresholdService {
         
     }
 
-    async updateThreshold({thresholdId,value}:UpdateThresholdRequest) {
-        if (!thresholdId) {
-            throw new ValidationError("Threshold id was not found");
-        }
-        const validKey = ["value"];
-        const isValid = Object.keys(value).every((key) => validKey.includes(key));
-        if (!isValid) {
-            throw new ValidationError("The request must include only the value");
-        }
-
-        if (value === null) {
-            throw new ValidationError("null value cannot be processed");
+    async updateThreshold(updates:UpdateThresholdRequest) {
+        if (!updates || !Array.isArray(updates) || updates.length === 0) {
+            throw new ValidationError("Invalid update threshold request");
         }
         
-        const updatedThreshold = this.thresholdRepository.updateThreshold({ thresholdId, value });
+        const validUpdates = updates.map((update) => {
+            if (!update.thresholdId) {
+                throw new ValidationError("Threshold id was not found");
+            }
+
+            if (update.value === null || update.value === undefined) {
+                throw new ValidationError("Null or undefined value is not allowed");
+            }
+            return update;
+        });
+
+        const updatedThreshold = await this.thresholdRepository.updateThreshold(validUpdates);
 
         return updatedThreshold;
     }

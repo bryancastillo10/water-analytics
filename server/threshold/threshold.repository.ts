@@ -98,14 +98,21 @@ export class ThresholdRepository implements IThresholdRepository {
              throw Error;
         }
     }
-    async updateThreshold({ thresholdId, value }: UpdateThresholdRequest): Promise<ThresholdData | null> {
+    async updateThreshold(updates: UpdateThresholdRequest[]): Promise<ThresholdData[]> {
         try {
-            const updatedThreshold = await this.prisma.threshold.update({
-                where: { id: thresholdId },
-                data: {value: value}
+            const updatedThreshold = await this.prisma.$transaction(async (prisma) => {
+                const updateRes = await Promise.all(
+                    updates.map((update) =>
+                        prisma.threshold.update({
+                            where: { id: update.thresholdId },
+                            data: { value: update.value }
+                        })
+                    )
+                );
+                return updateRes as ThresholdData[];
             })
-
-            return updatedThreshold as ThresholdData;
+            
+            return updatedThreshold;
         }
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {

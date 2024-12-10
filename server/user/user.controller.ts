@@ -84,7 +84,7 @@ export class UserController {
 
             const profPicUrl = await this.userService.updateProfilePicture(userId, file);
 
-            res.status(200).json({ "message": "Profile picture has been updated", profPicUrl: profPicUrl });
+            res.status(200).json({ "message": "Profile picture has been updated", profilePic: profPicUrl });
         } catch (error) {
             next(error);
         }
