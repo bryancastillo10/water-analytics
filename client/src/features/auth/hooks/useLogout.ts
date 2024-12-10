@@ -23,11 +23,10 @@ const useLogout = () => {
                 message: res.message
             });
         }
-        catch (error) {
-            console.error(error);
+        catch (error: any) {
             showToast({
                 status: "error",
-                message:"Failed to logout your account"
+                message: error?.data?.message || "Failed to logout your account"
             })
         }
     };

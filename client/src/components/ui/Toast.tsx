@@ -10,6 +10,7 @@ export interface ToastProps{
 
 const Toast = ({ status, message, isVisible, onClose }: ToastProps) => {
   const [show, setShow] = useState<boolean>(false);
+  
   const getStatusStyle = (status: string) => {
     switch (status) {
       case "success":
@@ -34,36 +35,37 @@ const Toast = ({ status, message, isVisible, onClose }: ToastProps) => {
     if (isVisible) {
         const timer = setTimeout(() => {
             setShow(true);
-        }, 200);
+        }, 500);
         return () => clearTimeout(timer);
     } else {
         setShow(false);
     }
     return;
-}, [isVisible]);
+  }, [isVisible]);
+  
+  const handleClose = () => {
+    if (onClose) onClose();
+    setShow(false);
+  };
 
   const Icon = getStatusStyle(status)["icon"];
   return (
-    <div
-      className={`
-        fixed z-50 flex justify-between items-center gap-x-4
-        xl:min-w-[20%] xl:max-w-[50%]
-        -auto px-4 py-3 rounded-lg shadow-md
-        text-sm font-medium -top-[100%] left-[20%] xl:left-[35%]
-        transition-all duration-500 ease-in-out
-        ${getStatusStyle(status)["style"]}
-        transform opacity-0 
-        ${show ? "top-[1rem] opacity-100" : ""}
-      `}
-    >
-      <Icon size="20" />
-      {message}
-      <X
-        onClick={onClose}
-        className="font-semibold cursor-pointer hover:scale-110"
-        aria-label="close-btn"
-      />
+      <div
+        className={`absolute z-50 flex justify-between items-center gap-x-4
+          xl:min-w-[20%] xl:max-w-[50%] px-4 py-3 rounded-lg shadow-md left-[10%] xl:left-[35%]
+          text-sm font-medium transform transition-all duration-500 ease-in-out
+          ${getStatusStyle(status)["style"]}
+          ${show ? "top-[1rem] opacity-100" : "-top-[100%] opacity-0"}`}
+      >
+        <Icon size="20" />
+        {message}
+        <X
+          onClick={handleClose}
+          className="font-semibold cursor-pointer hover:scale-110"
+          aria-label="close-btn"
+        />
     </div>
+
   );
 };
 

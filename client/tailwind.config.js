@@ -23,6 +23,13 @@ export default {
       fontFamily: {
          primary: ["Poppins", "sans-serif"], 
         secondary: ["Oldenburg", "serif"], 
+      },
+      animation: {
+        ping: 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite',
+      },
+      animationDelay: {
+        '300': '300ms',
+        '600': '600ms',
       }
     },
   },

@@ -43,10 +43,11 @@ const useSignInForm = () => {
       dispatch(setUser(userData));
       navigate(`/${userRole}/dashboard`);
     }
-    catch (error) {
+    catch (error: any) {
+      const errorMessage = error?.data?.message || "Failed to sign in. Try again!";
       showToast({
         status: "error",
-        message: "Failed to sign in. Try again!"
+        message: errorMessage
       })
     }
   };

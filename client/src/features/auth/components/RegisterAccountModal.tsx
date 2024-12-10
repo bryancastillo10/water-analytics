@@ -11,16 +11,15 @@ const RegisterAccountModal = ({ isOpenModal, handleCloseModal }: RegisterAccount
     <>
       {isOpenModal && (
         <div 
-          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center 
+          className="fixed inset-0 bg-dark/50  z-50 flex items-center justify-center 
           transition-opacity duration-300 ease-in-out"
         >
           <div 
-            className="relative bg-white w-[90%] max-w-md rounded-2xl shadow-xl p-6 
-            animate-slide-up transform"
+            className="relative bg-white w-[90%] max-w-md rounded-2xl shadow-xl p-6 transform"
           >
             <button 
               onClick={handleCloseModal}
-              className="absolute top-2 right-2 text-neutral hover:rotate-180 hover:text-gray-900 
+              className="absolute top-3 right-4 text-neutral hover:rotate-180 hover:text-gray-900 
               transition-all duration-200"
             >
               <X size={24} />
