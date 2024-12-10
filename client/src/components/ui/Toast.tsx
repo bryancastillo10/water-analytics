@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { X } from "@phosphor-icons/react";
+import { X, XCircle, WarningCircle, CheckCircle } from "@phosphor-icons/react";
 
 export interface ToastProps{
     status: "success"|"error" | "warning";
@@ -13,11 +13,20 @@ const Toast = ({ status, message, isVisible, onClose }: ToastProps) => {
   const getStatusStyle = (status: string) => {
     switch (status) {
       case "success":
-        return "bg-green-300 text-green-900";
+        return {
+          icon: CheckCircle,
+          style:"bg-green-300 text-green-900"
+        };
       case "error":
-        return "bg-red-300 text-red-900";
+        return {
+          icon: XCircle,
+          style: "bg-red-300 text-red-900"
+        };
       default:
-        return "bg-yellow-300 text-yellow-900";
+        return {
+          icon: WarningCircle,
+          style: "bg-yellow-300 text-yellow-900"
+        };
     }
   };
 
@@ -33,20 +42,21 @@ const Toast = ({ status, message, isVisible, onClose }: ToastProps) => {
     return;
 }, [isVisible]);
 
-
+  const Icon = getStatusStyle(status)["icon"];
   return (
     <div
       className={`
         fixed z-50 flex justify-between items-center gap-x-4
-        min-w-[35%] mx
+        xl:min-w-[20%] xl:max-w-[50%]
         -auto px-4 py-3 rounded-lg shadow-md
-        text-sm font-medium -top-[100%] left-[35%]
+        text-sm font-medium -top-[100%] left-[20%] xl:left-[35%]
         transition-all duration-500 ease-in-out
-        ${getStatusStyle(status)}
+        ${getStatusStyle(status)["style"]}
         transform opacity-0 
         ${show ? "top-[1rem] opacity-100" : ""}
       `}
     >
+      <Icon size="20" />
       {message}
       <X
         onClick={onClose}
