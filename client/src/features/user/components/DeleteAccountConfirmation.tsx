@@ -1,57 +1,17 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { FormButtons } from "@/components/layout";
 import { FormInput } from "@/components/ui";
-
 import { WarningCircle, ShieldCheck } from "@phosphor-icons/react";
-import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
 
-import { clearUser } from "@/lib/redux/states/userSlice";
-import { useDeleteUserMutation } from "@/features/user/api/userApi";
-import { useToast } from "@/hook/useToast";
+import useDeleteUser from "@/features/user/hooks/useDeleteUser";
 
 const DeleteAccountConfirmation = () => {
-  const [confirmUsername, setConfirmUsername] = useState<string>("");
-  const user = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  const [deleteUser, { isLoading }] = useDeleteUserMutation();
-  const { showToast } = useToast();
-  const onChangeUsernameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfirmUsername(e.target.value);
-  }
-
-  const callDeleteUser = async () => {
-    try {
-      if (user.user_id) {
-        await deleteUser({
-          id: user.user_id,
-          username: confirmUsername
-        }).unwrap();
-    
-        dispatch((clearUser()));
-
-        showToast({
-          status: "success",
-          message: "Account has been deleted successfully"
-        });
-
-        navigate("/");
-        }
-    }
-    catch (error: any) {
-        showToast({
-            status:"error",
-            message: error?.data?.message || "Failed to delete your account"
-        })
-    }    
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    callDeleteUser();
-  };
+  const {
+    confirmUsername,
+    isLoading,
+    onChangeUsernameInput,
+    handleSubmit
+  } = useDeleteUser();
+  
   return (
       <form onSubmit={handleSubmit}>
           <h1 className="text-lg">Are you sure you want to delete your account?</h1>
