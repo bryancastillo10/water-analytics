@@ -10,7 +10,7 @@ interface UploadImageInputProps {
   
 const UploadImageInput = ({ onImageSelect, label, icon: Icon }: UploadImageInputProps) => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);
-    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0] || null;
       onImageSelect(file);
     };

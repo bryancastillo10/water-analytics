@@ -1,7 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type {
-    UserProfile,
     UpdateUserRequest,
+    UpdateUserResponse,
+    UpdateProfilePicRequest,
+    UpdateProfilePicResponse,
     ResetPwRequest,
     ResetPwResponse,
     VerifyCodeRequest,
@@ -17,18 +19,28 @@ export const userApi = createApi({
         credentials: 'include'
     }),
     endpoints: (build) => ({
-        updateUser: build.mutation<UserProfile, UpdateUserRequest>({
+        updateUser: build.mutation<UpdateUserResponse, UpdateUserRequest>({
             query: ({ id, ...data }) => ({
                 url: `/update/${id}`,
                 method: "PUT",
                 body: data
             })
         }),
+        updateProfilePicture: build.mutation<UpdateProfilePicResponse, UpdateProfilePicRequest>({
+            query: ({ userId, file }) => {
+              const formData = new FormData();
+              formData.append("profilePic", file);      
+              return {
+                url: `/profile-pic/${userId}`,
+                method: "PUT",
+                body: formData,
+              };
+            },
+          }),
         deleteUser: build.mutation<void, DeleteUserRequest>({
             query: ({id, username}) => ({
-                url: `/delete/${id}`,
-                method: "DELETE",
-                body: username
+                url: `/delete/${id}?username=${encodeURIComponent(username)}`,
+                method: "DELETE"
             })
         }),
         requestPasswordReset: build.mutation<ResetPwResponse, ResetPwRequest>({
@@ -57,6 +69,7 @@ export const userApi = createApi({
 
 export const {
     useUpdateUserMutation,
+    useUpdateProfilePictureMutation,
     useDeleteUserMutation,
     useRequestPasswordResetMutation,
     useVerifyCodeMutation,

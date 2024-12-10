@@ -8,9 +8,22 @@ export interface UpdateUserRequest extends UserProfile{
     id: string;
 }
 
+export interface UpdateUserResponse extends UserProfile{
+    message: string;
+}
+
 export interface DeleteUserRequest{
     id: string;   
     username: string;
+}
+export interface UpdateProfilePicResponse {
+    message: string;
+    profilePic: string;
+}
+
+export interface UpdateProfilePicRequest {
+    userId: string;
+    file: File;
 }
 
 // Password Reset Feature
