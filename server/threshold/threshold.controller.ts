@@ -45,10 +45,9 @@ export class ThresholdController {
 
     async updateThreshold(req: Request, res: Response, next: NextFunction) {
         try {
-            const thresholdId = req.params.id;
-            const value = req.body;
+            const thresholdUpdates = req.body;
        
-            const updatedValues = await this.thresholdService.updateThreshold({thresholdId,value});
+            const updatedValues = await this.thresholdService.updateThreshold(thresholdUpdates);
 
             res.status(200).json({"message":"Threshold value has been updated", "updated":updatedValues})
         }
