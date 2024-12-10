@@ -16,6 +16,15 @@ export interface DeleteUserRequest{
     id: string;   
     username: string;
 }
+export interface UpdateProfilePicResponse {
+    message: string;
+    profilePic: string;
+}
+
+export interface UpdateProfilePicRequest {
+    userId: string;
+    file: File;
+}
 
 // Password Reset Feature
 export interface ResetPwRequest{

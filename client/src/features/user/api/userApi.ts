@@ -2,6 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type {
     UpdateUserRequest,
     UpdateUserResponse,
+    UpdateProfilePicRequest,
+    UpdateProfilePicResponse,
     ResetPwRequest,
     ResetPwResponse,
     VerifyCodeRequest,
@@ -24,6 +26,17 @@ export const userApi = createApi({
                 body: data
             })
         }),
+        updateProfilePicture: build.mutation<UpdateProfilePicResponse, UpdateProfilePicRequest>({
+            query: ({ userId, file }) => {
+              const formData = new FormData();
+              formData.append("profilePic", file);      
+              return {
+                url: `/profile-pic/${userId}`,
+                method: "PUT",
+                body: formData,
+              };
+            },
+          }),
         deleteUser: build.mutation<void, DeleteUserRequest>({
             query: ({id, username}) => ({
                 url: `/delete/${id}`,
@@ -57,6 +70,7 @@ export const userApi = createApi({
 
 export const {
     useUpdateUserMutation,
+    useUpdateProfilePictureMutation,
     useDeleteUserMutation,
     useRequestPasswordResetMutation,
     useVerifyCodeMutation,
