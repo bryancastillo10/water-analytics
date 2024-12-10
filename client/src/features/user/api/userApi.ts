@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type {
-    UserProfile,
     UpdateUserRequest,
+    UpdateUserResponse,
     ResetPwRequest,
     ResetPwResponse,
     VerifyCodeRequest,
@@ -17,7 +17,7 @@ export const userApi = createApi({
         credentials: 'include'
     }),
     endpoints: (build) => ({
-        updateUser: build.mutation<UserProfile, UpdateUserRequest>({
+        updateUser: build.mutation<UpdateUserResponse, UpdateUserRequest>({
             query: ({ id, ...data }) => ({
                 url: `/update/${id}`,
                 method: "PUT",

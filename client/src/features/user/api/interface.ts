@@ -8,6 +8,10 @@ export interface UpdateUserRequest extends UserProfile{
     id: string;
 }
 
+export interface UpdateUserResponse extends UserProfile{
+    message: string;
+}
+
 export interface DeleteUserRequest{
     id: string;   
     username: string;

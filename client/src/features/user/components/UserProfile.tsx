@@ -10,10 +10,10 @@ const UserProfile = () => {
   const user = useAppSelector((state) => state.user);
 
   const { handleOpenDrawer } = useDrawer();
-  const userId = "sample_userId";
+  const userId = user.user_id || "";
   
-  const updateUserDrawer = (id: string) => {
-    handleOpenDrawer("Edit Your Profile", "UpdateUserForm", {id});
+  const updateUserDrawer = () => {
+    handleOpenDrawer("Edit Your Profile", "UpdateUserForm");
   };
 
   const updateProfilePictureDrawer = () => {
@@ -24,8 +24,8 @@ const UserProfile = () => {
     handleOpenDrawer("Reset Your Password","ResetPasswordForm")
   }
 
-  const deleteUserDrawer = () => {
-    handleOpenDrawer("Delete Account Confirmation", "DeleteAccountConfirmation");
+  const deleteUserDrawer = (id: string) => {
+    handleOpenDrawer("Delete Account Confirmation", "DeleteAccountConfirmation", {id});
   };
 
 
@@ -58,7 +58,7 @@ const UserProfile = () => {
               <h2 className="text-lg font-semibold">Username</h2>
               </div>
               <div className="hidden group-hover:flex hover:text-primary items-center  cursor-pointer">
-                <PencilSimpleLine size={20} onClick={()=>updateUserDrawer(userId)} />
+                <PencilSimpleLine size={20} onClick={()=>updateUserDrawer()} />
               </div>
             </div>
             <p className={`${theme ? "text-secondary" :"text-primary"} text-base mt-1`}>{user.username || "username"}</p>
@@ -77,7 +77,7 @@ const UserProfile = () => {
               <ShieldCheck size="14"/> Reset Password
             </span>
           </Button>
-          <Button action={()=> deleteUserDrawer()} fontSize="text-sm" variant="danger">
+          <Button action={()=> deleteUserDrawer(userId)} fontSize="text-sm" variant="danger">
             <span className="flex items-center gap-1">
               <WarningCircle size="14"/> Delete Account
             </span>
