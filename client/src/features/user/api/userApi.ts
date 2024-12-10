@@ -39,9 +39,8 @@ export const userApi = createApi({
           }),
         deleteUser: build.mutation<void, DeleteUserRequest>({
             query: ({id, username}) => ({
-                url: `/delete/${id}`,
-                method: "DELETE",
-                body: username
+                url: `/delete/${id}?username=${encodeURIComponent(username)}`,
+                method: "DELETE"
             })
         }),
         requestPasswordReset: build.mutation<ResetPwResponse, ResetPwRequest>({
