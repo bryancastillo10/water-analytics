@@ -66,7 +66,7 @@ model Site {
 
 model Measurement {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  date DateTime @default(now()) @unique
+  date DateTime @default(now()) 
   
   // Core Parameters
   pH           Float?

@@ -32,7 +32,7 @@ export class AuthController{
         generateTokenAndSetCookie(newUser.id, res);
 
       res.status(201).json({
-        message: "New user has been created successfully",
+        message: "Congratulations, your account has been registered",
         user: newUser 
       });
     } catch (error) {

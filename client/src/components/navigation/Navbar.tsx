@@ -6,6 +6,8 @@ import { sidebarItems } from "@/components/navigation/sidebarItems";
 import AvatarPopOver from "@/components/navigation/AvatarPopOver";
 import { type NavigationProps } from "@/components/navigation/Sidebar";
 
+import { useAppSelector } from "@/lib/redux/hooks";
+
 const Navbar = ({
   isSidebarExpanded,
   theme,
@@ -13,7 +15,8 @@ const Navbar = ({
   toggleTheme
 }: NavigationProps) => {
   const [isPopOverOpen, setIsPopOverOpen] = useState<boolean>(false);
-
+  const user = useAppSelector((state) => state.user);
+  console.log(user);
   const togglePopOver = () => {
     setIsPopOverOpen(!isPopOverOpen);
   }
@@ -46,7 +49,7 @@ const Navbar = ({
           {/* Username Greetings */}
           <div className="grid-cols-1  items-center">
             <h1 className="font-secondary">Welcome</h1>
-            <p className="text-sm text-neutral">username</p>
+            <p className="text-sm text-neutral">{user.username || "username"}</p>
           </div>
           <hr className="h-10 border border-light" />
 
@@ -55,7 +58,7 @@ const Navbar = ({
             <img
               onClick={togglePopOver}
               className="size-10 rounded-full cursor-pointer duration-300 ease-in-out hover:scale-90"
-              src="https://i.pravatar.cc/150?img=55"
+              src={user.profilePic || "https://i.pravatar.cc/150?img=55"}
               alt="avatar"
               />
            {isPopOverOpen && <AvatarPopOver/>}

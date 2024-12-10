@@ -3,14 +3,18 @@ import { Link } from "react-router-dom";
 
 import { AnimatedInput, Button } from "@/components/ui";
 import useSignUpForm from "@/features/auth/hooks/useSignUpForm";
+
 import AuthContainer from "@/features/auth/components/AuthContainer";
 import AgreementCheckBox from "@/features/auth/components/AgreementCheckBox";
+import LoadingModal from "@/features/auth/components/LoadingModal";
 
 const SignIn = () => {
   const {
       signUpData,
       isChecked,
       isOpen,
+      isLoadingApi,
+      isModalVisible,
       onChangeInput,
       handleAgreement,
       handleSubmit,
@@ -67,10 +71,12 @@ const SignIn = () => {
             onCheck={handleAgreement}
             handleOpenModal={handleOpenModal}
         />
-        <Button disabled={!isChecked} type="submit" width="w-full" variant="primary">
+        <Button disabled={!isChecked} loading={isLoadingApi} type="submit" width="w-full" variant="primary">
           Sign Up
         </Button>
       </form>
+
+      {isModalVisible && (<LoadingModal/>)}
 
       <article className="mt-4 text-xs md:text-sm text-dark ">
         <p>

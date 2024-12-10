@@ -65,6 +65,7 @@ export class AuthService {
             ...signUpData,
             password: hashedPassword,
             profilePicURL: "",
+            role: "PUBLIC",
         });
 
         // Seed Data
