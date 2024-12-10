@@ -5,9 +5,9 @@ import TextHeader from "@/components/common/TextHeader";
 import { Button } from "@/components/ui";
 import useDrawer from "@/hook/useDrawer";
 
-
 const UserProfile = () => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);
+  const user = useAppSelector((state) => state.user);
 
   const { handleOpenDrawer } = useDrawer();
   const userId = "sample_userId";
@@ -39,7 +39,7 @@ const UserProfile = () => {
                 >
                   <img
                   className="shadow-md object-cover size-[150px] rounded-full duration-300 ease-out group-hover:scale-110"
-                  src="https://i.pravatar.cc/150?img=55"
+                  src={user.profilePic ||"https://i.pravatar.cc/150?img=55"}
                   alt="avatar"
                   />
                 <PencilSimpleLine 
@@ -55,19 +55,19 @@ const UserProfile = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-x-2">
                 <User size={24} />
-                <h2 className="text-lg font-semibold">Username</h2>
+              <h2 className="text-lg font-semibold">Username</h2>
               </div>
               <div className="hidden group-hover:flex hover:text-primary items-center  cursor-pointer">
                 <PencilSimpleLine size={20} onClick={()=>updateUserDrawer(userId)} />
               </div>
             </div>
-            <p className={`${theme ? "text-secondary" :"text-primary"} text-base mt-1`}>username123</p>
+            <p className={`${theme ? "text-secondary" :"text-primary"} text-base mt-1`}>{user.username || "username"}</p>
             <div className="mt-4">
             <div className="flex items-center gap-x-2">
                 <EnvelopeSimple size={24}  />
                 <h2 className="text-lg font-semibold">Email</h2>
               </div>
-              <p className={`${theme ? "text-secondary" :"text-primary"} text-base mt-1`}>your_email@domain.com</p>
+              <p className={`${theme ? "text-secondary" :"text-primary"} text-base mt-1`}>{user.email || "your_email@domain.com"}</p>
             </div>
           </div>
         </div>
