@@ -1,7 +1,11 @@
 import { useState, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hook/useToast";
 
-import { useSendCodeToEmail } from "@/features/user/hooks/useResetPasswordApi";
+import {
+  useSendCodeToEmail,
+  useVerifyCode,
+  useUpdatePassword
+} from "@/features/user/hooks/useResetPasswordApi";
 
 export enum STEP {
   EMAIL = 0,
@@ -11,20 +15,23 @@ export enum STEP {
 
 interface ResetPasswordData {
   email: string;
-  password: string;
-  confirmPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
 }
 
 const useResetPassword = () => {
+  const { showToast } = useToast();
   const [step, setStep] = useState<STEP>(STEP.EMAIL);
   const [resetData, setResetData] = useState<ResetPasswordData>({
     email: "",
-    password: "",
-    confirmPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
   });
-  const { sendCodeToEmail, isLoading: isSendingCode } = useSendCodeToEmail();
 
-  const navigate = useNavigate();
+  // API Call Hooks
+  const { sendCodeToEmail, isLoading: isSendingCode } = useSendCodeToEmail();
+  const { callVerifyCode, isLoading: isVerifyingCode } = useVerifyCode();
+  const { callUpdatePassword, isLoading: isUpdating } = useUpdatePassword();
 
   const stepForward = () => setStep((prev) => prev + 1);
   const stepBackward = () => setStep((prev) => prev - 1);
@@ -37,32 +44,29 @@ const useResetPassword = () => {
   const handleEmailSubmit = async (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     sendCodeToEmail(resetData.email, stepForward);
-  
-
   };
 
   const handleCodeVerification = (code: string) => {
-    console.log("Verification code entered:", code);
-    // API Verify Code
-    stepForward();
+    callVerifyCode(resetData.email, code, stepForward);
   };
 
-  const handlePasswordReset = (e:FormEvent<HTMLFormElement>) => {
-    const { email, password, confirmPassword } = resetData;
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      console.log("Passwords do not match.");
-      return;
+  const handlePasswordReset = () => {
+    const { newPassword, confirmNewPassword } = resetData;
+    if (newPassword !== confirmNewPassword) {
+      showToast({
+          status: "warning",
+          message: "Password and Confirm Password do not match"
+        })
     }
-    console.log("Reset password request:", { email, password });
-    // API for Update Password  
-    navigate("/");
+    callUpdatePassword(resetData);
   };
 
   return {
     step,
     resetData,
     isSendingCode,
+    isVerifyingCode,
+    isUpdating,
     stepForward,
     stepBackward,
     onResetDataChange,
