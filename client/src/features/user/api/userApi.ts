@@ -44,7 +44,7 @@ export const userApi = createApi({
             })
         }),
         requestPasswordReset: build.mutation<ResetPwResponse, ResetPwRequest>({
-            query: ({ email }) => ({
+            query: (email) => ({
                 url: "/request-reset-password",
                 method: "POST",
                 body: email

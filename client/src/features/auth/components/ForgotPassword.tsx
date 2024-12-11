@@ -11,6 +11,7 @@ const ForgotPassword = () => {
   const {
     step,
     resetData,
+    isSendingCode,
     stepForward,
     stepBackward,
     onResetDataChange,
@@ -31,10 +32,10 @@ const ForgotPassword = () => {
           validationMessage="your.email@domain.com"
         />
         <div className="flex items-center justify-between gap-x-2">
-          <Button action ={()=>navigate("/")} type="button" width="w-full" variant="outline">
+          <Button loading={isSendingCode} action ={()=>navigate("/")} type="button" width="w-full" variant="outline">
             Back
           </Button>
-          <Button  type="submit" width="w-full" variant="primary">
+          <Button loading={isSendingCode}  type="submit" width="w-full" variant="primary">
             Send A Code
           </Button>
         </div>

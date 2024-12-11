@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useSendCodeToEmail } from "@/features/user/hooks/useResetPasswordApi";
+
 export enum STEP {
   EMAIL = 0,
   VALIDATION = 1,
@@ -20,6 +22,8 @@ const useResetPassword = () => {
     password: "",
     confirmPassword: "",
   });
+  const { sendCodeToEmail, isLoading: isSendingCode } = useSendCodeToEmail();
+
   const navigate = useNavigate();
 
   const stepForward = () => setStep((prev) => prev + 1);
@@ -30,11 +34,11 @@ const useResetPassword = () => {
   };
     
 
-  const handleEmailSubmit = (e:FormEvent<HTMLFormElement>) => {
+  const handleEmailSubmit = async (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Email submitted:", resetData.email);
-    // API Send Verification
-    stepForward();
+    sendCodeToEmail(resetData.email, stepForward);
+  
+
   };
 
   const handleCodeVerification = (code: string) => {
@@ -58,6 +62,7 @@ const useResetPassword = () => {
   return {
     step,
     resetData,
+    isSendingCode,
     stepForward,
     stepBackward,
     onResetDataChange,

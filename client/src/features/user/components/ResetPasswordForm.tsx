@@ -10,6 +10,7 @@ const ResetPasswordForm = () => {
     const {
         step,
         resetData,
+        isSendingCode,
         stepBackward,
         onResetDataChange,
         handleEmailSubmit,
@@ -30,7 +31,7 @@ const ResetPasswordForm = () => {
             <div className="my-8">
                 <ProgressBar step={1} totalSteps={3} />
             </div>
-            <FormButtons primaryBtnLabel="Send A Code" />
+            <FormButtons loading={isSendingCode} primaryBtnLabel="Send A Code" />
         </form>
     );
 

@@ -35,10 +35,6 @@ export class UserService {
     }
 
     async requestResetPassword(email:string) {
-        if (!email) {
-            throw new NotFoundError("Email is not found");
-        }
-
         const user = await this.userRepository.findUserByEmail(email);
         if (!user) {
             throw new NotFoundError("User with this email does not exist");

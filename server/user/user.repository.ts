@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
-import { DatabaseError } from "@/infrastructure/errors/customErrors";
+import { DatabaseError, ValidationError } from "@/infrastructure/errors/customErrors";
 
 import { IUserRepository, SaveResetCodeProps, UpdateUserRequest, UpdatePasswordRepo, UpdateProfilePicRequest } from "@/user/core/interface/IUserRepository";
 import { UserData } from "@/user/core/entity/user";
@@ -51,9 +51,9 @@ export class UserRepository implements IUserRepository {
             const user = await this.prisma.user.findUnique({
               where: { email },
             });
-
+           
             if (!user) {
-              return null;
+              throw new ValidationError("User was not found in the database");
             }
 
             const existingUser: UserData = {
@@ -80,7 +80,7 @@ export class UserRepository implements IUserRepository {
           });
         
           if(!user){
-            return null;
+            throw new ValidationError("User was not found in the database");
           }
           return user as UserData;
          }
