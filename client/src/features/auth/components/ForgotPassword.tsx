@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import useResetPassword, {STEP} from "@/features/auth/hooks/useResetPassword";
+import useResetPassword, {STEP} from "@/features/user/hooks/useResetPassword";
 import { Envelope, Lock, Key } from "@phosphor-icons/react";
 
 import { ProgressBar } from "@/components/common";
@@ -11,6 +11,7 @@ const ForgotPassword = () => {
   const {
     step,
     resetData,
+    isSendingCode,
     stepForward,
     stepBackward,
     onResetDataChange,
@@ -31,10 +32,10 @@ const ForgotPassword = () => {
           validationMessage="your.email@domain.com"
         />
         <div className="flex items-center justify-between gap-x-2">
-          <Button action ={()=>navigate("/")} type="button" width="w-full" variant="outline">
+          <Button loading={isSendingCode} action ={()=>navigate("/")} type="button" width="w-full" variant="outline">
             Back
           </Button>
-          <Button  type="submit" width="w-full" variant="primary">
+          <Button loading={isSendingCode}  type="submit" width="w-full" variant="primary">
             Send A Code
           </Button>
         </div>
@@ -83,14 +84,18 @@ const ForgotPassword = () => {
   if (step === STEP.RESETPASSWORD) {
     bodyContent = (
       <>
-         <form onSubmit={handlePasswordReset}>
+        <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+          e.preventDefault();
+          handlePasswordReset();
+          navigate("/");
+        }}>
           <FormInput
             id="password"
             label="New Password"
             isPassword
             icon={Lock}
-            value={resetData.password}
-            onChange={(e) => onResetDataChange("password", e.target.value)}
+            value={resetData.newPassword}
+            onChange={(e) => onResetDataChange("newPassword", e.target.value)}
             validationMessage="Alphanumeric characters"
           />
 
@@ -99,8 +104,8 @@ const ForgotPassword = () => {
             label="Confirm Password"
             isPassword
             icon={Key}
-            value={resetData.confirmPassword}
-            onChange={(e) => onResetDataChange("confirmPassword", e.target.value)}
+            value={resetData.confirmNewPassword}
+            onChange={(e) => onResetDataChange("confirmNewPassword", e.target.value)}
             validationMessage="Re-type for password confirmation"
           />
           <div className="flex items-center justify-between gap-x-2">
@@ -113,7 +118,6 @@ const ForgotPassword = () => {
               Back
             </Button>
             <Button
-              action={()=>navigate("/")}
               type="submit"
               width="w-full"
               variant="primary"

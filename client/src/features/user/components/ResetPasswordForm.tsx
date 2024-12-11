@@ -4,12 +4,16 @@ import { ProgressBar } from "@/components/common";
 import { Button,FormInput, CodeInput } from "@/components/ui";
 import { FormButtons } from "@/components/layout";
 
-import useResetPassword, {STEP} from "@/features/auth/hooks/useResetPassword";
+import useResetPassword, { STEP } from "@/features/user/hooks/useResetPassword";
+import useDrawer from "@/hook/useDrawer";
 
 const ResetPasswordForm = () => {
+    const { handleCloseDrawer } = useDrawer();
+    
     const {
         step,
         resetData,
+        isSendingCode,
         stepBackward,
         onResetDataChange,
         handleEmailSubmit,
@@ -30,7 +34,7 @@ const ResetPasswordForm = () => {
             <div className="my-8">
                 <ProgressBar step={1} totalSteps={3} />
             </div>
-            <FormButtons primaryBtnLabel="Send A Code" />
+            <FormButtons loading={isSendingCode} primaryBtnLabel="Send A Code" />
         </form>
     );
 
@@ -57,14 +61,18 @@ const ResetPasswordForm = () => {
 
     if (step === STEP.RESETPASSWORD) {
         bodyContent = (
-            <form onSubmit={handlePasswordReset}>
+            <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                e.preventDefault();
+                handlePasswordReset();
+                handleCloseDrawer();
+            }}>
             <FormInput
                 id="password"
                 label="New Password"
                 isPassword
                 icon={Lock}
-                value={resetData.password}
-                onChange={(e)=> onResetDataChange("password",e.target.value)}
+                value={resetData.newPassword}
+                onChange={(e)=> onResetDataChange("newPassword",e.target.value)}
                 validationMessage="Alphanumeric characters"
             />
 
@@ -73,8 +81,8 @@ const ResetPasswordForm = () => {
                 label="Confirm Password"
                 isPassword
                 icon={Key}
-                value={resetData.confirmPassword}
-                onChange={(e)=> onResetDataChange("confirmPassword",e.target.value)}
+                value={resetData.confirmNewPassword}
+                onChange={(e)=> onResetDataChange("confirmNewPassword",e.target.value)}
                 validationMessage="Re-type for password confirmation"
                 />
                 <div className="my-8">
