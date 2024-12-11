@@ -1,6 +1,5 @@
-import { useState } from "react";
 import TextHeader from "@/components/common/TextHeader";
-import { ArrowUp, ArrowDown, PencilSimpleLine, TrashSimple } from "@phosphor-icons/react";
+import { ArrowUp, ArrowDown, PencilSimpleLine } from "@phosphor-icons/react";
 
 import { useAppSelector } from "@/lib/redux/hooks"
 import useDrawer from "@/hook/useDrawer";
@@ -11,16 +10,10 @@ import { thresholdColumns } from "@/features/thresholds/lib/thresholdTableConfig
 
 const ThresholdSettings = () => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);
-  const [hoveredRow, setHoveredRow] = useState<number | null>(null);
-  const isAdmin = true;
   const { handleOpenDrawer } = useDrawer();
 
   const updateThreshold = () => {
     handleOpenDrawer("Edit your threshold values", "UpdateThresholdForm", {thresholdData: sampleThresholds});
-  }
-
-  const deleteThreshold = (id:string) => {
-    handleOpenDrawer("Delete a Threshold Parameter", "DeleteThresholdForm", { id });
   }
 
   const table = useReactTable({
@@ -74,12 +67,10 @@ const ThresholdSettings = () => {
               ))}
             </thead>
             <tbody>
-              {table.getRowModel().rows.map((row, rowIndex)=> (
+              {table.getRowModel().rows.map((row)=> (
                 <tr
                   className="relative"
                   key={row.id}
-                  onMouseEnter={() => setHoveredRow(rowIndex)}
-                  onMouseLeave={()=> setHoveredRow(null)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td key={cell.id} className="border border-neutral text-left px-3 py-2">
@@ -87,13 +78,7 @@ const ThresholdSettings = () => {
                         cell.column.columnDef.cell,
                         cell.getContext()
                       )}
-                      {hoveredRow === rowIndex && isAdmin ?
-                        (<TrashSimple
-                          size="24"
-                          onClick={() => deleteThreshold(row.original.id)}
-                          className={`absolute top-2 rounded-full p-1 -right-4 cursor-pointer duration-300 ease-in-out 
-                            hover:scale-110 ${theme ? "bg-secondary" : "bg-neutral"}`} />)
-                          : null}     
+                     
                     </td>
                   ))}
                 </tr>
