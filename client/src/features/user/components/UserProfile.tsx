@@ -39,7 +39,7 @@ const UserProfile = () => {
                 >
                   <img
                   className="shadow-md object-cover size-[150px] rounded-full duration-300 ease-out group-hover:scale-110"
-                  src={user.profilePic ||"https://i.pravatar.cc/150?img=55"}
+                  src={user.profilePic}
                   alt="avatar"
                   />
                 <PencilSimpleLine 

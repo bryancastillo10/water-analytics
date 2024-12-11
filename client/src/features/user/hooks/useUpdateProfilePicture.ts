@@ -33,6 +33,7 @@ const useUpdateProfilePicture = () => {
           const res = await updateProfilePicture({ userId: user.user_id, file: imgFile }).unwrap();
           
           dispatch(setProfilePic(res.profilePic));
+          setPreviewUrl(res.profilePic);
           showToast({
             status: "success",
             message: res.message
