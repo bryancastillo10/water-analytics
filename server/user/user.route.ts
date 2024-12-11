@@ -5,7 +5,8 @@ import { upload } from "@/infrastructure/middleware/upload.middleware";
 
 const router = express.Router();
 
-router.put("/update/:id", protectRoute,userController.updateUser);
+router.put("/update/:id", protectRoute, userController.updateUser);
+router.get("/", protectRoute, userController.getUser);
 router.delete("/delete/:id",protectRoute, userController.deleteUser);
 router.post("/request-reset-password", userController.requestResetPassword);
 router.post("/verify-code", userController.verifyCodeForReset);

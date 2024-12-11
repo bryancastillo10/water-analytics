@@ -45,7 +45,47 @@ export class UserRepository implements IUserRepository {
             throw Error;
         }
     };
+    
+    async verifyUserRole(userId: string): Promise<boolean> {
+      try {
+          const user = await this.prisma.user.findUnique({
+              where: { id: userId }
+          });
 
+          if (!user) {
+              throw new ValidationError("User not found");
+          }
+  
+          const isUserVerified = user?.role === "ADMIN" || user?.role === "ANALYST";
+          return isUserVerified;
+      }
+      catch (error) {
+          if (error instanceof PrismaClientKnownRequestError) {
+              console.error(error.message);
+              throw new DatabaseError("Database error at getSiteByUser method");
+            }
+           throw Error;
+         }
+      }
+     
+     async getAllUsers(): Promise<UserData[]> {
+       try {
+         const allUsers = await this.prisma.user.findMany();
+
+         return allUsers.map(user => ({
+           ...user,
+           resetCode: user.resetCode ?? undefined,
+           resetCodeExpiry: user.resetCodeExpiry ?? undefined
+         }));
+       }
+       catch (error) {
+        if (error instanceof PrismaClientKnownRequestError) {
+            console.error(error.message);
+            throw new DatabaseError("Database error at getSiteByUser method");
+          }
+         throw Error;
+       }
+     }
      async findUserByEmail(email: string): Promise<UserData | null> {
          try {
             const user = await this.prisma.user.findUnique({

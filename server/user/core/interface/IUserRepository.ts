@@ -8,7 +8,9 @@ export interface IUserRepository {
     saveResetCode({email,code,expiry}:SaveResetCodeProps): Promise<void>;
     updatePassword({ email, hashedPassword }: UpdatePasswordRepo): Promise<void>;
     updateProfilePicture({userId, imageUrl}:UpdateProfilePicRequest):Promise<string>;
-}
+    getAllUsers(): Promise<UserData[]>;
+    verifyUserRole(userId: string): Promise<boolean>
+}   
 
 export type FileInput = { path: string }; 
 

@@ -11,6 +11,7 @@ import type {
     UpdatePasswordRequest,
     DeleteUserRequest
 } from "@/features/user/api/interface";
+import type { UserState } from "@/lib/redux/states/userSlice";
 
 export const userApi = createApi({
     reducerPath: "userApi",
@@ -36,7 +37,12 @@ export const userApi = createApi({
                 body: formData,
               };
             },
-          }),
+        }),
+        getAllUser: build.query < UserState[], {userId: string} > ({
+            query: ({ userId }) => ({
+                url: `/?id=${encodeURIComponent(userId)}`
+           }) 
+        }),
         deleteUser: build.mutation<void, DeleteUserRequest>({
             query: ({id, username}) => ({
                 url: `/delete/${id}?username=${encodeURIComponent(username)}`,

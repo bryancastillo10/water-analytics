@@ -4,6 +4,7 @@ import { UserService } from "@/user/core/service/userService";
 export class UserController {
     constructor(private readonly userService: UserService) {
         this.updateUser = this.updateUser.bind(this);
+        this.getUser = this.getUser.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
         this.requestResetPassword = this.requestResetPassword.bind(this);
         this.verifyCodeForReset = this.verifyCodeForReset.bind(this);
@@ -20,6 +21,18 @@ export class UserController {
             res.status(200).json({ message: "Your profile has been updated successfully", user: updatedUser });
         } catch (error) {
             next(error);
+        }
+    }
+
+    async getUser(req: Request, res: Response, next: NextFunction) {
+        try {
+            const userId = req.query.id;
+            const allUsers = await this.userService.getAllUser(String(userId));
+
+            res.status(200).json({users: allUsers})
+
+        } catch (error) {
+            next(error)
         }
     }
 

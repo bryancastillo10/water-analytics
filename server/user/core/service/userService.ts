@@ -20,6 +20,21 @@ export class UserService {
         return updatedUser;
     }
 
+    async getAllUser(userId: string) {
+        if (!userId) {
+            throw new NotFoundError("User id is not found");
+        }
+
+        const isUserVerified = await this.userRepository.verifyUserRole(userId);
+        if (!isUserVerified) {
+            throw new ValidationError("The user is not auhorized to create a threshold. Admin privileges only");
+        }
+
+        const allUsers = await this.userRepository.getAllUsers();
+
+        return allUsers;
+    }
+
     async deleteUser({userId, username}:DeleteUserRequest) {
         if (!userId) {
             throw new NotFoundError("User id is not found");
@@ -98,13 +113,11 @@ export class UserService {
             throw new NotFoundError("Image file not found");
         }
 
-
         const imageUrl = await uploadImage({
             filePath: file.path,
             folder: "profile-picture",
             deleteLocalFile: true
         });
-
 
         const updatedProfile = this.userRepository.updateProfilePicture({ userId, imageUrl });
         
