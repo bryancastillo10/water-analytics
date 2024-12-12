@@ -8,6 +8,7 @@ import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-tabl
 import { sampleThresholds } from "@/features/thresholds/api/mockData";
 import { thresholdColumns } from "@/features/thresholds/lib/thresholdTableConfig";
 import { useGetThresholdQuery } from "../api/thresholdApi";
+import { LoadingAnimation } from "@/components/common";
 
 const ThresholdSettings = () => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);
@@ -31,7 +32,7 @@ const ThresholdSettings = () => {
 
   if (isLoading) {
     return <div className="flex justify-center items-center xl:w-[50%]">
-      <h1 className="text-2xl">Loading...</h1>
+      <LoadingAnimation size="sm"/>
     </div>
   }
 
