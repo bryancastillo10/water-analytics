@@ -5,14 +5,12 @@ export interface IThresholdData{
     value: string;
 }
 
-type ParameterTypes = {
-    pH: number;
-    totalCOD: number;
-    suspendedSolids: number;
-}
-
-
 export interface UpdateThresholdRequest {
     thresholdId: string;
-    value: ParameterTypes
+    value: number;
+}[]
+
+export interface UpdateThresholdResponse{
+    message: string;
+    updated: IThresholdData[];
 }

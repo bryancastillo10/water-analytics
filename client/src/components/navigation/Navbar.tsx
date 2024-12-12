@@ -16,7 +16,6 @@ const Navbar = ({
 }: NavigationProps) => {
   const [isPopOverOpen, setIsPopOverOpen] = useState<boolean>(false);
   const user = useAppSelector((state) => state.user);
-  console.log(user);
   const togglePopOver = () => {
     setIsPopOverOpen(!isPopOverOpen);
   }
