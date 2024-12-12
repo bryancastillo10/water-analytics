@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useReactTable, getCoreRowModel } from "@tanstack/react-table";
+import { useToast } from "@/hook/useToast";
 
-import type { IThresholdData } from "@/features/thresholds/api/interface";
+import type { IThresholdData, UpdateThresholdRequest } from "@/features/thresholds/api/interface";
+import { useUpdateThresholdMutation } from "@/features/thresholds/api/thresholdApi";
 import { updateThresholdColumnsConfig } from "@/features/thresholds/lib/updateThresholdTableConfig";
 
 
@@ -14,6 +16,8 @@ const useUpdateThreshold = ({thresholdData}:{thresholdData: IThresholdData[]}) =
       };
       
     const [paramsValue, setParamsValue] = useState(() => preprocessData(thresholdData));
+    const [updateThreshold, {isLoading} ] = useUpdateThresholdMutation();
+    const { showToast } = useToast();
 
     const onChangeValue = (parameter: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
@@ -22,9 +26,42 @@ const useUpdateThreshold = ({thresholdData}:{thresholdData: IThresholdData[]}) =
         [parameter]: value
       }));
     };
+  
+    const preparePayload = (): UpdateThresholdRequest[] => {
+      return thresholdData.map((threshold) => {
+        const valueString = paramsValue[threshold.parameter]; 
+        const value = valueString !== undefined ? parseFloat(valueString) : 0; 
+        return {
+          thresholdId: threshold.id,
+          value,
+        };
+      });
+    };
     
-  console.log(paramsValue);
+    const data = preparePayload();
+    const callUpdateThreshold = async (data: UpdateThresholdRequest[]) => {
+        try{
+          const res = await updateThreshold(data).unwrap();
+          showToast({
+            status: "success",
+            message: res.message
+          });
+      }
+      catch (error: any){
+          showToast({
+            status: "error",
+            message: error.message || "Failed to update the threshold"
+          });
+      }
+    };
+  
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    callUpdateThreshold(data);
+  };
+
     const updateThresholdColumns = updateThresholdColumnsConfig(paramsValue, onChangeValue);
+    
     
     const updateTable = useReactTable({
         data: thresholdData,
@@ -33,9 +70,10 @@ const useUpdateThreshold = ({thresholdData}:{thresholdData: IThresholdData[]}) =
     });
 
     return {
-        updateTable,
-
+      updateTable,
+      isLoading,
+      handleSubmit
     }
 }
 
-export default useUpdateThreshold
+export default useUpdateThreshold;

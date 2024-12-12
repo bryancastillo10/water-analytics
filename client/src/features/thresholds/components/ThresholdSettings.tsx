@@ -5,29 +5,41 @@ import { useAppSelector } from "@/lib/redux/hooks"
 import useDrawer from "@/hook/useDrawer";
 
 import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import { sampleThresholds } from "@/features/thresholds/api/mockData";
 import { thresholdColumns } from "@/features/thresholds/lib/thresholdTableConfig";
+import { useGetThresholdQuery } from "../api/thresholdApi";
+import { LoadingAnimation } from "@/components/common";
 
 const ThresholdSettings = () => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);
+  const user = useAppSelector((state) => state.user);
+  const userId = user.user_id ?? undefined;
+
+  const { data: thresholdList, isLoading } = useGetThresholdQuery({id: userId!}, {skip: !userId});
+
   const { handleOpenDrawer } = useDrawer();
 
   const updateThreshold = () => {
-    handleOpenDrawer("Edit your threshold values", "UpdateThresholdForm", {thresholdData: sampleThresholds});
-  }
+    handleOpenDrawer("Edit your threshold values", "UpdateThresholdForm", { thresholdData: thresholdList });
+  };
 
   const table = useReactTable({
-    data: sampleThresholds,
-    columns:thresholdColumns,
+    data: thresholdList || [],
+    columns: thresholdColumns,
     debugTable: true,
     getCoreRowModel: getCoreRowModel(),
-  })
+  });
 
+  if (isLoading) {
+    return <div className="flex justify-center items-center xl:w-[50%]">
+      <LoadingAnimation size="sm"/>
+    </div>
+  }
 
   return (
     <section className="px-6 py-4 w-full xl:w-[50%]">
           <TextHeader text="Threshold Settings" />
-          <table className="table-auto xl:table-fixed w-full border-collapse mt-4 relative group">
+      {thresholdList &&
+(        <table className="table-auto xl:table-fixed w-full border-collapse mt-4 relative group">
           <thead>
             <tr>
               <th>
@@ -84,7 +96,7 @@ const ThresholdSettings = () => {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table>)}
     </section>
         )
       }

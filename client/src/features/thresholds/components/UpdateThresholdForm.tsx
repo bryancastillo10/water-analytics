@@ -4,6 +4,7 @@ import type { IThresholdData } from "@/features/thresholds/api/interface";
 import useUpdateThreshold from "@/features/thresholds/hooks/useUpdateThreshold";
 
 import { FormButtons } from "@/components/layout";
+import { LoadingAnimation } from "@/components/common";
 
 interface UpdateThresholdFormProps{
   thresholdData: IThresholdData[];
@@ -11,11 +12,11 @@ interface UpdateThresholdFormProps{
 
 
 const UpdateThresholdForm = ({thresholdData}:UpdateThresholdFormProps) => {
-  const { updateTable } = useUpdateThreshold({thresholdData});
+  const {  handleSubmit, isLoading, updateTable } = useUpdateThreshold({thresholdData});
   
   return (
-    <form className="p-6 space-y-4 rounded-lg shadow-md" onSubmit={()=>{}}>
-      <table className="table-fixed border-collapse w-full">
+    <form className="p-6 space-y-4 rounded-lg shadow-md" onSubmit={handleSubmit}>
+      {!isLoading ? <table className="table-fixed border-collapse w-full">
           <thead>
           {updateTable.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
@@ -42,9 +43,15 @@ const UpdateThresholdForm = ({thresholdData}:UpdateThresholdFormProps) => {
               </tr>
             ))}
           </tbody>
-      </table>
+      </table> :
+        <div className="w-full h-[60vh] flex justify-center items-center">
+          <LoadingAnimation size="lg" />
+        </div>}
       <div className="pt-4">
-        <FormButtons primaryBtnLabel="Save" />
+        <FormButtons
+          loading={isLoading}
+          primaryBtnLabel="Save"
+        />
       </div>
     </form>)
 }
