@@ -30,12 +30,12 @@ export class ThresholdController {
 
     async getThreshold(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            const userId = req.user?.id;
+            const userId = req.query.id;
             if (!userId) {
                 throw new Error("User ID is undefined. Ensure auth middleware is applied");
             }
 
-            const allUserThreshold = await this.thresholdService.getThreshold(userId);
+            const allUserThreshold = await this.thresholdService.getThreshold(String(userId));
 
             res.status(200).json(allUserThreshold);
         } catch (error) {
@@ -49,7 +49,7 @@ export class ThresholdController {
        
             const updatedValues = await this.thresholdService.updateThreshold(thresholdUpdates);
 
-            res.status(200).json({"message":"Threshold value has been updated", "updated":updatedValues})
+            res.status(200).json({message:"Threshold value has been updated", updated: updatedValues})
         }
         catch (error) {
             next(error);
@@ -62,7 +62,7 @@ export class ThresholdController {
 
             await this.thresholdService.deleteThreshold(thresholdId);
 
-            res.status(200).json({ "message": "Threshold value has been deleted" });
+            res.status(200).json({ message: "Threshold value has been deleted" });
 
         } catch (error) {
             next(error);

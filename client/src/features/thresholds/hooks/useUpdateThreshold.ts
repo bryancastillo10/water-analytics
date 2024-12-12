@@ -23,7 +23,7 @@ const useUpdateThreshold = ({thresholdData}:{thresholdData: IThresholdData[]}) =
       }));
     };
     
-  console.log(paramsValue);
+
     const updateThresholdColumns = updateThresholdColumnsConfig(paramsValue, onChangeValue);
     
     const updateTable = useReactTable({
