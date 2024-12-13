@@ -8,10 +8,12 @@ export enum WaterSourceType {
 }
 
 export interface SiteData {
+    id: string;
+    userId: string;
     siteName: string;
     location: string;
     description: string;
-    imageURL: string;
+    imageUrl: string;
     sourceType: WaterSourceType;
 }
 

@@ -54,7 +54,7 @@ const DeleteSiteForm = ({ id }: DeleteSiteFormProps) => {
         </div>
         </div>     
         <div className="col-span-1">
-          <ImagePreview imageUrl={siteData?.imageURL!}/>
+          {siteData?.imageUrl && <ImagePreview imageUrl={siteData?.imageUrl}/>}
         </div>
       </div>
       <FormButtons primaryBtnLabel="Delete"/>

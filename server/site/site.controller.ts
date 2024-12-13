@@ -36,7 +36,7 @@ export class SiteController{
                 throw new Error("User ID is undefined. Ensure auth middleware is applied");
             }
             const userSites = await this.siteService.getSiteByUser(userId);
-            res.status(200).json({ userSites });
+            res.status(200).json(userSites);
         } catch (error) {
             next(error);
      }

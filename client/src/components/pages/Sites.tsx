@@ -1,24 +1,34 @@
 import SiteCard from "@/features/sites/components/SiteCard";
-import { mockSiteData } from "@/features/sites/api/mockData";
+// import { mockSiteData } from "@/features/sites/api/mockData";
+import { useGetSiteByUserQuery } from "@/features/sites/api/sitesApi";
 
 import { Button } from "@/components/ui";
 
 import useDrawer from "@/hook/useDrawer";
+import { LoadingAnimation } from "../common";
 
 const Sites = () => {
   const { handleOpenDrawer } = useDrawer();
+  const { data: getSitesData, isLoading } = useGetSiteByUserQuery();
 
   const addSite = () => {
     handleOpenDrawer("Add Monitoring Site", "AddSiteForm");
+  };
+
+  if (isLoading) {
+    return (
+      <section className="flex w-full h-full justify-center items-center">
+        <LoadingAnimation size="lg"/>
+      </section>
+    )
   }
-  
   return (
     <section>
       <div className="ml-10 xl:ml-0 my-4">
         <Button action={addSite} variant="primary">Add More Sites</Button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 place-items-center xl:place-items-start">
-        {mockSiteData.map((site) => (
+        {getSitesData && getSitesData.map((site) => (
           <SiteCard key={site.id} siteData={site} />
         ))}
       </div>

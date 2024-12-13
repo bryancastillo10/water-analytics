@@ -13,7 +13,7 @@ const SiteCard = ({ siteData }: SiteCardProps) => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);
 
   const { handleOpenDrawer } = useDrawer();
-  const { id, siteName, location, description, imageURL, sourceType } = siteData;
+  const { id, siteName, location, description, imageUrl, sourceType } = siteData;
 
   const updateSite = (id: string) => {
     handleOpenDrawer("Edit Monitoring Site Info", "UpdateSiteForm", {id});
@@ -30,7 +30,7 @@ const SiteCard = ({ siteData }: SiteCardProps) => {
         <div className="bg-neutral/40 h-48 rounded-lg">
             <div className="relative w-full h-48 overflow-hidden rounded-lg">
             <img
-                src={imageURL}
+                src={imageUrl}
                 alt="site-photo"
                 className="w-full h-full rounded-lg object-cover transition-translate duration-300 hover:translate-y-4 hover:translate-x-4 "
             />

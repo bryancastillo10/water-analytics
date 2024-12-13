@@ -6,11 +6,11 @@ import type { SiteData } from "@/features/sites/api/interface";
 const useUpdateSiteForm = (initialSiteData: SiteData) => {
     const [updateSiteData, setUpdateSiteData] = useState<SiteData>(initialSiteData);
     const [imgFile, setImgFile] = useState<File | null>(null);
-    const [previewUrl, setPreviewUrl] = useState<string | null>(initialSiteData.imageURL);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(initialSiteData.imageUrl);
 
     useEffect(() => {
         setUpdateSiteData(initialSiteData);
-        setPreviewUrl(initialSiteData.imageURL || null);
+        setPreviewUrl(initialSiteData.imageUrl || null);
     }, [initialSiteData]);
 
     const onChangeInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -43,9 +43,9 @@ const useUpdateSiteForm = (initialSiteData: SiteData) => {
         formData.append("description", updateSiteData.description);
         formData.append("sourceType", updateSiteData.sourceType);
         if (imgFile) {
-          formData.append("sitePhoto", imgFile);
-        } else if (updateSiteData.imageURL) {
-            formData.append("imageUrl", updateSiteData.imageURL)
+            formData.append("sitePhoto", imgFile);
+        } else if (updateSiteData.imageUrl) {
+            formData.append("imageUrl", updateSiteData.imageUrl)
         }
         return formData;
       };
