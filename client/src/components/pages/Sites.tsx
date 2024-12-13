@@ -24,7 +24,7 @@ const Sites = () => {
     )
   };
 
-  if (error) {
+  if (error || !getSitesData) {
     return (
       <section className="flex flex-col w-full h-full justify-center items-center">
         <FailedRequest fill="#006DA3" />

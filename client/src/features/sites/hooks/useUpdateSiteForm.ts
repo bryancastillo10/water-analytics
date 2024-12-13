@@ -1,24 +1,35 @@
-import React, { useState, useEffect } from "react";
-import type { SiteData } from "@/features/sites/api/interface";
+import { useState, useEffect } from "react";
+import { useUpdateSiteMutation } from "@/features/sites/api/sitesApi";
+import type { ISiteData } from "@/features/sites/api/interface";
 
+import { useToast } from "@/hook/useToast";
 
+interface IUpdateSite{
+    id: string;
+    site: ISiteData;
+}
 
-const useUpdateSiteForm = (initialSiteData: SiteData) => {
-    const [updateSiteData, setUpdateSiteData] = useState<SiteData>(initialSiteData);
+const useUpdateSiteForm = ({id, site}: IUpdateSite) => {
+    const [updateSiteData, setUpdateSiteData] = useState<ISiteData>(site);
+    const [updateSite, {isLoading}] = useUpdateSiteMutation();
     const [imgFile, setImgFile] = useState<File | null>(null);
-    const [previewUrl, setPreviewUrl] = useState<string | null>(initialSiteData.imageUrl);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(site.imageUrl);
+
+    const { showToast } = useToast();
 
     useEffect(() => {
-        setUpdateSiteData(initialSiteData);
-        setPreviewUrl(initialSiteData.imageUrl || null);
-    }, [initialSiteData]);
+        if (site) {
+            setUpdateSiteData(site);
+            setPreviewUrl(site.imageUrl || null);
+        } 
+    }, [site]);
 
     const onChangeInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { id, value } = e.target;
         setUpdateSiteData({ ...updateSiteData, [id]: value });
     };
 
-    const onChangeSelect = (id: keyof SiteData, value: string) => {
+    const onChangeSelect = (id: keyof ISiteData, value: string) => {
         setUpdateSiteData({ ...updateSiteData, [id]: value });  
     };
 
@@ -48,16 +59,42 @@ const useUpdateSiteForm = (initialSiteData: SiteData) => {
             formData.append("imageUrl", updateSiteData.imageUrl)
         }
         return formData;
-      };
+    };
+    
+
+    const callUpdateSite = async () => {
+        try {
+          const formData = prepareMultiFormData();
+          const res = await updateSite({id, site: formData}).unwrap();
+          console.log(res);
+          
+          showToast({
+            status: "success",
+            message: res.message
+          });
+            
+      } catch (error:any) {
+            showToast({
+                status: "error",
+                message:""
+          })
+      } 
+    };
       
     const handleSubmit = (e: React.FormEvent) => {
-        console.log(updateSiteData);
         e.preventDefault();
-        const formData = prepareMultiFormData();
-        console.log(formData);
+        callUpdateSite();
     }
 
-    return { updateSiteData, previewUrl, onChangeInput, onChangeSelect, handleImageSelect, handleSubmit };
+    return {
+        updateSiteData,
+        previewUrl,
+        isLoading,
+        onChangeInput,
+        onChangeSelect,
+        handleImageSelect,
+        handleSubmit
+    };
 }
 
 export default useUpdateSiteForm;

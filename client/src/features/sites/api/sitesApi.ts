@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type {
-    SiteData,
+    ISiteData,
     MutateSiteResponse,
     UpdateSiteRequest,
     DeleteSiteResponse,
@@ -22,7 +22,7 @@ export const sitesApi = createApi({
             }),
             invalidatesTags:["getSites"]
         }),
-        getSiteByUser: build.query<SiteData[], void>({
+        getSiteByUser: build.query<ISiteData[], void>({
             query: () => ({
                 url: "/get"
             }),

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import type { SiteData } from "@/features/sites/api/interface";
+import type { ISiteData } from "@/features/sites/api/interface";
 
 const initialSiteData = {
     siteName: "",
@@ -10,7 +10,7 @@ const initialSiteData = {
 
 
 const useAddSiteForm = () => {
-    const [addSiteData, setAddSiteData] = useState<SiteData>(initialSiteData as SiteData);
+    const [addSiteData, setAddSiteData] = useState<ISiteData>(initialSiteData as ISiteData);
     const [imgFile, setImgFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
@@ -20,7 +20,7 @@ const useAddSiteForm = () => {
         setAddSiteData({ ...addSiteData, [id]: value });
     };
 
-    const onChangeSelect = (id: keyof SiteData, value: string) => {
+    const onChangeSelect = (id: keyof ISiteData, value: string) => {
         setAddSiteData({ ...addSiteData, [id]: value });
     };
 
