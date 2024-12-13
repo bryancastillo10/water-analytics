@@ -7,7 +7,7 @@ export const mockSiteData: CreateSiteResponse[] = [
         siteName: "Marikina River",
         location: "Marikina, NCR, Philippines",
         description: "Major river system running through Metro Manila, crucial for domestic water supply",
-        imageURL: "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410419/domestic_water_tuqrjj.jpg",
+        imageUrl: "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410419/domestic_water_tuqrjj.jpg",
         sourceType: WaterSourceType.DOMESTIC,
     },
     {
@@ -16,7 +16,7 @@ export const mockSiteData: CreateSiteResponse[] = [
         siteName: "Laguna Industrial Park Water Treatment Facility",
         location: "Santa Rosa, Laguna, Philippines",
         description: "Central water treatment facility serving multiple manufacturing plants",
-        imageURL: "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410434/industrial_water_aqag7u.jpg",
+        imageUrl: "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410434/industrial_water_aqag7u.jpg",
         sourceType: WaterSourceType.INDUSTRIAL,
     },
     {
@@ -25,7 +25,7 @@ export const mockSiteData: CreateSiteResponse[] = [
         siteName: "National Irrigation Administration Canal",
         location: "Nueva Ecija, Philippines",
         description: "Irrigation system supporting rice fields in Central Luzon",
-        imageURL: "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410415/agricultural_iwabd7.jpg",
+        imageUrl: "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410415/agricultural_iwabd7.jpg",
         sourceType: WaterSourceType.AGRICULTURAL,
     },
     {
@@ -34,7 +34,7 @@ export const mockSiteData: CreateSiteResponse[] = [
         siteName: "Ogallala Aquifer Well Site",
         location: "Nebraska, USA",
         description: "Deep groundwater well tapping into the Ogallala Aquifer system",
-        imageURL: "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410432/groundwater_x81rgn.jpg",
+        imageUrl: "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410432/groundwater_x81rgn.jpg",
         sourceType: WaterSourceType.GROUNDWATER,
     },
     {
@@ -43,7 +43,7 @@ export const mockSiteData: CreateSiteResponse[] = [
         siteName: "Lake Ontario Monitoring Station",
         location: "Toronto, Ontario, Canada",
         description: "Water quality monitoring station for one of the Great Lakes",
-        imageURL: "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410427/surface_water_pshwl0.jpg",
+        imageUrl: "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410427/surface_water_pshwl0.jpg",
         sourceType: WaterSourceType.SURFACE,
     },
     {
@@ -52,7 +52,7 @@ export const mockSiteData: CreateSiteResponse[] = [
         siteName: "Rainwater Harvesting Facility",
         location: "Vancouver, British Columbia, Canada",
         description: "Modern rainwater collection and treatment system for sustainable water usage",
-        imageURL: "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410407/others_jbme5z.jpg",
+        imageUrl: "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410407/others_jbme5z.jpg",
         sourceType: WaterSourceType.OTHERS,
     }
 ];

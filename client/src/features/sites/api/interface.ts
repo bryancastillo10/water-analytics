@@ -7,19 +7,21 @@ export enum WaterSourceType {
     OTHERS = "OTHERS"
 }
 
-export interface SiteData {
+export interface ISiteData {
+    id: string;
+    userId: string;
     siteName: string;
     location: string;
     description: string;
-    imageURL: string;
+    imageUrl: string;
     sourceType: WaterSourceType;
 }
 
-export interface SiteDataWithFile extends Omit<SiteData, 'imageURL'>{
+export interface SiteDataWithFile extends Omit<ISiteData, 'imageURL'>{
     imageFile: File | null;
 }
 
-export interface CreateSiteResponse extends SiteData {
+export interface CreateSiteResponse extends ISiteData {
     id: string;
     userId: string;
 }
@@ -35,5 +37,5 @@ export interface DeleteSiteResponse{
 
 export interface MutateSiteResponse{
     message: string;
-    site: SiteData
+    site: ISiteData
 }

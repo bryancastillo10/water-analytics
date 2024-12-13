@@ -67,9 +67,8 @@ export class SiteRepository implements ISiteRepository {
     }
   }
 
-  async updateSite(siteId: string, rawSite: Partial<SiteData>): Promise<SiteData | null> {
+  async updateSite(siteId: string, site: Partial<SiteData>): Promise<SiteData | null> {
     try {
-      const site = JSON.parse(rawSite as string);
       const updatedSite = await this.prisma.site.update({
       where: { id: siteId },
       data: site,
@@ -81,7 +80,7 @@ export class SiteRepository implements ISiteRepository {
          console.error(error.message);
          throw new DatabaseError("Database error at updateSite method");
        }
-      throw Error;
+      throw error;
     }
   }
 

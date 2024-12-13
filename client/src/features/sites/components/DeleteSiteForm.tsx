@@ -1,11 +1,14 @@
 import { MapPin, Signpost, Drop, Notepad, type Icon } from "@phosphor-icons/react";
 import { useAppSelector } from "@/lib/redux/hooks";
+import useDrawer from "@/hook/useDrawer";
+import { useToast } from "@/hook/useToast";
 
-import { mockSiteData } from "@/features/sites/api/mockData";
 import { formatStringSource } from "@/features/sites/utils/formatWaterSource";
+import { useDeleteSiteMutation } from "@/features/sites/api/sitesApi";
+import type { ISiteData } from "@/features/sites/api/interface";
 
 import { ImagePreview } from "@/components/ui";
-import { FormButtons } from "@/components/layout";
+import { DrawerFetchError, FormButtons } from "@/components/layout";
 
 interface SiteInfoRowProps{
   title: string;
@@ -15,6 +18,7 @@ interface SiteInfoRowProps{
 
 interface DeleteSiteFormProps{
   id: string;
+  siteData: ISiteData;
 }
 
 
@@ -30,34 +34,57 @@ const SiteInfoRow = ({ title, value, icon: Icon }: SiteInfoRowProps) => {
 };
 
 
-const DeleteSiteForm = ({ id }: DeleteSiteFormProps) => {
-  const theme = useAppSelector((state) => state.theme.isDarkMode);
+const DeleteSiteForm = ({ id, siteData }: DeleteSiteFormProps) => {
+  if (!siteData) {
+    return <DrawerFetchError/>
+  };
 
-  const siteData = mockSiteData.find((data) => data.id === id);
+  const theme = useAppSelector((state) => state.theme.isDarkMode);
+  const { handleCloseDrawer } = useDrawer();
+  const { showToast } = useToast();
+  const [deleteSite, { isLoading }] = useDeleteSiteMutation();
+  
+  const callDeleteSite = async () => {
+    try {
+      await deleteSite({ id });
+
+      showToast({
+        status: "success",
+        message: "Site has been successfully deleted"
+      });
+    }
+    catch (error: any) {
+        showToast({
+          status: "error",
+          message: error.message
+        })
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("to Delete ID", id);
+    callDeleteSite();
+    handleCloseDrawer();
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1 className="text-xl my-2">Are you sure you want to delete this site?</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-4">
-        <div className="col-span-2">
-          <SiteInfoRow title="Site Name" icon={Signpost} value={siteData?.siteName!} />
-          <SiteInfoRow title="Location" icon={MapPin} value={siteData?.location!} />
-          <SiteInfoRow title="Water Source" icon={Drop} value={formatStringSource(siteData?.sourceType!)} />
-          <div className="flex flex-col items-start mt-4">
-            <h1 className="flex items-center gap-x-2 mb-2"><Notepad size="20" />Description</h1>
-            <p className={theme ? "text-secondary":"text-primary"}>{siteData?.description}</p>
-        </div>
-        </div>     
-        <div className="col-span-1">
-          <ImagePreview imageUrl={siteData?.imageURL!}/>
-        </div>
-      </div>
-      <FormButtons primaryBtnLabel="Delete"/>
+          <h1 className="text-xl my-2">Are you sure you want to delete this site?</h1>
+          <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-4">
+          <div className="col-span-2">
+            <SiteInfoRow title="Site Name" icon={Signpost} value={siteData?.siteName!} />
+            <SiteInfoRow title="Location" icon={MapPin} value={siteData?.location!} />
+            <SiteInfoRow title="Water Source" icon={Drop} value={formatStringSource(siteData?.sourceType!)} />
+            <div className="flex flex-col items-start mt-4">
+              <h1 className="flex items-center gap-x-2 mb-2"><Notepad size="20" />Description</h1>
+              <p className={theme ? "text-secondary":"text-primary"}>{siteData?.description}</p>
+            </div>
+          </div>     
+            <div className="col-span-1">
+              {siteData?.imageUrl && <ImagePreview imageUrl={siteData?.imageUrl}/>}
+            </div>
+          </div>
+      <FormButtons loading={isLoading} primaryBtnLabel="Delete"/>
     </form>
   )
 }

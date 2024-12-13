@@ -1,24 +1,37 @@
 import { Image, MapPin, Signpost, Drop, Notepad } from "@phosphor-icons/react";
 
-import { mockSiteData } from "@/features/sites/api/mockData";
 import useUpdateSiteForm from "@/features/sites/hooks/useUpdateSiteForm";
 
-import { sourceOptions, formatStringSource } from "@/features/sites/utils/formatWaterSource";
 
+import { sourceOptions, formatStringSource } from "@/features/sites/utils/formatWaterSource";
+import type { ISiteData } from "@/features/sites/api/interface";
 import { FormInput, CustomSelect, UploadImageInput, FormTextarea, ImagePreview } from "@/components/ui";
-import { FormButtons } from "@/components/layout";
+import { DrawerFetchError, DrawerLoadingState, FormButtons } from "@/components/layout";
 
 interface UpdateSiteFormProps{
   id: string;
+  siteData: ISiteData;
 }
 
-const UpdateSiteForm = ({ id }: UpdateSiteFormProps) => {
-  const siteData = mockSiteData.find((data) => data.id === id)!;
-  const { updateSiteData, previewUrl, onChangeInput, onChangeSelect, handleImageSelect, handleSubmit } = useUpdateSiteForm(siteData);
+const UpdateSiteForm = ({ id, siteData }: UpdateSiteFormProps) => {
+  
+  if (!siteData) {
+    return <DrawerFetchError/>
+  };
+
+  const { updateSiteData,
+          previewUrl, 
+          isLoading,
+          onChangeInput, 
+          onChangeSelect, 
+          handleImageSelect, 
+          handleSubmit 
+        } = useUpdateSiteForm({ id, site: siteData });
+
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-x-4">
+      {!isLoading ? <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-x-4">
         <FormInput
           id="siteName"
           label="Site Name"
@@ -56,9 +69,11 @@ const UpdateSiteForm = ({ id }: UpdateSiteFormProps) => {
             onChange={onChangeInput}
             validationMessage={siteData?.description.length! > 200 ? "Too long!" : "Write a short description about the site"}
         />
-        <ImagePreview imageUrl={previewUrl} />
-      </div>
-      <FormButtons primaryBtnLabel="Update"/>
+        <ImagePreview imageUrl={previewUrl} /> 
+      </div> :
+          <DrawerLoadingState/>
+        }
+      <FormButtons loading={isLoading} primaryBtnLabel="Update"/>
     </form>
   )
 }

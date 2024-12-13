@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type {
-    SiteData,
+    ISiteData,
     MutateSiteResponse,
     UpdateSiteRequest,
     DeleteSiteResponse,
@@ -8,6 +8,7 @@ import type {
 
 export const sitesApi = createApi({
     reducerPath: "sitesApi",
+    tagTypes:["getSites"],
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_BASE_URL + "site",
         credentials: 'include'
@@ -18,25 +19,29 @@ export const sitesApi = createApi({
                 url: "/create",
                 method: "POST",
                 body: data
-            })
+            }),
+            invalidatesTags:["getSites"]
         }),
-        getSiteByUser: build.query<{ id: string }, SiteData>({
-            query: (id) => ({
-                url: `/user/${id}`
-            })
+        getSiteByUser: build.query<ISiteData[], void>({
+            query: () => ({
+                url: "/get"
+            }),
+            providesTags:["getSites"]
         }),
         updateSite: build.mutation<MutateSiteResponse, UpdateSiteRequest>({
             query: ({ id, site }) => ({
                 url: `/update/${id}`,
                 method: "PUT",
                 body: site
-            })
+            }),
+            invalidatesTags:["getSites"]
         }),
-        deleteSite: build.mutation<{ id: string }, DeleteSiteResponse>({
-            query: (id) => ({
+        deleteSite: build.mutation<DeleteSiteResponse,{id:string}>({
+            query: ({id}) => ({
                 url: `/delete/${id}`,
                 method: "DELETE"
-            })
+            }),
+            invalidatesTags:["getSites"]
         })
 
     })
