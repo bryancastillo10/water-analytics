@@ -14,7 +14,7 @@ interface UpdateSiteFormProps{
 }
 
 const UpdateSiteForm = ({ id }: UpdateSiteFormProps) => {
-  const { data: querySitesData, isLoading,  } = useGetSiteByUserQuery();
+  const { data: querySitesData, isLoading  } = useGetSiteByUserQuery();
 
   const siteData = querySitesData?.find((data) => data.id === id)!;
   const { updateSiteData, previewUrl, onChangeInput, onChangeSelect, handleImageSelect, handleSubmit } = useUpdateSiteForm(siteData);

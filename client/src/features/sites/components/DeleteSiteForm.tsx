@@ -1,8 +1,8 @@
 import { MapPin, Signpost, Drop, Notepad, type Icon } from "@phosphor-icons/react";
 import { useAppSelector } from "@/lib/redux/hooks";
 
-import { mockSiteData } from "@/features/sites/api/mockData";
 import { formatStringSource } from "@/features/sites/utils/formatWaterSource";
+import { useGetSiteByUserQuery } from "@/features/sites/api/sitesApi";
 
 import { ImagePreview } from "@/components/ui";
 import { FormButtons } from "@/components/layout";
@@ -32,8 +32,9 @@ const SiteInfoRow = ({ title, value, icon: Icon }: SiteInfoRowProps) => {
 
 const DeleteSiteForm = ({ id }: DeleteSiteFormProps) => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);
+  const { data: querySitesData, isLoading } = useGetSiteByUserQuery();
 
-  const siteData = mockSiteData.find((data) => data.id === id);
+  const siteData = querySitesData?.find((data) => data.id === id)!;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

@@ -5,11 +5,12 @@ import { useGetSiteByUserQuery } from "@/features/sites/api/sitesApi";
 import { Button } from "@/components/ui";
 
 import useDrawer from "@/hook/useDrawer";
-import { LoadingAnimation } from "../common";
+import { LoadingAnimation } from "@/components/common";
+import { FailedRequest } from "@/assets/svg";
 
 const Sites = () => {
   const { handleOpenDrawer } = useDrawer();
-  const { data: getSitesData, isLoading } = useGetSiteByUserQuery();
+  const { data: getSitesData, isLoading, error } = useGetSiteByUserQuery();
 
   const addSite = () => {
     handleOpenDrawer("Add Monitoring Site", "AddSiteForm");
@@ -21,7 +22,18 @@ const Sites = () => {
         <LoadingAnimation size="lg"/>
       </section>
     )
-  }
+  };
+
+  if (error) {
+    return (
+      <section className="flex flex-col w-full h-full justify-center items-center">
+        <FailedRequest fill="#006DA3" />
+        <h1 className="mt-4 text-lg">Sorry 🥹 Failed to fetch the data</h1>
+        <p className="text-darkGray">Try to refresh the page</p>
+      </section>
+    )
+  };
+
   return (
     <section>
       <div className="ml-10 xl:ml-0 my-4">
