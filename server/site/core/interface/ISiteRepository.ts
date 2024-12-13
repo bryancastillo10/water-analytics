@@ -29,6 +29,6 @@ export interface CreateSiteRepo {
 
 export interface UpdateSiteRequest {
   siteId: string;
-  rawData: {siteData: SiteDataInput};
-  file?: FileInput;
+  rawData: SiteData;
+  file?: Express.Multer.File;
 }

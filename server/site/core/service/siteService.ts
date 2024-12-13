@@ -3,6 +3,7 @@ import { SiteRepository } from "@/site/site.repository";
 
 import { NotFoundError, ValidationError } from "@/infrastructure/errors/customErrors";
 import { uploadImage } from "@/utils/cloudinary";
+import { WaterSourceType } from "@prisma/client";
 
 export class SiteService {
   constructor(private readonly siteRepository: SiteRepository) { }
@@ -56,19 +57,28 @@ export class SiteService {
       throw new NotFoundError("Site id was not found");
     }
 
-    const { siteData } = rawData;
-
-    let imageUrl = siteData.imageUrl;
-    if (file) {
-       imageUrl = await uploadImage({
-          filePath: file.path,
-          folder: "sites",
-          deleteLocalFile: true
-       });
+    const { siteName, location, description, sourceType, imageUrl } = rawData;
+  
+    if (!siteName || !location || !description || !sourceType) {
+      throw new ValidationError("Missing required site information");
     }
-    
-    
-    const updatedSite = await this.siteRepository.updateSite(siteId, siteData);
+
+    let finalImageUrl = imageUrl;
+    if (file) {
+      finalImageUrl = await uploadImage({
+        filePath: file.path,
+        folder: "sites",
+        deleteLocalFile: true
+      });
+    }
+
+    const updatedSite = await this.siteRepository.updateSite(siteId, {
+      siteName,
+      location,
+      description,
+      sourceType,
+      imageUrl: finalImageUrl
+    });
       
       return updatedSite;
   }

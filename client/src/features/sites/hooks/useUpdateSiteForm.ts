@@ -76,7 +76,7 @@ const useUpdateSiteForm = ({id, site}: IUpdateSite) => {
       } catch (error:any) {
             showToast({
                 status: "error",
-                message:""
+                message: error.message || "Failed to update the site"
           })
       } 
     };
