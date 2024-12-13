@@ -3,7 +3,7 @@ import { SiteRepository } from "@/site/site.repository";
 
 import { NotFoundError, ValidationError } from "@/infrastructure/errors/customErrors";
 import { uploadImage } from "@/utils/cloudinary";
-import { WaterSourceType } from "@prisma/client";
+
 
 export class SiteService {
   constructor(private readonly siteRepository: SiteRepository) { }

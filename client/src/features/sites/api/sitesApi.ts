@@ -36,8 +36,8 @@ export const sitesApi = createApi({
             }),
             invalidatesTags:["getSites"]
         }),
-        deleteSite: build.mutation<{ id: string }, DeleteSiteResponse>({
-            query: (id) => ({
+        deleteSite: build.mutation<DeleteSiteResponse,{id:string}>({
+            query: ({id}) => ({
                 url: `/delete/${id}`,
                 method: "DELETE"
             }),

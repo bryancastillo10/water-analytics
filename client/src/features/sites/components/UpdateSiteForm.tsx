@@ -6,7 +6,7 @@ import useUpdateSiteForm from "@/features/sites/hooks/useUpdateSiteForm";
 import { sourceOptions, formatStringSource } from "@/features/sites/utils/formatWaterSource";
 import type { ISiteData } from "@/features/sites/api/interface";
 import { FormInput, CustomSelect, UploadImageInput, FormTextarea, ImagePreview } from "@/components/ui";
-import { DrawerFetchError, FormButtons } from "@/components/layout";
+import { DrawerFetchError, DrawerLoadingState, FormButtons } from "@/components/layout";
 
 interface UpdateSiteFormProps{
   id: string;
@@ -31,7 +31,7 @@ const UpdateSiteForm = ({ id, siteData }: UpdateSiteFormProps) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-x-4">
+      {!isLoading ? <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-x-4">
         <FormInput
           id="siteName"
           label="Site Name"
@@ -69,8 +69,10 @@ const UpdateSiteForm = ({ id, siteData }: UpdateSiteFormProps) => {
             onChange={onChangeInput}
             validationMessage={siteData?.description.length! > 200 ? "Too long!" : "Write a short description about the site"}
         />
-        <ImagePreview imageUrl={previewUrl} />
-      </div> 
+        <ImagePreview imageUrl={previewUrl} /> 
+      </div> :
+          <DrawerLoadingState/>
+        }
       <FormButtons loading={isLoading} primaryBtnLabel="Update"/>
     </form>
   )

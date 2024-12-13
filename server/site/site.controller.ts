@@ -63,7 +63,7 @@ export class SiteController{
             const siteId = req.params.id;
             const message = await this.siteService.deleteSite(siteId);
 
-            res.status(200).json({ message: message });
+            res.status(200).json({ message });
             } catch (error) {
                next(error);
         }

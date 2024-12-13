@@ -1,11 +1,14 @@
 import { MapPin, Signpost, Drop, Notepad, type Icon } from "@phosphor-icons/react";
 import { useAppSelector } from "@/lib/redux/hooks";
+import useDrawer from "@/hook/useDrawer";
+import { useToast } from "@/hook/useToast";
 
 import { formatStringSource } from "@/features/sites/utils/formatWaterSource";
-import { useGetSiteByUserQuery } from "@/features/sites/api/sitesApi";
+import { useDeleteSiteMutation } from "@/features/sites/api/sitesApi";
+import type { ISiteData } from "@/features/sites/api/interface";
 
 import { ImagePreview } from "@/components/ui";
-import { DrawerLoadingState, FormButtons } from "@/components/layout";
+import { DrawerFetchError, FormButtons } from "@/components/layout";
 
 interface SiteInfoRowProps{
   title: string;
@@ -15,6 +18,7 @@ interface SiteInfoRowProps{
 
 interface DeleteSiteFormProps{
   id: string;
+  siteData: ISiteData;
 }
 
 
@@ -30,21 +34,41 @@ const SiteInfoRow = ({ title, value, icon: Icon }: SiteInfoRowProps) => {
 };
 
 
-const DeleteSiteForm = ({ id }: DeleteSiteFormProps) => {
-  const theme = useAppSelector((state) => state.theme.isDarkMode);
-  const { data: querySitesData, isLoading: queryLoading } = useGetSiteByUserQuery();
+const DeleteSiteForm = ({ id, siteData }: DeleteSiteFormProps) => {
+  if (!siteData) {
+    return <DrawerFetchError/>
+  };
 
-  const siteData = querySitesData?.find((data) => data.id === id)!;
+  const theme = useAppSelector((state) => state.theme.isDarkMode);
+  const { handleCloseDrawer } = useDrawer();
+  const { showToast } = useToast();
+  const [deleteSite, { isLoading }] = useDeleteSiteMutation();
+  
+  const callDeleteSite = async () => {
+    try {
+      await deleteSite({ id });
+
+      showToast({
+        status: "success",
+        message: "Site has been successfully deleted"
+      });
+    }
+    catch (error: any) {
+        showToast({
+          status: "error",
+          message: error.message
+        })
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("to Delete ID", id);
+    callDeleteSite();
+    handleCloseDrawer();
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      {!queryLoading ?
-        <>
           <h1 className="text-xl my-2">Are you sure you want to delete this site?</h1>
           <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-4">
           <div className="col-span-2">
@@ -60,10 +84,7 @@ const DeleteSiteForm = ({ id }: DeleteSiteFormProps) => {
               {siteData?.imageUrl && <ImagePreview imageUrl={siteData?.imageUrl}/>}
             </div>
           </div>
-        </> :
-        <DrawerLoadingState/>
-      }
-      <FormButtons primaryBtnLabel="Delete"/>
+      <FormButtons loading={isLoading} primaryBtnLabel="Delete"/>
     </form>
   )
 }

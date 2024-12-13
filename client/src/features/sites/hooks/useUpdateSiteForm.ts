@@ -66,7 +66,6 @@ const useUpdateSiteForm = ({id, site}: IUpdateSite) => {
         try {
           const formData = prepareMultiFormData();
           const res = await updateSite({id, site: formData}).unwrap();
-          console.log(res);
           
           showToast({
             status: "success",
