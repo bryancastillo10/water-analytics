@@ -8,10 +8,8 @@ import { uploadImage } from "@/utils/cloudinary";
 export class SiteService {
   constructor(private readonly siteRepository: SiteRepository) { }
   
-  async createSite({ userId, rawData, file }: CreateSiteRequest) {
-    
-    const { siteData: nestedData } = rawData;
-    const { siteName, location, description, sourceType } = nestedData;
+  async createSite({ userId, siteData, file }: CreateSiteRequest) {
+    const { siteName, location, description, sourceType } = siteData;
 
     if (!siteName || !location || !description || !sourceType) {
       throw new ValidationError("siteName,location,description, and sourceType are required");
@@ -22,7 +20,7 @@ export class SiteService {
       throw new NotFoundError("User not found. The requested site cannot be created");
     }
 
-    let imageUrl: string = "";
+    let imageUrl = "";
     if (file) {
         imageUrl = await uploadImage({
             filePath: file.path,
@@ -33,7 +31,7 @@ export class SiteService {
   
     const newSite = await this.siteRepository.createSite({
       userId,
-      siteData: { ...nestedData, imageUrl }
+      siteData: { ...siteData, imageUrl }
     });
 
     return newSite;

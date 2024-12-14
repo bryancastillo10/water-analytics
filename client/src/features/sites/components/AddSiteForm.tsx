@@ -1,17 +1,24 @@
 import { Image, MapPin, Signpost, Drop, Notepad } from "@phosphor-icons/react";
 import { FormInput, CustomSelect, UploadImageInput, ImagePreview, FormTextarea } from "@/components/ui";
-import { FormButtons } from "@/components/layout";
+import { DrawerLoadingState, FormButtons } from "@/components/layout";
 
 import { sourceOptions } from "@/features/sites/utils/formatWaterSource";
 import useAddSiteForm from "@/features/sites/hooks/useAddSiteForm";
 
 const AddSiteForm = () => {
-  const { addSiteData, previewUrl, onChangeInput, onChangeSelect, handleImageSelect, handleSubmit } = useAddSiteForm();
+  const { addSiteData,
+          previewUrl, 
+          isLoading,
+          onChangeInput, 
+          onChangeSelect, 
+          handleImageSelect, 
+          handleSubmit 
+        } = useAddSiteForm();
 
 
   return (
     <form onSubmit={handleSubmit}>
-    <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-x-4">
+    {!isLoading ? <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-x-4">
           <FormInput
               id="siteName"
               label="Site Name"
@@ -50,8 +57,8 @@ const AddSiteForm = () => {
               validationMessage={addSiteData.description.length > 200 ? "Too long!" : "Write a short description about the site"}
             />
             <ImagePreview imageUrl={previewUrl} />
-    </div>
-    <FormButtons primaryBtnLabel="Add"/>
+    </div> : <DrawerLoadingState/>}
+    <FormButtons loading={isLoading} primaryBtnLabel="Add"/>
     </form>
   )
 }
