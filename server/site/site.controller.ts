@@ -18,9 +18,9 @@ export class SiteController{
                 throw new Error("User ID is undefined. Ensure auth middleware is applied");
             }
 
-            const rawData = JSON.parse(req.body.siteData);
-            const { file } = req;
-            const newSite = await this.siteService.createSite({userId,rawData, file});
+            const siteData = JSON.parse(req.body.siteData);
+            const  file  = req.file;
+            const newSite = await this.siteService.createSite({userId,siteData, file});
  
             res.status(201).json({ message: "New site has been added", site: newSite });
 

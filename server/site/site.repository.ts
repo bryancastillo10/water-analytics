@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, WaterSourceType } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 import { DatabaseError } from "@/infrastructure/errors/customErrors";
@@ -11,26 +11,31 @@ export class SiteRepository implements ISiteRepository {
   private prisma = new PrismaClient();
 
   async createSite(data: CreateSiteRepo): Promise<SiteData> {
+    const { userId, siteData } = data;
+    const { siteName, location, description, imageUrl, sourceType } = siteData;
     try {
+      const validSourceType = Object.values(WaterSourceType).includes(sourceType) ?
+        sourceType : WaterSourceType.DOMESTIC;
+      
       const newSite = await this.prisma.site.create({
-      data: {
-        userId: data.userId,
-        siteName: data.siteData.siteName,
-        location: data.siteData.location,
-        description: data.siteData.description,
-        imageUrl: data.siteData.imageUrl || this.fallback_img,
-        sourceType: data.siteData.sourceType,
-      },
-    });
-
-    return newSite as SiteData;
+        data: {
+            userId,
+            siteName,
+            location,
+            description,
+            imageUrl: imageUrl || this.fallback_img,
+            sourceType: validSourceType
+          }
+      });
+      
+      return newSite as SiteData;
     }
     catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         console.error(error.message);
         throw new DatabaseError("Database error at createSite method");
       }
-      throw Error;
+      throw error;
     }
   }
 
