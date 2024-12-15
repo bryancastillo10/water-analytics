@@ -12,6 +12,7 @@ import { userApi } from "@/features/user/api/userApi";
 import { sitesApi } from "@/features/sites/api/sitesApi";
 import { measurementApi } from "@/features/waterquality/api/measurementApi";
 import { thresholdApi } from "@/features/thresholds/api/thresholdApi";
+import { stickynoteApi } from "@/features/stickynote/api/stickynoteApi";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -22,10 +23,11 @@ const rootReducer = combineReducers({
   [userApi.reducerPath]: userApi.reducer,
   [sitesApi.reducerPath]: sitesApi.reducer,
   [measurementApi.reducerPath]: measurementApi.reducer,
-  [thresholdApi.reducerPath]: thresholdApi.reducer
+  [thresholdApi.reducerPath]: thresholdApi.reducer,
+  [stickynoteApi.reducerPath]: stickynoteApi.reducer
 });
 
-export const apis = [authApi, userApi, sitesApi, measurementApi, thresholdApi];
+export const apis = [authApi, userApi, sitesApi, measurementApi, thresholdApi, stickynoteApi];
 export const apiReducerPaths = apis.map(api => api.reducerPath);
 
 export default rootReducer;

@@ -36,7 +36,7 @@ export class NotesController {
 
             const allNotesByUser = await this.notesService.getNotesByUser(userId);
 
-            res.status(200).json({ notes: allNotesByUser });
+            res.status(200).json(allNotesByUser);
         }
         catch (error) {
             next(error);

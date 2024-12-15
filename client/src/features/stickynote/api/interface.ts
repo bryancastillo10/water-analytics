@@ -6,8 +6,25 @@ export interface ColorTypes<T>  {
 }
 
 export interface INotesData {
+    id: string;
     title: string;
     content: string;
-    colors: string;
+    colors: IColors<string>;
     position: string;
+}
+
+export interface IColors<T>{
+    id: T;
+    colorHeader: T;
+    colorBody: T;
+    colorText: T;
+}
+
+export interface CreateNotesResponse {
+    message: string;
+    note: INotesData;
+}
+
+export interface DeleteNotesResponse{
+    message: string;
 }
