@@ -11,3 +11,12 @@ export interface INotesData {
     colors: string;
     position: string;
 }
+
+export interface CreateNotesResponse {
+    message: string;
+    note: INotesData;
+}
+
+export interface DeleteNotesResponse{
+    message: string;
+}
