@@ -1,11 +1,10 @@
 import { MapPin, Signpost, Drop, Notepad, type Icon } from "@phosphor-icons/react";
 import { useAppSelector } from "@/lib/redux/hooks";
-import useDrawer from "@/hook/useDrawer";
-import { useToast } from "@/hook/useToast";
+
 
 import { formatStringSource } from "@/features/sites/utils/formatWaterSource";
-import { useDeleteSiteMutation } from "@/features/sites/api/sitesApi";
 import type { ISiteData } from "@/features/sites/api/interface";
+import useDeleteSite from "@/features/sites/hooks/useDeleteSite";
 
 import { ImagePreview } from "@/components/ui";
 import { DrawerFetchError, FormButtons } from "@/components/layout";
@@ -40,35 +39,10 @@ const DeleteSiteForm = ({ id, siteData }: DeleteSiteFormProps) => {
   };
 
   const theme = useAppSelector((state) => state.theme.isDarkMode);
-  const { handleCloseDrawer } = useDrawer();
-  const { showToast } = useToast();
-  const [deleteSite, { isLoading }] = useDeleteSiteMutation();
-  
-  const callDeleteSite = async () => {
-    try {
-      await deleteSite({ id });
-
-      showToast({
-        status: "success",
-        message: "Site has been successfully deleted"
-      });
-    }
-    catch (error: any) {
-        showToast({
-          status: "error",
-          message: error.message
-        })
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    callDeleteSite();
-    handleCloseDrawer();
-  }
+  const { isLoading, handleSubmit } = useDeleteSite();
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={(e: React.FormEvent)=> handleSubmit(e,id)}>
           <h1 className="text-xl my-2">Are you sure you want to delete this site?</h1>
           <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-4">
           <div className="col-span-2">
