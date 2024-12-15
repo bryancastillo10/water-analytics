@@ -7,9 +7,10 @@ import { FormButtons } from "@/components/layout";
 import { colorOptions } from "@/features/stickynote/constants/colorOptions";
 import type { INotesData } from "@/features/stickynote/api/interface";
 const initialNotesData = {
+  id:"",
   title: "",
   content: "",
-  colors: JSON.stringify(colorOptions[0]),
+  colors: colorOptions[0]!,
   position:JSON.stringify({ x: 10, y: 10 })
 }
 

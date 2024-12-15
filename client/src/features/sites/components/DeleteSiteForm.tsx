@@ -1,7 +1,6 @@
 import { MapPin, Signpost, Drop, Notepad, type Icon } from "@phosphor-icons/react";
 import { useAppSelector } from "@/lib/redux/hooks";
 
-
 import { formatStringSource } from "@/features/sites/utils/formatWaterSource";
 import type { ISiteData } from "@/features/sites/api/interface";
 import useDeleteSite from "@/features/sites/hooks/useDeleteSite";

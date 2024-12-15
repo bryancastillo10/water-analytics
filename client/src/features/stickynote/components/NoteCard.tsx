@@ -13,9 +13,8 @@ interface NoteCardProps {
 const NoteCard = ({ note, containerRef }: NoteCardProps) => {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
-  const [position, setPosition] = useState<{ x: number; y: number }>(
-    JSON.parse(note.position)
-  );
+  const [position, setPosition] = useState<{ x: number; y: number }>
+    (typeof note.position === "string" ? JSON.parse(note.position) : note.position);
   const mouseStartPos = useRef({ x: 0, y: 0 });
 
   const mouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -75,8 +74,8 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
     autoGrow(textAreaRef);
   }, []);
 
-  const colors = JSON.parse(note.colors);
-  const body = JSON.parse(note.content);
+  const colors = note.colors;
+  const body = note.content;
   return (
     <article
       data-card="card"

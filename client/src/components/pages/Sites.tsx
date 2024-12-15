@@ -5,8 +5,7 @@ import { useGetSiteByUserQuery } from "@/features/sites/api/sitesApi";
 import { Button } from "@/components/ui";
 
 import useDrawer from "@/hook/useDrawer";
-import { LoadingAnimation } from "@/components/common";
-import { FailedRequest } from "@/assets/svg";
+import { MainPageFetchError, MainPageLoadingState } from "@/components/layout";
 
 const Sites = () => {
   const { handleOpenDrawer } = useDrawer();
@@ -17,21 +16,11 @@ const Sites = () => {
   };
 
   if (isLoading) {
-    return (
-      <section className="flex w-full h-full justify-center items-center">
-        <LoadingAnimation size="lg"/>
-      </section>
-    )
+    return <MainPageLoadingState/>
   };
 
   if (error || !getSitesData) {
-    return (
-      <section className="flex flex-col w-full h-full justify-center items-center">
-        <FailedRequest fill="#006DA3" />
-        <h1 className="mt-4 text-lg">Sorry 🥹 Failed to fetch the data</h1>
-        <p className="text-darkGray">Try to refresh the page</p>
-      </section>
-    )
+    return <MainPageFetchError/>
   };
 
   return (
