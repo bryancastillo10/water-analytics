@@ -2,7 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type {
     DeleteNotesResponse,
     CreateNotesResponse,
-    INotesData
+    INotesData,
+    UpdateNotesRequest,
+    UpdateNotesResponse
 } from "@/features/stickynote/api/interface";
 
 export const stickynoteApi = createApi({
@@ -27,6 +29,13 @@ export const stickynoteApi = createApi({
             }),
             providesTags: ["getNotes"]
         }),
+        updateNotes: build.mutation<UpdateNotesResponse, UpdateNotesRequest>({
+            query: ({id, notesData}) => ({
+                url: `/update/${id}`,
+                method: "PUT",
+                body: notesData
+            }),
+        }),
         deleteNotes: build.mutation<DeleteNotesResponse, { id: string }>({
             query: ({ id }) => ({
                 url: `/delete/${id}`,
@@ -40,5 +49,6 @@ export const stickynoteApi = createApi({
 export const {
     useCreateNotesMutation,
     useGetNotesQuery,
+    useUpdateNotesMutation,
     useDeleteNotesMutation
 } = stickynoteApi;

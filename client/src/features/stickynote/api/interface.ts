@@ -28,3 +28,12 @@ export interface CreateNotesResponse {
 export interface DeleteNotesResponse{
     message: string;
 }
+
+export interface UpdateNotesResponse {
+    notesData: Partial<Omit<INotesData, "id">>;
+}
+
+export interface UpdateNotesRequest {
+    id: string;
+    notesData: Partial<Omit<INotesData, "id">>;
+}

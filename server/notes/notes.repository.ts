@@ -75,7 +75,7 @@ export class NotesRepository implements INotesRepository{
                 console.error(error.message);
                 throw new DatabaseError("Database error at createNotes method");
               }
-             throw Error;
+             throw error;
         }
     }
     async deleteNotes(notesId: string): Promise<void> {
