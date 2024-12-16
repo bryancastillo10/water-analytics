@@ -14,17 +14,16 @@ const NotesPage = () => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);
   const { data: notes, isLoading, error } = useGetNotesQuery();
 
-
   if (error || !notes) {
     return <MainPageFetchError />;
-  }
+  };
  
   return (
     <main>
       <TextHeader text="Sticky Notes Board" />
       <div
         ref={containerRef}
-        className={`w-full h-screen border mt-2 relative overflow-hidden bg-darkGray/40
+        className={`w-full h-screen border mt-2 relative overflow-x-auto bg-darkGray/40
             ${theme ? "grid-style-dark border-secondary": "grid-style-light border-primary"}
         `}
       >

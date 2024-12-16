@@ -4,7 +4,8 @@ import { Spinner } from "@/assets/svg";
 
 import type { INotesData } from "@/features/stickynote/api/interface";
 import { autoGrow, handleZIndex, setNewOffset } from "@/features/stickynote/utils";
-import { useAppSelector } from "@/lib/redux/hooks";
+import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
+import { setSelectedNote } from "@/lib/redux/states/noteSlice";
 import { useUpdateNotesMutation } from "@/features/stickynote/api/stickynoteApi";
 
 interface NoteCardProps {
@@ -49,12 +50,16 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
     }
   };
 
+  const dispatch = useAppDispatch();
+  const handleNoteClick = (note: INotesData) => {
+    dispatch(setSelectedNote(note));
+  };
 
   const isOpenDrawer = useAppSelector((state) => state.drawer.isOpenDrawer);
 
   const mouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target instanceof HTMLElement && e.target.id === "card-header") {
-        // setSelectedNote(note);
+        handleNoteClick(note);
         mouseStartPos.current = { x: e.clientX, y: e.clientY };
         
         handleZIndex(cardRef, containerRef, isOpenDrawer);
@@ -63,7 +68,7 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
         document.addEventListener("mouseup", mouseUp);
     }
   };
-  
+
   const mouseMove = (e: MouseEvent) => {
     // 1 to calculate the movement direction
     let mouseMoveDirection = {
@@ -188,6 +193,7 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
           onInput={() => autoGrow(textAreaRef)}
           onFocus={() => {
             handleZIndex(cardRef, containerRef, isOpenDrawer);
+            handleNoteClick(note);
             autoGrow(textAreaRef);
           }}
           onKeyUp={handleKeyUp}
