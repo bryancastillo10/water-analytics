@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useReactTable, getCoreRowModel, type SortingState } from "@tanstack/react-table";
+import { useReactTable, getCoreRowModel, getPaginationRowModel , type SortingState} from "@tanstack/react-table";
 
 import useDrawer from "@/hook/useDrawer";
 import { useAppSelector } from "@/lib/redux/hooks";
@@ -31,10 +31,17 @@ const useWaterQualityTable = ({data}: {data:IMeasurementData[]}) => {
       columns: waterQualityColumns,
       debugTable:true,
       getCoreRowModel: getCoreRowModel(),
+      getPaginationRowModel: getPaginationRowModel(),
       state: {
         sorting,
       },
-      onSortingChange: setSorting
+      onSortingChange: setSorting,
+      initialState: {
+        pagination: {
+          pageIndex: 0,
+          pageSize: 10
+        }
+      },
     });
 
 

@@ -5,6 +5,7 @@ import userReducer from "@/lib/redux/states/userSlice";
 import sidebarReducer from "@/lib/redux/states/sidebarSlice";
 import drawerReducer from "@/lib/redux/states/drawerSlice";
 import themeReducer from "@/lib/redux/states/themeSlice";
+import notesReducer  from "@/lib/redux/states/noteSlice";
 
 // API from RTK-Query
 import { authApi } from "@/features/auth/api/authApi";
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   sidebar: sidebarReducer,
   drawer: drawerReducer,
   theme: themeReducer,
+  notes: notesReducer,
   [authApi.reducerPath]: authApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
   [sitesApi.reducerPath]: sitesApi.reducer,

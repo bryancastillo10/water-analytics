@@ -11,7 +11,7 @@ import type { IMeasurementData } from "@/features/waterquality/api/interface";
 const DataTablePage = () => {
   const { handleOpenDrawer } = useDrawer();
 
-  const mockMeasurements = generateMockMeasurements(mockSiteData, 5);
+  const mockMeasurements = generateMockMeasurements(mockSiteData, 20);
 
 
   const groupMeasurementsBySite = (

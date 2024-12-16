@@ -40,10 +40,6 @@ export class NotesService{
             throw new ValidationError("Notes id was not found");
         }
 
-        if (!notesData || !notesData.title || !notesData.content) {
-            throw new ValidationError("Title and Content for notes are required");
-        }
-        
         const updatedNotes = await this.notesRepository.updateNotes(notesId, notesData);
 
         return updatedNotes;

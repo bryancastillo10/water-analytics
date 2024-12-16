@@ -1,9 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
-import { TrashSimple } from "@phosphor-icons/react";
+import { CheckCircle, TrashSimple } from "@phosphor-icons/react";
 import { Spinner } from "@/assets/svg";
 
 import type { INotesData } from "@/features/stickynote/api/interface";
 import { autoGrow, handleZIndex, setNewOffset } from "@/features/stickynote/utils";
+import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
+import { setSelectedNote } from "@/lib/redux/states/noteSlice";
+import { useUpdateNotesMutation } from "@/features/stickynote/api/stickynoteApi";
 
 interface NoteCardProps {
   note: INotesData;
@@ -17,18 +20,55 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
     (typeof note.position === "string" ? JSON.parse(note.position) : note.position);
   const mouseStartPos = useRef({ x: 0, y: 0 });
 
+
+  const [saving, setSaving] = useState<boolean>(false);
+  const [savedSuccess, setSavedSuccess] = useState<boolean>(false);
+  const keyUpTimer = useRef<number | null>(null);
+  const savedSuccessTimer = useRef<number | null>(null);
+
+  const [updateNotes, { isLoading }] = useUpdateNotesMutation();
+
+  const saveData = async (
+    key: string, 
+    value: any, 
+    noteId: string, 
+    setSaving: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
+    const updatedData = { [key]: value };
+    try {
+      if (isLoading) return false;
+      console.log(updatedData);
+      await updateNotes({ id: noteId, notesData: updatedData });
+      
+      setSaving(false);
+      return true;
+    } catch (error) {
+      console.error("Save failed:", error);
+      return false;
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const dispatch = useAppDispatch();
+  const handleNoteClick = (note: INotesData) => {
+    dispatch(setSelectedNote(note));
+  };
+
+  const isOpenDrawer = useAppSelector((state) => state.drawer.isOpenDrawer);
+
   const mouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target instanceof HTMLElement && e.target.id === "card-header") {
-        // setSelectedNote(note);
+        handleNoteClick(note);
         mouseStartPos.current = { x: e.clientX, y: e.clientY };
-
-        handleZIndex(cardRef, containerRef);
+        
+        handleZIndex(cardRef, containerRef, isOpenDrawer);
 
         document.addEventListener("mousemove", mouseMove);
         document.addEventListener("mouseup", mouseUp);
     }
   };
-  
+
   const mouseMove = (e: MouseEvent) => {
     // 1 to calculate the movement direction
     let mouseMoveDirection = {
@@ -52,30 +92,63 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
         document.removeEventListener("mousemove", mouseMove);
         document.removeEventListener("mouseup", mouseUp);
     
-        // setNewOffset({ card: cardRef, containerRef });
-        // const newPosition =
-        // setSaving(true);
-        // saveData("position", newPosition, note.$id, setSaving)
-        //     .then((success) => {
-        //         if (success) {
-        //             setSavedSuccess(true);
-        //             if (savedSuccessTimer.current) {
-        //                 clearTimeout(savedSuccessTimer.current);
-        //             }
-        //             savedSuccessTimer.current = window.setTimeout(() => {
-        //                 setSavedSuccess(false);
-        //             }, 1000); 
-        //         }
-        //     });
+        const newPosition = setNewOffset({ card: cardRef, containerRef });    
+        setSaving(true);
+        saveData("position", newPosition, note.id, setSaving)
+            .then((success) => {
+                if (success) {
+                    setSavedSuccess(true);
+                    if (savedSuccessTimer.current) {
+                        clearTimeout(savedSuccessTimer.current);
+                    }
+                    savedSuccessTimer.current = window.setTimeout(() => {
+                        setSavedSuccess(false);
+                    }, 1000); 
+                }
+            });
     };
-
+  
+  
+    const handleKeyUp = () => {
+      setSaving(true);
+    
+      if (keyUpTimer.current) {
+        clearTimeout(keyUpTimer.current);
+      }
+    
+      keyUpTimer.current = window.setTimeout(() => {
+        saveData("content", textAreaRef?.current!.value, note.id, setSaving)
+          .then((success) => {
+            if (success) {
+              setSavedSuccess(true);
+              if (savedSuccessTimer.current) {
+                clearTimeout(savedSuccessTimer.current);
+              }
+              savedSuccessTimer.current = window.setTimeout(() => {
+                setSavedSuccess(false);
+              }, 1000);
+            } else {
+              console.error('Failed to save note');
+            }
+          })
+          .catch((error) => {
+            console.error('Error saving note:', error);
+            setSaving(false);
+            setSavedSuccess(false);
+          });
+      }, 2000);
+    }
 
   useEffect(() => {
     autoGrow(textAreaRef);
   }, []);
 
+  useEffect(() => {
+    handleZIndex(cardRef, containerRef, isOpenDrawer);
+  }, [isOpenDrawer, cardRef, containerRef]);
+
   const colors = note.colors;
-  const body = note.content;
+  const content = note.content;
   return (
     <article
       data-card="card"
@@ -100,10 +173,16 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
             {note.title}
           </h1>
         </div>  
-        <div className="flex items-center gap-3">
-          <Spinner className=""/>
-          <p className="text-sm font-secondary">Saving...</p>
-        </div>
+        {saving ? (
+          <div className="flex items-center gap-3">
+            <Spinner className="animate-spin"/>
+            <p className="text-sm font-secondary">Saving...</p>
+          </div>) : savedSuccess ? (
+          <div className="flex items-center gap-1">
+            <CheckCircle size="22" />
+            <p className="text-sm font-secondary">Saved</p>
+          </div>
+        ): null}
       </div>
 
       {/* Note Body */}
@@ -113,10 +192,12 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
           className="bg-inherit w-full h-full text-base resize-none focus:bg-inehirt focus:outline-none"
           onInput={() => autoGrow(textAreaRef)}
           onFocus={() => {
-            handleZIndex(cardRef, containerRef);
+            handleZIndex(cardRef, containerRef, isOpenDrawer);
+            handleNoteClick(note);
             autoGrow(textAreaRef);
           }}
-          defaultValue={body}
+          onKeyUp={handleKeyUp}
+          defaultValue={content}
         />
       </div>
     </article>
