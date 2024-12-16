@@ -4,6 +4,7 @@ import { Spinner } from "@/assets/svg";
 
 import type { INotesData } from "@/features/stickynote/api/interface";
 import { autoGrow, handleZIndex, setNewOffset } from "@/features/stickynote/utils";
+import { useAppSelector } from "@/lib/redux/hooks";
 
 interface NoteCardProps {
   note: INotesData;
@@ -17,12 +18,14 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
     (typeof note.position === "string" ? JSON.parse(note.position) : note.position);
   const mouseStartPos = useRef({ x: 0, y: 0 });
 
+  const isOpenDrawer = useAppSelector((state) => state.drawer.isOpenDrawer);
+
   const mouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target instanceof HTMLElement && e.target.id === "card-header") {
         // setSelectedNote(note);
         mouseStartPos.current = { x: e.clientX, y: e.clientY };
-
-        handleZIndex(cardRef, containerRef);
+        
+        handleZIndex(cardRef, containerRef, isOpenDrawer);
 
         document.addEventListener("mousemove", mouseMove);
         document.addEventListener("mouseup", mouseUp);
@@ -74,6 +77,10 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
     autoGrow(textAreaRef);
   }, []);
 
+  useEffect(() => {
+    handleZIndex(cardRef, containerRef, isOpenDrawer);
+  }, [isOpenDrawer, cardRef, containerRef]);
+
   const colors = note.colors;
   const body = note.content;
   return (
@@ -113,7 +120,7 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
           className="bg-inherit w-full h-full text-base resize-none focus:bg-inehirt focus:outline-none"
           onInput={() => autoGrow(textAreaRef)}
           onFocus={() => {
-            handleZIndex(cardRef, containerRef);
+            handleZIndex(cardRef, containerRef, isOpenDrawer);
             autoGrow(textAreaRef);
           }}
           defaultValue={body}

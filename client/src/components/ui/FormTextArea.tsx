@@ -37,7 +37,7 @@ const FormTextarea = ({
         value={value}
         onChange={onChange}
         className={`rounded-xl p-2 h-40 border border-neutral focus:border-secondary focus:ring-secondary focus:outline-none resize-none
-                ${theme ? "bg-darkGray text-light": "bg-light"}    
+                ${theme ? "bg-darkGray text-light": "bg-[#ffffff]"}    
         `}
       />
       <div className="my-2">

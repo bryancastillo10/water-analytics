@@ -18,7 +18,7 @@ const NotesPage = () => {
   if (error || !notes) {
     return <MainPageFetchError />;
   }
-  console.log(notes);
+ 
   return (
     <main>
       <TextHeader text="Sticky Notes Board" />
