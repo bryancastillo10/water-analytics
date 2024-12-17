@@ -2,28 +2,30 @@ import { useState, useRef } from "react";
 import { Notepad, ChatCircleDots } from "@phosphor-icons/react";
 
 import { FormInput, FormTextarea } from "@/components/ui";
-import { FormButtons } from "@/components/layout";
+import { FormButtons, DrawerLoadingState } from "@/components/layout";
 
 import { colorOptions } from "@/features/stickynote/constants/colorOptions";
+import useCreateNote from "@/features/stickynote/hooks/useCreateNote";
 import type { INotesData } from "@/features/stickynote/api/interface";
+
 const initialNotesData = {
   id:"",
   title: "",
   content: "",
   colors: colorOptions[0]!,
-  position:JSON.stringify({ x: 10, y: 10 })
+  position:JSON.stringify({ x: 80, y: 50 })
 }
 
 const AddNotesForm = () => {
-  const startingPos = useRef<number>(10);
+  const startingPos = useRef({ x: 80, y: 50 });
   const [newNote, setNewNote] = useState<INotesData>(initialNotesData);
+  const { callCreateNote, isLoading } = useCreateNote();
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
     setNewNote({ ...newNote, [id]: value });
   };
 
-  startingPos.current += 10;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,20 +33,24 @@ const AddNotesForm = () => {
     const preparedNote = {
       ...newNote,
       position: JSON.stringify({
-        x: startingPos.current,
-        y: startingPos.current,
+        x: startingPos.current.x,
+        y: startingPos.current.y,
       }),
     };
 
-    startingPos.current += 10;
+    startingPos.current = {
+      x: startingPos.current.x + 50, 
+      y: startingPos.current.y + (startingPos.current.x > 400 ? 80 : 0), 
+    };
 
-    console.log("Submitting note:", preparedNote);
-
-    // API Call here
+    
+    callCreateNote(preparedNote);
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      {!isLoading ?
+      (<>
       <FormInput
         id="title"
         icon={Notepad}
@@ -59,7 +65,10 @@ const AddNotesForm = () => {
         value={newNote.content}
         onChange={onChangeInput}
       />
-      <FormButtons primaryBtnLabel="Add"/>
+      </>) :
+      <DrawerLoadingState/>
+      }
+      <FormButtons loading={isLoading} primaryBtnLabel="Add" />
     </form>
   )
 }

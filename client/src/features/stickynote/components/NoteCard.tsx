@@ -2,11 +2,12 @@ import React, { useRef, useEffect, useState } from "react";
 import { CheckCircle, TrashSimple } from "@phosphor-icons/react";
 import { Spinner } from "@/assets/svg";
 
+import useDeleteNote from "@/features/stickynote/hooks/useDeleteNote";
 import type { INotesData } from "@/features/stickynote/api/interface";
 import { autoGrow, handleZIndex, setNewOffset } from "@/features/stickynote/utils";
-import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
-import { setSelectedNote } from "@/lib/redux/states/noteSlice";
+import { useAppSelector } from "@/lib/redux/hooks";
 import { useUpdateNotesMutation } from "@/features/stickynote/api/stickynoteApi";
+import useNoteContext from "@/features/stickynote/hooks/useNoteContext";
 
 interface NoteCardProps {
   note: INotesData;
@@ -27,7 +28,7 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
   const savedSuccessTimer = useRef<number | null>(null);
 
   const [updateNotes, { isLoading }] = useUpdateNotesMutation();
-
+  const { callDeleteNote } = useDeleteNote();
   const saveData = async (
     key: string, 
     value: any, 
@@ -37,7 +38,6 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
     const updatedData = { [key]: value };
     try {
       if (isLoading) return false;
-      console.log(updatedData);
       await updateNotes({ id: noteId, notesData: updatedData });
       
       setSaving(false);
@@ -50,16 +50,12 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
     }
   };
 
-  const dispatch = useAppDispatch();
-  const handleNoteClick = (note: INotesData) => {
-    dispatch(setSelectedNote(note));
-  };
-
+  const { setSelectedNote } = useNoteContext();
   const isOpenDrawer = useAppSelector((state) => state.drawer.isOpenDrawer);
 
   const mouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target instanceof HTMLElement && e.target.id === "card-header") {
-        handleNoteClick(note);
+        setSelectedNote(note);
         mouseStartPos.current = { x: e.clientX, y: e.clientY };
         
         handleZIndex(cardRef, containerRef, isOpenDrawer);
@@ -168,7 +164,12 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
         style={{ backgroundColor: colors.colorHeader }}
       >
         <div className="flex items-center gap-3">
-          <TrashSimple weight="fill" className="cursor-pointer hover:scale-110 duration-150 ease-out" size="20" />
+          <TrashSimple
+            onClick={() => callDeleteNote(note.id)}
+            weight="fill"
+            className="cursor-pointer hover:scale-110 duration-150 ease-out"
+            size="20"
+          />
           <h1 className="font-semibold tracking-wider w-[180px] truncate">
             {note.title}
           </h1>
@@ -193,7 +194,7 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
           onInput={() => autoGrow(textAreaRef)}
           onFocus={() => {
             handleZIndex(cardRef, containerRef, isOpenDrawer);
-            handleNoteClick(note);
+            // handleNoteClick(note);
             autoGrow(textAreaRef);
           }}
           onKeyUp={handleKeyUp}
