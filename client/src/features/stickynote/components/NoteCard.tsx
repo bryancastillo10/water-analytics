@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { CheckCircle, TrashSimple } from "@phosphor-icons/react";
 import { Spinner } from "@/assets/svg";
 
+import useDeleteNote from "@/features/stickynote/hooks/useDeleteNote";
 import type { INotesData } from "@/features/stickynote/api/interface";
 import { autoGrow, handleZIndex, setNewOffset } from "@/features/stickynote/utils";
 import { useAppSelector } from "@/lib/redux/hooks";
@@ -27,7 +28,7 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
   const savedSuccessTimer = useRef<number | null>(null);
 
   const [updateNotes, { isLoading }] = useUpdateNotesMutation();
-
+  const { callDeleteNote } = useDeleteNote();
   const saveData = async (
     key: string, 
     value: any, 
@@ -163,7 +164,12 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
         style={{ backgroundColor: colors.colorHeader }}
       >
         <div className="flex items-center gap-3">
-          <TrashSimple weight="fill" className="cursor-pointer hover:scale-110 duration-150 ease-out" size="20" />
+          <TrashSimple
+            onClick={() => callDeleteNote(note.id)}
+            weight="fill"
+            className="cursor-pointer hover:scale-110 duration-150 ease-out"
+            size="20"
+          />
           <h1 className="font-semibold tracking-wider w-[180px] truncate">
             {note.title}
           </h1>
