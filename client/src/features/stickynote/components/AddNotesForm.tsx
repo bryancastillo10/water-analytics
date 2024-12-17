@@ -2,10 +2,13 @@ import { useState, useRef } from "react";
 import { Notepad, ChatCircleDots } from "@phosphor-icons/react";
 
 import { FormInput, FormTextarea } from "@/components/ui";
-import { FormButtons } from "@/components/layout";
+import { FormButtons, DrawerLoadingState } from "@/components/layout";
 
 import { colorOptions } from "@/features/stickynote/constants/colorOptions";
+import useCreateNote from "@/features/stickynote/hooks/useCreateNote";
+import { useGetNotesQuery } from "@/features/stickynote/api/stickynoteApi";
 import type { INotesData } from "@/features/stickynote/api/interface";
+
 const initialNotesData = {
   id:"",
   title: "",
@@ -15,8 +18,10 @@ const initialNotesData = {
 }
 
 const AddNotesForm = () => {
-  const startingPos = useRef<number>(10);
+  const startingPos = useRef<number>(0);
   const [newNote, setNewNote] = useState<INotesData>(initialNotesData);
+  const { callCreateNote, isLoading } = useCreateNote();
+  const { refetch } = useGetNotesQuery();
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
@@ -38,13 +43,14 @@ const AddNotesForm = () => {
 
     startingPos.current += 10;
 
-    console.log("Submitting note:", preparedNote);
-
-    // API Call here
+    callCreateNote(preparedNote);
+    refetch();
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      {!isLoading ?
+      (<>
       <FormInput
         id="title"
         icon={Notepad}
@@ -59,7 +65,10 @@ const AddNotesForm = () => {
         value={newNote.content}
         onChange={onChangeInput}
       />
-      <FormButtons primaryBtnLabel="Add"/>
+      </>) :
+      <DrawerLoadingState/>
+      }
+      <FormButtons loading={isLoading} primaryBtnLabel="Add" />
     </form>
   )
 }

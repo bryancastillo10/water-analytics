@@ -2,7 +2,7 @@ import { Plus } from "@phosphor-icons/react";
 
 import ColorShade from "@/features/stickynote/components/ColorShade";
 import useDrawer from "@/hook/useDrawer";
-import { colorOptions } from "../constants/colorOptions";
+import { colorOptions } from "@/features/stickynote/constants/colorOptions";
 
 const Controls = () => {
   const { handleOpenDrawer } = useDrawer();
