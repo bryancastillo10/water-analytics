@@ -26,6 +26,7 @@ export default {
       },
       animation: {
         ping: 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite',
+        'spin-slow': 'spin 2500ms linear infinite'
       },
       animationDelay: {
         '300': '300ms',
