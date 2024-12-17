@@ -4,8 +4,7 @@ import { Spinner } from "@/assets/svg";
 
 import type { INotesData } from "@/features/stickynote/api/interface";
 import { autoGrow, handleZIndex, setNewOffset } from "@/features/stickynote/utils";
-import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
-import { setSelectedNote } from "@/lib/redux/states/noteSlice";
+import { useAppSelector } from "@/lib/redux/hooks";
 import { useUpdateNotesMutation } from "@/features/stickynote/api/stickynoteApi";
 
 interface NoteCardProps {
@@ -50,16 +49,11 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
     }
   };
 
-  const dispatch = useAppDispatch();
-  const handleNoteClick = (note: INotesData) => {
-    dispatch(setSelectedNote(note));
-  };
-
   const isOpenDrawer = useAppSelector((state) => state.drawer.isOpenDrawer);
 
   const mouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target instanceof HTMLElement && e.target.id === "card-header") {
-        handleNoteClick(note);
+        // setSelectedNote(note);
         mouseStartPos.current = { x: e.clientX, y: e.clientY };
         
         handleZIndex(cardRef, containerRef, isOpenDrawer);
@@ -193,7 +187,7 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
           onInput={() => autoGrow(textAreaRef)}
           onFocus={() => {
             handleZIndex(cardRef, containerRef, isOpenDrawer);
-            handleNoteClick(note);
+            // handleNoteClick(note);
             autoGrow(textAreaRef);
           }}
           onKeyUp={handleKeyUp}

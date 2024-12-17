@@ -20,7 +20,10 @@ const Controls = () => {
         <Plus size="20" />
       </div>
       {colorOptions.map((color) => (
-        <ColorShade key={color.id}  color={color}/>
+        <ColorShade
+          key={color.id}
+          color={color}
+        />
       ))}
     </div>
   )
