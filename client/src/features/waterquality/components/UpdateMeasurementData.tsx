@@ -7,7 +7,7 @@ import { FormButtons } from "@/components/layout";
 
 import { BasicParamsTable, OrgIndParamsTable, NutrientParamsTable } from "@/features/waterquality/tables";
 import type { IMeasurementData } from "@/features/waterquality/api/interface";
-import useUpdateWQDataForm from "@/features/waterquality/hook/useUpdateWQDataForm";
+import useUpdateWQDataForm from "@/features/waterquality/hooks/useUpdateWQDataForm";
 
 interface UpdateMeasurementProps{
   id: string;

@@ -8,7 +8,7 @@ import { FormButtons } from "@/components/layout";
 import { BasicParamsTableView, NutrientParamsTableView, OrgIndParamsTableView } from "@/features/waterquality/tables";
 import type { IMeasurementData } from "@/features/waterquality/api/interface";
 
-import useDeleteWQDataForm from "../hook/useDeleteWQDataForm";
+import useDeleteWQDataForm from "../hooks/useDeleteWQDataForm";
 
 interface DeleteMeasurementDataProps{
   id: string;

@@ -2,7 +2,7 @@ import { flexRender } from "@tanstack/react-table";
 import { CaretUp, CaretDown, PencilSimpleLine, TrashSimple } from "@phosphor-icons/react";
 
 import type { IMeasurementData } from "@/features/waterquality/api/interface";
-import useWaterQualityTable from "@/features/waterquality/hook/useWaterQualityTable";
+import useWaterQualityTable from "@/features/waterquality/hooks/useWaterQualityTable";
 import PaginationControl from "@/features/waterquality/components/PaginationControl";
 
 

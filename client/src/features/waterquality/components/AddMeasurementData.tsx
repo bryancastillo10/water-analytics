@@ -5,7 +5,7 @@ import { FormSubheader } from "@/components/common";
 import { FormInput } from "@/components/ui";
 
 import { BasicParamsTable, OrgIndParamsTable, NutrientParamsTable } from "@/features/waterquality/tables";
-import useAddWQDataForm from "@/features/waterquality/hook/useAddWQDataForm";
+import useAddWQDataForm from "@/features/waterquality/hooks/useAddWQDataForm";
 
 const AddMeasurementData = () => {
   const {
