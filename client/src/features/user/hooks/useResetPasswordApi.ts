@@ -5,7 +5,7 @@ import {
     }
     from "@/features/user/api/userApi";
 
-import { useToast } from "@/hook/useToast";
+import { useToast } from "@/hooks/useToast";
 
 // First API: Send Code To Email
 const useSendCodeToEmail = () => {

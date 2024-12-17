@@ -1,4 +1,4 @@
-import { useToast } from "@/hook/useToast";
+import { useToast } from "@/hooks/useToast";
 import { useSignOutMutation } from "@/features/auth/api/authApi";
 
 import { useAppDispatch } from "@/lib/redux/hooks";

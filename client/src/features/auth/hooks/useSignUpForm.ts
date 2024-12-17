@@ -6,7 +6,7 @@ import { useSignUpMutation } from "@/features/auth/api/authApi";
 
 import { useAppDispatch } from "@/lib/redux/hooks";
 import { setUser } from "@/lib/redux/states/userSlice";
-import { useToast } from "@/hook/useToast";
+import { useToast } from "@/hooks/useToast";
 
 const initialSignUpData = {
     username: "",

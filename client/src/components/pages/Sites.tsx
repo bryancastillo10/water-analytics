@@ -4,7 +4,7 @@ import { useGetSiteByUserQuery } from "@/features/sites/api/sitesApi";
 
 import { Button } from "@/components/ui";
 
-import useDrawer from "@/hook/useDrawer";
+import useDrawer from "@/hooks/useDrawer";
 import { MainPageFetchError, MainPageLoadingState } from "@/components/layout";
 
 const Sites = () => {

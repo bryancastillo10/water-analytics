@@ -1,7 +1,7 @@
 import { useUpdateNotesMutation, useGetNotesQuery } from "@/features/stickynote/api/stickynoteApi";
 
 import useNoteContext from "@/features/stickynote/hooks/useNoteContext";
-import { useToast } from "@/hook/useToast";
+import { useToast } from "@/hooks/useToast";
 import type { INotesData } from "@/features/stickynote/api/interface";
 
 interface ColorShadeProps<T>{

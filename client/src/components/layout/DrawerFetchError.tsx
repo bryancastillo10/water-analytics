@@ -2,7 +2,7 @@ import { Button } from "@/components/ui";
 import { FailedRequest } from "@/assets/svg";
 
 import { useAppSelector } from "@/lib/redux/hooks";
-import useDrawer from "@/hook/useDrawer";
+import useDrawer from "@/hooks/useDrawer";
 
 const DrawerFetchError = () => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);

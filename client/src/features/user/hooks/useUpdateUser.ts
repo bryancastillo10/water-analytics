@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
 import { setUserInfo } from "@/lib/redux/states/userSlice";
-import { useToast } from "@/hook/useToast";
+import { useToast } from "@/hooks/useToast";
 
 import { useUpdateUserMutation } from "@/features/user/api/userApi";
 import type { UserProfile } from "@/features/user/api/interface";

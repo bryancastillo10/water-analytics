@@ -5,7 +5,7 @@ import { Button,FormInput, CodeInput } from "@/components/ui";
 import { FormButtons } from "@/components/layout";
 
 import useResetPassword, { STEP } from "@/features/user/hooks/useResetPassword";
-import useDrawer from "@/hook/useDrawer";
+import useDrawer from "@/hooks/useDrawer";
 
 const ResetPasswordForm = () => {
     const { handleCloseDrawer } = useDrawer();

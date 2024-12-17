@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useReactTable, getCoreRowModel, getPaginationRowModel , type SortingState} from "@tanstack/react-table";
 
-import useDrawer from "@/hook/useDrawer";
+import useDrawer from "@/hooks/useDrawer";
 import { useAppSelector } from "@/lib/redux/hooks";
 
 import { waterQualityColumns } from "@/features/waterquality/lib/viewWQTableConfig";

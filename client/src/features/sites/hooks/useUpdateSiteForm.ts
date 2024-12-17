@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useUpdateSiteMutation } from "@/features/sites/api/sitesApi";
 import type { ISiteData } from "@/features/sites/api/interface";
 
-import { useToast } from "@/hook/useToast";
+import { useToast } from "@/hooks/useToast";
 
 interface IUpdateSite{
     id: string;

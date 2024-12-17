@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import type { ISiteData } from "@/features/sites/api/interface";
 import { useCreateSiteMutation } from "@/features/sites/api/sitesApi";
-import { useToast } from "@/hook/useToast";
+import { useToast } from "@/hooks/useToast";
 
 
 const initialSiteData = {

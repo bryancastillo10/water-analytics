@@ -1,7 +1,7 @@
 import TextHeader from "@/components/common/TextHeader";
 import { Plus, MapPin } from "@phosphor-icons/react";
 
-import useDrawer from "@/hook/useDrawer";
+import useDrawer from "@/hooks/useDrawer";
 
 import { generateMockMeasurements } from "@/features/waterquality/api/mockData";
 import { mockSiteData } from "@/features/sites/api/mockData";

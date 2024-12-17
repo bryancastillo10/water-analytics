@@ -1,5 +1,5 @@
 import { MapPin, PencilSimpleLine, TrashSimple } from "@phosphor-icons/react";
-import useDrawer from "@/hook/useDrawer";
+import useDrawer from "@/hooks/useDrawer";
 
 import SiteTag from "@/features/sites/components/SiteTag";
 import type { ISiteData } from "@/features/sites/api/interface";

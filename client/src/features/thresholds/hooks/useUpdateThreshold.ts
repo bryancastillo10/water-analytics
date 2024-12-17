@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useReactTable, getCoreRowModel } from "@tanstack/react-table";
-import { useToast } from "@/hook/useToast";
+import { useToast } from "@/hooks/useToast";
 
 import type { IThresholdData, UpdateThresholdRequest } from "@/features/thresholds/api/interface";
 import { useUpdateThresholdMutation } from "@/features/thresholds/api/thresholdApi";

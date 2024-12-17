@@ -2,7 +2,7 @@ import TextHeader from "@/components/common/TextHeader";
 import { ArrowUp, ArrowDown, PencilSimpleLine } from "@phosphor-icons/react";
 
 import { useAppSelector } from "@/lib/redux/hooks"
-import useDrawer from "@/hook/useDrawer";
+import useDrawer from "@/hooks/useDrawer";
 
 import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { thresholdColumns } from "@/features/thresholds/lib/thresholdTableConfig";

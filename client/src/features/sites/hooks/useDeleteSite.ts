@@ -1,5 +1,5 @@
-import useDrawer from "@/hook/useDrawer";
-import { useToast } from "@/hook/useToast";
+import useDrawer from "@/hooks/useDrawer";
+import { useToast } from "@/hooks/useToast";
 import { useDeleteSiteMutation } from "@/features/sites/api/sitesApi";
 
 const useDeleteSite = () => {
