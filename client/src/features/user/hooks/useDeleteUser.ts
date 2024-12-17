@@ -5,8 +5,8 @@ import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
 import { clearUser } from "@/lib/redux/states/userSlice";
 
 import { useDeleteUserMutation } from "@/features/user/api/userApi";
-import { useToast } from "@/hook/useToast";
-import useDrawer from "@/hook/useDrawer";
+import { useToast } from "@/hooks/useToast";
+import useDrawer from "@/hooks/useDrawer";
 
 
 const useDeleteUser = () => {

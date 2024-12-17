@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { useToast } from "@/hook/useToast";
+import { useToast } from "@/hooks/useToast";
 
 import {
   useSendCodeToEmail,

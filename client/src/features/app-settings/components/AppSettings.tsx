@@ -1,7 +1,7 @@
 import TextHeader from '@/components/common/TextHeader';
 import { Switch } from '@/components/ui';
 import SettingItem from '@/features/app-settings/components/SettingItem';
-import useDrawer from '@/hook/useDrawer';
+import useDrawer from '@/hooks/useDrawer';
 
 import { Palette, Bell, Info, PaperPlane } from '@phosphor-icons/react';
 

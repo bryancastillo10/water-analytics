@@ -2,8 +2,8 @@ import { useCreateNotesMutation } from "@/features/stickynote/api/stickynoteApi"
 import type { INotesData } from "@/features/stickynote/api/interface";
 import { useGetNotesQuery } from "@/features/stickynote/api/stickynoteApi";
 
-import { useToast } from "@/hook/useToast";
-import useDrawer from "@/hook/useDrawer";
+import { useToast } from "@/hooks/useToast";
+import useDrawer from "@/hooks/useDrawer";
 
 const useCreateNote = () => {
     const [createNote, { isLoading }] = useCreateNotesMutation();

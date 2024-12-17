@@ -1,5 +1,5 @@
 import { useDeleteNotesMutation } from "@/features/stickynote/api/stickynoteApi";
-import { useToast } from "@/hook/useToast";
+import { useToast } from "@/hooks/useToast";
 
 const useDeleteNote = () => {
     const [deleteNote, { isLoading }] = useDeleteNotesMutation();

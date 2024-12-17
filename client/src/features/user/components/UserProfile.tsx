@@ -3,7 +3,7 @@ import { useAppSelector } from "@/lib/redux/hooks";
 
 import TextHeader from "@/components/common/TextHeader";
 import { Button } from "@/components/ui";
-import useDrawer from "@/hook/useDrawer";
+import useDrawer from "@/hooks/useDrawer";
 
 const UserProfile = () => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);

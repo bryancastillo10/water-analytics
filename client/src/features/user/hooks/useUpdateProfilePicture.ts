@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
 import { setProfilePic } from "@/lib/redux/states/userSlice";
 
-import { useToast } from "@/hook/useToast";
+import { useToast } from "@/hooks/useToast";
 import { useUpdateProfilePictureMutation } from "@/features/user/api/userApi";
 
 const useUpdateProfilePicture = () => {
