@@ -36,9 +36,12 @@ const AvatarPopOver = () => {
   const { handleSignOut, isLoading } = useLogout();
 
   const role = user.role.toLowerCase();
+ 
   return (
       <>
-      <div className="absolute top-12 right-0 z-0  transform rotate-45  shadow-lg bg-light size-8"/>
+        <div 
+            className="absolute top-12 right-0 z-0  transform rotate-45  shadow-lg bg-light size-8"
+            />
             <div className="absolute top-14 -right-2 bg-light w-32 h-42 shadow-lg rounded-b-lg">
               <ul className=" text-dark text-sm px-2 py-1">
                   {popOverItems.map((pop) => {
