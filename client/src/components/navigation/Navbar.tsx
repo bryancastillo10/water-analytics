@@ -21,10 +21,10 @@ const Navbar = ({
   }
 
   const location = useLocation();
+  const normalizedPathname = location.pathname.replace(/^\/[^/]+/, "");
 
-  const currentPage = sidebarItems.find(
-    (item) => location.pathname === `/role${item.link}` || location.pathname === "/dashboard"
-  )?.name || "Dashboard";
+  const currentPage = sidebarItems.find((item) =>
+    item.link === normalizedPathname)?.name || "Page Not Found";
 
   return (
     <nav className="sticky z-20 top-0 bg-primary text-light px-6 py-4">
@@ -60,7 +60,7 @@ const Navbar = ({
               src={user.profilePic || "https://i.pravatar.cc/150?img=55"}
               alt="avatar"
               />
-           {isPopOverOpen && <AvatarPopOver/>}
+            {isPopOverOpen && <AvatarPopOver setIsPopOverOpen={setIsPopOverOpen} />}
           </div>
         </div>
       </section>

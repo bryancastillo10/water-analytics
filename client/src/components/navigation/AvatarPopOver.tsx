@@ -3,6 +3,10 @@ import { Gear, GridFour, NoteBlank, SignOut } from "@phosphor-icons/react";
 import useLogout from "@/features/auth/hooks/useLogout";
 import { useAppSelector } from "@/lib/redux/hooks";
 
+interface AvatarPopOverProps{
+    setIsPopOverOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
 const popOverItems = [
     {
         id: 1,
@@ -31,14 +35,17 @@ const popOverItems = [
 ]
 
 
-const AvatarPopOver = () => {
+const AvatarPopOver = ({setIsPopOverOpen}: AvatarPopOverProps) => {
   const user = useAppSelector((state) => state.user);
   const { handleSignOut, isLoading } = useLogout();
 
   const role = user.role.toLowerCase();
   return (
       <>
-      <div className="absolute top-12 right-0 z-0  transform rotate-45  shadow-lg bg-light size-8"/>
+        <div 
+            onMouseLeave={() => setIsPopOverOpen(false)}
+            className="absolute top-12 right-0 z-0  transform rotate-45  shadow-lg bg-light size-8"
+            />
             <div className="absolute top-14 -right-2 bg-light w-32 h-42 shadow-lg rounded-b-lg">
               <ul className=" text-dark text-sm px-2 py-1">
                   {popOverItems.map((pop) => {
