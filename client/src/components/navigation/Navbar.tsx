@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { List, Moon, Sun } from "@phosphor-icons/react";
 
@@ -15,13 +15,33 @@ const Navbar = ({
   toggleTheme
 }: NavigationProps) => {
   const [isPopOverOpen, setIsPopOverOpen] = useState<boolean>(false);
+  const popoverRef = useRef<HTMLDivElement | null>(null);
   const user = useAppSelector((state) => state.user);
+  
   const togglePopOver = () => {
     setIsPopOverOpen(!isPopOverOpen);
   }
 
   const location = useLocation();
   const normalizedPathname = location.pathname.replace(/^\/[^/]+/, "");
+
+  const handleOutsideClick = (event: MouseEvent) => {
+    if (
+      popoverRef.current &&
+      !popoverRef.current.contains(event.target as Node)
+    ) {
+      setIsPopOverOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isPopOverOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [isPopOverOpen]);
 
   const currentPage = sidebarItems.find((item) =>
     item.link === normalizedPathname)?.name || "Page Not Found";
@@ -52,7 +72,10 @@ const Navbar = ({
           </div>
           <hr className="h-10 border border-light" />
 
-          <div className="relative flex items-center gap-x-3">      
+          <div
+            className="relative flex items-center gap-x-3"
+            ref={popoverRef}
+          >      
           {/* Avatar */}
             <img
               onClick={togglePopOver}
@@ -60,7 +83,7 @@ const Navbar = ({
               src={user.profilePic || "https://i.pravatar.cc/150?img=55"}
               alt="avatar"
               />
-            {isPopOverOpen && <AvatarPopOver setIsPopOverOpen={setIsPopOverOpen} />}
+            {isPopOverOpen && <AvatarPopOver/>}
           </div>
         </div>
       </section>
