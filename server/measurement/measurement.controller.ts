@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import { CustomRequest } from "@/infrastructure/middleware/type";
 import { MeasurementService } from "@/measurement/core/service/measurementService";
 
 export class MeasurementController {
@@ -22,9 +23,14 @@ export class MeasurementController {
     }
   }
 
-    async getAllMeasurements(req: Request, res: Response, next: NextFunction) {
+    async getAllMeasurements(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            const allSiteMeasurements = await this.measurementService.getAllMeasurements();
+            const userId = req.user?.id;
+            if (!userId) {
+                throw new Error("User ID is undefined. Ensure auth middleware is applied");
+            }
+
+            const allSiteMeasurements = await this.measurementService.getAllMeasurements(userId);
             res.status(200).json(allSiteMeasurements);
         } catch (error) {
             next(error);
