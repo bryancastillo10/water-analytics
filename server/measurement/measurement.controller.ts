@@ -4,7 +4,7 @@ import { MeasurementService } from "@/measurement/core/service/measurementServic
 export class MeasurementController {
   constructor(private readonly measurementService: MeasurementService) {
       this.createMeasurementBySite = this.createMeasurementBySite.bind(this);
-      this.getMeasurementBySite = this.getMeasurementBySite.bind(this);
+      this.getAllMeasurements = this.getAllMeasurements.bind(this);
       this.updateMeasurement = this.updateMeasurement.bind(this);
       this.deleteMeasurement = this.deleteMeasurement.bind(this);
   }
@@ -22,10 +22,9 @@ export class MeasurementController {
     }
   }
 
-    async getMeasurementBySite(req: Request, res: Response, next: NextFunction) {
+    async getAllMeasurements(req: Request, res: Response, next: NextFunction) {
         try {
-            const siteId = req.params.siteId;
-            const allSiteMeasurements = await this.measurementService.getMeasurementBySite(siteId);
+            const allSiteMeasurements = await this.measurementService.getAllMeasurements();
             res.status(200).json(allSiteMeasurements);
         } catch (error) {
             next(error);
