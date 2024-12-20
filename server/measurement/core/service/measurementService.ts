@@ -16,12 +16,9 @@ export class MeasurementService {
     return newMeasurement;
   }
 
-  async getMeasurementBySite(siteId:string) {
-    if (!siteId) {
-      throw new NotFoundError("Site is required");
-    }
+  async getAllMeasurements(userId:string) {
 
-    const allSiteMeasurements = await this.measurementRepository.getMeasurementBySite(siteId);
+    const allSiteMeasurements = await this.measurementRepository.getAllMeasurements(userId);
     if (!allSiteMeasurements) {
       throw new NotFoundError("Failed to get all the measurements of the site ID");
     }

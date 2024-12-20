@@ -29,10 +29,14 @@ export class MeasurementRepository implements IMeasurementRepository {
     }
   };
   
-  async getMeasurementBySite(siteId: string): Promise<MeasurementData[]> {
+  async getAllMeasurements(userId:string): Promise<MeasurementData[]> {
     try {
       const measurements = await this.prisma.measurement.findMany({
-        where: { siteId },
+        where: {
+          site: {
+            userId: userId 
+          }
+        },
         orderBy: { date: "desc" },
       });
   

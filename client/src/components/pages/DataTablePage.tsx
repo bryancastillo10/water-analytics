@@ -8,12 +8,15 @@ import { mockSiteData } from "@/features/sites/api/mockData";
 import WaterQualityTable from "@/features/waterquality/components/WaterQualityTable";
 import type { IMeasurementData } from "@/features/waterquality/api/interface";
 
+import useGetMeasurementData from "@/features/waterquality/hooks/useGetMeasurementData";
+
 const DataTablePage = () => {
   const { handleOpenDrawer } = useDrawer();
-
+  const { measurementData } = useGetMeasurementData();
   const mockMeasurements = generateMockMeasurements(mockSiteData, 20);
 
 
+  console.log(measurementData);
   const groupMeasurementsBySite = (
     measurements: IMeasurementData[]
   ): Record<string, { location: string; data: IMeasurementData[] }> => {
