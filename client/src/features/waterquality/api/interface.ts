@@ -26,14 +26,6 @@ export interface CreateMeasurementResponse{
     data: IMeasurementData;
 }
 
-// Get
-export interface GetMeasurementRequest{
-    id: string;
-}
-
-export interface GetMeasurementResponse{
-    allSiteMeasurements: IMeasurementData[];
-}
 
 // Update
 export interface UpdateMeasurementResponse{

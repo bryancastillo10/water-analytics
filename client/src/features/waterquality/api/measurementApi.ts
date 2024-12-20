@@ -2,16 +2,15 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type {
     MutateMeasurementRequest,
     CreateMeasurementResponse,
-    GetMeasurementRequest,
-    GetMeasurementResponse,
     UpdateMeasurementResponse,
-    DeleteMeasurementResponse
+    DeleteMeasurementResponse,
+    IMeasurementData
 } from "@/features/waterquality/api/interface";
 
 export const measurementApi = createApi({
     reducerPath: "measurementApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_API_BASE_URL + "water-quality-data/measurement",
+        baseUrl: import.meta.env.VITE_API_BASE_URL + "water-quality-data",
         credentials: 'include'
     }),
     endpoints: (build) => ({
@@ -22,9 +21,9 @@ export const measurementApi = createApi({
                 body: data
             })
         }),
-        getMeasurementBySite: build.query<GetMeasurementResponse, GetMeasurementRequest>({
-            query: (id) => ({
-                url: `/site/${id}`,
+        getAllMeasurements: build.query<IMeasurementData[], void>({
+            query: () => ({
+                url: `/`,
             })
         }),
         updateMeasurement: build.mutation<UpdateMeasurementResponse, MutateMeasurementRequest>({
@@ -45,7 +44,7 @@ export const measurementApi = createApi({
 
 export const {
     useCreateMeasurementMutation,
-    useGetMeasurementBySiteQuery,
+    useGetAllMeasurementsQuery,
     useUpdateMeasurementMutation,
     useDeleteMeasurementMutation
 } = measurementApi;
