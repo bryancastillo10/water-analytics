@@ -1,5 +1,6 @@
 export interface IMeasurementData {
     id: string;
+    siteId?: string;
     siteName: string;
     location: string;
     date: string;
