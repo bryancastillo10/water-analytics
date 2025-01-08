@@ -19,7 +19,6 @@ const WaterQualityTable = ({ data }: WaterQualityTableProps) => {
     hoveredRow,
     setHoveredRow
   } = useWaterQualityTable({ data });
-  
   return (
     <section>
       <table className="min-w-full table-auto border-collapse">

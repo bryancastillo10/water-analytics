@@ -33,12 +33,13 @@ const UpdateMeasurementData = ({ id, data }: UpdateMeasurementProps) => {
     nutrientParamsData,
     handleBasicParamsChange,
     handleOrgIndParamsChange,
-    handleNutrientParamsChange
+    handleNutrientParamsChange,
+    handleSubmit
   } = useUpdateWQDataForm(findMeasurement);
 
 
   return (
-    <form onSubmit={()=> {}}>
+    <form onSubmit={handleSubmit}>
       <div className="grid grid-cols-1 w-[50%]">
         <FormInput
           id="date"
