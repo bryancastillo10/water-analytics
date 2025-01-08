@@ -1,7 +1,8 @@
 export interface IMeasurementData {
     id: string;
-    siteName: string;
-    location: string;
+    siteId?: string;
+    siteName?: string;
+    location?: string;
     date: string;
     pH: number | null;
     suspendedSolids: number | null;
