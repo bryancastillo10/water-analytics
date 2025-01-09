@@ -4,7 +4,8 @@ import type {
     CreateMeasurementResponse,
     UpdateMeasurementResponse,
     DeleteMeasurementResponse,
-    IMeasurementData
+    IMeasurementData,
+    UpdateMeasurementRequest
 } from "@/features/waterquality/api/interface";
 
 export const measurementApi = createApi({
@@ -26,7 +27,7 @@ export const measurementApi = createApi({
                 url: `/`,
             })
         }),
-        updateMeasurement: build.mutation<UpdateMeasurementResponse, MutateMeasurementRequest>({
+        updateMeasurement: build.mutation<UpdateMeasurementResponse, UpdateMeasurementRequest>({
             query: ({ id, data }) => ({
                 url: `/measurement/${id}`,
                 method: "PUT",
