@@ -38,8 +38,8 @@ export const measurementApi = createApi({
             }),
             invalidatesTags:["getMeasurements"]
         }),
-        deleteMeasurement: build.mutation<DeleteMeasurementResponse, { id: string }>({
-            query: (id) => ({
+        deleteMeasurement: build.mutation<DeleteMeasurementResponse, {id: string} >({
+            query: ({id}) => ({
                 url: `/measurement/${id}`,
                 method: "DELETE"
             }),

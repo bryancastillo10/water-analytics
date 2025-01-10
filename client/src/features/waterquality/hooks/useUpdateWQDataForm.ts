@@ -71,9 +71,9 @@ const useUpdateWQData = (findMeasurement: IMeasurementData) => {
     totalCOD: parseInt(orgIndParamsData.totalCOD!) || null,
     suspendedSolids: parseInt(orgIndParamsData.suspendedSolids!) || null,
     fecalColiform: parseInt(orgIndParamsData.fecalColiform!) || null,
-    ammonia: parseInt(nutrientParamsData.ammonia!) || null,
-    nitrates: parseInt(nutrientParamsData.nitrates!) || null,
-    phosphates: parseInt(nutrientParamsData.phosphates!) || null,
+    ammonia: parseFloat(nutrientParamsData.ammonia!) || null,
+    nitrates: parseFloat(nutrientParamsData.nitrates!) || null,
+    phosphates: parseFloat(nutrientParamsData.phosphates!) || null,
   };
 
   const callUpdateMeasurement = async () => {
@@ -82,9 +82,15 @@ const useUpdateWQData = (findMeasurement: IMeasurementData) => {
         id: findMeasurement.id,
         data: toUpdateWaterQualityData,
       }).unwrap();
-      showToast({ status: "success", message: "Water Quality Data Updated Successfully" });
+      showToast({
+        status: "success",
+        message: "Water Quality Data Updated Successfully"
+      });
     } catch (error: any) {
-      showToast({ status: "error", message: error.message });
+      showToast({
+        status: "error",
+        message: error.message || "Failed to update the selected water quality data"
+      });
     }
   };
 
