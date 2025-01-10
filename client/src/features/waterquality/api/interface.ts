@@ -36,10 +36,7 @@ export interface UpdateMeasurementResponse{
 export interface UpdateMeasurementRequest {
     id: string;
     data: {
-        siteId?: string;
-        siteName?: string;
-        location?: string;
-        date: string;
+        date: Date;
         pH: number | null;
         suspendedSolids: number | null;
         totalCOD: number | null;

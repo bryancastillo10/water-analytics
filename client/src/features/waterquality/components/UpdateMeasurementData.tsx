@@ -34,9 +34,9 @@ const UpdateMeasurementData = ({ id, data }: UpdateMeasurementProps) => {
     handleBasicParamsChange,
     handleOrgIndParamsChange,
     handleNutrientParamsChange,
-    handleSubmit
+    handleSubmit,
+    isLoading
   } = useUpdateWQDataForm(findMeasurement);
-
 
   return (
     <form onSubmit={handleSubmit}>
@@ -65,7 +65,7 @@ const UpdateMeasurementData = ({ id, data }: UpdateMeasurementProps) => {
         paramsData={nutrientParamsData}
         onChangeInput={handleNutrientParamsChange}  
       />
-      <FormButtons primaryBtnLabel="Update" /> 
+      <FormButtons loading={isLoading} primaryBtnLabel="Update" /> 
     </form>
   )
 }

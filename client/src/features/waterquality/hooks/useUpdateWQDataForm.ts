@@ -6,9 +6,9 @@ import type { IBasicParams, IOrgIndicatorParams, INutrientParams } from "@/featu
 
 const useUpdateWQData = (findMeasurement: IMeasurementData) => {
   const { showToast } = useToast();
-  const [updateMeasurement] = useUpdateMeasurementMutation();
+  const [updateMeasurement, { isLoading}] = useUpdateMeasurementMutation();
 
-  const formatDate = (date: Date | null): string => date?.toISOString().split("T")[0] || "";
+  // const formatDate = (date: Date | null): string => date?.toISOString().split("T")[0] || "";
 
   // Data pre-processing
   const basicParamsToUpdate = useMemo(() => {
@@ -63,12 +63,8 @@ const useUpdateWQData = (findMeasurement: IMeasurementData) => {
   const handleOrgIndParamsChange = onChangeInput(setOrgIndParamsData);
   const handleNutrientParamsChange = onChangeInput(setNutrientParamsData);
 
-  const toUpdateWaterQualityData: IMeasurementData = {
-    id: findMeasurement.id,
-    siteId: findMeasurement.siteId ?? "",
-    siteName: findMeasurement.siteName ?? "",
-    location: findMeasurement.location ?? "",
-    date: formatDate(sampleDate),
+  const toUpdateWaterQualityData = {
+    date: sampleDate!,
     pH: parseInt(basicParamsData.pH!) || null,
     temperature: parseInt(basicParamsData.temperature!) || null,
     dissolvedOxygen: parseInt(basicParamsData.dissolvedOxygen!) || null,
@@ -103,6 +99,7 @@ const useUpdateWQData = (findMeasurement: IMeasurementData) => {
     basicParamsData,
     orgIndParamsData,
     nutrientParamsData,
+    isLoading,
     handleBasicParamsChange,
     handleOrgIndParamsChange,
     handleNutrientParamsChange,
