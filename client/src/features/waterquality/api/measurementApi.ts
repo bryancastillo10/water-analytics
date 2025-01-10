@@ -4,11 +4,13 @@ import type {
     CreateMeasurementResponse,
     UpdateMeasurementResponse,
     DeleteMeasurementResponse,
-    IMeasurementData
+    IMeasurementData,
+    UpdateMeasurementRequest
 } from "@/features/waterquality/api/interface";
 
 export const measurementApi = createApi({
     reducerPath: "measurementApi",
+    tagTypes: ["getMeasurements"],
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_BASE_URL + "water-quality-data",
         credentials: 'include'
@@ -19,25 +21,29 @@ export const measurementApi = createApi({
                 url: `/site/${id}`,
                 method: "POST",
                 body: data
-            })
+            }),
+            invalidatesTags:["getMeasurements"]
         }),
         getAllMeasurements: build.query<IMeasurementData[], void>({
             query: () => ({
                 url: `/`,
-            })
+            }),
+            providesTags:["getMeasurements"]
         }),
-        updateMeasurement: build.mutation<UpdateMeasurementResponse, MutateMeasurementRequest>({
+        updateMeasurement: build.mutation<UpdateMeasurementResponse, UpdateMeasurementRequest>({
             query: ({ id, data }) => ({
                 url: `/measurement/${id}`,
                 method: "PUT",
                 body: data
-            })
+            }),
+            invalidatesTags:["getMeasurements"]
         }),
-        deleteMeasurement: build.mutation<DeleteMeasurementResponse, { id: string }>({
-            query: (id) => ({
+        deleteMeasurement: build.mutation<DeleteMeasurementResponse, {id: string} >({
+            query: ({id}) => ({
                 url: `/measurement/${id}`,
                 method: "DELETE"
-            })
+            }),
+            invalidatesTags:["getMeasurements"]
         })
     })
 });
