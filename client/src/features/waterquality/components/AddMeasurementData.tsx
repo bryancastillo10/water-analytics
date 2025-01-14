@@ -14,13 +14,14 @@ const AddMeasurementData = () => {
     basicParamsData,
     orgIndParamsData,
     nutrientParamsData,
+    handleSubmit,
     handleBasicParamsChange,
     handleOrgIndParamsChange,
     handleNutrientParamsChange,
   } = useAddWQDataForm();
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}> 
       <div className="grid grid-cols-1 w-[50%]">
         <FormInput
           id="date"

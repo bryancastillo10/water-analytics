@@ -1,6 +1,8 @@
-import { useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useToast } from "@/hooks/useToast";
 import type { IBasicParams, INutrientParams, IOrgIndicatorParams } from "@/features/waterquality/tables/interface";
 
+import { useCreateMeasurementMutation } from "@/features/waterquality/api/measurementApi";
 
 const initBasicParams = {
     pH: null,
@@ -24,6 +26,9 @@ const useAddWQDataForm = () => {
     const [basicParamsData, setBasicParamsData] = useState<IBasicParams>(initBasicParams);
     const [orgIndParamsData, setOrgIndParamsData] = useState<IOrgIndicatorParams>(initOrgIndParams);
     const [nutrientParamsData, setNutrientParamsData] = useState<INutrientParams>(initNutrientParams);
+    
+    const [ createMeasurement, { isLoading } ] = useCreateMeasurementMutation();
+    const { showToast } = useToast();
 
     const onDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newDate = new Date(e.target.value);
@@ -40,9 +45,33 @@ const useAddWQDataForm = () => {
             }))
         };
   
-    const handleBasicParamsChange = onChangeInput(setBasicParamsData);
-    const handleOrgIndParamsChange = onChangeInput(setOrgIndParamsData);
-    const handleNutrientParamsChange = onChangeInput(setNutrientParamsData);
+  const handleBasicParamsChange = onChangeInput(setBasicParamsData);
+  const handleOrgIndParamsChange = onChangeInput(setOrgIndParamsData);
+  const handleNutrientParamsChange = onChangeInput(setNutrientParamsData);
+
+  const newMeasurement = {
+    ...sampleDate,
+    ...basicParamsData,
+    ...orgIndParamsData,
+    ...nutrientParamsData
+  }
+  
+  const callAddMeasurement = async () => {
+    try {
+      // await createMeasurement().unwrap();
+    }
+    catch (error: any) {
+      showToast({
+        status: "error",
+        message: error.message || "Failed to add a new data"
+      });
+    }
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    callAddMeasurement();
+  }
     
     const newWaterQualityData = {
         sampleDate,
@@ -56,6 +85,8 @@ const useAddWQDataForm = () => {
         basicParamsData,
         orgIndParamsData,
         nutrientParamsData,
+        isLoading,
+        handleSubmit,
         handleBasicParamsChange,
         handleOrgIndParamsChange,
         handleNutrientParamsChange,

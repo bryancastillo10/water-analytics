@@ -88,7 +88,10 @@ const useUpdateWQData = (findMeasurement: IMeasurementData) => {
       }).unwrap();
       showToast({ status: "success", message: "Water Quality Data Updated Successfully" });
     } catch (error: any) {
-      showToast({ status: "error", message: error.message });
+      showToast({
+        status: "error",
+        message: error.message || " Failed to update the data"
+      });
     }
   };
 

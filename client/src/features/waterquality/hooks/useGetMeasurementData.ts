@@ -19,15 +19,17 @@ const useGetMeasurementData = () => {
     // Pre-processing of data to match rendering
     const groupMeasurementsBySite = (
         measurements: IMeasurementData[]
-      ): Record<string, { location: string; data: IMeasurementData[] }> => {
+      ): Record<string, { location: string | undefined; data: IMeasurementData[] }> => {
         return measurements.reduce((acc, measurement) => {
           const { siteName, location } = measurement;
-          if (!acc[siteName]) {
-            acc[siteName] = { location, data: [] };
+          if (siteName) { 
+            if (!acc[siteName]) {
+              acc[siteName] = { location, data: [] };
+            }
+            acc[siteName].data.push(measurement);
           }
-          acc[siteName].data.push(measurement);
           return acc;
-        }, {} as Record<string, { location: string; data: IMeasurementData[] }>);
+        }, {} as Record<string, { location: string | undefined ; data: IMeasurementData[] }>);
     };
     
     const dataSummary = Object.entries(groupMeasurementsBySite(measurementDataWithSiteInfo));
