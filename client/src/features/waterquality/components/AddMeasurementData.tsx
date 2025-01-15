@@ -7,7 +7,7 @@ import { FormInput } from "@/components/ui";
 import { BasicParamsTable, OrgIndParamsTable, NutrientParamsTable } from "@/features/waterquality/tables";
 import useAddWQDataForm from "@/features/waterquality/hooks/useAddWQDataForm";
 
-const AddMeasurementData = () => {
+const AddMeasurementData = ({siteId}: {siteId:string}) => {
   const {
     sampleDate,
     onDateChange,
@@ -19,6 +19,8 @@ const AddMeasurementData = () => {
     handleOrgIndParamsChange,
     handleNutrientParamsChange,
   } = useAddWQDataForm();
+
+  console.log("Site ID", siteId);
 
   return (
     <form onSubmit={handleSubmit}> 
