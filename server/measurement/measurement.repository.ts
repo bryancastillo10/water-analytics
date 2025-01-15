@@ -53,9 +53,11 @@ export class MeasurementRepository implements IMeasurementRepository {
 
   async updateMeasurement({ measurementId, measurement }: UpdateMeasurementRequest): Promise<MeasurementData> {
     try {
+      const { id, ...updateData } = measurement;
+
       const updatedMeasurement = await this.prisma.measurement.update({
         where: { id: measurementId },
-        data: { ...measurement }
+        data: updateData
       });
       return updatedMeasurement as MeasurementData;
     }
@@ -64,7 +66,7 @@ export class MeasurementRepository implements IMeasurementRepository {
         console.error(error.message);
         throw new DatabaseError("Database error at updateMeasurement method");
       }
-      throw Error;
+      throw error;
     }
   };
 

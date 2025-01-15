@@ -6,9 +6,9 @@ import type { IBasicParams, IOrgIndicatorParams, INutrientParams } from "@/featu
 
 const useUpdateWQData = (findMeasurement: IMeasurementData) => {
   const { showToast } = useToast();
-  const [updateMeasurement] = useUpdateMeasurementMutation();
+  const [updateMeasurement, { isLoading}] = useUpdateMeasurementMutation();
 
-  const formatDate = (date: Date | null): string => date?.toISOString().split("T")[0] || "";
+  // const formatDate = (date: Date | null): string => date?.toISOString().split("T")[0] || "";
 
   // Data pre-processing
   const basicParamsToUpdate = useMemo(() => {
@@ -63,21 +63,17 @@ const useUpdateWQData = (findMeasurement: IMeasurementData) => {
   const handleOrgIndParamsChange = onChangeInput(setOrgIndParamsData);
   const handleNutrientParamsChange = onChangeInput(setNutrientParamsData);
 
-  const toUpdateWaterQualityData: IMeasurementData = {
-    id: findMeasurement.id,
-    siteId: findMeasurement.siteId ?? "",
-    siteName: findMeasurement.siteName ?? "",
-    location: findMeasurement.location ?? "",
-    date: formatDate(sampleDate),
+  const toUpdateWaterQualityData = {
+    date: sampleDate!,
     pH: parseInt(basicParamsData.pH!) || null,
     temperature: parseInt(basicParamsData.temperature!) || null,
     dissolvedOxygen: parseInt(basicParamsData.dissolvedOxygen!) || null,
     totalCOD: parseInt(orgIndParamsData.totalCOD!) || null,
     suspendedSolids: parseInt(orgIndParamsData.suspendedSolids!) || null,
     fecalColiform: parseInt(orgIndParamsData.fecalColiform!) || null,
-    ammonia: parseInt(nutrientParamsData.ammonia!) || null,
-    nitrates: parseInt(nutrientParamsData.nitrates!) || null,
-    phosphates: parseInt(nutrientParamsData.phosphates!) || null,
+    ammonia: parseFloat(nutrientParamsData.ammonia!) || null,
+    nitrates: parseFloat(nutrientParamsData.nitrates!) || null,
+    phosphates: parseFloat(nutrientParamsData.phosphates!) || null,
   };
 
   const callUpdateMeasurement = async () => {
@@ -86,11 +82,14 @@ const useUpdateWQData = (findMeasurement: IMeasurementData) => {
         id: findMeasurement.id,
         data: toUpdateWaterQualityData,
       }).unwrap();
-      showToast({ status: "success", message: "Water Quality Data Updated Successfully" });
+      showToast({
+        status: "success",
+        message: "Water Quality Data Updated Successfully"
+      });
     } catch (error: any) {
       showToast({
         status: "error",
-        message: error.message || " Failed to update the data"
+        message: error.message || "Failed to update the selected water quality data"
       });
     }
   };
@@ -106,6 +105,7 @@ const useUpdateWQData = (findMeasurement: IMeasurementData) => {
     basicParamsData,
     orgIndParamsData,
     nutrientParamsData,
+    isLoading,
     handleBasicParamsChange,
     handleOrgIndParamsChange,
     handleNutrientParamsChange,

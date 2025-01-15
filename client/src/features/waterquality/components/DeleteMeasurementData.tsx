@@ -3,12 +3,12 @@ import { CalendarBlank, Drop, Hexagon, Plant } from "@phosphor-icons/react";
 import { useAppSelector } from "@/lib/redux/hooks";
 
 import { FormSubheader } from "@/components/common";
-import { FormButtons } from "@/components/layout";
+import { DrawerLoadingState, FormButtons } from "@/components/layout";
 
 import { BasicParamsTableView, NutrientParamsTableView, OrgIndParamsTableView } from "@/features/waterquality/tables";
 import type { IMeasurementData } from "@/features/waterquality/api/interface";
 
-import useDeleteWQDataForm from "../hooks/useDeleteWQDataForm";
+import useDeleteWQDataForm from "@/features/waterquality/hooks/useDeleteWQDataForm";
 
 interface DeleteMeasurementDataProps{
   id: string;
@@ -33,10 +33,14 @@ const DeleteMeasurementData = ({ id, data }: DeleteMeasurementDataProps) => {
     basicParamsData,
     orgIndParamsData,
     nutrientParamsData,
+    isLoading,
+    handleSubmit
   } = useDeleteWQDataForm(findMeasurement);
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
+      {!isLoading ?
+        <>
         <h1 className="text-xl my-2">Are you sure you want to delete the following data?</h1>
         <div className="grid grid-cols-2 items-center mb-2">
           <h1 className="flex items-center gap-x-2"><CalendarBlank size="20" /> Sampling Date</h1>
@@ -62,8 +66,11 @@ const DeleteMeasurementData = ({ id, data }: DeleteMeasurementDataProps) => {
         />
         <NutrientParamsTableView
           paramsData={nutrientParamsData}
-        />
-        <FormButtons primaryBtnLabel="Delete"/>
+          /> </>
+        : <DrawerLoadingState />
+      }
+        
+        <FormButtons loading={isLoading} primaryBtnLabel="Delete"/>
     </form>
   )
 }
