@@ -9,13 +9,13 @@ const DataTablePage = () => {
   const { handleOpenDrawer } = useDrawer();
   const { dataSummary } = useGetMeasurementData();
 
-  const addMeasurementDrawer = (siteName:string) => {
-    handleOpenDrawer("Add Water Quality Data to " + siteName , "AddMeasurementData");
+  const addMeasurementDrawer = (siteName:string, siteId:string) => {
+    handleOpenDrawer("Add Water Quality Data to " + siteName , "AddMeasurementData", { siteId });
   }
 
   return (
     <main className="flex flex-col w-full">
-      {dataSummary.map(([siteName, {location,data}]) => (
+      {dataSummary.map(([siteName, {location, siteId, data}]) => (
         <div key={siteName} className="mb-8">
           <div className="flex justify-between items-center gap-x-4">
             <div className="flex flex-col">
@@ -23,7 +23,7 @@ const DataTablePage = () => {
               <p className="flex ixtems-center gap-2 text-sm"><MapPin />{location}</p>
             </div>
             <div
-              onClick={()=> addMeasurementDrawer(siteName)}
+              onClick={()=> addMeasurementDrawer(siteName, siteId!)}
               className="rounded-full cursor-pointer p-2 duration-300 ease-in-out hover:scale-110 hover:bg-neutral/40 border border-primary border-dashed">
               <Plus
                 className="font-bold text-secondary"

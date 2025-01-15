@@ -12,29 +12,25 @@ const useGetMeasurementData = () => {
         return {
             ...measure,
             siteName: site?.siteName ?? "Site Not Found",
+            siteId: site?.id ?? "Site ID Not Found",
             location: site?.location ?? "Location Not Found"
         }
     }) ?? [];
 
     // Pre-processing of data to match rendering
     const groupMeasurementsBySite = (
-      measurements: IMeasurementData[]
-    ): Record<string, { location: string | undefined; data: IMeasurementData[] }> => {
-      return measurements.reduce((acc, measurement) => {
-        const { siteName, location } = measurement;
-    
-        if (!siteName) {
-          console.warn("Measurement missing siteName:", measurement);
-          return acc; 
-        }
-    
-        if (!acc[siteName]) {
-          acc[siteName] = { location: location ?? undefined, data: [] }; 
-        }
-    
-        acc[siteName].data.push(measurement);
-        return acc;
-      }, {} as Record<string, { location: string | undefined; data: IMeasurementData[] }>);
+        measurements: IMeasurementData[]
+      ): Record<string, { location: string | undefined; siteId: string | undefined; data: IMeasurementData[]  }> => {
+        return measurements.reduce((acc, measurement) => {
+          const { siteName, siteId, location } = measurement;
+          if (siteName) { 
+            if (!acc[siteName]) {
+              acc[siteName] = { location, siteId, data: [] };
+            }
+            acc[siteName].data.push(measurement);
+          }
+          return acc;
+        }, {} as Record<string, { siteId: string | undefined ,location: string | undefined ; data: IMeasurementData[] }>);
     };
     
     const dataSummary = Object.entries(groupMeasurementsBySite(measurementDataWithSiteInfo));
