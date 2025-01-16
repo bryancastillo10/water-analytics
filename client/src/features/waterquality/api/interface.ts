@@ -1,9 +1,12 @@
-export interface IMeasurementData {
+export interface IMeasurementData extends IMeasurementBase {
     id: string;
     siteId?: string;
     siteName?: string;
     location?: string;
-    date: string;
+}
+
+export interface IMeasurementBase {
+    date: string | null;
     pH: number | null;
     suspendedSolids: number | null;
     totalCOD: number | null;
@@ -13,12 +16,13 @@ export interface IMeasurementData {
     ammonia: number | null;
     nitrates: number | null;
     phosphates: number | null;
-}
+  }
+  
 
 // Create
-export interface MutateMeasurementRequest{
+export interface CreateMeasurementRequest{
     id: string;
-    data: IMeasurementData;
+    data: IMeasurementBase;
 }
 
 export interface CreateMeasurementResponse{

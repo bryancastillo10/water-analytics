@@ -9,7 +9,7 @@ const columnHelper = createColumnHelper<IMeasurementData>();
 export const waterQualityColumns = [
     columnHelper.accessor("date", {
         header: "Date",
-        cell: (info) => formatDate(info.getValue()),
+        cell: (info) => formatDate(info?.getValue()!),
       }),
       columnHelper.accessor("pH", {
         header: "pH Level",

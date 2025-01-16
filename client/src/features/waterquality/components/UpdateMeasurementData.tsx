@@ -40,7 +40,7 @@ const UpdateMeasurementData = ({ id, data }: UpdateMeasurementProps) => {
 
   return (
     <form onSubmit={handleSubmit}>
-     {isLoading ? 
+     {!isLoading ? 
      <>
       <div className="grid grid-cols-1 w-[50%]">
       <FormInput
