@@ -21,7 +21,7 @@ const initBasicParams = {
     nitrates: null,
     phosphates:null
   }
-const useAddWQDataForm = () => {
+const useAddWQDataForm = (siteId: string) => {
     const [sampleDate, setSampleDate] = useState<Date | null>(null);
     const [basicParamsData, setBasicParamsData] = useState<IBasicParams>(initBasicParams);
     const [orgIndParamsData, setOrgIndParamsData] = useState<IOrgIndicatorParams>(initOrgIndParams);
@@ -49,16 +49,30 @@ const useAddWQDataForm = () => {
   const handleOrgIndParamsChange = onChangeInput(setOrgIndParamsData);
   const handleNutrientParamsChange = onChangeInput(setNutrientParamsData);
 
-  const newMeasurement = {
-    ...sampleDate,
-    ...basicParamsData,
-    ...orgIndParamsData,
-    ...nutrientParamsData
-  }
+  const newWaterQualityData = {
+    date: sampleDate?.toISOString() ?? null,
+    pH: parseFloat(basicParamsData.pH!) || null,
+    temperature: parseFloat(basicParamsData.temperature!) || null,
+    dissolvedOxygen: parseFloat(basicParamsData.dissolvedOxygen!) || null,
+    totalCOD: parseInt(orgIndParamsData.totalCOD!) || null,
+    suspendedSolids: parseInt(orgIndParamsData.suspendedSolids!) || null,
+    fecalColiform: parseInt(orgIndParamsData.fecalColiform!) || null,
+    ammonia: parseFloat(nutrientParamsData.ammonia!) || null,
+    nitrates: parseFloat(nutrientParamsData.nitrates!) || null,
+    phosphates: parseFloat(nutrientParamsData.phosphates!) || null,
+  } 
   
   const callAddMeasurement = async () => {
     try {
-      // await createMeasurement().unwrap();
+      const res = await createMeasurement({
+        id: siteId,
+        data: newWaterQualityData
+      }).unwrap();
+
+      showToast({
+        status: "success",
+        message: res.message || "Water quality data has been added"
+      })
     }
     catch (error: any) {
       showToast({
@@ -73,12 +87,7 @@ const useAddWQDataForm = () => {
     callAddMeasurement();
   }
     
-    const newWaterQualityData = {
-        sampleDate,
-        ...basicParamsData,
-        ...orgIndParamsData,
-        ...nutrientParamsData
-    } 
+
     return {
         sampleDate,
         onDateChange,

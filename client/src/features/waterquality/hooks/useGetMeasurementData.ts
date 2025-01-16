@@ -2,6 +2,16 @@ import { useGetAllMeasurementsQuery } from "@/features/waterquality/api/measurem
 import { useGetSiteByUserQuery } from "@/features/sites/api/sitesApi";
 import type { IMeasurementData } from "@/features/waterquality/api/interface";
 
+
+type PreProcessedWQData = Record<
+  string,
+  {
+    location: string | undefined;
+    siteId: string | undefined;
+    data: IMeasurementData[]
+  }
+  >;
+
 const useGetMeasurementData = () => {
     const { data: siteData } = useGetSiteByUserQuery();
     const { data: measurementData } = useGetAllMeasurementsQuery();
@@ -20,7 +30,7 @@ const useGetMeasurementData = () => {
     // Pre-processing of data to match rendering
     const groupMeasurementsBySite = (
         measurements: IMeasurementData[]
-      ): Record<string, { location: string | undefined; siteId: string | undefined; data: IMeasurementData[]  }> => {
+      ): PreProcessedWQData => {
         return measurements.reduce((acc, measurement) => {
           const { siteName, siteId, location } = measurement;
           if (siteName) { 
@@ -30,7 +40,7 @@ const useGetMeasurementData = () => {
             acc[siteName].data.push(measurement);
           }
           return acc;
-        }, {} as Record<string, { siteId: string | undefined ,location: string | undefined ; data: IMeasurementData[] }>);
+        }, {} as PreProcessedWQData);
     };
     
     const dataSummary = Object.entries(groupMeasurementsBySite(measurementDataWithSiteInfo));

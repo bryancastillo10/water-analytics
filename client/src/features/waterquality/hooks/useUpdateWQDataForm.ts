@@ -8,8 +8,6 @@ const useUpdateWQData = (findMeasurement: IMeasurementData) => {
   const { showToast } = useToast();
   const [updateMeasurement, { isLoading}] = useUpdateMeasurementMutation();
 
-  // const formatDate = (date: Date | null): string => date?.toISOString().split("T")[0] || "";
-
   // Data pre-processing
   const basicParamsToUpdate = useMemo(() => {
     return {

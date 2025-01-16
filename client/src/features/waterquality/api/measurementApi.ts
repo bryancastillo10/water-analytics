@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type {
-    MutateMeasurementRequest,
+    CreateMeasurementRequest,
     CreateMeasurementResponse,
     UpdateMeasurementResponse,
     DeleteMeasurementResponse,
@@ -16,7 +16,7 @@ export const measurementApi = createApi({
         credentials: 'include'
     }),
     endpoints: (build) => ({
-        createMeasurement: build.mutation<CreateMeasurementResponse, MutateMeasurementRequest>({
+        createMeasurement: build.mutation<CreateMeasurementResponse, CreateMeasurementRequest>({
             query: ({ id, data }) => ({
                 url: `/site/${id}`,
                 method: "POST",

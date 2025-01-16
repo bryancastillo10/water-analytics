@@ -3,7 +3,7 @@ import { CalendarBlank, Drop, Hexagon, Plant } from "@phosphor-icons/react";
 
 import { FormSubheader } from "@/components/common";
 import { FormInput } from "@/components/ui";
-import { DrawerLoadingState, FormButtons } from "@/components/layout";
+import { DrawerFetchError, DrawerLoadingState, FormButtons } from "@/components/layout";
 
 import { BasicParamsTable, OrgIndParamsTable, NutrientParamsTable } from "@/features/waterquality/tables";
 import type { IMeasurementData } from "@/features/waterquality/api/interface";
@@ -21,7 +21,7 @@ const UpdateMeasurementData = ({ id, data }: UpdateMeasurementProps) => {
 
   if (!findMeasurement) {
     return (
-      <div className="text-lg"> No Measurement Was Found with the ID</div>
+       <DrawerFetchError/>
     )
   };
 
@@ -40,7 +40,7 @@ const UpdateMeasurementData = ({ id, data }: UpdateMeasurementProps) => {
 
   return (
     <form onSubmit={handleSubmit}>
-     {isLoading ? 
+     {!isLoading ? 
      <>
       <div className="grid grid-cols-1 w-[50%]">
       <FormInput
