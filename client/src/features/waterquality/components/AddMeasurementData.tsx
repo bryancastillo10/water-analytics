@@ -1,6 +1,6 @@
 import { CalendarBlank, Drop, Hexagon, Plant } from "@phosphor-icons/react";
 
-import { DrawerLoadingState, FormButtons } from "@/components/layout";
+import { DrawerLoadingState, DrawerFetchError, FormButtons } from "@/components/layout";
 import { FormSubheader } from "@/components/common";
 import { FormInput } from "@/components/ui";
 
@@ -20,6 +20,11 @@ const AddMeasurementData = ({siteId}: {siteId:string}) => {
     handleOrgIndParamsChange,
     handleNutrientParamsChange,
   } = useAddWQDataForm(siteId);
+
+  if (!siteId) {
+    return <DrawerFetchError/>
+  };
+
 
   return (
     <form onSubmit={handleSubmit}>
