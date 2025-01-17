@@ -1,9 +1,11 @@
-
+import { TextHeader } from "@/components/common";
+import UsersListTable from "@/features/user/components/UsersListTable";
 
 const UsersList = () => {
   return (
     <main className="flex flex-col xl:gap-4">
-          <h1 className="font-semibold text-2xl">Users should be rendered here</h1>
+          <TextHeader text="Admins can check list of users" />
+          <UsersListTable/>
     </main>
   )
 }

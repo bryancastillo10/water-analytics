@@ -6,7 +6,7 @@ import useDrawer from "@/hooks/useDrawer";
 
 import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { thresholdColumns } from "@/features/thresholds/lib/thresholdTableConfig";
-import { useGetThresholdQuery } from "../api/thresholdApi";
+import { useGetThresholdQuery } from "@/features/thresholds/api/thresholdApi";
 import { LoadingAnimation } from "@/components/common";
 
 const ThresholdSettings = () => {
@@ -39,7 +39,7 @@ const ThresholdSettings = () => {
     <section className="px-6 py-4 w-full xl:w-[50%]">
           <TextHeader text="Threshold Settings" />
       {thresholdList &&
-(        <table className="table-auto xl:table-fixed w-full border-collapse mt-4 relative group">
+    (<table className="table-auto xl:table-fixed w-full border-collapse mt-4 relative group">
           <thead>
             <tr>
               <th>
