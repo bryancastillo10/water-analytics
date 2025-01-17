@@ -1,55 +1,39 @@
-import TextHeader from "@/components/common/TextHeader";
-import { ArrowUp, ArrowDown, PencilSimpleLine } from "@phosphor-icons/react";
-
-import { useAppSelector } from "@/lib/redux/hooks"
-import useDrawer from "@/hooks/useDrawer";
+import { TrashSimple, ArrowUp, ArrowDown } from "@phosphor-icons/react";
+import { useAppSelector } from "@/lib/redux/hooks";
 
 import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import { thresholdColumns } from "@/features/thresholds/lib/thresholdTableConfig";
-import { useGetThresholdQuery } from "@/features/thresholds/api/thresholdApi";
-import { LoadingAnimation } from "@/components/common";
 
-const ThresholdSettings = () => {
+import { useGetAllUserQuery } from "@/features/user/api/userApi";
+import { mockUsersData } from "@/features/user/api/mockData";
+import { userColumns } from "@/features/user/lib/allUsersTable";
+
+const UsersListTable = () => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);
-  const user = useAppSelector((state) => state.user);
-  const userId = user.user_id ?? undefined;
+  const authUser = useAppSelector((state) => state.user);
 
-  const { data: thresholdList, isLoading } = useGetThresholdQuery({id: userId!}, {skip: !userId});
+  const userId = authUser?.user_id!;
 
-  const { handleOpenDrawer } = useDrawer();
-
-  const updateThreshold = () => {
-    handleOpenDrawer("Edit your threshold values", "UpdateThresholdForm", { thresholdData: thresholdList });
-  };
-
+  const { data: allUsers } = useGetAllUserQuery({ userId });
+  
   const table = useReactTable({
-    data: thresholdList || [],
-    columns: thresholdColumns,
+    data: mockUsersData || [],
+    columns: userColumns,
     debugTable: true,
-    getCoreRowModel: getCoreRowModel(),
-  });
-
-  if (isLoading) {
-    return <div className="flex justify-center items-center xl:w-[50%]">
-      <LoadingAnimation size="sm"/>
-    </div>
-  }
-
+    getCoreRowModel: getCoreRowModel()
+  })
+  
+  console.log(allUsers);
   return (
-    <section className="px-6 py-4 w-full xl:w-[50%]">
-          <TextHeader text="Threshold Settings" />
-      {thresholdList &&
-    (<table className="table-auto xl:table-fixed w-full border-collapse mt-4 relative group">
+    <table className="table-auto xl:table-fixed w-full border-collapse mt-4 relative group">
           <thead>
             <tr>
               <th>
                 <div
-                  onClick={updateThreshold} 
                   className={`flex items-center gap-x-2 absolute opacity-0 group-hover:opacity-100 cursor-pointer duration-300 ease-in-out
                       border border-dashed -top-10 right-0
                       rounded-full p-2 hover:scale-110  ${theme ? "border-light" : "border-dark"}`}
                 >
-                  <PencilSimpleLine size="20" />
+                  <TrashSimple size="20" />
                   <span className="text-sm hidden xl:block">Edit</span>
                 </div>
               </th>
@@ -97,7 +81,5 @@ const ThresholdSettings = () => {
               ))}
             </tbody>
           </table>)}
-    </section>
-        )
-      }
-export default ThresholdSettings;
+
+export default UsersListTable;

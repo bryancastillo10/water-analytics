@@ -47,3 +47,11 @@ export interface UpdatePasswordRequest extends ResetPwRequest{
     newPassword: string;
     confirmNewPassword: string;
 }
+
+export interface IUsersData {
+    id: string;
+    username: string;
+    email: string;
+    profilePic: string;
+    role: string;
+}

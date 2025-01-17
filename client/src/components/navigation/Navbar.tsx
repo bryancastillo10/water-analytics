@@ -44,7 +44,7 @@ const Navbar = ({
   }, [isPopOverOpen]);
 
   const currentPage = sidebarItems.find((item) =>
-    item.link === normalizedPathname)?.name || "Page Not Found";
+    item.link === normalizedPathname)?.name || "Users";
 
   return (
     <nav className="sticky z-20 top-0 bg-primary text-light px-6 py-4">
