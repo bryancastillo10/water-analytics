@@ -3,7 +3,7 @@ import { useAppSelector } from "@/lib/redux/hooks";
 
 import AppLogo from "@/assets/water.png";
 import { sidebarItems, type sidebarItemsProps } from "@/components/navigation/sidebarItems";
-import { ArrowCircleLeft, ArrowCircleRight } from "@phosphor-icons/react";
+import { ArrowCircleLeft, ArrowCircleRight, UsersThree } from "@phosphor-icons/react";
 
 export interface NavigationProps{
   isSidebarExpanded: boolean;
@@ -36,7 +36,9 @@ const SideBarRowItem = ({ name, icon: Icon,link, isSidebarExpanded, theme }: sid
 
 // Sidebar parent component
 const Sidebar = ({ isSidebarExpanded, toggleSidebar, theme }: NavigationProps) => {
+  const user = useAppSelector((state) => state.user);
   const currentYear = new Date().getFullYear();
+  const role = user.role.toLowerCase();
 
   return (
     <nav
@@ -70,6 +72,14 @@ const Sidebar = ({ isSidebarExpanded, toggleSidebar, theme }: NavigationProps) =
               theme={theme!}
             />
           ))}
+          { role === "admin" && <SideBarRowItem
+              id={6}
+              name="Users"
+              link="/users"
+              icon={UsersThree}
+              isSidebarExpanded={isSidebarExpanded}
+              theme={theme!}
+          />}
         </ul>
       </div>
 
