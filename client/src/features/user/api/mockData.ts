@@ -1,6 +1,6 @@
+import type { IUsersData } from "./interface";
 
-
-export const mockUsersData = [
+export const mockUsersData: IUsersData[] = [
     {
         id: "1001a",
         username: "Rick Morty",
