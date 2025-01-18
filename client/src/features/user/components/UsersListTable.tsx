@@ -6,7 +6,7 @@ import { useAppSelector } from "@/lib/redux/hooks";
 import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
 import { useGetAllUserQuery } from "@/features/user/api/userApi";
-import { mockUsersData } from "@/features/user/api/mockData";
+// import { mockUsersData } from "@/features/user/api/mockData";
 import { userColumns } from "@/features/user/lib/allUsersTable";
 import useDrawer from "@/hooks/useDrawer";
 
@@ -27,13 +27,14 @@ const UsersListTable = () => {
 
 
   const userTable = useReactTable({
-    data: mockUsersData || [],
+    data: allUsers || [],
     columns: userColumns,
     debugTable: true,
     getCoreRowModel: getCoreRowModel()
   });
   
   console.log(allUsers);
+  
   return (
     <table className="min-w-full table-auto border-collapse">
       <thead className="relative group">
