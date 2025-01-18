@@ -6,6 +6,7 @@ import UpdateUserForm from "@/features/user/components/UpdateUserForm";
 import UpdateProfilePicture from "@/features/user/components/UpdateProfilePicture";
 import DeleteAccountConfirmation from "@/features/user/components/DeleteAccountConfirmation";
 import ResetPasswordForm from "@/features/user/components/ResetPasswordForm";
+import DeleteAppUser from "@/features/user/components/DeleteAppUser";
 
 import UpdateThresholdForm from "@/features/thresholds/components/UpdateThresholdForm";
 import DeleteThresholdForm from "@/features/thresholds/components/DeleteThresholdForm";
@@ -34,6 +35,7 @@ export const drawerForms: Record<string, React.ComponentType<any>> = {
     UpdateProfilePicture,
     DeleteAccountConfirmation,
     ResetPasswordForm,
+    DeleteAppUser,
 
     // Notes
     AddNotesForm,

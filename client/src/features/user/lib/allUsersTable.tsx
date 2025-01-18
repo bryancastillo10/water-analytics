@@ -18,6 +18,12 @@ export const userColumns = [
     }),
     columnHelper.accessor("profilePic", {
         header: () => "Profile Picture",
-        cell: (info) => info.getValue()
+        cell: (info) => (
+            <img
+                src={info.getValue()}
+                alt="user-profile-pic"
+                className="size-10 rounded-full"
+            />
+        )
     }),
 ];
