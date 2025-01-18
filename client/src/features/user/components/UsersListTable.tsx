@@ -1,39 +1,20 @@
-import { useState } from "react";
 import { TrashSimple } from "@phosphor-icons/react";
 
-import { useAppSelector } from "@/lib/redux/hooks";
+import { flexRender } from "@tanstack/react-table";
 
-import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
-
-import { useGetAllUserQuery } from "@/features/user/api/userApi";
-// import { mockUsersData } from "@/features/user/api/mockData";
-import { userColumns } from "@/features/user/lib/allUsersTable";
-import useDrawer from "@/hooks/useDrawer";
 import { MainPageLoadingState } from "@/components/layout";
+import useUserListTable from "../hooks/useUserListTable";
 
 const UsersListTable = () => {
-  const theme = useAppSelector((state) => state.theme.isDarkMode);
-  const authUser = useAppSelector((state) => state.user);
-  const { handleOpenDrawer } = useDrawer();
+  const {
+    hoveredRow,
+    theme,
+    isLoading,
+    userTable,
+    setHoveredRow,
+    deleteUserDrawer
+  } = useUserListTable();
 
-  const [hoveredRow, setHoveredRow] = useState<number | null>(null);
-
-  const userId = authUser?.user_id!;
-
-  const { data: allUsers, isLoading } = useGetAllUserQuery({ userId });
-  
-  const deleteUserDrawer = (id: string) => {
-    handleOpenDrawer("Delete the selected User", "DeleteAppUser", { id });
-  };
-
-
-  const userTable = useReactTable({
-    data: allUsers || [],
-    columns: userColumns,
-    debugTable: true,
-    getCoreRowModel: getCoreRowModel()
-  });
-  
   if (isLoading) {
     return <MainPageLoadingState />;
   }
