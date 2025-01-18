@@ -9,6 +9,7 @@ import { useGetAllUserQuery } from "@/features/user/api/userApi";
 // import { mockUsersData } from "@/features/user/api/mockData";
 import { userColumns } from "@/features/user/lib/allUsersTable";
 import useDrawer from "@/hooks/useDrawer";
+import { MainPageLoadingState } from "@/components/layout";
 
 const UsersListTable = () => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);
@@ -19,7 +20,7 @@ const UsersListTable = () => {
 
   const userId = authUser?.user_id!;
 
-  const { data: allUsers } = useGetAllUserQuery({ userId });
+  const { data: allUsers, isLoading } = useGetAllUserQuery({ userId });
   
   const deleteUserDrawer = (id: string) => {
     handleOpenDrawer("Delete the selected User", "DeleteAppUser", { id });
@@ -33,8 +34,10 @@ const UsersListTable = () => {
     getCoreRowModel: getCoreRowModel()
   });
   
-  console.log(allUsers);
-  
+  if (isLoading) {
+    return <MainPageLoadingState />;
+  }
+
   return (
     <table className="min-w-full table-auto border-collapse">
       <thead className="relative group">

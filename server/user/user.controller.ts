@@ -29,7 +29,7 @@ export class UserController {
             const userId = req.query.id;
             const allUsers = await this.userService.getAllUser(String(userId));
 
-            res.status(200).json({users: allUsers})
+            res.status(200).json(allUsers);
 
         } catch (error) {
             next(error)

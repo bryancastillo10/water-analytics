@@ -26,7 +26,8 @@ export const userApi = createApi({
                 url: `/update/${id}`,
                 method: "PUT",
                 body: data
-            })
+            }),
+            invalidatesTags:["getAllUsers"]
         }),
         updateProfilePicture: build.mutation<UpdateProfilePicResponse, UpdateProfilePicRequest>({
             query: ({ userId, file }) => {
@@ -38,6 +39,7 @@ export const userApi = createApi({
                 body: formData,
               };
             },
+            invalidatesTags:["getAllUsers"]
         }),
         getAllUser: build.query < IUsersData[], {userId: string} > ({
             query: ({ userId }) => ({
