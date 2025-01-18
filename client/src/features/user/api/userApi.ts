@@ -9,12 +9,13 @@ import type {
     VerifyCodeRequest,
     VerifyCodeResponse,
     UpdatePasswordRequest,
-    DeleteUserRequest
+    DeleteUserRequest,
+    IUsersData
 } from "@/features/user/api/interface";
-import type { UserState } from "@/lib/redux/states/userSlice";
 
 export const userApi = createApi({
     reducerPath: "userApi",
+    tagTypes: ["getAllUsers"],
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_BASE_URL + "user",
         credentials: 'include'
@@ -25,7 +26,8 @@ export const userApi = createApi({
                 url: `/update/${id}`,
                 method: "PUT",
                 body: data
-            })
+            }),
+            invalidatesTags:["getAllUsers"]
         }),
         updateProfilePicture: build.mutation<UpdateProfilePicResponse, UpdateProfilePicRequest>({
             query: ({ userId, file }) => {
@@ -37,17 +39,20 @@ export const userApi = createApi({
                 body: formData,
               };
             },
+            invalidatesTags:["getAllUsers"]
         }),
-        getAllUser: build.query < UserState[], {userId: string} > ({
+        getAllUser: build.query < IUsersData[], {userId: string} > ({
             query: ({ userId }) => ({
                 url: `/?id=${encodeURIComponent(userId)}`
-           }) 
+            }),
+           providesTags:["getAllUsers"] 
         }),
         deleteUser: build.mutation<void, DeleteUserRequest>({
             query: ({id, username}) => ({
                 url: `/delete/${id}?username=${encodeURIComponent(username)}`,
                 method: "DELETE"
-            })
+            }),
+            invalidatesTags:["getAllUsers"]
         }),
         requestPasswordReset: build.mutation<ResetPwResponse, ResetPwRequest>({
             query: (email) => ({

@@ -1,13 +1,15 @@
 import { TextHeader } from "@/components/common";
 import UsersListTable from "@/features/user/components/UsersListTable";
 
-const UsersList = () => {
+const UsersPage = () => {
   return (
     <main className="flex flex-col xl:gap-4">
-          <TextHeader text="Admins can check list of users" />
+      <div className="w-fit">
+        <TextHeader text="Admins can check the list of users" />
+      </div>
           <UsersListTable/>
     </main>
   )
 }
 
-export default UsersList;
+export default UsersPage;

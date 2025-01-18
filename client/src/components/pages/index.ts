@@ -3,6 +3,6 @@ import DataTablePage from "./DataTablePage";
 import Sites from "./Sites";
 import NotesPage from "./NotesPage";
 import Settings from "./Settings";
-import UsersList from "./UsersList";
+import UsersPage from "./UsersPage";
 
-export {DashboardPage, DataTablePage, Sites, NotesPage, UsersList, Settings}
+export {DashboardPage, DataTablePage, Sites, NotesPage, UsersPage, Settings}

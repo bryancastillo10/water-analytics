@@ -1,5 +1,5 @@
 
-import { DashboardPage, DataTablePage, Sites, NotesPage, UsersList, Settings } from "@/components/pages";
+import { DashboardPage, DataTablePage, Sites, NotesPage, UsersPage, Settings } from "@/components/pages";
 import type React from "react";
 
 export const appRoutes = [
@@ -8,6 +8,6 @@ export const appRoutes = [
         { path: "sites", element: Sites as React.ComponentType },
         { path: "notes", element: NotesPage as React.ComponentType },
         { path: "settings", element: Settings as React.ComponentType },
-        { path: "users", element: UsersList as React.ComponentType }
+        { path: "users", element: UsersPage as React.ComponentType }
 
 ];
