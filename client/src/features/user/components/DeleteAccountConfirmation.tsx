@@ -3,14 +3,16 @@ import { FormInput } from "@/components/ui";
 import { WarningCircle, ShieldCheck } from "@phosphor-icons/react";
 
 import useDeleteUser from "@/features/user/hooks/useDeleteUser";
+import { useAppSelector } from "@/lib/redux/hooks";
 
 const DeleteAccountConfirmation = () => {
+  const userId = useAppSelector((state) => state.user.user_id);
   const {
     confirmUsername,
     isLoading,
     onChangeUsernameInput,
     handleSubmit
-  } = useDeleteUser();
+  } = useDeleteUser(userId!);
   
   return (
       <form onSubmit={handleSubmit}>
