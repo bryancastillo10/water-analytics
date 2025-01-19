@@ -39,18 +39,7 @@ export interface UpdateMeasurementResponse{
 
 export interface UpdateMeasurementRequest {
     id: string;
-    data: {
-        date: Date;
-        pH: number | null;
-        suspendedSolids: number | null;
-        totalCOD: number | null;
-        fecalColiform: number | null;
-        temperature: number | null;
-        dissolvedOxygen: number | null;
-        ammonia: number | null;
-        nitrates: number | null;
-        phosphates: number | null;
-    }
+    data: IMeasurementBase;
 }
 
 // Delete
