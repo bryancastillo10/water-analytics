@@ -9,9 +9,10 @@ import { useToast } from "@/hooks/useToast";
 import useDrawer from "@/hooks/useDrawer";
 
 
-const useDeleteUser = () => {
+const useDeleteUser = (userId:string) => {
     const [confirmUsername, setConfirmUsername] = useState<string>("");
-    const user = useAppSelector((state) => state.user);
+    const currentUserId = useAppSelector((state) => state.user.user_id);  
+  
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
   
@@ -25,20 +26,22 @@ const useDeleteUser = () => {
   
     const callDeleteUser = async () => {
       try {
-        if (user.user_id) {
+        if (userId) {
           await deleteUser({
-            id: user.user_id,
+            id: userId,
             username: confirmUsername
           }).unwrap();
       
-          dispatch((clearUser()));
-  
           showToast({
             status: "success",
             message: "Account has been deleted successfully"
           });
   
-          navigate("/");
+          if (userId === currentUserId) {
+            dispatch((clearUser()));
+            navigate("/");            
+          } 
+
           }
       }
       catch (error: any) {

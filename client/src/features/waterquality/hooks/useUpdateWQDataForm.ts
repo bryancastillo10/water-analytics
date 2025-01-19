@@ -62,7 +62,7 @@ const useUpdateWQData = (findMeasurement: IMeasurementData) => {
   const handleNutrientParamsChange = onChangeInput(setNutrientParamsData);
 
   const toUpdateWaterQualityData = {
-    date: sampleDate!,
+    date: sampleDate?.toISOString() ?? null,
     pH: parseInt(basicParamsData.pH!) || null,
     temperature: parseInt(basicParamsData.temperature!) || null,
     dissolvedOxygen: parseInt(basicParamsData.dissolvedOxygen!) || null,
