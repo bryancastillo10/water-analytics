@@ -1,7 +1,7 @@
 import { TimeSeriesData } from "@/dashboard/core/entity/timeSeries";
 
 export interface IDashboardRepository {
-    timeSeries({siteId,parameter}: GetTimeSeriesDataRequest): Promise<TimeSeriesData>;
+    timeSeries({siteId,parameter}: GetTimeSeriesDataRequest): Promise<TimeSeriesData[]>;
 }
 
 

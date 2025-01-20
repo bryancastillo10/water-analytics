@@ -1,4 +1,9 @@
 export class TimeSeriesData {
-    date?: Date;
-    parameter?: string;
-};
+    date: Date;
+    value: number;
+
+    constructor(date: Date, value: number) {
+        this.date = date;
+        this.value = value;
+    }
+}
