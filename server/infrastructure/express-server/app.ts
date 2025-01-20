@@ -10,6 +10,7 @@ import measurementRoutes from "@/measurement/measurement.route";
 import siteRoutes from "@/site/site.route";
 import thresholdRoutes from "@/threshold/threshold.route";
 import notesRoutes from "@/notes/notes.route";
+import dashboardRoutes from "@/dashboard/dashboard.route";
 
 export const startApp = () => {
     const app = express();
@@ -33,6 +34,7 @@ export const startApp = () => {
     app.use("/api/site", siteRoutes);
     app.use("/api/threshold", thresholdRoutes);
     app.use("/api/notes", notesRoutes);
+    app.use("/api/dashboard", dashboardRoutes);
 
     // Error Handler Middleware
     app.use(errorHandler);
