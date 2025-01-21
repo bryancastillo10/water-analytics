@@ -24,6 +24,9 @@ export class DashboardService {
     };
 
     async sitePercentage(userId: string) {
+        if (!userId) {
+            throw new NotFoundError("User ID was not found");
+        }
         const totalSites = await this.dashboardRepository.getTotalSitesByUser(userId);
 
         if (totalSites === 0) {
@@ -39,4 +42,14 @@ export class DashboardService {
 
         return { totalSites, percentages}
     };
+
+    async nutrientPercentages(siteId: string) {
+        if (!siteId) {
+            throw new NotFoundError("Site ID was not found");
+        }
+
+        const nutrientAvg = await this.dashboardRepository.nutrientPercentageBySite(siteId);
+
+        return nutrientAvg;
+    }
 };

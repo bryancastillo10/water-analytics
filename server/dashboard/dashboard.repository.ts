@@ -4,7 +4,8 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import {
     IDashboardRepository,
     GetTimeSeriesDataRequest,
-    GetSiteCountByUserResponse
+    GetSiteCountByUserResponse,
+    NutrientAvgBySiteResponse
 } from "@/dashboard/core/interface/IDashboardRepository";
 import { TimeSeriesData } from "@/dashboard/core/entity/timeSeries";
 import { DatabaseError } from "@/infrastructure/errors/customErrors";
@@ -65,6 +66,36 @@ export class DashboardRepository implements IDashboardRepository {
             });
 
             return totalCount;
+        }
+        catch (error) {
+            if (error instanceof PrismaClientKnownRequestError) {
+                console.error(error.message);
+                throw new DatabaseError("Database error at the timeSeries method");
+            } 
+            throw Error;
+        }
+    }
+
+    async nutrientPercentageBySite(siteId: string): Promise<NutrientAvgBySiteResponse> {
+        try {
+            const nutrientAvg = await this.prisma.measurement.aggregate({
+                where: { siteId },
+                _avg: {
+                    ammonia: true,
+                    nitrates: true,
+                    phosphates: true
+                }
+            });
+
+            if (!nutrientAvg._avg.ammonia && !nutrientAvg._avg.nitrates && !nutrientAvg._avg.phosphates) {
+                throw new Error("No data found for the given site ID");
+            }
+
+            return {
+                ammonia: nutrientAvg._avg.ammonia ?? 0,
+                nitrates: nutrientAvg._avg.nitrates ?? 0,
+                phosphates: nutrientAvg._avg.phosphates ?? 0
+            };
         }
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
