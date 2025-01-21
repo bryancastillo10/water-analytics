@@ -1,7 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
-import { IDashboardRepository, GetTimeSeriesDataRequest } from "@/dashboard/core/interface/IDashboardRepository";
+import {
+    IDashboardRepository,
+    GetTimeSeriesDataRequest,
+    GetSiteCountByUserResponse
+} from "@/dashboard/core/interface/IDashboardRepository";
 import { TimeSeriesData } from "@/dashboard/core/entity/timeSeries";
 import { DatabaseError } from "@/infrastructure/errors/customErrors";
 
@@ -32,4 +36,42 @@ export class DashboardRepository implements IDashboardRepository {
             throw Error;
         }
     }  
+
+    async getSiteCountByUser(userId: string): Promise<GetSiteCountByUserResponse[]> {
+        try {
+            const groupedSite = await this.prisma.site.groupBy({
+                by: ['sourceType'],
+                where: { userId },
+                _count: {
+                    id: true
+                }
+            });
+
+            return groupedSite;
+        }
+        catch (error) {
+            if (error instanceof PrismaClientKnownRequestError) {
+                console.error(error.message);
+                throw new DatabaseError("Database error at the timeSeries method");
+            } 
+            throw Error;
+        }
+    }
+    
+    async getTotalSitesByUser(userId: string): Promise<number> {
+        try {
+            const totalCount = await this.prisma.site.count({
+                where: { userId }
+            });
+
+            return totalCount;
+        }
+        catch (error) {
+            if (error instanceof PrismaClientKnownRequestError) {
+                console.error(error.message);
+                throw new DatabaseError("Database error at the timeSeries method");
+            } 
+            throw Error;
+        }
+    }
 }

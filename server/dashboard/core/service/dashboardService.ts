@@ -21,5 +21,22 @@ export class DashboardService {
         const timeSeriesData = await this.dashboardRepository.timeSeries({ siteId, parameter });
 
         return timeSeriesData;
-    }
+    };
+
+    async sitePercentage(userId: string) {
+        const totalSites = await this.dashboardRepository.getTotalSitesByUser(userId);
+
+        if (totalSites === 0) {
+            return { message: "No sites was found", percentage: [] };
+        };
+
+        const siteCounts = await this.dashboardRepository.getSiteCountByUser(userId);
+
+        const percentages = siteCounts.map((site) => ({
+            sourceType: site.sourceType,
+            percentage: ((site._count.id) / totalSites * 100).toFixed(2)
+        }));
+
+        return { totalSites, percentages}
+    };
 };
