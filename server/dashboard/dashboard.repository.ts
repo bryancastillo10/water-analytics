@@ -8,7 +8,7 @@ import {
     NutrientAvgBySiteResponse
 } from "@/dashboard/core/interface/IDashboardRepository";
 import { TimeSeriesData } from "@/dashboard/core/entity/timeSeries";
-import { DatabaseError } from "@/infrastructure/errors/customErrors";
+import { DatabaseError, NotFoundError } from "@/infrastructure/errors/customErrors";
 
 export class DashboardRepository implements IDashboardRepository {
     private prisma = new PrismaClient();
@@ -78,6 +78,15 @@ export class DashboardRepository implements IDashboardRepository {
 
     async nutrientPercentageBySite(siteId: string): Promise<NutrientAvgBySiteResponse> {
         try {
+            const site = await this.prisma.site.findUnique({
+                where: { id: siteId },
+                select: { siteName: true }
+            });
+
+            if (!site) {
+                throw new NotFoundError("Site Name was not found");
+            }
+
             const nutrientAvg = await this.prisma.measurement.aggregate({
                 where: { siteId },
                 _avg: {
@@ -91,11 +100,16 @@ export class DashboardRepository implements IDashboardRepository {
                 throw new Error("No data found for the given site ID");
             }
 
-            return {
-                ammonia: nutrientAvg._avg.ammonia ?? 0,
-                nitrates: nutrientAvg._avg.nitrates ?? 0,
-                phosphates: nutrientAvg._avg.phosphates ?? 0
-            };
+            const nutrientData = {
+                siteName: site.siteName,
+                average: {
+                    ammonia: nutrientAvg._avg.ammonia ?? 0,
+                    nitrates: nutrientAvg._avg.nitrates ?? 0,
+                    phosphates: nutrientAvg._avg.phosphates ?? 0
+                }
+            }
+
+            return nutrientData;
         }
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {

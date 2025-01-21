@@ -21,7 +21,10 @@ export interface GetSiteCountByUserResponse {
 }
 
 export interface NutrientAvgBySiteResponse {
-    ammonia: number;
-    nitrates: number;
-    phosphates: number;
+    siteName: string; 
+    average: {
+        ammonia: number;
+        nitrates: number;
+        phosphates: number;
+    }
 }
