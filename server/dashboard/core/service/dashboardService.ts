@@ -66,4 +66,28 @@ export class DashboardService {
 
         return siteData;
     };
+
+    async getParameterStatus({siteId, parameter}: GetTimeSeriesDataRequest) {
+        if (!parameter) {
+            throw new NotFoundError("Parameter is not found");
+        }
+
+        const paramAvg = await this.dashboardRepository.getParameterAvg({ siteId, parameter });
+
+        const parameterRecord: Record<string, string> = {
+            suspendedSolids: "Total Suspended Solids",
+            totalCOD: "Total COD",
+            fecalColiform: "Fecal Coliform"
+        };
+
+        const parameterName = parameterRecord[parameter] || parameter;
+
+        const thresholdValue = await this.dashboardRepository.getThresholdValue(parameterName);
+
+        
+
+
+        return thresholdValue;
+
+    }
 };

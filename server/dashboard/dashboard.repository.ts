@@ -6,7 +6,8 @@ import {
     GetTimeSeriesDataRequest,
     GetSiteCountByUserResponse,
     NutrientAvgBySiteResponse,
-    ISiteDataResponse
+    ISiteDataResponse,
+    IParameterAvg,
 } from "@/dashboard/core/interface/IDashboardRepository";
 import { TimeSeriesData } from "@/dashboard/core/entity/timeSeries";
 import { DatabaseError, NotFoundError } from "@/infrastructure/errors/customErrors";
@@ -163,6 +164,48 @@ export class DashboardRepository implements IDashboardRepository {
             };
             
             return siteData;
+        }
+        catch (error) {
+            if (error instanceof PrismaClientKnownRequestError) {
+                console.error(error.message);
+                throw new DatabaseError("Database error at the getDataPerSite method");
+            } 
+            throw Error;
+        }
+    }
+
+    async getParameterAvg({ siteId, parameter }: GetTimeSeriesDataRequest): Promise<IParameterAvg> {
+        try {
+            const siteData = await this.prisma.measurement.aggregate({
+                where: { siteId },
+                _avg: {
+                    [parameter]: true
+                }
+            });
+
+            const { _avg } = siteData;
+
+            return _avg;
+        }
+        catch (error) {
+            if (error instanceof PrismaClientKnownRequestError) {
+                console.error(error.message);
+                throw new DatabaseError("Database error at the getDataPerSite method");
+            } 
+            throw Error;
+        }
+    }
+
+    async getThresholdValue(parameter: string) {
+        try {
+            const thresholdValue = await this.prisma.threshold.findFirst({
+                where: { parameter },
+                select: {
+                    value: true
+                }
+            });
+
+            return thresholdValue;
         }
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {

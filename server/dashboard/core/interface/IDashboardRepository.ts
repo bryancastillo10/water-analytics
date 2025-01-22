@@ -6,6 +6,7 @@ export interface IDashboardRepository {
     getTotalSitesByUser(userId: string): Promise<number>;
     nutrientPercentageBySite(siteId: string): Promise<NutrientAvgBySiteResponse>;
     getDataPerSite(siteId: string): Promise<ISiteDataResponse>;
+    getParameterAvg({ siteId, parameter }: GetTimeSeriesDataRequest): Promise<IParameterAvg>;
 }
 
 
@@ -45,4 +46,8 @@ interface IParameters {
     ammonia: number;
     nitrates: number;
     phosphates: number;
+}
+
+export interface IParameterAvg {
+    [parameter: string]: number;
 }
