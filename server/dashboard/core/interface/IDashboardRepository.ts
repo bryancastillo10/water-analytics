@@ -2,9 +2,11 @@ import { TimeSeriesData } from "@/dashboard/core/entity/timeSeries";
 
 export interface IDashboardRepository {
     timeSeries({siteId,parameter}: GetTimeSeriesDataRequest): Promise<TimeSeriesData[]>;
-    getSiteCountByUser(userId: string): Promise<GetSiteCountByUserResponse[]>
-    getTotalSitesByUser(userId: string): Promise<number>
-    nutrientPercentageBySite(siteId:string): Promise<NutrientAvgBySiteResponse>
+    getSiteCountByUser(userId: string): Promise<GetSiteCountByUserResponse[]>;
+    getTotalSitesByUser(userId: string): Promise<number>;
+    nutrientPercentageBySite(siteId: string): Promise<NutrientAvgBySiteResponse>;
+    getDataPerSite(siteId: string): Promise<ISiteDataResponse>;
+    getParameterAvg({ siteId, parameter }: GetTimeSeriesDataRequest): Promise<IParameterAvg>;
 }
 
 
@@ -27,4 +29,25 @@ export interface NutrientAvgBySiteResponse {
         nitrates: number;
         phosphates: number;
     }
+}
+
+export interface ISiteDataResponse {
+    siteName: string;
+    averages: IParameters;
+}
+
+interface IParameters {
+    pH: number;
+    temperature: number;
+    dissolvedOxygen: number;
+    totalCOD: number;
+    suspendedSolids: number;
+    fecalColiform: number;
+    ammonia: number;
+    nitrates: number;
+    phosphates: number;
+}
+
+export interface IParameterAvg {
+    [parameter: string]: number;
 }

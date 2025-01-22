@@ -51,5 +51,43 @@ export class DashboardService {
         const nutrientAvg = await this.dashboardRepository.nutrientPercentageBySite(siteId);
 
         return nutrientAvg;
+    };
+
+    async getDataPerSite(siteId:string) { 
+        if (!siteId) {
+            throw new NotFoundError("Site ID was not found");
+        }
+
+        const siteData = await this.dashboardRepository.getDataPerSite(siteId);
+
+        if (!siteData) {
+            throw new ValidationError("Error calculating the parameter averages of the site");
+        }
+
+        return siteData;
+    };
+
+    async getParameterStatus({siteId, parameter}: GetTimeSeriesDataRequest) {
+        if (!parameter) {
+            throw new NotFoundError("Parameter is not found");
+        }
+
+        const paramAvg = await this.dashboardRepository.getParameterAvg({ siteId, parameter });
+
+        const parameterRecord: Record<string, string> = {
+            suspendedSolids: "Total Suspended Solids",
+            totalCOD: "Total COD",
+            fecalColiform: "Fecal Coliform"
+        };
+
+        const parameterName = parameterRecord[parameter] || parameter;
+
+        const thresholdValue = await this.dashboardRepository.getThresholdValue(parameterName);
+
+        
+
+
+        return thresholdValue;
+
     }
 };
