@@ -51,5 +51,19 @@ export class DashboardService {
         const nutrientAvg = await this.dashboardRepository.nutrientPercentageBySite(siteId);
 
         return nutrientAvg;
-    }
+    };
+
+    async getDataPerSite(siteId:string) { 
+        if (!siteId) {
+            throw new NotFoundError("Site ID was not found");
+        }
+
+        const siteData = await this.dashboardRepository.getDataPerSite(siteId);
+
+        if (!siteData) {
+            throw new ValidationError("Error calculating the parameter averages of the site");
+        }
+
+        return siteData;
+    };
 };

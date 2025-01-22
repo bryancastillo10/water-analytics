@@ -5,7 +5,8 @@ import {
     IDashboardRepository,
     GetTimeSeriesDataRequest,
     GetSiteCountByUserResponse,
-    NutrientAvgBySiteResponse
+    NutrientAvgBySiteResponse,
+    ISiteDataResponse
 } from "@/dashboard/core/interface/IDashboardRepository";
 import { TimeSeriesData } from "@/dashboard/core/entity/timeSeries";
 import { DatabaseError, NotFoundError } from "@/infrastructure/errors/customErrors";
@@ -114,7 +115,59 @@ export class DashboardRepository implements IDashboardRepository {
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
                 console.error(error.message);
-                throw new DatabaseError("Database error at the timeSeries method");
+                throw new DatabaseError("Database error at the nutrientPercentageBySite method");
+            } 
+            throw Error;
+        }
+    }
+
+    async getDataPerSite(siteId: string): Promise<ISiteDataResponse> {
+        try {
+            const site = await this.prisma.site.findUnique({
+                where: { id: siteId },
+                select: { siteName: true }
+            });
+
+            if (!site) {
+                throw new NotFoundError("Site name was not found");
+            }
+
+            const averages = await this.prisma.measurement.aggregate({
+                where: { siteId },
+                _avg: {
+                    pH: true,
+                    temperature: true,
+                    dissolvedOxygen: true,
+                    totalCOD: true,
+                    suspendedSolids: true,
+                    fecalColiform: true,
+                    ammonia: true,
+                    nitrates: true,
+                    phosphates: true
+                }
+            });
+            
+            const siteData = {
+                siteName: site.siteName,
+                averages: {
+                    pH: averages._avg.pH || 0,
+                    temperature: averages._avg.temperature || 0,
+                    dissolvedOxygen: averages._avg.dissolvedOxygen || 0,
+                    totalCOD: averages._avg.totalCOD || 0,
+                    suspendedSolids: averages._avg.suspendedSolids || 0,
+                    fecalColiform: averages._avg.fecalColiform || 0,
+                    ammonia: averages._avg.ammonia || 0,
+                    nitrates: averages._avg.nitrates || 0,
+                    phosphates: averages._avg.phosphates || 0
+                }
+            };
+            
+            return siteData;
+        }
+        catch (error) {
+            if (error instanceof PrismaClientKnownRequestError) {
+                console.error(error.message);
+                throw new DatabaseError("Database error at the getDataPerSite method");
             } 
             throw Error;
         }

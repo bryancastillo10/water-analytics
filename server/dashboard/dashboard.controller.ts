@@ -7,7 +7,8 @@ export class DashboardController {
         this.timeSeries = this.timeSeries.bind(this);
         this.sitePercentage = this.sitePercentage.bind(this);
         this.nutrientPercentages = this.nutrientPercentages.bind(this);
-    }
+        this.getDataPerSite = this.getDataPerSite.bind(this);
+    };
 
     async timeSeries(req: Request, res: Response, next: NextFunction) {
         try {
@@ -47,5 +48,18 @@ export class DashboardController {
         catch (error) {
             next(error);
         }
-    }
+    };
+
+    async getDataPerSite(req: Request, res: Response, next: NextFunction) {
+        try {
+            const siteId = req.params.siteId;
+
+            const siteData = await this.dashboardService.getDataPerSite(siteId);
+
+            res.status(200).json(siteData);
+        }  
+        catch (error) {
+            next(error);
+        }
+    };
 }
