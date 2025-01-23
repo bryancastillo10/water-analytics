@@ -4,10 +4,11 @@ import useDrawer from "@/hooks/useDrawer";
 
 import WaterQualityTable from "@/features/waterquality/components/WaterQualityTable";
 import useGetMeasurementData from "@/features/waterquality/hooks/useGetMeasurementData";
+import { MainPageLoadingState } from "@/components/layout";
 
 const DataTablePage = () => {
   const { handleOpenDrawer } = useDrawer();
-  const { dataSummary } = useGetMeasurementData();
+  const { dataSummary, isLoading } = useGetMeasurementData();
 
   const addMeasurementDrawer = (siteName:string, siteId:string) => {
     handleOpenDrawer("Add Water Quality Data to " + siteName , "AddMeasurementData", { siteId });
@@ -15,7 +16,7 @@ const DataTablePage = () => {
 
   return (
     <main className="flex flex-col w-full">
-      {dataSummary.map(([siteName, {location, siteId, data}]) => (
+      {!isLoading ? dataSummary.map(([siteName, {location, siteId, data}]) => (
         <div key={siteName} className="mb-8">
           <div className="flex justify-between items-center gap-x-4">
             <div className="flex flex-col">
@@ -35,7 +36,10 @@ const DataTablePage = () => {
             <WaterQualityTable data={data} />
           </div>
         </div>
-      ))}
+      )) :
+        <div className="flex justify-center items-center w-full h-[80vh]">
+          <MainPageLoadingState />
+        </div>}
     </main>
   )
 }

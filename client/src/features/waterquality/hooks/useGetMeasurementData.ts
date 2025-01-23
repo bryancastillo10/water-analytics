@@ -14,7 +14,7 @@ type PreProcessedWQData = Record<
 
 const useGetMeasurementData = () => {
     const { data: siteData } = useGetSiteByUserQuery();
-    const { data: measurementData } = useGetAllMeasurementsQuery();
+    const { data: measurementData, isLoading } = useGetAllMeasurementsQuery();
 
     // Query of Measurement Data Per Site
     const measurementDataWithSiteInfo = measurementData?.map((measure) => {
@@ -47,7 +47,8 @@ const useGetMeasurementData = () => {
     
 
     return {
-        dataSummary
+      dataSummary,
+      isLoading
     }
 }
 
