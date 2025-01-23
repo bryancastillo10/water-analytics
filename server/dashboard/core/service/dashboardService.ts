@@ -82,12 +82,40 @@ export class DashboardService {
 
         const parameterName = parameterRecord[parameter] || parameter;
 
-        const thresholdValue = await this.dashboardRepository.getThresholdValue(parameterName);
+        const thresholdData = await this.dashboardRepository.getThresholdValue(parameterName);
 
+        if (!thresholdData) {
+            throw new NotFoundError("Threshold for that parameter is not found");
+        }
+  
+        let status: string;
+        const averageValue = paramAvg[parameter];
+        const thresholdValue = thresholdData.value || 0;
         
+        if (parameter === "pH") {
+            switch (true) {
+                case averageValue < 6.6:
+                    status = "Acidic";
+                    break;
+                case averageValue > 7.5:
+                    status =  "Alkaline";
+                default:
+                    status = "Neutral";
+                    break;
+            };
+        } else {
+            status = averageValue > thresholdValue ? "Above Threshold" : "Pass";
+        }
 
+        const kpiData = {
+            siteName: paramAvg.siteName,
+            parameter: parameterName,
+            averageValue,
+            thresholdValue,
+            status: status
+        };
 
-        return thresholdValue;
+        return kpiData;
 
     }
 };
