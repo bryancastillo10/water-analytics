@@ -8,7 +8,7 @@ import useSiteQuery from "@/features/dashboard/hooks/useSiteQuery";
 
 
 const DashboardPage = () => {
-  const { selectedSite, siteNames, getSiteIdByName } = useSiteQuery();
+  const { selectedSiteName, siteOptions, getSiteIdByName } = useSiteQuery();
 
   return (
     <main className="">
@@ -22,8 +22,8 @@ const DashboardPage = () => {
                 label="Monitoring Site"
                 icon={MapPin}
                 placeholder="Search for the site"
-                value={selectedSite}
-                options={siteNames}
+                value={selectedSiteName}
+                options={siteOptions}
                 onChangeValue={getSiteIdByName}
               />
           </div>

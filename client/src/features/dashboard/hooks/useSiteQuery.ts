@@ -1,43 +1,47 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useGetSiteByUserQuery } from "@/features/sites/api/sitesApi";
 import type { ISiteData } from "@/features/sites/api/interface";
 
+import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
+import { setSiteData, setSiteOptions } from "@/lib/redux/states/dashboardFilterSlice";
 
 const useSiteQuery = () => {
-    const [selectedSite, setSelectedSite] = useState<string | null>(null);
-    const [selectedSiteId, setSelectedSiteId] = useState<string | null>(null);
-    
-    const { data : siteData, isLoading } = useGetSiteByUserQuery();
+    const dispatch = useAppDispatch();
+    const { selectedSiteId, selectedSiteName, siteOptions } = useAppSelector((state) => state.dashboard);
 
-    const siteNames = siteData?.map((site: ISiteData) => site.siteName) || [];
+    const { data: siteData, isLoading } = useGetSiteByUserQuery();
 
     useEffect(() => {
-        if (siteData?.length && !selectedSite) {
-            setSelectedSite(siteData[0]!.siteName);
-            setSelectedSiteId(siteData[0]!.id);
+        if (siteData?.length) {
+            dispatch(setSiteOptions(siteData.map((site: ISiteData) => site.siteName)));
+
+            if (!selectedSiteId || !selectedSiteName) {
+                dispatch(setSiteData({ 
+                    id: siteData[0]?.id!, 
+                    siteName: siteData[0]?.siteName! 
+                }));
+            }
         }
+    }, [siteData, selectedSiteId, selectedSiteName, dispatch]);
 
-    }, [siteData]);
-
-    const getSiteIdByName = (selectedSiteName: string) => {
-        const selectedSiteObj = siteData?.find((site: ISiteData) => site.siteName === selectedSiteName);
-
+    const getSiteIdByName = (siteName: string) => {
+        const selectedSiteObj = siteData?.find((site: ISiteData) => site.siteName === siteName);
+        
         if (selectedSiteObj) {
-            setSelectedSite(selectedSiteObj.siteName);
-            setSelectedSiteId(selectedSiteObj.id);
+            dispatch(setSiteData({ id: selectedSiteObj.id, siteName: selectedSiteObj.siteName }));
         } else {
-            setSelectedSite(null);
-            setSelectedSiteId(null);
+            dispatch(setSiteData({ id: "", siteName: "" }));  
         }
     };
+    
 
     return {
-        siteNames,
-        selectedSite,
+        siteOptions,
+        selectedSiteName,
         selectedSiteId,
         getSiteIdByName,
-        isLoading
-    }
-}
+        isLoading,
+    };
+};
 
 export default useSiteQuery;
