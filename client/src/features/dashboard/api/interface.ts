@@ -7,6 +7,8 @@ export interface ITimeSeries {
 export interface ITimeSeriesRequest {
     id: string;
     parameter: string;
+    startDate?: string;
+    endDate?: string;
 }
 
 export interface ISitePercentage {

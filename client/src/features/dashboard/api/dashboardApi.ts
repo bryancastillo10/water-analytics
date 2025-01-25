@@ -10,9 +10,13 @@ export const dashboardApi = createApi({
     }),
     endpoints: (build) => ({
         getTimeSeries: build.query<ITimeSeries, ITimeSeriesRequest>({
-            query: ({ id, parameter }) => ({
+            query: ({ id, parameter, startDate, endDate }) => ({
                 url: `/line/site/${id}`,
-                body: parameter
+                params: {
+                    parameter,
+                    startDate,
+                    endDate
+                }
             })
         }),
         getSitePercentage: build.query<ISitePercentage, void>({

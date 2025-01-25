@@ -1,4 +1,14 @@
+import { useGetTimeSeriesQuery } from "../api/dashboardApi";
+import { useAppSelector } from "@/lib/redux/hooks";
+
 const TimeSeriesLineChart = () => {
+  const siteId = useAppSelector((state) => state.dashboard?.selectedSiteId);
+  const { data } = useGetTimeSeriesQuery({
+    id: siteId!,
+    parameter: "pH"
+  });
+
+  console.log(data);
   return (
     <div className="col-span-1 xl:col-span-2 h-[350px] bg-teal-500">
         <div className="flex flex-col odd:justify-center items-center h-full">
