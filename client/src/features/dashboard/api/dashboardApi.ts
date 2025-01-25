@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { ITimeSeries, ITimeSeriesRequest } from "./interface";
+import type { ISitePercentage, ITimeSeries, ITimeSeriesRequest } from "./interface";
 
 
 export const dashboardApi = createApi({
@@ -14,7 +14,12 @@ export const dashboardApi = createApi({
                 url: `/line/site/${id}`,
                 body: parameter
             })
-        })
+        }),
+        getSitePercentage: build.query<ISitePercentage, void>({
+            query: () => ({
+                url: "/pie"
+            })
+        }) 
     })
 });
 

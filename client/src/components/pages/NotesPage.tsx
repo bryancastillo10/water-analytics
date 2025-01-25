@@ -15,7 +15,11 @@ const NotesPage = () => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);
   const { data: notes, isLoading, error } = useGetNotesQuery();
 
-  if (error || !notes) {
+  if (!notes) {
+    return <MainPageLoadingState/>
+  };
+
+  if (error) {
     return <MainPageFetchError />;
   };
  
