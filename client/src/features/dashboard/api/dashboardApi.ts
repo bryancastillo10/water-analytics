@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { ITimeSeries, ITimeSeriesRequest } from "./interface";
+import type { ISitePercentage, ITimeSeries, ITimeSeriesRequest } from "./interface";
 
 
 export const dashboardApi = createApi({
@@ -10,11 +10,20 @@ export const dashboardApi = createApi({
     }),
     endpoints: (build) => ({
         getTimeSeries: build.query<ITimeSeries, ITimeSeriesRequest>({
-            query: ({ id, parameter }) => ({
+            query: ({ id, parameter, startDate, endDate }) => ({
                 url: `/line/site/${id}`,
-                body: parameter
+                params: {
+                    parameter,
+                    startDate,
+                    endDate
+                }
             })
-        })
+        }),
+        getSitePercentage: build.query<ISitePercentage, void>({
+            query: () => ({
+                url: "/pie"
+            })
+        }) 
     })
 });
 

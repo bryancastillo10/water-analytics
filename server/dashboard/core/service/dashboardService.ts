@@ -5,7 +5,7 @@ import { NotFoundError, ValidationError } from "@/infrastructure/errors/customEr
 export class DashboardService {
     constructor(private readonly dashboardRepository: DashboardRepository) { }
 
-    async timeSeries({ siteId, parameter}: GetTimeSeriesDataRequest) { 
+    async timeSeries({ siteId, parameter, startDate, endDate}: GetTimeSeriesDataRequest) { 
         if (!parameter) {
             throw new NotFoundError("Parameter is not found");
         }
@@ -18,7 +18,7 @@ export class DashboardService {
         if (!validParameters.includes(parameter)) {
             throw new ValidationError("Invalid parameter was requested");
         }
-        const timeSeriesData = await this.dashboardRepository.timeSeries({ siteId, parameter });
+        const timeSeriesData = await this.dashboardRepository.timeSeries({ siteId, parameter, startDate, endDate });
 
         return timeSeriesData;
     };

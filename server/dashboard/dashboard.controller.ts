@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { CustomRequest } from "@/infrastructure/middleware/type";
 import { DashboardService } from "@/dashboard/core/service/dashboardService";
+import { ValidationError } from "@/infrastructure/errors/customErrors";
 
 export class DashboardController {
     constructor(private readonly dashboardService: DashboardService) {
@@ -14,9 +15,18 @@ export class DashboardController {
     async timeSeries(req: Request, res: Response, next: NextFunction) {
         try {
             const siteId = req.params.siteId;
-            const { parameter } = req.body;
+            const { startDate, endDate, parameter } = req.query;
 
-            const timeSeriesData = await this.dashboardService.timeSeries({ siteId, parameter });
+            if (!parameter) {
+                throw new ValidationError("Parameter is required");
+            }
+
+            const timeSeriesData = await this.dashboardService.timeSeries({
+                siteId,
+                parameter: parameter as string,
+                startDate: startDate as string || undefined,
+                endDate: endDate as string || undefined
+            });
 
             res.status(200).json(timeSeriesData);
         }

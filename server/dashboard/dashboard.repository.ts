@@ -14,10 +14,18 @@ import { DatabaseError, NotFoundError } from "@/infrastructure/errors/customErro
 
 export class DashboardRepository implements IDashboardRepository {
     private prisma = new PrismaClient();
-    async timeSeries({ siteId, parameter }: GetTimeSeriesDataRequest): Promise<TimeSeriesData[]> {
+    async timeSeries({ siteId, parameter, startDate, endDate }: GetTimeSeriesDataRequest): Promise<TimeSeriesData[]> {
         try {
+            const whereCondition: any = { siteId };
+
+            if (startDate && endDate) {
+                whereCondition.date = {
+                    gte: new Date(startDate),
+                    lte: new Date(endDate)
+                };
+            }
             const rawTimeSeries = await this.prisma.measurement.findMany({
-                where: { siteId },
+                where:  whereCondition,
                 select: {
                     date: true,
                     [parameter]: true

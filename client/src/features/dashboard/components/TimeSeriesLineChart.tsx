@@ -1,11 +1,26 @@
+import { useGetTimeSeriesQuery } from "../api/dashboardApi";
+import { useAppSelector } from "@/lib/redux/hooks";
+
+import { CustomSelect } from "@/components/ui";
+
 const TimeSeriesLineChart = () => {
+  const siteId = useAppSelector((state) => state.dashboard?.selectedSiteId);
+  const { data } = useGetTimeSeriesQuery({
+    id: siteId!,
+    parameter: "pH"
+  });
+
+  console.log(data);
   return (
-    <div className="col-span-1 xl:col-span-2 h-[350px] bg-teal-500">
-        <div className="flex flex-col odd:justify-center items-center h-full">
-          <h1 className="text-2xl">Time Series Area Chart</h1>
-          <p className="text-center">
-            pH, Temperature, DO, COD, Suspended Solids over Time
-          </p>
+    <div className="col-span-1 xl:col-span-2 bg-teal-500">
+        <div className="flex flex-col items-center h-full">
+        <CustomSelect
+          label="Parameter"
+          placeholder="Select a water quality parameter"
+          value="pH"
+          options={["pH", "dissolvedOxygen", "totalCOD"]}
+          onChangeValue={()=>{}}
+        />
         </div>
     </div>
   )
