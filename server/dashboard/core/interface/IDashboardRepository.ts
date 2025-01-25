@@ -13,6 +13,8 @@ export interface IDashboardRepository {
 export interface GetTimeSeriesDataRequest {
     siteId: string;
     parameter: string;
+    startDate?: string;
+    endDate?: string;
 }
 
 export interface GetSiteCountByUserResponse {
