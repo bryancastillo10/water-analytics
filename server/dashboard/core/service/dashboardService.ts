@@ -1,11 +1,22 @@
 import { DashboardRepository } from "@/dashboard/dashboard.repository";
 import { GetTimeSeriesDataRequest } from "@/dashboard/core/interface/IDashboardRepository";
 import { NotFoundError, ValidationError } from "@/infrastructure/errors/customErrors";
+import { parameterRecord } from "@/dashboard/utils/parameterRecord";
 
 export class DashboardService {
     constructor(private readonly dashboardRepository: DashboardRepository) { }
 
-    async timeSeries({ siteId, parameter, startDate, endDate}: GetTimeSeriesDataRequest) { 
+    async getParameterFilters(userId: string) {
+        if (!userId) {
+            throw new NotFoundError("User ID");
+        }
+
+        const parameterList = await this.dashboardRepository.getParameterFilters(userId);
+
+        return parameterList;
+    };
+    
+    async timeSeries({ siteId, parameter, startDate, endDate }: GetTimeSeriesDataRequest) { 
         if (!parameter) {
             throw new NotFoundError("Parameter is not found");
         }
@@ -73,12 +84,6 @@ export class DashboardService {
         }
 
         const paramAvg = await this.dashboardRepository.getParameterAvg({ siteId, parameter });
-
-        const parameterRecord: Record<string, string> = {
-            suspendedSolids: "Total Suspended Solids",
-            totalCOD: "Total COD",
-            fecalColiform: "Fecal Coliform"
-        };
 
         const parameterName = parameterRecord[parameter] || parameter;
 
