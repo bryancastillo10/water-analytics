@@ -11,9 +11,35 @@ import {
 } from "@/dashboard/core/interface/IDashboardRepository";
 import { TimeSeriesData } from "@/dashboard/core/entity/timeSeries";
 import { DatabaseError, NotFoundError } from "@/infrastructure/errors/customErrors";
+import { parameterRecord } from "@/dashboard/utils/parameterRecord";
 
 export class DashboardRepository implements IDashboardRepository {
     private prisma = new PrismaClient();
+
+    async getParameterFilters(userId:string): Promise<string[]> {
+        try {
+            const parameters = await this.prisma.threshold.findMany({
+                where: {userId},
+                select: {
+                    parameter: true
+                }
+            });
+
+            const paramtersList = parameters.map((param) => 
+                parameterRecord[param.parameter] || param.parameter
+            );
+
+            return paramtersList;
+        }
+        catch (error) {
+            if (error instanceof PrismaClientKnownRequestError) {
+                console.error(error.message);
+                throw new DatabaseError("Database error at the getParameterFilters method");
+            } 
+            throw Error;
+        }
+    }
+
     async timeSeries({ siteId, parameter, startDate, endDate }: GetTimeSeriesDataRequest): Promise<TimeSeriesData[]> {
         try {
             const whereCondition: any = { siteId };
@@ -24,6 +50,8 @@ export class DashboardRepository implements IDashboardRepository {
                     lte: new Date(endDate)
                 };
             }
+            whereCondition[parameter] = { not: null };
+            
             const rawTimeSeries = await this.prisma.measurement.findMany({
                 where:  whereCondition,
                 select: {
@@ -63,7 +91,7 @@ export class DashboardRepository implements IDashboardRepository {
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
                 console.error(error.message);
-                throw new DatabaseError("Database error at the timeSeries method");
+                throw new DatabaseError("Database error at the getSiteByCountUser method");
             } 
             throw Error;
         }
@@ -80,7 +108,7 @@ export class DashboardRepository implements IDashboardRepository {
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
                 console.error(error.message);
-                throw new DatabaseError("Database error at the timeSeries method");
+                throw new DatabaseError("Database error at the getTotalSitesByUser method");
             } 
             throw Error;
         }
