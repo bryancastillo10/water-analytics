@@ -24,6 +24,8 @@ export class DashboardRepository implements IDashboardRepository {
                     lte: new Date(endDate)
                 };
             }
+            whereCondition[parameter] = { not: null };
+            
             const rawTimeSeries = await this.prisma.measurement.findMany({
                 where:  whereCondition,
                 select: {
