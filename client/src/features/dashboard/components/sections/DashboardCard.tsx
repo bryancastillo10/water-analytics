@@ -1,5 +1,5 @@
 import type { statisticsCardProps } from "@/features/dashboard/api/mockData";
-import { getTrendInfo } from "../utils/tresholdIndicator";
+import { getTrendInfo } from "@/features/dashboard/utils/tresholdIndicator";
 
 const DashboardCard = ({
   parameter,

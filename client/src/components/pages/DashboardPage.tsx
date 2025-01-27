@@ -1,10 +1,16 @@
-import DashboardCard from "@/features/dashboard/components/DashboardCard";
 import { statisticsCard } from "@/features/dashboard/api/mockData";
-import { NutrientsBarChart, PieChart, RadarChart, TimeSeriesLineChart } from "@/features/dashboard";
+
 
 import { CustomSelect } from "@/components/ui";
 import { MapPin, Funnel } from "@phosphor-icons/react";
 import useSiteQuery from "@/features/dashboard/hooks/useSiteQuery";
+import {
+  TimeSeriesBlock,
+  BarChartBlock,
+  PieChartBlock,
+  RadarChartBlock,
+  DashboardCard
+} from "@/features/dashboard/components/sections";
 
 
 const DashboardPage = () => {
@@ -42,10 +48,10 @@ const DashboardPage = () => {
       </div>
       </div>
       <div className="grid grid-cols-1 gap-4 mt-8 sm:grid-cols-2 xl:grid-cols-3">
-        <TimeSeriesLineChart />
-        <PieChart />
-        <RadarChart />
-        <NutrientsBarChart/>
+        <TimeSeriesBlock/>
+        <PieChartBlock />
+        <RadarChartBlock />
+        <BarChartBlock />
       </div>
     </main>
   );
