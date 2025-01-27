@@ -14,7 +14,7 @@ export const dashboardApi = createApi({
                url:"/filter/parameter"
            })
         }),
-        getDateFilters: build.query<string[], {siteId: string} > ({
+        getDateFilters: build.query<string[],string> ({
             query: (siteId) => ({   
                 url: `filter/date/${siteId}`
             })
@@ -39,6 +39,7 @@ export const dashboardApi = createApi({
 
 export const {
     useGetParameterFiltersQuery,
+    useGetDateFiltersQuery,
     useGetTimeSeriesQuery,
     useGetSitePercentageQuery
 } = dashboardApi;
