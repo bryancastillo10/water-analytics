@@ -6,6 +6,7 @@ import { ValidationError } from "@/infrastructure/errors/customErrors";
 export class DashboardController {
     constructor(private readonly dashboardService: DashboardService) {
         this.getParameterFilters = this.getParameterFilters.bind(this);
+        this.getDateFilters = this.getDateFilters.bind(this); 
         this.timeSeries = this.timeSeries.bind(this);
         this.sitePercentage = this.sitePercentage.bind(this);
         this.nutrientPercentages = this.nutrientPercentages.bind(this);
@@ -16,12 +17,27 @@ export class DashboardController {
     async getParameterFilters(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const userId = req?.user?.id!;
-            const parameterList = await this.dashboardService.getParameterFilters(userId);
+
+            const parameterList = await this.dashboardService.parameterFilters(userId);
 
             res.status(200).json(parameterList);
         }
         catch (error) {
             next(error);
+        }
+    };
+
+    async getDateFilters(req: CustomRequest, res: Response, next:NextFunction) {
+        try {
+            const userId = req?.user?.id!;
+            const siteId = req.params.siteId;
+            
+            const dateFilters = await this.dashboardService.dateFilters(userId, siteId);
+
+            res.status(200).json(dateFilters);
+        }
+        catch (error) {
+            next(error)
         }
     };
 
