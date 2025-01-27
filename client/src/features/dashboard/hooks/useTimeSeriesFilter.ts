@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
     useGetParameterFiltersQuery,
     useGetDateFiltersQuery,
@@ -8,6 +8,7 @@ import {
  
 import { useAppSelector } from "@/lib/redux/hooks";
 import { formatDate } from "@/features/waterquality/lib/formatDate";
+import { parameterRecord } from "@/features/dashboard/utils/parameterMapping";
 
 export interface IDateRange {
     startDate?: string;
@@ -19,16 +20,23 @@ const useTimeSeriesFilter = () => {
     const [selectedDateRange, setSelectedDateRange] = useState<IDateRange>({ startDate: undefined, endDate: undefined } as unknown as IDateRange);
 
     const siteId = useAppSelector((state) => state.dashboard?.selectedSiteId!);
-    
+    const mappedParameter = parameterRecord[selectedParameter] || selectedParameter;
+
     const { data: parameterList, isLoading: parameterListLoading } = useGetParameterFiltersQuery();
     const { data: dateList, isLoading: dateListLoading } = useGetDateFiltersQuery(siteId);
 
-    const { data: rawTimeSeries, isLoading: timeSeriesLoading } = useGetTimeSeriesQuery({
+    const { data: rawTimeSeries, isLoading: timeSeriesLoading, refetch } = useGetTimeSeriesQuery({
         id: siteId,
-        parameter: selectedParameter,
+        parameter: mappedParameter,
         startDate: selectedDateRange.startDate!,
         endDate: selectedDateRange.endDate!
     });
+
+    useEffect(() => {
+        if (selectedDateRange.startDate && selectedDateRange.endDate) {
+          refetch();
+        }
+      }, [selectedDateRange.startDate, selectedDateRange.endDate, refetch]);
 
     const parameterOptions = parameterList || ["pH"];
     const dateOptions = dateList?.map(date => formatDate(date.toString())) || ["2020-01-01"];

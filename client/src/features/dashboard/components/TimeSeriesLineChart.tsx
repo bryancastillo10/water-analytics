@@ -18,7 +18,10 @@ const TimeSeriesLineChart = () => {
   } = useTimeSeriesFilter();
 
   if (timeSeriesLoading) {
-    return <div className="flex justify-items-center items-center w-full h-[30vh]"><DrawerLoadingState/></div>
+    return (
+      <div className="flex justify-items-center items-center col-span-1 xl:col-span-2 w-full h-[350px]">
+        <DrawerLoadingState />
+      </div>)
   }
 
   return (
@@ -33,7 +36,7 @@ const TimeSeriesLineChart = () => {
             handleSelectedParameter={handleSelectedParameter}
             handleSelectedDate={handleSelectedDate}
         />
-       <ResponsiveContainer width="100%" height="90%">
+       <ResponsiveContainer className="pt-4" width="100%" height="90%">
         <AreaChart
           data={processedTimeSeriesData}
           margin={{
@@ -59,16 +62,17 @@ const TimeSeriesLineChart = () => {
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: 'white',
-              border: '1px solid #ccc',
+              backgroundColor: '#F4F3F2',
+              border: '1px solid #c2c2c2',
+              color:"#040710",
               borderRadius: '4px',
             }}
           />
           <Area
             type="monotone"
             dataKey="value"
-            stroke="#8884d8"
-            fill="#8884d8"
+            stroke="#13b6f6"
+            fill="#006da3"
             fillOpacity={0.3}
             dot={{ r: 2 }}
             name={selectedParameter}
