@@ -1,22 +1,27 @@
 import { Funnel, Drop, CalendarDot, CalendarDots } from "@phosphor-icons/react";
 import { CustomSelect } from "@/components/ui";
+import type { IDateRange } from "@/features/dashboard/hooks/useTimeSeriesFilter";
 
 interface TimeSeriesFilterProps{
     selectedParameter: string;
+    selectedDateRange: IDateRange;
     parameterOptions: string[];
     dateOptions: string[];
     parameterListLoading: boolean;
     dateListLoading: boolean;
     handleSelectedParameter: (parameter: string) => void;
+    handleSelectedDate: (key: keyof IDateRange, value?:string) => void;
 }
 
 const TimeSeriesFilter = ({
     selectedParameter,
+    selectedDateRange,
     parameterOptions,
     dateOptions,
     parameterListLoading,
     dateListLoading,
-    handleSelectedParameter
+    handleSelectedParameter,
+    handleSelectedDate
 }: TimeSeriesFilterProps) => {
   return (
         <section className="flex flex-col xl:flex-row gap-4">
@@ -38,9 +43,9 @@ const TimeSeriesFilter = ({
                     label={dateListLoading ? "Loading...":"Dates"}
                     icon={CalendarDot}
                     placeholder="Select a water quality parameter"
-                    value="2023-1-10"
+                    value={selectedDateRange.startDate ?? dateOptions.at(-1) ?? null}
                     options={dateOptions}
-                    onChangeValue={()=>{}}
+                    onChangeValue={(value) => handleSelectedDate('startDate', value)}
                 />
             </div>
             <div className="flex items-center  gap-2">
@@ -49,9 +54,9 @@ const TimeSeriesFilter = ({
                     label={dateListLoading ? "Loading...":"Dates"}
                     icon={CalendarDots}
                     placeholder="Select a water quality parameter"
-                    value="2023-10-31"
+                    value={selectedDateRange.endDate ?? dateOptions[0] ?? null}
                     options={dateOptions}
-                    onChangeValue={()=>{}}
+                    onChangeValue={(value) => handleSelectedDate('endDate',value)}
             />
             </div>
     </section>
