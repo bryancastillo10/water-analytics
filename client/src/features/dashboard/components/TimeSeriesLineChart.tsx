@@ -1,49 +1,80 @@
-import { useGetTimeSeriesQuery } from "../api/dashboardApi";
-import { useAppSelector } from "@/lib/redux/hooks";
-
-import { CustomSelect } from "@/components/ui";
-import { Funnel, Drop, CalendarDot, CalendarDots } from "@phosphor-icons/react";
+import { ResponsiveContainer, AreaChart, CartesianGrid, XAxis, YAxis, Area, Tooltip } from "recharts";
+import useTimeSeriesFilter from "@/features/dashboard/hooks/useTimeSeriesFilter";
+import TimeSeriesFilter from "@/features/dashboard/components/TimeSeriesFilter";
+import { DrawerLoadingState } from "@/components/layout";
 
 const TimeSeriesLineChart = () => {
-  const siteId = useAppSelector((state) => state.dashboard?.selectedSiteId);
-  const { data } = useGetTimeSeriesQuery({
-    id: siteId!,
-    parameter: "pH"
-  });
+  const {
+    selectedParameter,
+    selectedDateRange,
+    parameterOptions,
+    dateOptions,
+    processedTimeSeriesData,
+    parameterListLoading,
+    dateListLoading,
+    timeSeriesLoading,
+    handleSelectedParameter,
+    handleSelectedDate
+  } = useTimeSeriesFilter();
 
-  console.log(data);
+  if (timeSeriesLoading) {
+    return <div className="flex justify-items-center items-center w-full h-[30vh]"><DrawerLoadingState/></div>
+  }
+
   return (
-    <div className="col-span-1 xl:col-span-2">
-      <div className="flex mx-4 gap-4 items-center">
-          <Funnel weight="fill" size="20"/> 
-          <CustomSelect
-            label="Parameter"
-            icon={Drop}
-            placeholder="Select a water quality parameter"
-            value="pH"
-            options={["pH", "dissolvedOxygen", "totalCOD"]}
-            onChangeValue={()=>{}}
+    <div className="col-span-1 xl:col-span-2 w-full">
+        <TimeSeriesFilter
+            selectedParameter={selectedParameter}
+            selectedDateRange={selectedDateRange}
+            parameterOptions={parameterOptions || []}
+            dateOptions={dateOptions || []}
+            parameterListLoading={parameterListLoading}
+            dateListLoading={dateListLoading}
+            handleSelectedParameter={handleSelectedParameter}
+            handleSelectedDate={handleSelectedDate}
+        />
+       <ResponsiveContainer width="100%" height="90%">
+        <AreaChart
+          data={processedTimeSeriesData}
+          margin={{
+            top: 10,
+            right: 30,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis 
+            dataKey="date"
+            tick={{ fontSize: 12 }}
           />
-          <p className="text-xs">from</p>
-          <CustomSelect
-            label="Parameter"
-            icon={CalendarDot}
-            placeholder="Select a water quality parameter"
-            value="2023-1-10"
-            options={["2023-1-10", "dissolvedOxygen", "totalCOD"]}
-            onChangeValue={()=>{}}
+          <YAxis
+            tick={{ fontSize: 12 }}
+            label={{ 
+              value: selectedParameter, 
+              angle: -90, 
+              position: 'insideLeft',
+              style: { textAnchor: 'middle' }
+            }}
           />
-          <p className="text-xs">to</p>
-          <CustomSelect
-            label="Parameter"
-            icon={CalendarDots}
-            placeholder="Select a water quality parameter"
-            value="2023-10-31"
-            options={["2023-1-10", "dissolvedOxygen", "totalCOD"]}
-            onChangeValue={()=>{}}
+          <Tooltip
+            contentStyle={{
+              backgroundColor: 'white',
+              border: '1px solid #ccc',
+              borderRadius: '4px',
+            }}
           />
-        </div>
-        <div className="w-full h-[300px] bg-teal-500"/>
+          <Area
+            type="monotone"
+            dataKey="value"
+            stroke="#8884d8"
+            fill="#8884d8"
+            fillOpacity={0.3}
+            dot={{ r: 2 }}
+            name={selectedParameter}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
     </div>
   )
 }

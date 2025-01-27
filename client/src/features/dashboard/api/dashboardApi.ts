@@ -9,7 +9,17 @@ export const dashboardApi = createApi({
         credentials: 'include'
     }),
     endpoints: (build) => ({
-        getTimeSeries: build.query<ITimeSeries, ITimeSeriesRequest>({
+        getParameterFilters: build.query<string[], void>({
+            query: () => ({
+               url:"/filter/parameter"
+           })
+        }),
+        getDateFilters: build.query<string[],string> ({
+            query: (siteId) => ({   
+                url: `filter/date/${siteId}`
+            })
+        }),
+        getTimeSeries: build.query<ITimeSeries[], ITimeSeriesRequest>({
             query: ({ id, parameter, startDate, endDate }) => ({
                 url: `/line/site/${id}`,
                 params: {
@@ -23,10 +33,13 @@ export const dashboardApi = createApi({
             query: () => ({
                 url: "/pie"
             })
-        }) 
+        })
     })
 });
 
 export const {
-    useGetTimeSeriesQuery
+    useGetParameterFiltersQuery,
+    useGetDateFiltersQuery,
+    useGetTimeSeriesQuery,
+    useGetSitePercentageQuery
 } = dashboardApi;
