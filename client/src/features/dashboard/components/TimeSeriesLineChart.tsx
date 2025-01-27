@@ -1,10 +1,14 @@
-import { useGetTimeSeriesQuery } from "../api/dashboardApi";
+import { useGetParameterFiltersQuery, useGetTimeSeriesQuery } from "../api/dashboardApi";
 import { useAppSelector } from "@/lib/redux/hooks";
 
 import { CustomSelect } from "@/components/ui";
 import { Funnel, Drop, CalendarDot, CalendarDots } from "@phosphor-icons/react";
 
 const TimeSeriesLineChart = () => {
+  const { data: parameterList } = useGetParameterFiltersQuery();
+
+  const parameterOptions = parameterList || ["pH"];
+
   const siteId = useAppSelector((state) => state.dashboard?.selectedSiteId);
   const { data } = useGetTimeSeriesQuery({
     id: siteId!,
@@ -21,7 +25,7 @@ const TimeSeriesLineChart = () => {
             icon={Drop}
             placeholder="Select a water quality parameter"
             value="pH"
-            options={["pH", "dissolvedOxygen", "totalCOD"]}
+            options={parameterOptions}
             onChangeValue={()=>{}}
           />
           <p className="text-xs">from</p>

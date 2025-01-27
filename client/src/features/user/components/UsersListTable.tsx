@@ -16,7 +16,9 @@ const UsersListTable = () => {
   } = useUserListTable();
 
   if (isLoading) {
-    return <MainPageLoadingState />;
+    return <div className="flex justify-center items-center w-full h-[70vh]">
+      <MainPageLoadingState />
+    </div>;
   }
 
   return (

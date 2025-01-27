@@ -16,7 +16,10 @@ const DataTablePage = () => {
 
   return (
     <main className="flex flex-col w-full">
-      {!isLoading ? dataSummary.map(([siteName, {location, siteId, data}]) => (
+      {isLoading ? <div className="flex justify-center items-center w-full h-[80vh]">
+          <MainPageLoadingState />
+        </div> :
+        dataSummary.map(([siteName, {location, siteId, data}]) => (
         <div key={siteName} className="mb-8">
           <div className="flex justify-between items-center gap-x-4">
             <div className="flex flex-col">
@@ -36,10 +39,7 @@ const DataTablePage = () => {
             <WaterQualityTable data={data} />
           </div>
         </div>
-      )) :
-        <div className="flex justify-center items-center w-full h-[80vh]">
-          <MainPageLoadingState />
-        </div>}
+      ))}
     </main>
   )
 }
