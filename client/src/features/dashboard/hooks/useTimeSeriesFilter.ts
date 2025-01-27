@@ -23,7 +23,7 @@ const useTimeSeriesFilter = () => {
     const { data: parameterList, isLoading: parameterListLoading } = useGetParameterFiltersQuery();
     const { data: dateList, isLoading: dateListLoading } = useGetDateFiltersQuery(siteId);
 
-    const { data: timeSeriesData, isLoading: timeSeriesLoading } = useGetTimeSeriesQuery({
+    const { data: rawTimeSeries, isLoading: timeSeriesLoading } = useGetTimeSeriesQuery({
         id: siteId,
         parameter: selectedParameter,
         startDate: selectedDateRange.startDate!,
@@ -44,12 +44,18 @@ const useTimeSeriesFilter = () => {
         }));
     };
 
+    const timeSeriesData = rawTimeSeries || [{ date: "NA", value: 0 }]; 
+    const processedTimeSeriesData = timeSeriesData.map(item => ({
+        date: new Date(item.date).toLocaleDateString(),
+        value: item.value || 0
+      }));
+
     return {
         selectedParameter,
         selectedDateRange,
         parameterOptions,
         dateOptions,
-        timeSeriesData,
+        processedTimeSeriesData,
         parameterListLoading,
         dateListLoading,
         timeSeriesLoading,

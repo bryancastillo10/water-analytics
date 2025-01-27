@@ -19,7 +19,7 @@ export const dashboardApi = createApi({
                 url: `filter/date/${siteId}`
             })
         }),
-        getTimeSeries: build.query<ITimeSeries, ITimeSeriesRequest>({
+        getTimeSeries: build.query<ITimeSeries[], ITimeSeriesRequest>({
             query: ({ id, parameter, startDate, endDate }) => ({
                 url: `/line/site/${id}`,
                 params: {

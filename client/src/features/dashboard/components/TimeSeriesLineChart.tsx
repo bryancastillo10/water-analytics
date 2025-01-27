@@ -1,5 +1,7 @@
+import { ResponsiveContainer, AreaChart, CartesianGrid, XAxis, YAxis, Area, Tooltip } from "recharts";
 import useTimeSeriesFilter from "@/features/dashboard/hooks/useTimeSeriesFilter";
-import TimeSeriesFilter from "./TimeSeriesFilter";
+import TimeSeriesFilter from "@/features/dashboard/components/TimeSeriesFilter";
+import { DrawerLoadingState } from "@/components/layout";
 
 const TimeSeriesLineChart = () => {
   const {
@@ -7,14 +9,18 @@ const TimeSeriesLineChart = () => {
     selectedDateRange,
     parameterOptions,
     dateOptions,
-    timeSeriesData,
+    processedTimeSeriesData,
     parameterListLoading,
     dateListLoading,
     timeSeriesLoading,
     handleSelectedParameter,
     handleSelectedDate
   } = useTimeSeriesFilter();
-  console.log(timeSeriesData);
+
+  if (timeSeriesLoading) {
+    return <div className="flex justify-items-center items-center w-full h-[30vh]"><DrawerLoadingState/></div>
+  }
+
   return (
     <div className="col-span-1 xl:col-span-2 w-full">
         <TimeSeriesFilter
@@ -27,7 +33,48 @@ const TimeSeriesLineChart = () => {
             handleSelectedParameter={handleSelectedParameter}
             handleSelectedDate={handleSelectedDate}
         />
-        <div className="w-full h-[300px] bg-teal-500"/>
+       <ResponsiveContainer width="100%" height="90%">
+        <AreaChart
+          data={processedTimeSeriesData}
+          margin={{
+            top: 10,
+            right: 30,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis 
+            dataKey="date"
+            tick={{ fontSize: 12 }}
+          />
+          <YAxis
+            tick={{ fontSize: 12 }}
+            label={{ 
+              value: selectedParameter, 
+              angle: -90, 
+              position: 'insideLeft',
+              style: { textAnchor: 'middle' }
+            }}
+          />
+          <Tooltip
+            contentStyle={{
+              backgroundColor: 'white',
+              border: '1px solid #ccc',
+              borderRadius: '4px',
+            }}
+          />
+          <Area
+            type="monotone"
+            dataKey="value"
+            stroke="#8884d8"
+            fill="#8884d8"
+            fillOpacity={0.3}
+            dot={{ r: 2 }}
+            name={selectedParameter}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
     </div>
   )
 }
