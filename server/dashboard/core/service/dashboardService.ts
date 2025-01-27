@@ -6,7 +6,7 @@ import { parameterRecord } from "@/dashboard/utils/parameterRecord";
 export class DashboardService {
     constructor(private readonly dashboardRepository: DashboardRepository) { }
 
-    async getParameterFilters(userId: string) {
+    async parameterFilters(userId: string) {
         if (!userId) {
             throw new NotFoundError("User ID");
         }
@@ -14,6 +14,16 @@ export class DashboardService {
         const parameterList = await this.dashboardRepository.getParameterFilters(userId);
 
         return parameterList;
+    };
+
+    async dateFilters(userId: string, siteId:string) {
+        if (!userId) {
+            throw new NotFoundError("User ID");
+        }
+
+        const dateFilters = await this.dashboardRepository.getDateFilters(siteId);
+
+        return dateFilters;
     };
     
     async timeSeries({ siteId, parameter, startDate, endDate }: GetTimeSeriesDataRequest) { 

@@ -40,6 +40,28 @@ export class DashboardRepository implements IDashboardRepository {
         }
     }
 
+    async getDateFilters( siteId:string): Promise<string[]> {
+        try {
+            const dates = await this.prisma.measurement.findMany({
+                where: { siteId },
+                select: {
+                    date: true
+                }
+            });
+
+            const formatDates = dates.map(d => d.date.toISOString());
+
+            return formatDates;
+        }
+        catch (error) {
+            if (error instanceof PrismaClientKnownRequestError) {
+                console.error(error.message);
+                throw new DatabaseError("Database error at the getDateFilters method");
+            } 
+            throw Error;
+        }
+    }
+
     async timeSeries({ siteId, parameter, startDate, endDate }: GetTimeSeriesDataRequest): Promise<TimeSeriesData[]> {
         try {
             const whereCondition: any = { siteId };

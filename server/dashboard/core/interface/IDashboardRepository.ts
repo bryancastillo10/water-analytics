@@ -1,7 +1,8 @@
 import { TimeSeriesData } from "@/dashboard/core/entity/timeSeries";
 
 export interface IDashboardRepository {
-    getParameterFilters(userId:string): Promise<string[]>;
+    getParameterFilters(userId: string): Promise<string[]>;
+    getDateFilters(siteId:string): Promise<string[]>;
     timeSeries({siteId,parameter}: GetTimeSeriesDataRequest): Promise<TimeSeriesData[]>;
     getSiteCountByUser(userId: string): Promise<GetSiteCountByUserResponse[]>;
     getTotalSitesByUser(userId: string): Promise<number>;
