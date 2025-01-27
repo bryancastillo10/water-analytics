@@ -15,7 +15,7 @@ export const dashboardApi = createApi({
            })
         }),
         getDateFilters: build.query<string[], {siteId: string} > ({
-            query: (siteId) => ({
+            query: (siteId) => ({   
                 url: `filter/date/${siteId}`
             })
         }),
