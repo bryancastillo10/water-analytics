@@ -19,14 +19,14 @@ const useTimeSeriesFilter = () => {
     const [selectedParameter, setSelectedParameter] = useState<string>("pH");
     const [selectedDateRange, setSelectedDateRange] = useState<IDateRange>({ startDate: undefined, endDate: undefined } as unknown as IDateRange);
 
-    const siteId = useAppSelector((state) => state.dashboard?.selectedSiteId!);
+    const siteId = useAppSelector((state) => state.dashboard?.selectedSiteId);
     const mappedParameter = parameterRecord[selectedParameter] || selectedParameter;
 
     const { data: parameterList, isLoading: parameterListLoading } = useGetParameterFiltersQuery();
-    const { data: dateList, isLoading: dateListLoading } = useGetDateFiltersQuery(siteId);
+    const { data: dateList, isLoading: dateListLoading } = useGetDateFiltersQuery(siteId!);
 
     const { data: rawTimeSeries, isLoading: timeSeriesLoading, refetch } = useGetTimeSeriesQuery({
-        id: siteId,
+        id: siteId!,
         parameter: mappedParameter,
         startDate: selectedDateRange.startDate!,
         endDate: selectedDateRange.endDate!
@@ -39,7 +39,7 @@ const useTimeSeriesFilter = () => {
       }, [selectedDateRange.startDate, selectedDateRange.endDate, refetch]);
 
     const parameterOptions = parameterList || ["pH"];
-    const dateOptions = dateList?.map(date => formatDate(date.toString())) || ["2020-01-01"];
+    const dateOptions = dateList?.map((date) => formatDate(date.toString())) || ["2020-01-01"];
     
     const handleSelectedParameter = (parameter: string) => {
         setSelectedParameter(parameter);

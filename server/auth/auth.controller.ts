@@ -15,7 +15,7 @@ export class AuthController{
             const signInData = req.body;
             const loggedUser = await this.authService.signIn(signInData);
 
-            generateTokenAndSetCookie(loggedUser.id, res);
+            generateTokenAndSetCookie(loggedUser.id, req, res);
             res.status(200).json({ "message": "You have successfully signed in", user: loggedUser });
         }
         catch (error) {
@@ -29,7 +29,7 @@ export class AuthController{
       const signUpData = req.body;
       const newUser = await this.authService.signUp(signUpData);
        
-        generateTokenAndSetCookie(newUser.id, res);
+        generateTokenAndSetCookie(newUser.id, req, res);
 
       res.status(201).json({
         message: "Congratulations, your account has been registered",
