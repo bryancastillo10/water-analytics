@@ -19,7 +19,7 @@ export interface IDashboardCardResponse {
 }
 export interface ISitePercentage {
     totalSites: number;
-    percentages: PercentageInfo;
+    percentages: PercentageInfo[];
 }
 
 
