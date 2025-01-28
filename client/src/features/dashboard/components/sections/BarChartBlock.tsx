@@ -1,5 +1,5 @@
 
-const NutrientsBarChart = () => {
+const BarChartBlock = () => {
   return (
     <div className="col-span-1 xl:col-span-2  h-[350px] bg-indigo-500">
         <div className="flex flex-col justify-center items-center h-full">
@@ -12,4 +12,4 @@ const NutrientsBarChart = () => {
   )
 }
 
-export default NutrientsBarChart;
+export default BarChartBlock;

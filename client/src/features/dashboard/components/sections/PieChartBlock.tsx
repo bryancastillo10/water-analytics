@@ -1,5 +1,5 @@
 
-const PieChart = () => {
+const PieChartBlock = () => {
   return (
         <div className="col-span-1 h-[350px] bg-amber-500">
           <div className="flex justify-center items-center h-full">
@@ -9,4 +9,4 @@ const PieChart = () => {
   )
 }
 
-export default PieChart;
+export default PieChartBlock;
