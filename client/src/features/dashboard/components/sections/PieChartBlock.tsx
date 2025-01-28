@@ -8,11 +8,12 @@ import {
   Tooltip
 } from "recharts";
 
+import PieChartHeader from "@/features/dashboard/components/ui/PieChartHeader";
 import PieChartToolTip from "@/features/dashboard/components/tooltips/PieChartToolTip";
 
 const PieChartBlock = () => {
   const { data, isLoading } = useGetSitePercentageQuery();
-  const COLORS = ['#006da3', '#00C49F', '#F0E442', '#FF8042'];
+  const COLORS = ['#006da3', '#00C49F', '#F0E442', '#FF8042','#5D3A9B','#8E7A65'];
 
   const siteData = data?.percentages.map((site) => {
     return {
@@ -31,10 +32,10 @@ const PieChartBlock = () => {
 
   return (
       <div className="col-span-1 h-[350px]">
-        <div className="flex items-center gap-2">
-            <h1>Total Number of Sites</h1>
-            <p className="text-darkGray">{data?.totalSites || "No data retrieved"}</p>
-        </div>
+        <PieChartHeader 
+          totalSites={data?.totalSites || "No data retrieved"}
+        />
+        
         <ResponsiveContainer className="pt-4" width="100%" height="90%">
           <PieChart width={800} height={400}>
             <Pie
