@@ -1,7 +1,10 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
-export const generateTokenAndSetCookie = (userId: string, res: Response) => {
+export const generateTokenAndSetCookie = (userId: string, req: Request, res: Response) => {
+    const userAgent = req.headers["user-agent"] || "";
+    const isSafari = /Safari/.test(userAgent) && !/Chrome/.test(userAgent);
+
     const token = jwt.sign(
         {userId}, 
         process.env.JWT_SECRET as string,
@@ -10,7 +13,7 @@ export const generateTokenAndSetCookie = (userId: string, res: Response) => {
         {
             maxAge: 5 * 60 * 60 * 1000,
             httpOnly:true,
-            sameSite:"strict",
-            secure: process.env.NODE_ENV !== "development"
+            sameSite: isSafari ? undefined : "strict",
+            secure: isSafari ? false : process.env.NODE_ENV !== "development"
         });
 }

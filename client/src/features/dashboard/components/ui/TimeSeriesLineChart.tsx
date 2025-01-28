@@ -1,4 +1,13 @@
-import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line, Tooltip } from "recharts";
+import {
+  ResponsiveContainer,
+  LineChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Line,
+  Tooltip,
+  type TooltipProps
+} from "recharts";
 import { useAppSelector } from "@/lib/redux/hooks";
 
 interface TimeSeriesLineChartProps{
@@ -12,7 +21,7 @@ const TimeSeriesLineChart = ({
 }: TimeSeriesLineChartProps) => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);
 
-  const renderTooltip = ({ active, payload, label }: any) => {
+  const renderTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
     if (active && payload && payload.length) {
       return (
         <div
@@ -28,7 +37,7 @@ const TimeSeriesLineChart = ({
               color: theme ? "#13b6f6" : "#006da3",
             }}
           >
-            {`${selectedParameter}: ${payload[0].value}`}
+            {`${selectedParameter}: ${payload[0]?.value}`}
           </p>
         </div>
       );
