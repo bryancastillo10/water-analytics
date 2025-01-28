@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { ISitePercentage, ITimeSeries, ITimeSeriesRequest } from "./interface";
+import type {
+    IDashboardCardResponse,
+    ISitePercentage,
+    ITimeSeries,
+    ITimeSeriesRequest
+} from "./interface";
 
 
 export const dashboardApi = createApi({
@@ -33,6 +38,11 @@ export const dashboardApi = createApi({
             query: () => ({
                 url: "/pie"
             })
+        }),
+        getDashboardCardValues: build.query<IDashboardCardResponse, {siteId: string}>({
+            query: ({ siteId }) => ({
+                url: `/card/site/${siteId}`
+            })
         })
     })
 });
@@ -41,5 +51,6 @@ export const {
     useGetParameterFiltersQuery,
     useGetDateFiltersQuery,
     useGetTimeSeriesQuery,
-    useGetSitePercentageQuery
+    useGetSitePercentageQuery,
+    useGetDashboardCardValuesQuery
 } = dashboardApi;
