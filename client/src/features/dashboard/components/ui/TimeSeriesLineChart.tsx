@@ -5,10 +5,10 @@ import {
   XAxis,
   YAxis,
   Line,
-  Tooltip,
-  type TooltipProps
+  Tooltip
 } from "recharts";
 import { useAppSelector } from "@/lib/redux/hooks";
+import LineChartToolTip from "@/features/dashboard/components/tooltips/LineChartToolTip";
 
 interface TimeSeriesLineChartProps{
    selectedParameter: string;
@@ -20,30 +20,6 @@ const TimeSeriesLineChart = ({
   selectedParameter
 }: TimeSeriesLineChartProps) => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);
-
-  const renderTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
-    if (active && payload && payload.length) {
-      return (
-        <div
-          className="border border-neutral rounded-md shaodw-md p-2"
-          style={{
-            backgroundColor: theme ? "#545454" : "#F4F3F2",
-            color: theme ? "#ffffff" : "#040710",
-          }}
-        >
-          <p className="text-sm">{`Date: ${label}`}</p>
-          <p
-            style={{
-              color: theme ? "#13b6f6" : "#006da3",
-            }}
-          >
-            {`${selectedParameter}: ${payload[0]?.value}`}
-          </p>
-        </div>
-      );
-    }
-    return null;
-  };
 
   return (    
        <ResponsiveContainer className="pt-4" width="100%" height="90%">
@@ -70,7 +46,11 @@ const TimeSeriesLineChart = ({
               style: { textAnchor: 'middle' }
             }}
           />
-          <Tooltip content={renderTooltip} />
+            <Tooltip 
+              content={<LineChartToolTip
+                            selectedParameter={selectedParameter} 
+                        />} 
+            />
           <Line
             type="monotone"
             dataKey="value"

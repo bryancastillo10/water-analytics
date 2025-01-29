@@ -15,6 +15,7 @@ export interface IDashboardCardResponse {
     parameter: string;
     averageValue: number;
     thresholdValue: number;
+    unit: string;
     status: string;
 }
 export interface ISitePercentage {
