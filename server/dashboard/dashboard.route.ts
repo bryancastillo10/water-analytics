@@ -9,7 +9,7 @@ router.get("/filter/date/:siteId", protectRoute, dashboardController.getDateFilt
 router.get("/line/site/:siteId", protectRoute, dashboardController.timeSeries);
 router.get("/bar/site/:siteId", protectRoute, dashboardController.nutrientPercentages);
 router.get("/pie", protectRoute, dashboardController.sitePercentage);
-router.get("/radar/site/:siteId", protectRoute, dashboardController.getDataPerSite);
+router.get("/radar/site/:siteId", protectRoute, dashboardController.getAvgDataPerSite);
 router.get("/card/site/:siteId", protectRoute, dashboardController.getParameterStatus);
 
 export default router;

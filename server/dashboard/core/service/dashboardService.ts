@@ -1,7 +1,7 @@
 import { DashboardRepository } from "@/dashboard/dashboard.repository";
 import { GetTimeSeriesDataRequest } from "@/dashboard/core/interface/IDashboardRepository";
 import { NotFoundError, ValidationError } from "@/infrastructure/errors/customErrors";
-import { parameterRecord } from "@/dashboard/utils/parameterRecord";
+import { parameterRecord, parameterCardDisplayNames } from "@/dashboard/utils/parameterRecord";
 
 export class DashboardService {
     constructor(private readonly dashboardRepository: DashboardRepository) { }
@@ -28,7 +28,7 @@ export class DashboardService {
     
     async timeSeries({ siteId, parameter, startDate, endDate }: GetTimeSeriesDataRequest) { 
         if (!parameter) {
-            throw new NotFoundError("Parameter is not found");
+            throw new NotFoundError("Parameter");
         }
         
         const validParameters = [
@@ -46,7 +46,7 @@ export class DashboardService {
 
     async sitePercentage(userId: string) {
         if (!userId) {
-            throw new NotFoundError("User ID was not found");
+            throw new NotFoundError("User ID");
         }
         const totalSites = await this.dashboardRepository.getTotalSitesByUser(userId);
 
@@ -66,7 +66,7 @@ export class DashboardService {
 
     async nutrientPercentages(siteId: string) {
         if (!siteId) {
-            throw new NotFoundError("Site ID was not found");
+            throw new NotFoundError("Site ID");
         }
 
         const nutrientAvg = await this.dashboardRepository.nutrientPercentageBySite(siteId);
@@ -76,7 +76,7 @@ export class DashboardService {
 
     async getDataPerSite(siteId:string) { 
         if (!siteId) {
-            throw new NotFoundError("Site ID was not found");
+            throw new NotFoundError("Site ID");
         }
 
         const siteData = await this.dashboardRepository.getDataPerSite(siteId);
@@ -88,48 +88,56 @@ export class DashboardService {
         return siteData;
     };
 
-    async getParameterStatus({siteId, parameter}: GetTimeSeriesDataRequest) {
-        if (!parameter) {
-            throw new NotFoundError("Parameter is not found");
-        }
-
-        const paramAvg = await this.dashboardRepository.getParameterAvg({ siteId, parameter });
-
-        const parameterName = parameterRecord[parameter] || parameter;
-
-        const thresholdData = await this.dashboardRepository.getThresholdValue(parameterName);
-
-        if (!thresholdData) {
-            throw new NotFoundError("Threshold for that parameter is not found");
-        }
-  
-        let status: string;
-        const averageValue = paramAvg[parameter];
-        const thresholdValue = thresholdData.value || 0;
+    async getParameterStatus(siteId :string) {
+        const parameters = ["pH", "suspendedSolids", "totalCOD", "fecalColiform"];
         
-        if (parameter === "pH") {
-            switch (true) {
-                case averageValue < 6.6:
-                    status = "Acidic";
-                    break;
-                case averageValue > 7.5:
-                    status =  "Alkaline";
-                default:
-                    status = "Neutral";
-                    break;
-            };
-        } else {
-            status = averageValue > thresholdValue ? "Above Threshold" : "Pass";
-        }
+        const kpiData = await Promise.all(
+            parameters.map(async (parameter) => {
+                const paramAvg = await this.dashboardRepository.getParameterAvg({ siteId, parameter });
+                
+                if (!paramAvg || paramAvg[parameter] === null) {
+                    return { parameter, status: "No Data Available" };
+                }
 
-        const kpiData = {
-            siteName: paramAvg.siteName,
-            parameter: parameterName,
-            averageValue,
-            thresholdValue,
-            status: status
-        };
+                const parameterName = parameterRecord[parameter] || parameter;
+                const unit = parameterCardDisplayNames[parameter]?.unit || "";
 
+                const thresholdData = await this.dashboardRepository.getThresholdValue(parameterName);
+                
+                if (!thresholdData) {
+                    throw new NotFoundError("Threshold for the parameter");
+                }
+
+                let status: string;
+                const averageValue = paramAvg[parameter];
+                const thresholdValue = thresholdData.value || 0;
+                const displayName = parameterCardDisplayNames[parameter]?.displayName || parameter;
+                
+                if (parameter === "pH") {
+                    switch (true) {
+                        case averageValue < 6.6:
+                            status = "Acidic";
+                            break;
+                        case averageValue > 7.5:
+                            status =  "Alkaline";
+                        default:
+                            status = "Neutral";
+                            break;
+                    };
+                } else {
+                    status = averageValue > thresholdValue ? "Above Threshold" : "Pass";
+                }
+
+                return {
+                    siteName: paramAvg.siteName,
+                    parameter: displayName,
+                    averageValue,
+                    thresholdValue,
+                    unit,
+                    status
+                }
+            })
+        )
         return kpiData;
 
     }
