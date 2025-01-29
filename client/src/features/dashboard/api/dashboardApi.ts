@@ -39,8 +39,8 @@ export const dashboardApi = createApi({
                 url: "/pie"
             })
         }),
-        getDashboardCardValues: build.query<IDashboardCardResponse, {siteId: string}>({
-            query: ({ siteId }) => ({
+        getDashboardCardValues: build.query<IDashboardCardResponse[], string>({
+            query: (siteId) => ({
                 url: `/card/site/${siteId}`
             })
         })
