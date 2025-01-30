@@ -5,10 +5,10 @@ import type {
     UpdateSiteRequest,
     DeleteSiteResponse,
 } from "@/features/sites/api/interface";
-
+import { TagType } from "@/lib/mappings/tagTypes";
 export const sitesApi = createApi({
     reducerPath: "sitesApi",
-    tagTypes:["getSites"],
+    tagTypes:[TagType.SITES],
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_BASE_URL + "site",
         credentials: 'include'
@@ -20,13 +20,13 @@ export const sitesApi = createApi({
                 method: "POST",
                 body: data
             }),
-            invalidatesTags:["getSites"]
+            invalidatesTags:[TagType.SITES, TagType.DASHBOARD]
         }),
         getSiteByUser: build.query<ISiteData[], void>({
             query: () => ({
                 url: "/get"
             }),
-            providesTags:["getSites"]
+            providesTags:[TagType.SITES]
         }),
         updateSite: build.mutation<MutateSiteResponse, UpdateSiteRequest>({
             query: ({ id, site }) => ({
@@ -34,14 +34,14 @@ export const sitesApi = createApi({
                 method: "PUT",
                 body: site
             }),
-            invalidatesTags:["getSites"]
+            invalidatesTags:[TagType.SITES, TagType.DASHBOARD]
         }),
         deleteSite: build.mutation<DeleteSiteResponse,{id:string}>({
             query: ({id}) => ({
                 url: `/delete/${id}`,
                 method: "DELETE"
             }),
-            invalidatesTags:["getSites"]
+            invalidatesTags:[TagType.SITES, TagType.DASHBOARD]
         })
 
     })
