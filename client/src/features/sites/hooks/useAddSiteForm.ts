@@ -16,7 +16,7 @@ const useAddSiteForm = () => {
     const [addSiteData, setAddSiteData] = useState<ISiteData>(initialSiteData as ISiteData);
     const [imgFile, setImgFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-    
+
     const [createSite, { isLoading }] = useCreateSiteMutation();
     const { showToast } = useToast();
   
@@ -45,7 +45,12 @@ const useAddSiteForm = () => {
     
     const prepareMultiFormData = () => {
       const formData = new FormData();
-      formData.append("siteData",JSON.stringify(addSiteData));
+      formData.append("siteData", JSON.stringify({
+        siteName: addSiteData.siteName,
+        location: addSiteData.location,
+        description: addSiteData.description,
+        sourceType: addSiteData.sourceType.toUpperCase()
+      }));
       
       if (imgFile) {
         formData.append("sitePhoto", imgFile)
