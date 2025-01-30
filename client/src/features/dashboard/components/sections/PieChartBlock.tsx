@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { MainPageLoadingState } from "@/components/layout";
 import { useGetSitePercentageQuery } from "@/features/dashboard/api/dashboardApi";
 import {
@@ -12,7 +13,7 @@ import PieChartHeader from "@/features/dashboard/components/ui/PieChartHeader";
 import PieChartToolTip from "@/features/dashboard/components/tooltips/PieChartToolTip";
 
 const PieChartBlock = () => {
-  const { data, isLoading } = useGetSitePercentageQuery();
+  const { data, isLoading, refetch } = useGetSitePercentageQuery();
   const COLORS = ['#006da3', '#00C49F', '#F0E442', '#FF8042','#5D3A9B','#8E7A65'];
 
   const siteData = data?.percentages.map((site) => {
@@ -21,6 +22,10 @@ const PieChartBlock = () => {
       percentage: parseFloat(site.percentage)
     }
   }) ?? [];
+
+  useEffect(() => {
+    refetch();
+  }, [data]);
 
   if (isLoading) {
     return (
@@ -37,7 +42,11 @@ const PieChartBlock = () => {
         />
         
         <ResponsiveContainer className="pt-4" width="100%" height="90%">
-          <PieChart width={800} height={400}>
+          <PieChart
+            key={siteData.length}
+            width={800}
+            height={400}
+          >
             <Pie
               data={siteData}
               cx="50%"

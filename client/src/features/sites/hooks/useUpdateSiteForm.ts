@@ -16,7 +16,6 @@ const useUpdateSiteForm = ({id, site}: IUpdateSite) => {
     const [previewUrl, setPreviewUrl] = useState<string | null>(site.imageUrl);
 
     const { showToast } = useToast();
-
     useEffect(() => {
         if (site) {
             setUpdateSiteData(site);
@@ -52,7 +51,7 @@ const useUpdateSiteForm = ({id, site}: IUpdateSite) => {
         formData.append("siteName", updateSiteData.siteName);
         formData.append("location", updateSiteData.location);
         formData.append("description", updateSiteData.description);
-        formData.append("sourceType", updateSiteData.sourceType);
+        formData.append("sourceType", updateSiteData.sourceType.toUpperCase());
         if (imgFile) {
             formData.append("sitePhoto", imgFile);
         } else if (updateSiteData.imageUrl) {
