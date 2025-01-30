@@ -45,10 +45,12 @@ const useAddSiteForm = () => {
     
     const prepareMultiFormData = () => {
       const formData = new FormData();
-      formData.append("siteName", addSiteData.siteName);
-      formData.append("location", addSiteData.location);
-      formData.append("description", addSiteData.description);
-      formData.append("sourceType", addSiteData.sourceType.toUpperCase());
+      formData.append("siteData", JSON.stringify({
+        siteName: addSiteData.siteName,
+        location: addSiteData.location,
+        description: addSiteData.description,
+        sourceType: addSiteData.sourceType.toUpperCase()
+      }));
       
       if (imgFile) {
         formData.append("sitePhoto", imgFile)
