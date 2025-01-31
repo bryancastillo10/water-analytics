@@ -24,7 +24,7 @@ const DataTablePage = () => {
           <div className="flex justify-between items-center gap-x-4">
             <div className="flex flex-col">
               <TextHeader text={siteName} />
-              <p className="flex ixtems-center gap-2 text-sm"><MapPin />{location}</p>
+              <p className="flex items-center gap-2 text-sm"><MapPin />{location}</p>
             </div>
             <div
               onClick={()=> addMeasurementDrawer(siteName, siteId!)}
