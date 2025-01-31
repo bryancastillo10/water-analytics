@@ -23,7 +23,7 @@ const useTimeSeriesFilter = () => {
     const mappedParameter = parameterRecord[selectedParameter] || selectedParameter;
 
     const { data: parameterList, isLoading: parameterListLoading } = useGetParameterFiltersQuery();
-    const { data: dateList, isLoading: dateListLoading } = useGetDateFiltersQuery(siteId!);
+    const { data: dateList, isLoading: dateListLoading, refetch: refetchDateList } = useGetDateFiltersQuery(siteId!);
 
     const { data: rawTimeSeries, isLoading: timeSeriesLoading, refetch } = useGetTimeSeriesQuery({
         id: siteId!,
@@ -31,6 +31,12 @@ const useTimeSeriesFilter = () => {
         startDate: selectedDateRange.startDate!,
         endDate: selectedDateRange.endDate!
     });
+    
+    useEffect(() => {
+        if (rawTimeSeries) {
+            refetchDateList();
+        }
+    }, [rawTimeSeries, refetchDateList]);
 
     useEffect(() => {
         if (selectedDateRange.startDate && selectedDateRange.endDate) {

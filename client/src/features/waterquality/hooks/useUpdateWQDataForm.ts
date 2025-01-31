@@ -63,9 +63,9 @@ const useUpdateWQData = (findMeasurement: IMeasurementData) => {
 
   const toUpdateWaterQualityData = {
     date: sampleDate?.toISOString() ?? null,
-    pH: parseInt(basicParamsData.pH!) || null,
+    pH: parseFloat(basicParamsData.pH!) || null,
     temperature: parseInt(basicParamsData.temperature!) || null,
-    dissolvedOxygen: parseInt(basicParamsData.dissolvedOxygen!) || null,
+    dissolvedOxygen: parseFloat(basicParamsData.dissolvedOxygen!) || null,
     totalCOD: parseInt(orgIndParamsData.totalCOD!) || null,
     suspendedSolids: parseInt(orgIndParamsData.suspendedSolids!) || null,
     fecalColiform: parseInt(orgIndParamsData.fecalColiform!) || null,
