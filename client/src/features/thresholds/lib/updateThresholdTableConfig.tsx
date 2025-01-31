@@ -5,8 +5,9 @@ import type { IThresholdData } from "@/features/thresholds/api/interface";
 const columnHelper = createColumnHelper<IThresholdData>();
 
 export const updateThresholdColumnsConfig = (
-  paramsValue: Record<string, string>, 
-  onChangeValue: (parameter: string) => (e: React.ChangeEvent<HTMLInputElement>) => void
+  paramsValue: Record<string, string>,  
+  onChangeValue: (parameter: string, value: string) => void,
+  inputRefs: React.MutableRefObject<Record<string, HTMLInputElement | null>>
 ) => [
   columnHelper.accessor("parameter", {
     header: () => "Parameter",
@@ -22,11 +23,12 @@ export const updateThresholdColumnsConfig = (
       const { parameter } = row.original;
       return (
         <FormNumberInput
-          id={ parameter }
-          value={paramsValue[parameter]!}
-          onChange={onChangeValue(parameter)}
+          id={parameter}
+          ref={(el) => (inputRefs.current[parameter] = el)} // Store reference
+          value={paramsValue[parameter] ?? ""}
+          onChange={(e) => onChangeValue(parameter, e.target.value)}
         />
-      )
+      );
     }
   })
 ];

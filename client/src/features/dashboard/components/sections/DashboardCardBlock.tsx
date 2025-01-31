@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { useAppSelector } from "@/lib/redux/hooks";
+
 import { useGetDashboardCardValuesQuery } from "@/features/dashboard/api/dashboardApi";
 import { parameterIcons } from "@/features/dashboard/utils/parameterMapping";
 import DashboardCard from "@/features/dashboard/components/ui/DashboardCard";
@@ -7,9 +9,13 @@ import { Drop } from "@phosphor-icons/react";
 const DashboardCardBlock = () => {
   const selectedSiteId = useAppSelector((state) => state.dashboard.selectedSiteId);
   const siteId = selectedSiteId || "";
-  const {data: statistics, isLoading } = useGetDashboardCardValuesQuery(siteId);
+  const {data: statistics, isLoading, refetch } = useGetDashboardCardValuesQuery(siteId);
   
-    const statisticsCard = statistics?.map((stat) => ({
+  useEffect(() => {
+    refetch();
+  }, [statistics]);
+
+  const statisticsCard = statistics?.map((stat) => ({
         parameter: stat.parameter,
         value: stat.averageValue ?? "N/A",
         unit: stat.unit || "",
