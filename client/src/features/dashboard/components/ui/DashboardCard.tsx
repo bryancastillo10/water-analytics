@@ -1,49 +1,23 @@
-import { ChartLineUp, ChartLineDown, ArrowsOutLineVertical, type Icon } from "@phosphor-icons/react";
-import type { IDashboardCardResponse } from "../../api/interface";
+import { type Icon } from "@phosphor-icons/react";
+import type { IDashboardCardResponse } from "@/features/dashboard/api/interface";
+
 interface DashboardCardProps extends Partial<IDashboardCardResponse> {
   icon: Icon;
   value: number;
   status: string;
+  trendIcon: Icon;
+  colorClass: string;
 }
 const DashboardCard = ({
   parameter,
   icon: Icon,
   value,
   status,
-  unit
+  unit,
+  trendIcon: TrendIcon,
+  colorClass
 }: DashboardCardProps) => {
-  const getStatusStyle = (status: string) => {
-    switch (status) {
-      case "Alkaline":
-        return {
-          trendIcon: ChartLineUp,
-          colorClass: "text-emerald-300"
-        }
-      case "Pass":
-        return {
-          trendIcon: ChartLineDown,
-          colorClass: "text-emerald-300"
-        }
-      case "Above Threshold":
-        return {
-          trendIcon: ChartLineDown,
-          colorClass: "text-rose-300"
-        }
-      case "Acidic":
-        return {
-          trendIcon: ChartLineDown,
-          colorClass: "text-rose-300"
-        }
-      default:
-        return {
-          trendIcon: ArrowsOutLineVertical,
-          colorClass: "text-lightYellow"
-        }
-    }
-  };
-  
-  const TrendIcon = getStatusStyle(status).trendIcon;
-
+ 
   
   return (
     <article className="w-full h-[200px] overflow-hidden max-w-md bg-gradient-to-br from-secondary to-primary text-light rounded-xl shadow-lg p-4 lg:p-6 transition-all duration-300 hover:shadow-xl relative">
@@ -71,7 +45,7 @@ const DashboardCard = ({
               {unit}
             </span>
           </div>
-          <div className={`flex items-center gap-x-2 ${getStatusStyle(status).colorClass}`}>
+          <div className={`flex items-center gap-x-2 ${colorClass}`}>
             {<TrendIcon className="size-6"/>}
             <span className="text-xs lg:text-sm font-semibold whitespace-nowrap">
               {status}

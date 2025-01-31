@@ -3,6 +3,8 @@ import { useAppSelector } from "@/lib/redux/hooks";
 
 import { useGetDashboardCardValuesQuery } from "@/features/dashboard/api/dashboardApi";
 import { parameterIcons } from "@/features/dashboard/utils/parameterMapping";
+import { getStatusStyle } from "@/features/dashboard/utils/getStatusStyle";
+
 import DashboardCard from "@/features/dashboard/components/ui/DashboardCard";
 
 import { Drop } from "@phosphor-icons/react";
@@ -11,16 +13,17 @@ const DashboardCardBlock = () => {
   const siteId = selectedSiteId || "";
   const {data: statistics, isLoading, refetch } = useGetDashboardCardValuesQuery(siteId);
   
-  useEffect(() => {
-    refetch();
-  }, [statistics]);
+   useEffect(() => {
+    if (siteId) refetch();
+  }, [siteId, refetch]);
 
   const statisticsCard = statistics?.map((stat) => ({
         parameter: stat.parameter,
         value: stat.averageValue ?? "N/A",
         unit: stat.unit || "",
         status: stat.status || "Unknown",
-        icon: parameterIcons[stat.parameter] || Drop
+        icon: parameterIcons[stat.parameter] || Drop,
+        statusStyles: getStatusStyle(stat.status)
     })) ?? [];
 
     if (isLoading) {
@@ -47,6 +50,8 @@ const DashboardCardBlock = () => {
               unit={card.unit}
               status={card.status}
               icon={card.icon}
+              trendIcon={card.statusStyles.trendIcon}
+              colorClass={card.statusStyles.colorClass}
             />
           ))}
       </div>
