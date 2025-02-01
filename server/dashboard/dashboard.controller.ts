@@ -9,7 +9,7 @@ export class DashboardController {
         this.getDateFilters = this.getDateFilters.bind(this); 
         this.timeSeries = this.timeSeries.bind(this);
         this.sitePercentage = this.sitePercentage.bind(this);
-        this.nutrientPercentages = this.nutrientPercentages.bind(this);
+        this.nutrientStats = this.nutrientStats.bind(this);
         this.getAvgDataPerSite = this.getAvgDataPerSite.bind(this);
         this.getParameterStatus = this.getParameterStatus.bind(this);
     };
@@ -77,13 +77,13 @@ export class DashboardController {
         }
     };
 
-    async nutrientPercentages(req: Request, res: Response, next: NextFunction) {
+    async nutrientStats(req: Request, res: Response, next: NextFunction) {
         try {
             const siteId = req.params.siteId;
 
-            const nutrientAvg = await this.dashboardService.nutrientPercentages(siteId);
+            const nutrientStats = await this.dashboardService.nutrientStats(siteId);
 
-            res.status(200).json(nutrientAvg);
+            res.status(200).json(nutrientStats);
         }
         catch (error) {
             next(error);

@@ -6,7 +6,7 @@ export interface IDashboardRepository {
     timeSeries({siteId,parameter}: GetTimeSeriesDataRequest): Promise<TimeSeriesData[]>;
     getSiteCountByUser(userId: string): Promise<GetSiteCountByUserResponse[]>;
     getTotalSitesByUser(userId: string): Promise<number>;
-    nutrientPercentageBySite(siteId: string): Promise<NutrientAvgBySiteResponse>;
+    nutrientStatsBySite(siteId: string): Promise<NutrientAvgBySiteResponse>;
     getDataPerSite(siteId: string): Promise<ISiteDataResponse>;
     getParameterAvg({ siteId, parameter }: GetTimeSeriesDataRequest): Promise<IParameterAvg>;
 }
@@ -55,3 +55,5 @@ interface IParameters {
 export interface IParameterAvg {
     [parameter: string]: number;
 }
+
+export type NutrientKey = "ammonia" | "nitrates" | "phosphates"  
