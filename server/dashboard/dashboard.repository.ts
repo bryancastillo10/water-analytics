@@ -136,7 +136,7 @@ export class DashboardRepository implements IDashboardRepository {
         }
     }
 
-    async nutrientPercentageBySite(siteId: string): Promise<NutrientAvgBySiteResponse> {
+    async nutrientStatsBySite(siteId: string): Promise<NutrientAvgBySiteResponse> {
         try {
             const site = await this.prisma.site.findUnique({
                 where: { id: siteId },
