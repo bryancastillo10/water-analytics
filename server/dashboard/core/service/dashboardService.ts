@@ -2,6 +2,7 @@ import { DashboardRepository } from "@/dashboard/dashboard.repository";
 import { GetTimeSeriesDataRequest } from "@/dashboard/core/interface/IDashboardRepository";
 import { NotFoundError, ValidationError } from "@/infrastructure/errors/customErrors";
 import { parameterRecord, parameterCardDisplayNames } from "@/dashboard/utils/parameterRecord";
+import type { NutrientKey } from "@/dashboard/core/interface/IDashboardRepository";
 
 export class DashboardService {
     constructor(private readonly dashboardRepository: DashboardRepository) { }
@@ -64,25 +65,54 @@ export class DashboardService {
         return { totalSites, percentages}
     };
 
-    async nutrientPercentages(siteId: string) {
+    async nutrientStats(siteId: string) {
         if (!siteId) {
             throw new NotFoundError("Site ID");
         }
 
-        const nutrientAvg = await this.dashboardRepository.nutrientPercentageBySite(siteId);
-
-        return nutrientAvg;
+        const nutrientData = await this.dashboardRepository.nutrientStatsBySite(siteId);
+        
+        const nutrients: NutrientKey[] = ["ammonia", "nitrates", "phosphates"];
+        
+        const nutrientStatusData = await Promise.all(
+            nutrients.map(async (nutrient) => {
+                const parameterName = parameterRecord[nutrient] || nutrient;
+                const thresholdData = await this.dashboardRepository.getThresholdValue(parameterName);
+                if (!thresholdData) {
+                    throw new ValidationError(`Threshold data for ${nutrient} not found`);
+                }
+                
+                const thresholdValue = thresholdData.value ?? 0;
+                const avgValue = nutrientData.average[nutrient];
+                
+                const status = avgValue > thresholdValue ? "Above Threshold" : "Pass";
+                
+                return {
+                    nutrient,
+                    avgValue,
+                    thresholdValue,
+                    status
+                };
+            })
+        );
+        
+        const nutrientDataBySite = {
+            siteName: nutrientData.siteName,
+            nutrientStatus: nutrientStatusData
+        }
+        
+        return nutrientDataBySite;
     };
 
-    async getDataPerSite(siteId:string) { 
+    async getStatPerSite(siteId:string, statType:string) { 
         if (!siteId) {
             throw new NotFoundError("Site ID");
         }
-
-        const siteData = await this.dashboardRepository.getDataPerSite(siteId);
+        
+        const siteData = await this.dashboardRepository.getStatPerSite(siteId, statType);
 
         if (!siteData) {
-            throw new ValidationError("Error calculating the parameter averages of the site");
+            throw new ValidationError("Error calculating the descriptive statistics of the site");
         }
 
         return siteData;

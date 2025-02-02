@@ -9,8 +9,8 @@ export class DashboardController {
         this.getDateFilters = this.getDateFilters.bind(this); 
         this.timeSeries = this.timeSeries.bind(this);
         this.sitePercentage = this.sitePercentage.bind(this);
-        this.nutrientPercentages = this.nutrientPercentages.bind(this);
-        this.getAvgDataPerSite = this.getAvgDataPerSite.bind(this);
+        this.nutrientStats = this.nutrientStats.bind(this);
+        this.getStatDataPerSite = this.getStatDataPerSite.bind(this);
         this.getParameterStatus = this.getParameterStatus.bind(this);
     };
 
@@ -77,24 +77,26 @@ export class DashboardController {
         }
     };
 
-    async nutrientPercentages(req: Request, res: Response, next: NextFunction) {
+    async nutrientStats(req: Request, res: Response, next: NextFunction) {
         try {
             const siteId = req.params.siteId;
 
-            const nutrientAvg = await this.dashboardService.nutrientPercentages(siteId);
+            const nutrientStats = await this.dashboardService.nutrientStats(siteId);
 
-            res.status(200).json(nutrientAvg);
+            res.status(200).json(nutrientStats);
         }
         catch (error) {
             next(error);
         }
     };
 
-    async getAvgDataPerSite(req: Request, res: Response, next: NextFunction) {
+    async getStatDataPerSite(req: Request, res: Response, next: NextFunction) {
         try {
             const siteId = req.params.siteId;
+            
+            const statType = req.query.statType as string || "average";
 
-            const siteData = await this.dashboardService.getDataPerSite(siteId);
+            const siteData = await this.dashboardService.getStatPerSite(siteId, statType);
 
             res.status(200).json(siteData);
         }  
