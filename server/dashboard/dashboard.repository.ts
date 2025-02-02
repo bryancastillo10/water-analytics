@@ -8,10 +8,13 @@ import {
     NutrientAvgBySiteResponse,
     ISiteDataResponse,
     IParameterAvg,
+    IParameters,
 } from "@/dashboard/core/interface/IDashboardRepository";
 import { TimeSeriesData } from "@/dashboard/core/entity/timeSeries";
 import { DatabaseError, NotFoundError } from "@/infrastructure/errors/customErrors";
+
 import { parameterRecord } from "@/dashboard/utils/parameterRecord";
+import { extractAggData, getAggField, validateCalcData, validateStatType } from "@/dashboard/utils/statTypes";
 
 export class DashboardRepository implements IDashboardRepository {
     private prisma = new PrismaClient();
@@ -80,7 +83,7 @@ export class DashboardRepository implements IDashboardRepository {
                     date: true,
                     [parameter]: true
                 },
-                orderBy: { date: 'asc' }
+                orderBy: { date: 'desc' }
             });
 
             const formattedData = rawTimeSeries
@@ -180,57 +183,46 @@ export class DashboardRepository implements IDashboardRepository {
         }
     }
 
-    async getDataPerSite(siteId: string): Promise<ISiteDataResponse> {
-        try {
-            const site = await this.prisma.site.findUnique({
-                where: { id: siteId },
-                select: { siteName: true }
-            });
+  async getStatPerSite(siteId: string, statType: string): Promise<ISiteDataResponse> {
+    try {
+        const site = await this.prisma.site.findUnique({
+            where: { id: siteId },
+            select: { siteName: true }
+        });
 
-            if (!site) {
-                throw new NotFoundError("Site name was not found");
+        if (!site) {
+            throw new NotFoundError("Site Name not found");
+        }
+        
+        const selectedStatType = validateStatType(statType);
+        const aggField = getAggField(selectedStatType);
+     
+        const calcData = await this.prisma.measurement.aggregate({
+            where: { siteId },
+            ...aggField
+        });
+        
+        const queryData = extractAggData(calcData, aggField);
+        
+        const finalizedData = validateCalcData(queryData);
+
+        return {
+            siteName: site.siteName,
+            result: {
+                [selectedStatType]: finalizedData
             }
-
-            const averages = await this.prisma.measurement.aggregate({
-                where: { siteId },
-                _avg: {
-                    pH: true,
-                    temperature: true,
-                    dissolvedOxygen: true,
-                    totalCOD: true,
-                    suspendedSolids: true,
-                    fecalColiform: true,
-                    ammonia: true,
-                    nitrates: true,
-                    phosphates: true
-                }
-            });
-            
-            const siteData = {
-                siteName: site.siteName,
-                averages: {
-                    pH: averages._avg.pH || 0,
-                    temperature: averages._avg.temperature || 0,
-                    dissolvedOxygen: averages._avg.dissolvedOxygen || 0,
-                    totalCOD: averages._avg.totalCOD || 0,
-                    suspendedSolids: averages._avg.suspendedSolids || 0,
-                    fecalColiform: averages._avg.fecalColiform || 0,
-                    ammonia: averages._avg.ammonia || 0,
-                    nitrates: averages._avg.nitrates || 0,
-                    phosphates: averages._avg.phosphates || 0
-                }
-            };
-            
-            return siteData;
+        };
+        
+        
+    } catch (error) {
+        if (error instanceof PrismaClientKnownRequestError) {
+            console.error(error.message);
+            throw new DatabaseError("Database error at the getStatPerSite method");
         }
-        catch (error) {
-            if (error instanceof PrismaClientKnownRequestError) {
-                console.error(error.message);
-                throw new DatabaseError("Database error at the getDataPerSite method");
-            } 
-            throw Error;
-        }
+        throw error;
     }
+}
+
 
     async getParameterAvg({ siteId, parameter }: GetTimeSeriesDataRequest): Promise<IParameterAvg> {
         try {

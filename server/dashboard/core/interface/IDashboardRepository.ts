@@ -7,7 +7,7 @@ export interface IDashboardRepository {
     getSiteCountByUser(userId: string): Promise<GetSiteCountByUserResponse[]>;
     getTotalSitesByUser(userId: string): Promise<number>;
     nutrientStatsBySite(siteId: string): Promise<NutrientAvgBySiteResponse>;
-    getDataPerSite(siteId: string): Promise<ISiteDataResponse>;
+    getStatPerSite(siteId: string, statType:string): Promise<ISiteDataResponse>;
     getParameterAvg({ siteId, parameter }: GetTimeSeriesDataRequest): Promise<IParameterAvg>;
 }
 
@@ -37,10 +37,12 @@ export interface NutrientAvgBySiteResponse {
 
 export interface ISiteDataResponse {
     siteName: string;
-    averages: IParameters;
+    result: {
+        [statType: string]: IParameters;
+    }
 }
 
-interface IParameters {
+export interface IParameters {
     pH: number;
     temperature: number;
     dissolvedOxygen: number;
@@ -54,6 +56,10 @@ interface IParameters {
 
 export interface IParameterAvg {
     [parameter: string]: number;
+}
+
+export interface IAggregationFields {
+    [aggregation: string]: "_avg" | "_max" | "_min" | "_count";
 }
 
 export type NutrientKey = "ammonia" | "nitrates" | "phosphates"  

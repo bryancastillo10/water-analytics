@@ -10,7 +10,7 @@ export class DashboardController {
         this.timeSeries = this.timeSeries.bind(this);
         this.sitePercentage = this.sitePercentage.bind(this);
         this.nutrientStats = this.nutrientStats.bind(this);
-        this.getAvgDataPerSite = this.getAvgDataPerSite.bind(this);
+        this.getStatDataPerSite = this.getStatDataPerSite.bind(this);
         this.getParameterStatus = this.getParameterStatus.bind(this);
     };
 
@@ -90,11 +90,13 @@ export class DashboardController {
         }
     };
 
-    async getAvgDataPerSite(req: Request, res: Response, next: NextFunction) {
+    async getStatDataPerSite(req: Request, res: Response, next: NextFunction) {
         try {
             const siteId = req.params.siteId;
+            
+            const statType = req.query.statType as string || "average";
 
-            const siteData = await this.dashboardService.getDataPerSite(siteId);
+            const siteData = await this.dashboardService.getStatPerSite(siteId, statType);
 
             res.status(200).json(siteData);
         }  

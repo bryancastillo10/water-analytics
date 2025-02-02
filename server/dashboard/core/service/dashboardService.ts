@@ -104,15 +104,15 @@ export class DashboardService {
         return nutrientDataBySite;
     };
 
-    async getDataPerSite(siteId:string) { 
+    async getStatPerSite(siteId:string, statType:string) { 
         if (!siteId) {
             throw new NotFoundError("Site ID");
         }
-
-        const siteData = await this.dashboardRepository.getDataPerSite(siteId);
+        
+        const siteData = await this.dashboardRepository.getStatPerSite(siteId, statType);
 
         if (!siteData) {
-            throw new ValidationError("Error calculating the parameter averages of the site");
+            throw new ValidationError("Error calculating the descriptive statistics of the site");
         }
 
         return siteData;
