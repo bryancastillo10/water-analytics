@@ -83,7 +83,7 @@ export class DashboardRepository implements IDashboardRepository {
                     date: true,
                     [parameter]: true
                 },
-                orderBy: { date: 'desc' }
+                orderBy: { date: 'asc' }
             });
 
             const formattedData = rawTimeSeries
