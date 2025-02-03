@@ -58,7 +58,12 @@ const PieChartBlock = () => {
               dataKey="percentage"
             >
             {siteData.map((_, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}  />
+              <Cell
+                className="hover:drop-shadow-lg 
+                          hover:translate-x-[8px] 
+                          hover:translate-y-[4px] duration-500 ease-out"
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
             <Tooltip content={<PieChartToolTip/>}/>

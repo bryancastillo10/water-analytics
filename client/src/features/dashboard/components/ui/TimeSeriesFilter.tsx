@@ -47,7 +47,7 @@ const TimeSeriesFilter = ({
         />
       </div>
 
-
+    <div className="flex flex-col lg:flex-row items-start gap-2">
       <div className="flex items-center gap-2">
         <p className="text-xs">from</p>
         <CustomSelect
@@ -71,6 +71,7 @@ const TimeSeriesFilter = ({
           onChangeValue={(value) => handleSelectedDate("endDate", value)}
         />
       </div>
+    </div>
     </section>
   );
 };
