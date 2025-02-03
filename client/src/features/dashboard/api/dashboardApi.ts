@@ -1,9 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type {
     IDashboardCardResponse,
+    INutrientStatsResponse,
     ISitePercentage,
     ITimeSeries,
-    ITimeSeriesRequest
+    ITimeSeriesRequest,
+    ISiteStatRequest,
+    ISiteStatResponse
 } from "@/features/dashboard/api/interface";
 import { TagType } from "@/lib/mappings/tagTypes";
 
@@ -17,15 +20,15 @@ export const dashboardApi = createApi({
     endpoints: (build) => ({
         getParameterFilters: build.query<string[], void>({
             query: () => ({
-               url:"/filter/parameter"
+                url: "/filter/parameter"
             }),
-            providesTags:[TagType.DASHBOARD],
+            providesTags: [TagType.DASHBOARD],
         }),
-        getDateFilters: build.query<string[],string> ({
-            query: (siteId) => ({   
+        getDateFilters: build.query<string[], string>({
+            query: (siteId) => ({
                 url: `filter/date/${siteId}`
             }),
-            providesTags:[TagType.DASHBOARD],
+            providesTags: [TagType.DASHBOARD],
         }),
         getTimeSeries: build.query<ITimeSeries[], ITimeSeriesRequest>({
             query: ({ id, parameter, startDate, endDate }) => ({
@@ -36,20 +39,32 @@ export const dashboardApi = createApi({
                     endDate
                 }
             }),
-            providesTags:["dashboard"],
+            providesTags: [TagType.DASHBOARD],
         }),
         getSitePercentage: build.query<ISitePercentage, void>({
             query: () => ({
                 url: "/pie"
             }),
-            providesTags:[TagType.DASHBOARD],
+            providesTags: [TagType.DASHBOARD],
         }),
         getDashboardCardValues: build.query<IDashboardCardResponse[], string>({
             query: (siteId) => ({
                 url: `/card/site/${siteId}`
             }),
-            providesTags:[TagType.DASHBOARD],
-        })
+            providesTags: [TagType.DASHBOARD],
+        }),
+        getNutrientStats: build.query<INutrientStatsResponse, string>({
+            query: (siteId) => ({
+                url:`/bar/site/${siteId}`
+            }),
+            providesTags: [TagType.DASHBOARD]
+        }),
+        getSiteStatSummary: build.query<ISiteStatResponse, ISiteStatRequest>({
+            query: ({siteId, statType}) => ({
+                url: `/radar/site/${siteId}?statType=${statType}`
+            }),
+            providesTags: [TagType.DASHBOARD]
+        }) 
     })
 });
 
@@ -58,5 +73,7 @@ export const {
     useGetDateFiltersQuery,
     useGetTimeSeriesQuery,
     useGetSitePercentageQuery,
-    useGetDashboardCardValuesQuery
+    useGetDashboardCardValuesQuery,
+    useGetNutrientStatsQuery,
+    useGetSiteStatSummaryQuery
 } = dashboardApi;

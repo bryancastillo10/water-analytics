@@ -1,4 +1,3 @@
-
 const BarChartBlock = () => {
   return (
     <div className="col-span-1 xl:col-span-1  h-[350px] bg-indigo-500">
