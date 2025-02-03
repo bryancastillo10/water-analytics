@@ -7,7 +7,7 @@ interface BarChartProps {
 }
 
 const BarChart = ({ statData, loading }: BarChartProps) => {
-  console.log(statData);
+  console.log("Bar Chart Data",statData);
   
   if (loading) {
     return (

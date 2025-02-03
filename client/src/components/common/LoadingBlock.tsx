@@ -9,9 +9,9 @@ const LoadingBlock = (props: LoadingBlockProps) => {
     return (
         <div className={`${layoutClassName} animate-pulse w-full bg-gradient-to-br from-secondary to-primary 
         text-light h-[350px] rounded-xl shadow-md flex justify-center items-center`}>
-                <h1 className="text-5xl font-semibold text-center">
-                    <DropHalf />
-                </h1>
+            <h1 className="text-5xl font-semibold text-center">
+                <DropHalf />
+            </h1>
         </div>
   )
 }

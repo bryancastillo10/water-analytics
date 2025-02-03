@@ -39,7 +39,7 @@ export interface INutrientStatsResponse {
     nutrientStatus: NutrientStatResult<string, number>[]
 };
 
-type NutrientStatResult<T, U> = {
+export type NutrientStatResult<T, U> = {
     nutrient: T;
     avgValue: U;
     thresholdValue: U;

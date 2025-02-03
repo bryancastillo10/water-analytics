@@ -11,17 +11,23 @@ const StatisticsProfileCharts = () => {
     
     const { data: rawStats, isLoading } = useGetNutrientStatsQuery(safeSiteId, { skip: !siteId });
     
-    const statData = rawStats ?? {
+    const statsDataWithSiteName = rawStats ?? {
         siteName: "No site name",
         nutrientStatus: []
     };
+    
+    const nutrientData = statsDataWithSiteName.nutrientStatus;
+    
     return (
       <>
         <BarChart
-            statData={statData}
+            statData={statsDataWithSiteName}
             loading={isLoading}
         />
-        <GaugeChart/>
+        <GaugeChart
+            statData={nutrientData}
+            loading={isLoading}
+        />
      </>
   )
 }
