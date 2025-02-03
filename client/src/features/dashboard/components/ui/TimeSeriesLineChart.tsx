@@ -21,8 +21,9 @@ const TimeSeriesLineChart = ({
 }: TimeSeriesLineChartProps) => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);
 
-  return (    
-       <ResponsiveContainer className="pt-4" width="100%" height="90%">
+  return (
+    <section className="w-full h-[250px] lg:h-[300px]">    
+       <ResponsiveContainer className="pt-4" width="100%" height="100%">
         <LineChart
           data={timeSeriesData}
           margin={{
@@ -62,6 +63,7 @@ const TimeSeriesLineChart = ({
           />
         </LineChart>
       </ResponsiveContainer>
+    </section>    
   )
 }
 

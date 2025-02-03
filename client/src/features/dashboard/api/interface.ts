@@ -4,6 +4,7 @@ export interface ITimeSeries {
     value: number | null;
 }
 
+// Time Series Line Chart
 export interface ITimeSeriesRequest {
     id: string;
     parameter: string;
@@ -11,6 +12,7 @@ export interface ITimeSeriesRequest {
     endDate?: string;
 }
 
+// UPI Card
 export interface IDashboardCardResponse {
     parameter: string;
     averageValue: number;
@@ -18,6 +20,8 @@ export interface IDashboardCardResponse {
     unit: string;
     status: string;
 }
+
+// Site Percentage Pie Chart
 export interface ISitePercentage {
     totalSites: number;
     percentages: PercentageInfo[];
@@ -27,4 +31,34 @@ export interface ISitePercentage {
 type PercentageInfo = {
     sourceType: WaterSourceType;
     percentage: string;
+}
+
+// Nutrient Statistics Bar Chart & Gauge Chart
+export interface INutrientStatsResponse {
+    siteName: string;
+    nutrientStatus: NutrientStatResult<string, number>[]
+};
+
+export type NutrientStatResult<T, U> = {
+    nutrient: T;
+    avgValue: U;
+    thresholdValue: U;
+    status: T;
+}
+
+
+// Site Statistics Representation Radar Chart
+type StatType = "average" | "maximum" | "minimum";
+type ParamsType = "pH" | "temperature" | "dissolvedOxygen" |
+    "totalCOD" | "suspendedSolids" | "fecalColiform" | 
+    "ammonia" | "nitrates" | "phosphates"
+
+export interface ISiteStatResponse<T> {
+    siteName: string;
+    result: Record<StatType, Record<ParamsType, T>>;
+}
+
+export interface ISiteStatRequest {
+    siteId: string;
+    statType: string;
 }

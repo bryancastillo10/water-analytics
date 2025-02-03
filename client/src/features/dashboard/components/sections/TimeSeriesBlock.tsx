@@ -1,8 +1,7 @@
 import useTimeSeriesFilter from "@/features/dashboard/hooks/useTimeSeriesFilter";
-import { DrawerLoadingState } from "@/components/layout";
-
 import TimeSeriesFilter from "@/features/dashboard/components/ui/TimeSeriesFilter";
 import TimeSeriesLineChart from "@/features/dashboard/components/ui/TimeSeriesLineChart";
+import { LoadingBlock } from "@/components/common";
 
 const TimeSeriesBlock = () => {
   const {
@@ -20,10 +19,9 @@ const TimeSeriesBlock = () => {
 
   if (timeSeriesLoading) {
     return (
-      <div className="flex justify-items-center items-center col-span-1 xl:col-span-2 w-full h-[350px]">
-        <DrawerLoadingState />
-      </div>)
-  }
+      <LoadingBlock
+        layoutClassName="col-span-1 xl:col-span-2" />
+    )}
 
   return (
     <div className="col-span-1 xl:col-span-2 w-full">

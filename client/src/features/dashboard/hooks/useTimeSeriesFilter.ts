@@ -5,7 +5,8 @@ import {
     useGetDateFiltersQuery,
     useGetTimeSeriesQuery
 } from "@/features/dashboard/api/dashboardApi";
- 
+import { skipToken } from "@reduxjs/toolkit/query";
+
 import { useAppSelector } from "@/lib/redux/hooks";
 import { formatDate } from "@/features/waterquality/lib/formatDate";
 import { parameterRecord } from "@/features/dashboard/utils/parameterMapping";
@@ -20,17 +21,18 @@ const useTimeSeriesFilter = () => {
     const [selectedDateRange, setSelectedDateRange] = useState<IDateRange>({ startDate: undefined, endDate: undefined } as unknown as IDateRange);
 
     const siteId = useAppSelector((state) => state.dashboard?.selectedSiteId);
+    const safeSiteId = siteId ?? "";
     const mappedParameter = parameterRecord[selectedParameter] || selectedParameter;
 
     const { data: parameterList, isLoading: parameterListLoading } = useGetParameterFiltersQuery();
-    const { data: dateList, isLoading: dateListLoading, refetch: refetchDateList } = useGetDateFiltersQuery(siteId!);
+    const { data: dateList, isLoading: dateListLoading, refetch: refetchDateList } = useGetDateFiltersQuery(safeSiteId,{skip: !siteId});
 
-    const { data: rawTimeSeries, isLoading: timeSeriesLoading, refetch } = useGetTimeSeriesQuery({
-        id: siteId!,
+    const { data: rawTimeSeries, isLoading: timeSeriesLoading, refetch } = useGetTimeSeriesQuery( siteId ? {
+        id: siteId,
         parameter: mappedParameter,
-        startDate: selectedDateRange.startDate!,
-        endDate: selectedDateRange.endDate!
-    });
+        startDate: selectedDateRange.startDate || "",
+        endDate: selectedDateRange.endDate || ""
+    } : skipToken);
     
     useEffect(() => {
         if (rawTimeSeries) {
