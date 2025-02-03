@@ -1,4 +1,5 @@
-import type { INutrientStatsResponse } from "../../api/interface";
+import type { INutrientStatsResponse } from "@/features/dashboard/api/interface";
+import { LoadingBlock } from "@/components/common";
 
 interface BarChartProps {
   statData: INutrientStatsResponse;
@@ -10,8 +11,7 @@ const BarChart = ({ statData, loading }: BarChartProps) => {
   
   if (loading) {
     return (
-      <div className="col-span-1 xl:col-span-1  h-[350px] animate-pulse bg-indigo-500">
-      </div>
+      <LoadingBlock layoutClassName="col-span-1" />
   )};
   
   return (
