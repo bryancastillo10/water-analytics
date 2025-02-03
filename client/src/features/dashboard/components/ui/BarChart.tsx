@@ -1,4 +1,19 @@
-const BarChart = () => {
+import type { INutrientStatsResponse } from "../../api/interface";
+
+interface BarChartProps {
+  statData: INutrientStatsResponse;
+  loading: boolean;
+}
+
+const BarChart = ({ statData, loading }: BarChartProps) => {
+  console.log(statData);
+  
+  if (loading) {
+    return (
+      <div className="col-span-1 xl:col-span-1  h-[350px] animate-pulse bg-indigo-500">
+      </div>
+  )};
+  
   return (
     <div className="col-span-1 xl:col-span-1  h-[350px] bg-indigo-500">
         <div className="flex flex-col justify-center items-center h-full">

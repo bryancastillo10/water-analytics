@@ -59,7 +59,7 @@ export const dashboardApi = createApi({
             }),
             providesTags: [TagType.DASHBOARD]
         }),
-        getSiteStatSummary: build.query<ISiteStatResponse, ISiteStatRequest>({
+        getSiteStatSummary: build.query<ISiteStatResponse<number>, ISiteStatRequest>({
             query: ({siteId, statType}) => ({
                 url: `/radar/site/${siteId}?statType=${statType}`
             }),
