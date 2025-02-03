@@ -4,6 +4,7 @@ import useSiteQuery from "@/features/dashboard/hooks/useSiteQuery";
 import {
   TimeSeriesBlock,
   BarChartBlock,
+  GaugeChartBlock,
   PieChartBlock,
   RadarChartBlock,
   DashboardCardBlock
@@ -37,6 +38,7 @@ const DashboardPage = () => {
         <PieChartBlock />
         <RadarChartBlock />
         <BarChartBlock />
+        <GaugeChartBlock />
       </div>
     </main>
   );
