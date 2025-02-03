@@ -3,8 +3,7 @@ import { MapPin, Funnel } from "@phosphor-icons/react";
 import useSiteQuery from "@/features/dashboard/hooks/useSiteQuery";
 import {
   TimeSeriesBlock,
-  BarChartBlock,
-  GaugeChartBlock,
+  StatisticsProfileCharts,
   PieChartBlock,
   RadarChartBlock,
   DashboardCardBlock
@@ -37,8 +36,7 @@ const DashboardPage = () => {
         <TimeSeriesBlock/>
         <PieChartBlock />
         <RadarChartBlock />
-        <BarChartBlock />
-        <GaugeChartBlock />
+        <StatisticsProfileCharts />
       </div>
     </main>
   );

@@ -1,6 +1,6 @@
 
 
-const GaugeChartBlock = () => {
+const GaugeChart = () => {
   return (
     <div className="col-span-1 xl:col-span-1  h-[350px] bg-teal-500">
         <div className="flex flex-col justify-center items-center h-full">
@@ -13,4 +13,4 @@ const GaugeChartBlock = () => {
   )
 }
 
-export default GaugeChartBlock;
+export default GaugeChart;
