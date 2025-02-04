@@ -2,7 +2,8 @@ import { DashboardRepository } from "@/dashboard/dashboard.repository";
 import { GetTimeSeriesDataRequest } from "@/dashboard/core/interface/IDashboardRepository";
 import { NotFoundError, ValidationError } from "@/infrastructure/errors/customErrors";
 import { parameterRecord, parameterCardDisplayNames } from "@/dashboard/utils/parameterRecord";
-import type { NutrientKey } from "@/dashboard/core/interface/IDashboardRepository";
+
+import type { NutrientKey, IParameterGroups } from "@/dashboard/core/interface/IDashboardRepository";
 
 export class DashboardService {
     constructor(private readonly dashboardRepository: DashboardRepository) { }
@@ -65,6 +66,7 @@ export class DashboardService {
         return { totalSites, percentages}
     };
 
+    // To be replaced soon
     async nutrientStats(siteId: string) {
         if (!siteId) {
             throw new NotFoundError("Site ID");
@@ -103,6 +105,52 @@ export class DashboardService {
         
         return nutrientDataBySite;
     };
+    
+    
+async getParameterStatistics(siteId: string, paramGroup: string) {
+    if (!siteId) {
+        throw new NotFoundError("Site ID");
+    }
+
+    const parameterGroups: IParameterGroups = {
+        basic: ["pH", "temperature", "dissolvedOxygen"],
+        organic: ["totalCOD", "suspendedSolids", "fecalColiform"],
+        nutrients: ["ammonia", "nitrates", "phosphates"]
+    };
+
+    const parameters = parameterGroups[paramGroup as keyof IParameterGroups];
+    if (!parameters) {
+        throw new ValidationError(`Invalid parameter group: ${paramGroup}`);
+    }
+
+    const parameterData = await this.dashboardRepository.nutrientStatsBySite(siteId);
+
+    const avgAndStatusData = await Promise.all(
+        parameters.map(async (parameter) => {
+            const parameterName = parameterRecord[parameter] || parameter;
+            const thresholdData = await this.dashboardRepository.getThresholdValue(parameterName);
+
+            if (!thresholdData) {
+                throw new ValidationError(`Threshold data for ${parameter} not found`);
+            }
+
+            const thresholdValue = thresholdData.value ?? 0;
+            const avgValue = (parameterData.average as Record<string,number>)[parameter] ;
+
+            const status = avgValue > thresholdValue ? "Above Threshold" : "Pass";
+
+            return {
+                parameter,
+                avgValue,
+                thresholdValue,
+                status
+            };
+        })
+    );
+
+    return avgAndStatusData;
+    }
+
 
     async getStatPerSite(siteId:string, statType:string) { 
         if (!siteId) {
