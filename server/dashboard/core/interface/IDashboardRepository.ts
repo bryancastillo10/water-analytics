@@ -63,3 +63,9 @@ export interface IAggregationFields {
 }
 
 export type NutrientKey = "ammonia" | "nitrates" | "phosphates"  
+
+export interface IParameterGroups  {
+    basic: ["pH", "temperature", "dissolvedOxygen"],
+    organic: ["totalCOD", "suspendedSolids", "fecalColiform"],
+    nutrients: ["ammonia", "nitrates", "phosphates"]
+}

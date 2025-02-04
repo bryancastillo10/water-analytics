@@ -12,6 +12,7 @@ export class DashboardController {
         this.nutrientStats = this.nutrientStats.bind(this);
         this.getStatDataPerSite = this.getStatDataPerSite.bind(this);
         this.getParameterStatus = this.getParameterStatus.bind(this);
+        this.getParamStats = this.getParamStats.bind(this);
     };
 
     async getParameterFilters(req: CustomRequest, res: Response, next: NextFunction) {
@@ -77,6 +78,7 @@ export class DashboardController {
         }
     };
 
+    // To be replaced soon
     async nutrientStats(req: Request, res: Response, next: NextFunction) {
         try {
             const siteId = req.params.siteId;
@@ -84,6 +86,21 @@ export class DashboardController {
             const nutrientStats = await this.dashboardService.nutrientStats(siteId);
 
             res.status(200).json(nutrientStats);
+        }
+        catch (error) {
+            next(error);
+        }
+    };
+    
+    
+    async getParamStats(req: Request, res: Response, next: NextFunction) {
+        try {
+            const siteId = req.params.siteId;
+            const parameter = req.query.paramgroup as string || "nutrients";
+            
+            const avgAndStatusData = await this.dashboardService.getParameterStatistics(siteId, parameter);
+            
+            res.status(200).json(avgAndStatusData);
         }
         catch (error) {
             next(error);
