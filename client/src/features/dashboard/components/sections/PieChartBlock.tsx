@@ -25,7 +25,11 @@ const PieChartBlock = () => {
   }) ?? [];
 
   useEffect(() => {
-    refetch();
+      const timeout = setTimeout(() => {
+            refetch();
+    }, 2000);
+  
+    return () => clearTimeout(timeout);
   }, [data]);
 
   if (isLoading) {

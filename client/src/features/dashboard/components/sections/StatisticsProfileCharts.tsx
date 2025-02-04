@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useAppSelector } from "@/lib/redux/hooks";
 import { useGetNutrientStatsQuery } from "@/features/dashboard/api/dashboardApi";
 
@@ -9,7 +10,18 @@ const StatisticsProfileCharts = () => {
     const siteId = useAppSelector((state) => state.dashboard.selectedSiteId);
     const safeSiteId = siteId ?? "";
     
-    const { data: rawStats, isLoading } = useGetNutrientStatsQuery(safeSiteId, { skip: !siteId });
+    const { data: rawStats, isLoading, refetch } = useGetNutrientStatsQuery(safeSiteId, { skip: !siteId });
+    
+    useEffect(() => {
+        if (!siteId) return;
+        
+        const timeout = setTimeout(() => {
+            refetch();
+        }, 2500);
+        
+        return () => clearTimeout(timeout);
+    }, [rawStats, siteId]);
+    
     
     const statsDataWithSiteName = rawStats ?? {
         siteName: "No site name",
