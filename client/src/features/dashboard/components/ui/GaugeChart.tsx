@@ -1,28 +1,73 @@
-import { LoadingBlock } from "@/components/common";
-import type { NutrientStatResult } from "@/features/dashboard/api/interface";
+import {  ResponsiveContainer,Pie, PieChart, Cell, Tooltip } from "recharts";
 
-interface GaugeChartProps {
-  statData: NutrientStatResult<string, number>[];
-  loading: boolean;
-};
+import Needle from "@/features/dashboard/components/tooltips/Needle";
+import GaugeChartToolTip from "@/features/dashboard/components/tooltips/GaugeChartTooltip";
 
-const GaugeChart = ({ statData, loading }: GaugeChartProps) => {
-  
-  console.log("Gauge Chart Data", statData);
-  
-  if (loading) {
-    return (
-      <LoadingBlock layoutClassName="col-span-1 xl:col-span-1"/>
-  )}
+interface GaugeChartProps<T> {
+    percentage: string;
+    cx?: T;
+    cy?: T;
+    innerRad?: T;
+    outerRad?: T;
+    radian: T;
+    theme?: boolean;
+}
+
+const GaugeChart = (props: GaugeChartProps<number>) => {
+    const
+    { percentage,
+      cx = 100,
+      cy = 100,
+      innerRad = 60,
+      outerRad = 90,
+      radian,
+      theme = false,
+    } = props;
+    
+  const percentageValue = parseFloat(percentage); 
+  const totalValue = 100; 
+  const filledValue = Math.min(percentageValue, totalValue); 
+  const remainingValue = totalValue - filledValue;
+
+  const data = [
+    { name: "Loading", value: filledValue },
+    { name: "Limit", value: remainingValue },
+  ];
+
+  const COLORS = ["#006DA3", "#13B6F650"]; 
+    
   return (
-    <div className="col-span-1 xl:col-span-1  h-[350px] bg-teal-500">
-        <div className="flex flex-col justify-center items-center h-full">
-          <h1 className="text-2xl">Gauge Chart of Nutrients</h1>
-          <p className="text-center">
-            Indicating the threshold versus avg value comparison
-          </p>
-        </div>
-    </div>
+    <ResponsiveContainer width="100%" height="100%">
+        <PieChart width={200} height={120}>
+           <Pie
+              data={data}
+              startAngle={180} 
+              endAngle={0} 
+              cx={cx}
+              cy={cy} 
+              innerRadius={innerRad}
+              outerRadius={outerRad}
+              dataKey="value"
+          >
+              {data.map((_, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index]} />
+              ))}
+          </Pie>
+          <Tooltip content={<GaugeChartToolTip />} />
+          <svg>
+            <Needle
+              value={filledValue} 
+              data={data} 
+              radian={radian} 
+              cx={cx} 
+              cy={cy} 
+              innerRad={innerRad} 
+              outerRad={outerRad} 
+              color={theme ? "#C2C2C2": "#545454"}
+            />
+          </svg>
+        </PieChart>
+    </ResponsiveContainer>
   )
 }
 

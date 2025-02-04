@@ -17,7 +17,10 @@ const LineChartToolTip = ({
         const data = payload[0]?.value 
         return (
             <div className={`${theme ? "bg-darkGray border-darkGray":"bg-light border-primary"} border shadow-md rounded-md px-4 py-3`}>
-                <p className="text-sm">{`Date: ${label}`}</p>
+                <p className="text-sm">
+                    <span className="font-semibold mr-1">Date:</span>
+                    {label}
+                </p>
                 <div className="flex items-center gap-2">
                     <h1 className="font-semibold">{selectedParameter}</h1>
                     <p className={`${theme ? "text-secondary" : "text-primary"}`}>

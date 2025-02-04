@@ -35,16 +35,25 @@ const useTimeSeriesFilter = () => {
     } : skipToken);
     
     useEffect(() => {
-        if (rawTimeSeries) {
-            refetchDateList();
-        }
-    }, [rawTimeSeries, refetchDateList]);
+        if (!selectedDateRange.startDate || !selectedDateRange.endDate) return;
+
+        const timeout = setTimeout(() => {
+            refetch();
+        }, 1000); 
+
+        return () => clearTimeout(timeout);
+    }, [selectedDateRange, refetch]);
+
 
     useEffect(() => {
-        if (selectedDateRange.startDate && selectedDateRange.endDate) {
-          refetch();
-        }
-      }, [selectedDateRange.startDate, selectedDateRange.endDate, refetch]);
+        if (!rawTimeSeries) return;
+
+        const timeout = setTimeout(() => {
+            refetchDateList();
+        }, 1000); 
+
+        return () => clearTimeout(timeout);
+    }, [rawTimeSeries, refetchDateList]);
 
     const parameterOptions = parameterList || ["pH"];
     const dateOptions = dateList?.map((date) => formatDate(date.toString())) || ["2020-01-01"];
@@ -60,11 +69,11 @@ const useTimeSeriesFilter = () => {
         }));
     };
 
-    const timeSeriesData = rawTimeSeries || [{ date: "NA", value: 0 }]; 
-    const processedTimeSeriesData = timeSeriesData.map(item => ({
-        date: new Date(item.date).toLocaleDateString(),
-        value: item.value || 0
-      }));
+   const processedTimeSeriesData = [...(rawTimeSeries || [{ date: "NA", value: 0 }])].map(item => ({
+    date: new Date(item.date).toLocaleDateString(),
+    value: item.value || 0
+    }));
+
 
     return {
         selectedParameter,

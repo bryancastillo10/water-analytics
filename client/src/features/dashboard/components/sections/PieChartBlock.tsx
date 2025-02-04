@@ -9,12 +9,13 @@ import {
   Tooltip
 } from "recharts";
 
-import PieChartHeader from "@/features/dashboard/components/ui/PieChartHeader";
 import PieChartToolTip from "@/features/dashboard/components/tooltips/PieChartToolTip";
+import ChartHeader from "@/features/dashboard/components/ui/ChartHeader";
+import { MapPin } from "@phosphor-icons/react";
+import { colorTheme } from "@/features/dashboard/utils/colorTheme";
 
 const PieChartBlock = () => {
   const { data, isLoading, refetch } = useGetSitePercentageQuery();
-  const COLORS = ['#006da3', '#00C49F', '#F0E442', '#FF8042','#5D3A9B','#8E7A65'];
 
   const siteData = data?.percentages.map((site) => {
     return {
@@ -24,7 +25,11 @@ const PieChartBlock = () => {
   }) ?? [];
 
   useEffect(() => {
-    refetch();
+      const timeout = setTimeout(() => {
+            refetch();
+    }, 2000);
+  
+    return () => clearTimeout(timeout);
   }, [data]);
 
   if (isLoading) {
@@ -37,11 +42,13 @@ const PieChartBlock = () => {
 
   return (
       <div className="col-span-1 h-[350px]">
-        <PieChartHeader 
-          totalSites={data?.totalSites || "No data retrieved"}
+        <ChartHeader
+          h1="Distribution of Water Sources Across Sites"
+          icon={MapPin}
+          h2= "Total Sites"
+          totalSites={data?.totalSites || "No data found"}
         />
-        
-        <ResponsiveContainer className="pt-4" width="100%" height="90%">
+        <ResponsiveContainer width="100%" height="90%">
           <PieChart
             key={siteData.length}
             width={800}
@@ -63,7 +70,7 @@ const PieChartBlock = () => {
                           hover:translate-x-[8px] 
                           hover:translate-y-[4px] duration-500 ease-out"
                 key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]} />
+                fill={colorTheme[index % colorTheme.length]} />
               ))}
             </Pie>
             <Tooltip content={<PieChartToolTip/>}/>
