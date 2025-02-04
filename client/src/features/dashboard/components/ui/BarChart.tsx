@@ -15,7 +15,9 @@ import {
 } from "recharts";
 
 import BarChartToolTip from "@/features/dashboard/components/tooltips/BarChartToolTip";
+import ChartHeader from "@/features/dashboard/components/ui/ChartHeader";
 import { formatLabel } from "@/features/dashboard/utils/formatLabel";
+import { colorTheme } from "@/features/dashboard/utils/colorTheme";
 
 interface BarChartProps {
   statData: INutrientStatsResponse;
@@ -29,8 +31,6 @@ const BarChart = ({ statData, loading }: BarChartProps) => {
 
   const siteName = statData.siteName;
 
-  const COLORS = ["#006da3", "#00C49F", "#F0E442", "#FF5733", "#8A2BE2"]; // Dynamic colors
-
 
   const barData = statData.nutrientStatus.map((stat) => ({
     parameter: formatLabel(stat.nutrient),
@@ -39,15 +39,11 @@ const BarChart = ({ statData, loading }: BarChartProps) => {
 
   return (
     <div className="col-span-1 xl:col-span-1 h-[350px]">
-      <section className="flex flex-col gap-x-2 mb-2">
-        <h1 className="text-md font-semibold tracking-wide">Nutrients Profile</h1>
-        <div className="flex justify-start items-center gap-4">
-          <h1 className="flex items-center gap-1 text-sm mt-1">
-            <MapPinArea size="20" />
-            {siteName}
-          </h1>
-        </div>
-      </section>
+      <ChartHeader
+        h1="Nutrients Profile"
+        icon={MapPinArea}
+        h2={siteName}
+      />
 
       <ResponsiveContainer width="100%" height="90%">
         <BarChartRecharts
@@ -67,7 +63,7 @@ const BarChart = ({ statData, loading }: BarChartProps) => {
             >
             {barData.map((_, index) => (
               <Cell
-                key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                key={`cell-${index}`} fill={colorTheme[index % colorTheme.length]} />
             ))}
           </Bar>
         </BarChartRecharts>

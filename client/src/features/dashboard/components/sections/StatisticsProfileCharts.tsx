@@ -2,8 +2,7 @@ import { useAppSelector } from "@/lib/redux/hooks";
 import { useGetNutrientStatsQuery } from "@/features/dashboard/api/dashboardApi";
 
 import BarChart from "@/features/dashboard/components/ui/BarChart";
-import GaugeChart from "@/features/dashboard/components/ui/GaugeChart";
-
+import GaugeCard from "@/features/dashboard/components/ui/GaugeCard";
 
 const StatisticsProfileCharts = () => {
     const siteId = useAppSelector((state) => state.dashboard.selectedSiteId);
@@ -24,10 +23,9 @@ const StatisticsProfileCharts = () => {
             statData={statsDataWithSiteName}
             loading={isLoading}
         />
-        <GaugeChart
-            statData={nutrientData}
-            loading={isLoading}
-        />
+        <div>
+            <GaugeCard />
+        </div>
      </>
   )
 }
