@@ -1,21 +1,39 @@
+import type { NutrientStatResult } from "@/features/dashboard/api/interface"
+import GaugeChart from "@/features/dashboard/components/ui/GaugeChart";
+
+import useGaugeConfig from "@/features/dashboard/hooks/useGaugeConfig";
+import { formatLabel } from "@/features/dashboard/utils/formatLabel";
+import { getStatusStyle } from "@/features/dashboard/utils/getStatusStyle";
 
 
-const GaugeCard = () => {
-  return (
-    <div className="grid grid-cols-5 h-[120px] border border-dark">
-          <div className="col-span-3 bg-teal-500">
-              <h1 className="flex justify-center items-center h-full">
-                  Gauge Chart Here
-              </h1>
-          </div>
-          <div className="col-span-2 bg-indigo-400">
-              <h1 className="font-medium text-center p-4 text-xl">Ammonia</h1>
-              
-              <p className="text-center text-lg font-bold">PASS</p>
-          
-          </div>
-    </div>
-  )
-}
+const GaugeCard = (props: NutrientStatResult<string,number>) => {
+    const { nutrient, status } = props;
+    const { dataToPercentage } = useGaugeConfig();
+    const pieData = dataToPercentage(props);
+    
+    const statusStyle = getStatusStyle(status);
+    const Icon = statusStyle.trendIcon;
+    return (
+        <div className="grid grid-cols-5 h-[120px] rounded-xl border 
+        border-neutral shadow-md px-2">
+            <div className="col-span-3">
+                <GaugeChart
+                    name={pieData.name}
+                    percentage={pieData.percentage}
+                    status={pieData.status}
+                />
+            </div>
+            <div className="col-span-2">
+                <h1 className="font-medium text-center p-4 text-lg">{formatLabel(nutrient)}</h1>
+                
+                <div className="flex items-center gap-2">
+                    <Icon size="30" className={`${statusStyle.colorClass}`} />
+                    <p className={`text-left font-bold leading-tight tracking-wider ${statusStyle.colorClass}`}>
+                        {status.toUpperCase()}
+                    </p>
+                </div>
+            </div>
+        </div>
+    )}
 
 export default GaugeCard;

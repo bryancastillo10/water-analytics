@@ -1,6 +1,15 @@
-
+import type { NutrientStatResult } from "@/features/dashboard/api/interface";
 
 const useGaugeConfig = () => {
+    const dataToPercentage = (data: NutrientStatResult<string, number>) => {
+        const calcPercentage = Math.min((data.avgValue / data.thresholdValue) * 100, 100).toFixed(2);
+        return ({
+            name: data.nutrient,
+            percentage: calcPercentage,
+            status: data.status
+        })
+    };
+    
     const radian = Math.PI / 180;
     
     const cx = 150;
@@ -9,20 +18,15 @@ const useGaugeConfig = () => {
     const innerRad = 50;
     const outerRad = 100;
     
-    const mockGaugeData = {
-        nutrient: "Ammonia",
-        avgValue: 1.78,
-        thresholdValue: 2.5,
-        status: "Pass"
-    }
+
     
     return {
-        mockGaugeData,
         radian,
         cx,
         cy,
         innerRad,
-        outerRad
+        outerRad,
+        dataToPercentage
     }
 }
 

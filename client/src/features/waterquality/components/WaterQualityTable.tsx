@@ -68,14 +68,14 @@ const WaterQualityTable = ({ data }: WaterQualityTableProps) => {
                       flex items-center gap-2 p-2 rounded-xl ${theme ? "bg-secondary/80" : "bg-light/80"}`}
                     >
                       <PencilSimpleLine
-                        onClick={() => updateMeasurementDrawer(row.id)}
+                        onClick={() => updateMeasurementDrawer(row.original.id)}
                         weight="fill"
                         size="20"
                         className="hover:scale-110 duration-150 ease-in-out cursor-pointer"
                         color={theme ? "#F6F5F4" : "#006da3"}
                       />
                       <TrashSimple
-                        onClick={() => deleteMeasurementDrawer(row.id)}
+                        onClick={() => deleteMeasurementDrawer(row.original.id)}
                         weight="fill"
                         size="20"
                         className="hover:scale-110 duration-150 ease-in-out cursor-pointer"
