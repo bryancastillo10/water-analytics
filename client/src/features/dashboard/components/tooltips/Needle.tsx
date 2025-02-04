@@ -1,6 +1,6 @@
 interface NeedleProps<T> {
   value: T;
-  data: { name: string; value: T; color: string }[];
+  data: { name: string; value: T; color?: string }[];
   radian: T;
   cx: T;
   cy: T;
@@ -9,22 +9,9 @@ interface NeedleProps<T> {
   color?: string;
 }
 
-import React from "react";
-
-interface NeedleProps<T> {
-  value: T;
-  data: { name: string; value: T; color: string }[];
-  radian: T;
-  cx: T;
-  cy: T;
-  innerRad: T;
-  outerRad: T;
-  color?: string;
-}
-
-const Needle: React.FC<NeedleProps<number>> = ({ value, data, radian, cx, cy, innerRad, outerRad, color = "#C2C2C2" }) => {
+const Needle= ({ value, data, radian, cx, cy, innerRad, outerRad, color = "#C2C2C2" }: NeedleProps<number>) => {
   let total = data.reduce((sum, v) => sum + v.value, 0); 
-  const ang = 180.0 * (1 - value / total);
+  const ang = 180 * (1 - value / total);
   const length = (innerRad + 2 * outerRad) / 3;
   const sin = Math.sin(-radian * ang);
   const cos = Math.cos(-radian * ang);

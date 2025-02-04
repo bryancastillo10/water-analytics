@@ -8,19 +8,22 @@ import { getStatusStyle } from "@/features/dashboard/utils/getStatusStyle";
 
 const GaugeCard = (props: NutrientStatResult<string,number>) => {
     const { nutrient, status } = props;
-    const { dataToPercentage } = useGaugeConfig();
+    const { cx, cy, innerRadius, outerRadius, dataToPercentage } = useGaugeConfig();
     const pieData = dataToPercentage(props);
     
     const statusStyle = getStatusStyle(status);
     const Icon = statusStyle.trendIcon;
     return (
-        <div className="grid grid-cols-5 h-[120px] rounded-xl border 
+        <div className="grid grid-cols-5 h-[120px] rounded-xl border bg-white/80
         border-neutral shadow-md px-2">
             <div className="col-span-3">
                 <GaugeChart
-                    name={pieData.name}
+                    cx={cx}
+                    cy={cy}
+                    innerRad={innerRadius}
+                    outerRad={outerRadius}
                     percentage={pieData.percentage}
-                    status={pieData.status}
+                    radian={Math.PI/180}
                 />
             </div>
             <div className="col-span-2">

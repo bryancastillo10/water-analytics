@@ -10,22 +10,16 @@ const useGaugeConfig = () => {
         })
     };
     
-    const radian = Math.PI / 180;
-    
-    const cx = 150;
-    const cy = 200;
-    
-    const innerRad = 50;
-    const outerRad = 100;
-    
-
-    
+    const cx = 100;
+    const cy = 100;
+    const innerRadius = 60;
+    const outerRadius = 90;
+      
     return {
-        radian,
         cx,
         cy,
-        innerRad,
-        outerRad,
+        innerRadius,
+        outerRadius,
         dataToPercentage
     }
 }

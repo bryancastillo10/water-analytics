@@ -14,7 +14,7 @@ export const getStatusStyle = (status: string) => {
         }
       case "Above Threshold":
         return {
-          trendIcon: ChartLineDown,
+          trendIcon: ChartLineUp,
           colorClass: "text-rose-300"
         }
       case "Acidic":
