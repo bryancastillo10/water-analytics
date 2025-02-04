@@ -54,7 +54,12 @@ const BarChart = ({ statData, loading }: BarChartProps) => {
         >
           <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="parameter" />
-            <YAxis />
+          <YAxis label={{
+            value: "Concentration (mg/L)",
+            angle: -90,
+            position: 'insideLeft',
+            style: { textAnchor: 'middle' }
+           }} />
           <Tooltip content={<BarChartToolTip/>} />
             <Bar
               dataKey="avgValue"

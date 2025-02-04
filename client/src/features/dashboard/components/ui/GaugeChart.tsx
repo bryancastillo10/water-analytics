@@ -1,5 +1,7 @@
-import {  ResponsiveContainer,Pie, PieChart, Cell } from "recharts";
+import {  ResponsiveContainer,Pie, PieChart, Cell, Tooltip } from "recharts";
+
 import Needle from "@/features/dashboard/components/tooltips/Needle";
+import GaugeChartToolTip from "@/features/dashboard/components/tooltips/GaugeChartTooltip";
 
 interface GaugeChartProps<T> {
     percentage: string;
@@ -8,6 +10,7 @@ interface GaugeChartProps<T> {
     innerRad?: T;
     outerRad?: T;
     radian: T;
+    theme?: boolean;
 }
 
 const GaugeChart = (props: GaugeChartProps<number>) => {
@@ -17,7 +20,8 @@ const GaugeChart = (props: GaugeChartProps<number>) => {
       cy = 100,
       innerRad = 60,
       outerRad = 90,
-      radian
+      radian,
+      theme = false,
     } = props;
     
   const percentageValue = parseFloat(percentage); 
@@ -26,11 +30,11 @@ const GaugeChart = (props: GaugeChartProps<number>) => {
   const remainingValue = totalValue - filledValue;
 
   const data = [
-    { name: "Filled", value: filledValue },
-    { name: "Remaining", value: remainingValue },
+    { name: "Loading", value: filledValue },
+    { name: "Limit", value: remainingValue },
   ];
 
-  const COLORS = ["#006da3", "#13b6f650"]; 
+  const COLORS = ["#006DA3", "#13B6F650"]; 
     
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -49,6 +53,7 @@ const GaugeChart = (props: GaugeChartProps<number>) => {
                   <Cell key={`cell-${index}`} fill={COLORS[index]} />
               ))}
           </Pie>
+          <Tooltip content={<GaugeChartToolTip />} />
           <svg>
             <Needle
               value={filledValue} 
@@ -58,7 +63,7 @@ const GaugeChart = (props: GaugeChartProps<number>) => {
               cy={cy} 
               innerRad={innerRad} 
               outerRad={outerRad} 
-              color="#545454"
+              color={theme ? "#C2C2C2": "#545454"}
             />
           </svg>
         </PieChart>
