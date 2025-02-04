@@ -9,8 +9,9 @@ import {
   Tooltip
 } from "recharts";
 
-import PieChartHeader from "@/features/dashboard/components/ui/PieChartHeader";
 import PieChartToolTip from "@/features/dashboard/components/tooltips/PieChartToolTip";
+import ChartHeader from "../ui/ChartHeader";
+import { MapPin } from "@phosphor-icons/react";
 
 const PieChartBlock = () => {
   const { data, isLoading, refetch } = useGetSitePercentageQuery();
@@ -37,10 +38,12 @@ const PieChartBlock = () => {
 
   return (
       <div className="col-span-1 h-[350px]">
-        <PieChartHeader 
-          totalSites={data?.totalSites || "No data retrieved"}
+        <ChartHeader
+          h1="Distribution of Water Sources Across Sites"
+          icon={MapPin}
+          h2= "Total Sites"
+          totalSites={data?.totalSites || "No data found"}
         />
-        
         <ResponsiveContainer className="pt-4" width="100%" height="90%">
           <PieChart
             key={siteData.length}
