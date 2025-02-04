@@ -1,8 +1,21 @@
 import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui"
+import { useAppSelector } from "@/lib/redux/hooks";
 
 const PageNotFound = () => {
     const navigate = useNavigate();
+    const user = useAppSelector((state) => state.user);
+    
+    const role = user?.role.toLowerCase();
+    
+    const handleNavigate = () => {
+        if (user && role) {
+            navigate(`/${role}/dashboard`); 
+        } else {
+            navigate("/"); 
+        }
+    };
+    
     return (
       <main className="w-full h-screen">
           <div className="flex flex-col h-full justify-center items-center m-auto">
@@ -11,7 +24,7 @@ const PageNotFound = () => {
               <p className="mt-2">Looks like you've visited a wrong URL in this app</p>
               <div className="mt-8">
                     <Button
-                        action={() => navigate("/")}
+                        action={handleNavigate}
                         variant="outline"
                     >
                         Go back to home
