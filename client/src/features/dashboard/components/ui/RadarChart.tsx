@@ -25,8 +25,7 @@ const RadarChart = ({ rawData }: RadarChartProps) => {
   }));
 
   return (
-    <div className="w-full max-w-md md:max-w-lg lg:max-w-xl">
-        <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height="100%">
         <RadarRecharts cx={200} cy={200} outerRadius="100%" data={radarData}>
             <PolarGrid />
             <PolarAngleAxis 
@@ -43,8 +42,7 @@ const RadarChart = ({ rawData }: RadarChartProps) => {
             fillOpacity={0.6}
             />
         </RadarRecharts>
-        </ResponsiveContainer>
-    </div>
+      </ResponsiveContainer>
   );
 };
 
