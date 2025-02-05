@@ -99,7 +99,7 @@ export class DashboardController {
             const parameter = req.query.paramgroup as string || "nutrients";
             
             const avgAndStatusData = await this.dashboardService.getParameterStatistics(siteId, parameter);
-            
+
             res.status(200).json(avgAndStatusData);
         }
         catch (error) {

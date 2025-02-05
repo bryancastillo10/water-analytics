@@ -1,13 +1,23 @@
 import { TimeSeriesData } from "@/dashboard/core/entity/timeSeries";
 
 export interface IDashboardRepository {
+    // Filters
     getParameterFilters(userId: string): Promise<string[]>;
-    getDateFilters(siteId:string): Promise<string[]>;
-    timeSeries({siteId,parameter}: GetTimeSeriesDataRequest): Promise<TimeSeriesData[]>;
+    getDateFilters(siteId: string): Promise<string[]>;
+    
+    // For Line Chart
+    timeSeries({ siteId, parameter }: GetTimeSeriesDataRequest): Promise<TimeSeriesData[]>;
+    
+    // For Pie Chart
     getSiteCountByUser(userId: string): Promise<GetSiteCountByUserResponse[]>;
     getTotalSitesByUser(userId: string): Promise<number>;
+    
+    // For Bar and Gauge Chart
     nutrientStatsBySite(siteId: string): Promise<NutrientAvgBySiteResponse>;
-    getStatPerSite(siteId: string, statType:string): Promise<ISiteDataResponse>;
+    getParameterProfile(siteId: string, parameters: string[]): Promise<IParameterProfile>;
+    
+    // For Radar Chart
+    getStatPerSite(siteId: string, statType: string): Promise<ISiteDataResponse>;
     getParameterAvg({ siteId, parameter }: GetTimeSeriesDataRequest): Promise<IParameterAvg>;
 }
 
@@ -56,6 +66,11 @@ export interface IParameters {
 
 export interface IParameterAvg {
     [parameter: string]: number;
+}
+
+export interface IParameterProfile {
+    siteName: string;
+    average: Record<string, number>;
 }
 
 export interface IAggregationFields {

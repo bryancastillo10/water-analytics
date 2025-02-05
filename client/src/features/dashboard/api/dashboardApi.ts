@@ -6,7 +6,9 @@ import type {
     ITimeSeries,
     ITimeSeriesRequest,
     ISiteStatRequest,
-    ISiteStatResponse
+    ISiteStatResponse,
+    IParamStatisticsResponse,
+    IParamStatisticsRequest
 } from "@/features/dashboard/api/interface";
 import { TagType } from "@/lib/mappings/tagTypes";
 
@@ -59,6 +61,11 @@ export const dashboardApi = createApi({
             }),
             providesTags: [TagType.DASHBOARD]
         }),
+        getParameterProfileStatistics: build.query<IParamStatisticsResponse, IParamStatisticsRequest>({
+            query: ({siteId, paramgroup}) => ({
+                url: `/site/${siteId}?paramgroup=${paramgroup}`
+            })
+        }),
         getSiteStatSummary: build.query<ISiteStatResponse<number>, ISiteStatRequest>({
             query: ({siteId, statType}) => ({
                 url: `/radar/site/${siteId}?statType=${statType}`
@@ -75,5 +82,6 @@ export const {
     useGetSitePercentageQuery,
     useGetDashboardCardValuesQuery,
     useGetNutrientStatsQuery,
-    useGetSiteStatSummaryQuery
+    useGetSiteStatSummaryQuery,
+    useGetParameterProfileStatisticsQuery
 } = dashboardApi;

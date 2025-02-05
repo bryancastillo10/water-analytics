@@ -46,6 +46,17 @@ export type NutrientStatResult<T, U> = {
     status: T;
 }
 
+export interface IParamStatisticsResponse {
+    parameter: string;
+    thresholdValue: number;
+    status: string;
+}
+
+export interface IParamStatisticsRequest {
+    siteId: string;
+    paramgroup: "basic" | "organic" | "nutrients"
+}
+
 
 // Site Statistics Representation Radar Chart
 type StatType = "average" | "maximum" | "minimum";

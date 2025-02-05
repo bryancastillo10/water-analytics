@@ -107,9 +107,9 @@ export class DashboardService {
     };
     
     
-async getParameterStatistics(siteId: string, paramGroup: string) {
+async getParameterStatistics(siteId: string, paramGroup: string){
     if (!siteId) {
-        throw new NotFoundError("Site ID");
+        throw new NotFoundError("Site ID is required");
     }
 
     const parameterGroups: IParameterGroups = {
@@ -123,7 +123,7 @@ async getParameterStatistics(siteId: string, paramGroup: string) {
         throw new ValidationError(`Invalid parameter group: ${paramGroup}`);
     }
 
-    const parameterData = await this.dashboardRepository.nutrientStatsBySite(siteId);
+    const parameterData = await this.dashboardRepository.getParameterProfile(siteId, parameters);
 
     const avgAndStatusData = await Promise.all(
         parameters.map(async (parameter) => {
@@ -135,7 +135,8 @@ async getParameterStatistics(siteId: string, paramGroup: string) {
             }
 
             const thresholdValue = thresholdData.value ?? 0;
-            const avgValue = (parameterData.average as Record<string,number>)[parameter] ;
+            const avgValue = parameterData.average[parameter] ?? 0;
+
 
             const status = avgValue > thresholdValue ? "Above Threshold" : "Pass";
 
@@ -149,7 +150,8 @@ async getParameterStatistics(siteId: string, paramGroup: string) {
     );
 
     return avgAndStatusData;
-    }
+}
+
 
 
     async getStatPerSite(siteId:string, statType:string) { 

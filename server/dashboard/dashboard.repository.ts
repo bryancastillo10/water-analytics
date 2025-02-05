@@ -8,7 +8,7 @@ import {
     NutrientAvgBySiteResponse,
     ISiteDataResponse,
     IParameterAvg,
-    IParameters,
+    IParameterProfile,
 } from "@/dashboard/core/interface/IDashboardRepository";
 import { TimeSeriesData } from "@/dashboard/core/entity/timeSeries";
 import { DatabaseError, NotFoundError } from "@/infrastructure/errors/customErrors";
@@ -139,6 +139,7 @@ export class DashboardRepository implements IDashboardRepository {
         }
     }
 
+    // To be replaced soon
     async nutrientStatsBySite(siteId: string): Promise<NutrientAvgBySiteResponse> {
         try {
             const site = await this.prisma.site.findUnique({
@@ -173,6 +174,51 @@ export class DashboardRepository implements IDashboardRepository {
             }
 
             return nutrientData;
+        }
+        catch (error) {
+            if (error instanceof PrismaClientKnownRequestError) {
+                console.error(error.message);
+                throw new DatabaseError("Database error at the nutrientPercentageBySite method");
+            } 
+            throw Error;
+        }
+    }
+    
+    async getParameterProfile(siteId: string, parameters: string[]): Promise<IParameterProfile> {
+        try {
+            const site = await this.prisma.site.findUnique({
+                where: { id: siteId },
+                select: { siteName: true }
+            });
+
+            if (!site) {
+                throw new NotFoundError("Site Name was not found");
+            }
+
+             const avgFields = parameters.reduce((acc, param) => {
+                acc[param] = true;
+                return acc;
+             }, {} as Record<string, boolean>);
+            const parameterAvg = await this.prisma.measurement.aggregate({
+                where: { siteId },
+                _avg: avgFields
+            });
+        
+            const hasData = parameters.some(param => parameterAvg._avg?.[param] !== null);
+
+                if (!hasData) {
+            throw new Error("No data found for the given site ID and parameters");
+        }
+            const averageData: Record<string, number> = {};
+                parameters.forEach(param => {
+                averageData[param] = parameterAvg._avg?.[param] ?? 0;
+            });
+
+            return {
+                siteName: site.siteName,
+                average: averageData
+            };
+        
         }
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
@@ -254,7 +300,7 @@ export class DashboardRepository implements IDashboardRepository {
                     value: true
                 }
             });
-
+            console.log("value",thresholdValue);
             return thresholdValue;
         }
         catch (error) {
