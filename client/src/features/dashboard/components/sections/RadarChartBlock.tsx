@@ -3,6 +3,8 @@ import { Calculator } from "@phosphor-icons/react";
 
 import ChartHeader from "@/features/dashboard/components/ui/ChartHeader";
 import useRadarStat from "@/features/dashboard/hooks/useRadarStat";
+import RadarChart from "@/features/dashboard/components/ui/RadarChart";
+
 import { LoadingBlock } from "@/components/common";
 
 const RadarChartBlock = () => {
@@ -13,7 +15,6 @@ const RadarChartBlock = () => {
           handleChangeSelectStat
   } = useRadarStat();
   
-  console.log("Radar Data", rawStat);
   if (isLoading) {
     return (
       <LoadingBlock layoutClassName="col-span-1 sm:col-span-2 xl:col-span-1 h-[350px]" />);
@@ -24,7 +25,7 @@ const RadarChartBlock = () => {
   };
   
   return (
-    <div className="col-span-1 sm:col-span-2 xl:col-span-1 h-[350px]">
+    <div className="col-span-1 sm:col-span-2 xl:col-span-1 h-[345px]">
       <div className="flex items-center w-full gap-4">
         <ChartHeader
           h1="Site Profile"
@@ -39,6 +40,7 @@ const RadarChartBlock = () => {
           onChangeValue={handleChangeSelectStat}
         />
       </div>
+      {rawStat && (<RadarChart rawData={rawStat} />)}
     </div>
   )
 }

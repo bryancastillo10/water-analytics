@@ -48,14 +48,14 @@ export interface IParamStatisticsRequest {
 
 
 // Site Statistics Representation Radar Chart
-type StatType = "average" | "maximum" | "minimum";
+export type StatType = "average" | "maximum" | "minimum";
 type ParamsType = "pH" | "temperature" | "dissolvedOxygen" |
     "totalCOD" | "suspendedSolids" | "fecalColiform" | 
     "ammonia" | "nitrates" | "phosphates"
 
 export interface ISiteStatResponse<T> {
     siteName: string;
-    result: Record<StatType, Record<ParamsType, T>>;
+    result: Partial<Record<StatType, Record<ParamsType, T>>>;
 }
 
 export interface ISiteStatRequest {

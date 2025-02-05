@@ -33,7 +33,7 @@ const StatisticsProfileCharts = () => {
     }, [rawStats, siteId]);
             
     return (
-      <div className="col-span-2 grid grid-cols-1 xl:grid-cols-2">
+      <div className="col-span-2 grid grid-cols-1 xl:grid-cols-2 gap-y-12 xl:gap-4">
         <BarChart
             statData={statsData}
             loading={isLoading}
