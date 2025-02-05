@@ -19,6 +19,7 @@ export const dashboardApi = createApi({
     }),
     tagTypes:[TagType.DASHBOARD],
     endpoints: (build) => ({
+        // Filters
         getParameterFilters: build.query<string[], void>({
             query: () => ({
                 url: "/filter/parameter"
@@ -31,6 +32,8 @@ export const dashboardApi = createApi({
             }),
             providesTags: [TagType.DASHBOARD],
         }),
+        
+        // Line Chart
         getTimeSeries: build.query<ITimeSeries[], ITimeSeriesRequest>({
             query: ({ id, parameter, startDate, endDate }) => ({
                 url: `/line/site/${id}`,
@@ -42,23 +45,31 @@ export const dashboardApi = createApi({
             }),
             providesTags: [TagType.DASHBOARD],
         }),
-        getSitePercentage: build.query<ISitePercentage, void>({
-            query: () => ({
-                url: "/pie"
-            }),
-            providesTags: [TagType.DASHBOARD],
-        }),
+        
+        // Dashboard KPI Card
         getDashboardCardValues: build.query<IDashboardCardResponse[], string>({
             query: (siteId) => ({
                 url: `/card/site/${siteId}`
             }),
             providesTags: [TagType.DASHBOARD],
         }),
+        
+        // Pie Chart
+        getSitePercentage: build.query<ISitePercentage, void>({
+            query: () => ({
+                url: "/pie"
+            }),
+            providesTags: [TagType.DASHBOARD],
+        }),
+        
+        // Bar & Gauge Chart
         getParameterProfileStatistics: build.query<IParamStatisticsResponse<string,number>, IParamStatisticsRequest>({
             query: ({siteId, paramgroup}) => ({
                 url: `/bar&gauge/site/${siteId}?paramgroup=${paramgroup}`
             })
         }),
+        
+        // Radar Chart
         getSiteStatSummary: build.query<ISiteStatResponse<number>, ISiteStatRequest>({
             query: ({siteId, statType}) => ({
                 url: `/radar/site/${siteId}?statType=${statType}`

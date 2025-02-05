@@ -16,8 +16,8 @@ const parameterGroups = [
 ] as const;
 
 const useParameterGroupSelection = () => {
-    const [selectedLabel, setSelectedLabel] = useState<string>(parameterGroups[0].label);
-    const [selectedValue, setSelectedValue] = useState<string>(parameterGroups[0].value);
+    const [selectedLabel, setSelectedLabel] = useState<string>(parameterGroups[2].label);
+    const [selectedValue, setSelectedValue] = useState<string>(parameterGroups[2].value);
     const paramGroupOptions = parameterGroups.map(group => group.label);
 
     const selectParameterGroup = (label: string) => {
