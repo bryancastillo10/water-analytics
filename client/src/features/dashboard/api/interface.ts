@@ -43,7 +43,7 @@ export interface IParamStatisticsResponse<T,U> {
 
 export interface IParamStatisticsRequest {
     siteId: string;
-    paramgroup: "basic" | "organic" | "nutrients"
+    paramgroup: string;
 }
 
 

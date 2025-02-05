@@ -5,16 +5,28 @@ import useGaugeConfig from "@/features/dashboard/hooks/useGaugeConfig";
 import { getStatusStyle } from "@/features/dashboard/utils/getStatusStyle";
 import { useAppSelector } from "@/lib/redux/hooks";
 import type { IParamStatisticsResponse } from "@/features/dashboard/api/interface";
-import { formatLabel } from "../../utils/formatLabel";
+import { formatLabel } from "@/features/dashboard/utils/formatLabel";
 
-const GaugeCard = (props: IParamStatisticsResponse<string,number>) => {
+import { LoadingBlock } from "@/components/common";
+
+interface GaugeCardProps extends IParamStatisticsResponse<string,number> {
+    loading: boolean;
+}
+
+const GaugeCard = (props: GaugeCardProps) => {
     const theme = useAppSelector((state) => state.theme.isDarkMode);
-    const { parameter, status } = props;
+    const { parameter, status, loading } = props;
     const { cx, cy, innerRadius, outerRadius, dataToPercentage } = useGaugeConfig();
     const pieData = dataToPercentage(props);
     
     const statusStyle = getStatusStyle(status);
     const Icon = statusStyle.trendIcon;
+    
+    if (loading) {
+        return (
+            <LoadingBlock layoutClassName="h-full rounded-xl border border-neutral"/>
+        )
+    }
     return (
         <div className={`grid grid-cols-5 h-[120px] rounded-xl border border-neutral shadow-md px-2
             ${theme ? "bg-darkGray text-light": "bg-white/80 text-primary"}

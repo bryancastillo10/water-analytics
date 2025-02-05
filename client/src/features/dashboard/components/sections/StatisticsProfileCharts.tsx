@@ -6,12 +6,16 @@ import type { IParamStatisticsResponse } from "@/features/dashboard/api/interfac
 import BarChart from "@/features/dashboard/components/ui/BarChart";
 import GaugeCard from "@/features/dashboard/components/ui/GaugeCard";
 
+import useParameterGroupSelection from "@/features/dashboard/hooks/useParameterGroupSelection";
+
 const StatisticsProfileCharts = () => {
     const siteId = useAppSelector((state) => state.dashboard.selectedSiteId);
     const safeSiteId = siteId ?? "";
     
+    const { selectedLabel, selectedValue, paramGroupOptions, selectParameterGroup } = useParameterGroupSelection();
+    
     const { data: rawStats, isLoading, refetch } = useGetParameterProfileStatisticsQuery(
-        {siteId: safeSiteId, paramgroup: "basic"}, { skip: !siteId });
+        {siteId: safeSiteId, paramgroup: selectedValue}, { skip: !siteId });
     
     
     const statsData: IParamStatisticsResponse<string, number>[] = Array.isArray(rawStats) 
@@ -34,11 +38,15 @@ const StatisticsProfileCharts = () => {
         <BarChart
             statData={statsData}
             loading={isLoading}
+            selectLabel={selectedLabel}
+            options={paramGroupOptions}
+            selectParameterGroup={selectParameterGroup }  
         />
         <div className="flex flex-col gap-2">
             {statsData.map((param) => (
                 <GaugeCard
                     key={param.parameter}
+                    loading={isLoading}
                     {...param}
                 />
             ))}
