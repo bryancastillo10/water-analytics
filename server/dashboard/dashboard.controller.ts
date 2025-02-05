@@ -5,13 +5,23 @@ import { ValidationError } from "@/infrastructure/errors/customErrors";
 
 export class DashboardController {
     constructor(private readonly dashboardService: DashboardService) {
+        // Dashboard Filters
         this.getParameterFilters = this.getParameterFilters.bind(this);
-        this.getDateFilters = this.getDateFilters.bind(this); 
-        this.timeSeries = this.timeSeries.bind(this);
-        this.sitePercentage = this.sitePercentage.bind(this);
-        this.nutrientStats = this.nutrientStats.bind(this);
-        this.getStatDataPerSite = this.getStatDataPerSite.bind(this);
+        this.getDateFilters = this.getDateFilters.bind(this);
+
+        // Dashboard KPI Card 
         this.getParameterStatus = this.getParameterStatus.bind(this);
+        
+        // Line Chart 
+        this.timeSeries = this.timeSeries.bind(this);
+        
+        // Pie Chart 
+        this.sitePercentage = this.sitePercentage.bind(this);
+        
+        // Radar Chart
+        this.getStatDataPerSite = this.getStatDataPerSite.bind(this);
+
+        // Bar & Gauge Chart
         this.getParamStats = this.getParamStats.bind(this);
     };
 
@@ -78,28 +88,14 @@ export class DashboardController {
         }
     };
 
-    // To be replaced soon
-    async nutrientStats(req: Request, res: Response, next: NextFunction) {
-        try {
-            const siteId = req.params.siteId;
-
-            const nutrientStats = await this.dashboardService.nutrientStats(siteId);
-
-            res.status(200).json(nutrientStats);
-        }
-        catch (error) {
-            next(error);
-        }
-    };
-    
-    
+  
     async getParamStats(req: Request, res: Response, next: NextFunction) {
         try {
             const siteId = req.params.siteId;
             const parameter = req.query.paramgroup as string || "nutrients";
             
             const avgAndStatusData = await this.dashboardService.getParameterStatistics(siteId, parameter);
-            
+
             res.status(200).json(avgAndStatusData);
         }
         catch (error) {

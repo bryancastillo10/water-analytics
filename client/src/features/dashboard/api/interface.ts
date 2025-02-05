@@ -33,17 +33,17 @@ type PercentageInfo = {
     percentage: string;
 }
 
-// Nutrient Statistics Bar Chart & Gauge Chart
-export interface INutrientStatsResponse {
-    siteName: string;
-    nutrientStatus: NutrientStatResult<string, number>[]
-};
-
-export type NutrientStatResult<T, U> = {
-    nutrient: T;
+// Parameter Statistics Bar Chart & Gauge Chart
+export interface IParamStatisticsResponse<T,U> {
+    parameter: T;
     avgValue: U;
     thresholdValue: U;
     status: T;
+}
+
+export interface IParamStatisticsRequest {
+    siteId: string;
+    paramgroup: string;
 }
 
 

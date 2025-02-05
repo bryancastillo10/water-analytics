@@ -1,12 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type {
     IDashboardCardResponse,
-    INutrientStatsResponse,
     ISitePercentage,
     ITimeSeries,
     ITimeSeriesRequest,
     ISiteStatRequest,
-    ISiteStatResponse
+    ISiteStatResponse,
+    IParamStatisticsResponse,
+    IParamStatisticsRequest
 } from "@/features/dashboard/api/interface";
 import { TagType } from "@/lib/mappings/tagTypes";
 
@@ -53,11 +54,10 @@ export const dashboardApi = createApi({
             }),
             providesTags: [TagType.DASHBOARD],
         }),
-        getNutrientStats: build.query<INutrientStatsResponse, string>({
-            query: (siteId) => ({
-                url:`/bar/site/${siteId}`
-            }),
-            providesTags: [TagType.DASHBOARD]
+        getParameterProfileStatistics: build.query<IParamStatisticsResponse<string,number>, IParamStatisticsRequest>({
+            query: ({siteId, paramgroup}) => ({
+                url: `/bar&gauge/site/${siteId}?paramgroup=${paramgroup}`
+            })
         }),
         getSiteStatSummary: build.query<ISiteStatResponse<number>, ISiteStatRequest>({
             query: ({siteId, statType}) => ({
@@ -74,6 +74,6 @@ export const {
     useGetTimeSeriesQuery,
     useGetSitePercentageQuery,
     useGetDashboardCardValuesQuery,
-    useGetNutrientStatsQuery,
-    useGetSiteStatSummaryQuery
+    useGetSiteStatSummaryQuery,
+    useGetParameterProfileStatisticsQuery
 } = dashboardApi;

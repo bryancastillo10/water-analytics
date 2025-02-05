@@ -8,7 +8,7 @@ import {
     NutrientAvgBySiteResponse,
     ISiteDataResponse,
     IParameterAvg,
-    IParameters,
+    IParameterProfile,
 } from "@/dashboard/core/interface/IDashboardRepository";
 import { TimeSeriesData } from "@/dashboard/core/entity/timeSeries";
 import { DatabaseError, NotFoundError } from "@/infrastructure/errors/customErrors";
@@ -139,7 +139,8 @@ export class DashboardRepository implements IDashboardRepository {
         }
     }
 
-    async nutrientStatsBySite(siteId: string): Promise<NutrientAvgBySiteResponse> {
+    
+    async getParameterProfile(siteId: string, parameters: string[]): Promise<IParameterProfile> {
         try {
             const site = await this.prisma.site.findUnique({
                 where: { id: siteId },
@@ -150,34 +151,35 @@ export class DashboardRepository implements IDashboardRepository {
                 throw new NotFoundError("Site Name was not found");
             }
 
-            const nutrientAvg = await this.prisma.measurement.aggregate({
+             const avgFields = parameters.reduce((acc, param) => {
+                acc[param] = true;
+                return acc;
+             }, {} as Record<string, boolean>);
+            const parameterAvg = await this.prisma.measurement.aggregate({
                 where: { siteId },
-                _avg: {
-                    ammonia: true,
-                    nitrates: true,
-                    phosphates: true
-                }
+                _avg: avgFields
+            });
+        
+            const hasData = parameters.some(param => parameterAvg._avg?.[param] !== null);
+
+                if (!hasData) {
+            throw new Error("No data found for the given site ID and parameters");
+        }
+            const averageData: Record<string, number> = {};
+                parameters.forEach(param => {
+                averageData[param] = parameterAvg._avg?.[param] ?? 0;
             });
 
-            if (!nutrientAvg._avg.ammonia && !nutrientAvg._avg.nitrates && !nutrientAvg._avg.phosphates) {
-                throw new Error("No data found for the given site ID");
-            }
-
-            const nutrientData = {
+            return {
                 siteName: site.siteName,
-                average: {
-                    ammonia: nutrientAvg._avg.ammonia ?? 0,
-                    nitrates: nutrientAvg._avg.nitrates ?? 0,
-                    phosphates: nutrientAvg._avg.phosphates ?? 0
-                }
-            }
-
-            return nutrientData;
+                average: averageData
+            };
+        
         }
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
                 console.error(error.message);
-                throw new DatabaseError("Database error at the nutrientPercentageBySite method");
+                throw new DatabaseError("Database error at the getParameterProfile method");
             } 
             throw Error;
         }
@@ -254,7 +256,6 @@ export class DashboardRepository implements IDashboardRepository {
                     value: true
                 }
             });
-
             return thresholdValue;
         }
         catch (error) {
