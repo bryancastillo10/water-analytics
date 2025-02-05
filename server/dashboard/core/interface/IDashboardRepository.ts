@@ -13,7 +13,6 @@ export interface IDashboardRepository {
     getTotalSitesByUser(userId: string): Promise<number>;
     
     // For Bar and Gauge Chart
-    nutrientStatsBySite(siteId: string): Promise<NutrientAvgBySiteResponse>;
     getParameterProfile(siteId: string, parameters: string[]): Promise<IParameterProfile>;
     
     // For Radar Chart
@@ -74,10 +73,8 @@ export interface IParameterProfile {
 }
 
 export interface IAggregationFields {
-    [aggregation: string]: "_avg" | "_max" | "_min" | "_count";
+    [aggregation: string]: "_avg" | "_max" | "_min";
 }
-
-export type NutrientKey = "ammonia" | "nitrates" | "phosphates"  
 
 export interface IParameterGroups  {
     basic: ["pH", "temperature", "dissolvedOxygen"],

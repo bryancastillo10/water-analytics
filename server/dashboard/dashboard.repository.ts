@@ -139,50 +139,6 @@ export class DashboardRepository implements IDashboardRepository {
         }
     }
 
-    // To be replaced soon
-    async nutrientStatsBySite(siteId: string): Promise<NutrientAvgBySiteResponse> {
-        try {
-            const site = await this.prisma.site.findUnique({
-                where: { id: siteId },
-                select: { siteName: true }
-            });
-
-            if (!site) {
-                throw new NotFoundError("Site Name was not found");
-            }
-
-            const nutrientAvg = await this.prisma.measurement.aggregate({
-                where: { siteId },
-                _avg: {
-                    ammonia: true,
-                    nitrates: true,
-                    phosphates: true
-                }
-            });
-
-            if (!nutrientAvg._avg.ammonia && !nutrientAvg._avg.nitrates && !nutrientAvg._avg.phosphates) {
-                throw new Error("No data found for the given site ID");
-            }
-
-            const nutrientData = {
-                siteName: site.siteName,
-                average: {
-                    ammonia: nutrientAvg._avg.ammonia ?? 0,
-                    nitrates: nutrientAvg._avg.nitrates ?? 0,
-                    phosphates: nutrientAvg._avg.phosphates ?? 0
-                }
-            }
-
-            return nutrientData;
-        }
-        catch (error) {
-            if (error instanceof PrismaClientKnownRequestError) {
-                console.error(error.message);
-                throw new DatabaseError("Database error at the nutrientPercentageBySite method");
-            } 
-            throw Error;
-        }
-    }
     
     async getParameterProfile(siteId: string, parameters: string[]): Promise<IParameterProfile> {
         try {
@@ -223,7 +179,7 @@ export class DashboardRepository implements IDashboardRepository {
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
                 console.error(error.message);
-                throw new DatabaseError("Database error at the nutrientPercentageBySite method");
+                throw new DatabaseError("Database error at the getParameterProfile method");
             } 
             throw Error;
         }
