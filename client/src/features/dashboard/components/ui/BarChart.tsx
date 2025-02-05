@@ -5,7 +5,6 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  CartesianGrid,
   Rectangle,
   Cell,
 } from "recharts";
@@ -17,6 +16,7 @@ import { colorTheme } from "@/features/dashboard/utils/colorTheme";
 
 import type { IParamStatisticsResponse } from "@/features/dashboard/api/interface";
 import { formatLabel } from "@/features/dashboard/utils/formatLabel";
+import { YAxisLabel } from "@/features/dashboard/utils/formatYAxisLabel";
 
 interface BarChartProps {
   statData: IParamStatisticsResponse<string,number>[];
@@ -59,7 +59,6 @@ const BarChart = (props: BarChartProps) => {
           data={barData}
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             className="text-sm"
             dataKey="parameter"
@@ -67,10 +66,10 @@ const BarChart = (props: BarChartProps) => {
             textAnchor="middle"
           />
           <YAxis label={{
-            value: "Concentration (mg/L)",
+            value: YAxisLabel(selectLabel),
             angle: -90,
             position: 'insideLeft',
-            style: { textAnchor: 'middle' }
+            style: { textAnchor: 'middle', fontSize:12 }
            }} />
           <Tooltip content={<BarChartToolTip/>} />
             <Bar

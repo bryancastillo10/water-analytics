@@ -31,10 +31,9 @@ const StatisticsProfileCharts = () => {
         
         return () => clearTimeout(timeout);
     }, [rawStats, siteId]);
-    
-         
+            
     return (
-      <>
+      <div className="col-span-2 grid grid-cols-1 xl:grid-cols-2">
         <BarChart
             statData={statsData}
             loading={isLoading}
@@ -42,7 +41,7 @@ const StatisticsProfileCharts = () => {
             options={paramGroupOptions}
             selectParameterGroup={selectParameterGroup }  
         />
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 mt-8 xl:mt-0">
             {statsData.map((param) => (
                 <GaugeCard
                     key={param.parameter}
@@ -51,7 +50,7 @@ const StatisticsProfileCharts = () => {
                 />
             ))}
         </div>
-     </>
+     </div>
   )
 }
 
