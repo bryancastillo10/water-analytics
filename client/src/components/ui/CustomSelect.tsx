@@ -43,7 +43,7 @@ const CustomSelect = ({
             </div>
           </div>
         <ul 
-          className={`absolute top-full mt-1 ${width}  ${theme ? "bg-dark":"bg-light"} overflow-y-auto z-50 border border-dark/20 rounded-md
+          className={`absolute top-full mt-1 ${width}  ${theme ? "bg-dark border-neutral":"bg-light"} overflow-y-auto z-50 border border-dark/20 rounded-md
             ${isSelectOpened ? "max-h-60" : "max-h-0 hidden"}`}
           onClick={e => e.stopPropagation()}
         >
