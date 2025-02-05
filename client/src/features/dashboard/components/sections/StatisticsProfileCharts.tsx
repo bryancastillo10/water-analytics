@@ -1,17 +1,23 @@
 import { useEffect } from "react";
 import { useAppSelector } from "@/lib/redux/hooks";
-import { useGetNutrientStatsQuery } from "@/features/dashboard/api/dashboardApi";
+import { useGetParameterProfileStatisticsQuery } from "@/features/dashboard/api/dashboardApi";
+import type { IParamStatisticsResponse } from "@/features/dashboard/api/interface";
 
 import BarChart from "@/features/dashboard/components/ui/BarChart";
 import GaugeCard from "@/features/dashboard/components/ui/GaugeCard";
-
 
 const StatisticsProfileCharts = () => {
     const siteId = useAppSelector((state) => state.dashboard.selectedSiteId);
     const safeSiteId = siteId ?? "";
     
-    const { data: rawStats, isLoading, refetch } = useGetNutrientStatsQuery(safeSiteId, { skip: !siteId });
+    const { data: rawStats, isLoading, refetch } = useGetParameterProfileStatisticsQuery(
+        {siteId: safeSiteId, paramgroup: "basic"}, { skip: !siteId });
     
+    
+    const statsData: IParamStatisticsResponse<string, number>[] = Array.isArray(rawStats) 
+        ? rawStats 
+        : [{ parameter: "N/A", avgValue: 0, thresholdValue: 0, status: "N/A" }];
+
     useEffect(() => {
         if (!siteId) return;
         
@@ -22,25 +28,18 @@ const StatisticsProfileCharts = () => {
         return () => clearTimeout(timeout);
     }, [rawStats, siteId]);
     
-    
-    const statsDataWithSiteName = rawStats ?? {
-        siteName: "No site name",
-        nutrientStatus: []
-    };
-    
-    const nutrientData = statsDataWithSiteName.nutrientStatus;
-        
+         
     return (
       <>
         <BarChart
-            statData={statsDataWithSiteName}
+            statData={statsData}
             loading={isLoading}
         />
         <div className="flex flex-col gap-2">
-            {nutrientData.map((nutri) => (
+            {statsData.map((param) => (
                 <GaugeCard
-                    key={nutri.nutrient}
-                    {...nutri}
+                    key={param.parameter}
+                    {...param}
                 />
             ))}
         </div>

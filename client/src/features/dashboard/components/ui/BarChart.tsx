@@ -1,5 +1,4 @@
-import { MapPinArea } from "@phosphor-icons/react";
-import type { INutrientStatsResponse } from "@/features/dashboard/api/interface";
+import { Signpost } from "@phosphor-icons/react";
 import { LoadingBlock } from "@/components/common";
 
 import {
@@ -16,11 +15,13 @@ import {
 
 import BarChartToolTip from "@/features/dashboard/components/tooltips/BarChartToolTip";
 import ChartHeader from "@/features/dashboard/components/ui/ChartHeader";
-import { formatLabel } from "@/features/dashboard/utils/formatLabel";
 import { colorTheme } from "@/features/dashboard/utils/colorTheme";
 
+import type { IParamStatisticsResponse } from "@/features/dashboard/api/interface";
+import { formatLabel } from "@/features/dashboard/utils/formatLabel";
+
 interface BarChartProps {
-  statData: INutrientStatsResponse;
+  statData: IParamStatisticsResponse<string,number>[];
   loading: boolean;
 }
 
@@ -29,20 +30,17 @@ const BarChart = ({ statData, loading }: BarChartProps) => {
     return <LoadingBlock layoutClassName="col-span-1" />;
   }
 
-  const siteName = statData.siteName;
-
-
-  const barData = statData.nutrientStatus.map((stat) => ({
-    parameter: formatLabel(stat.nutrient),
+  const barData = statData.map((stat) => ({
+    parameter: formatLabel(stat.parameter),
     avgValue: stat.avgValue,
   }));
 
   return (
     <div className="col-span-1 xl:col-span-1 h-[350px]">
       <ChartHeader
-        h1="Nutrients Profile"
-        icon={MapPinArea}
-        h2={siteName}
+        h1="Parameter Profile"
+        icon={Signpost}
+        h2="Select a group"
       />
 
       <ResponsiveContainer width="100%" height="90%">
@@ -53,7 +51,12 @@ const BarChart = ({ statData, loading }: BarChartProps) => {
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="parameter" />
+          <XAxis
+            className="text-sm"
+            dataKey="parameter"
+            interval={0}
+            textAnchor="middle"
+          />
           <YAxis label={{
             value: "Concentration (mg/L)",
             angle: -90,

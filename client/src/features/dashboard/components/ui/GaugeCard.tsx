@@ -1,14 +1,15 @@
-import type { NutrientStatResult } from "@/features/dashboard/api/interface"
+
 import GaugeChart from "@/features/dashboard/components/ui/GaugeChart";
 
 import useGaugeConfig from "@/features/dashboard/hooks/useGaugeConfig";
-import { formatLabel } from "@/features/dashboard/utils/formatLabel";
 import { getStatusStyle } from "@/features/dashboard/utils/getStatusStyle";
 import { useAppSelector } from "@/lib/redux/hooks";
+import type { IParamStatisticsResponse } from "@/features/dashboard/api/interface";
+import { formatLabel } from "../../utils/formatLabel";
 
-const GaugeCard = (props: NutrientStatResult<string,number>) => {
+const GaugeCard = (props: IParamStatisticsResponse<string,number>) => {
     const theme = useAppSelector((state) => state.theme.isDarkMode);
-    const { nutrient, status } = props;
+    const { parameter, status } = props;
     const { cx, cy, innerRadius, outerRadius, dataToPercentage } = useGaugeConfig();
     const pieData = dataToPercentage(props);
     
@@ -30,7 +31,7 @@ const GaugeCard = (props: NutrientStatResult<string,number>) => {
                 />
             </div>
             <div className="col-span-2">
-                <h1 className="font-medium text-center p-4 text-lg">{formatLabel(nutrient)}</h1>
+                <h1 className="font-medium text-center px-2 py-3 text-lg">{formatLabel(parameter)}</h1>
                 
                 <div className="flex items-center gap-2">
                     <Icon size="30" className={`${statusStyle.colorClass}`} />

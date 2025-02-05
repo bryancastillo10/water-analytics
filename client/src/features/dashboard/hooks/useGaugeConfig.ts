@@ -1,10 +1,10 @@
-import type { NutrientStatResult } from "@/features/dashboard/api/interface";
+import type { IParamStatisticsResponse } from "@/features/dashboard/api/interface";
 
 const useGaugeConfig = () => {
-    const dataToPercentage = (data: NutrientStatResult<string, number>) => {
+    const dataToPercentage = (data: IParamStatisticsResponse<string,number>) => {
         const calcPercentage = Math.min((data.avgValue / data.thresholdValue) * 100, 100).toFixed(2);
         return ({
-            name: data.nutrient,
+            name: data.parameter,
             percentage: calcPercentage,
             status: data.status
         })

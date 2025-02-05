@@ -300,7 +300,6 @@ export class DashboardRepository implements IDashboardRepository {
                     value: true
                 }
             });
-            console.log("value",thresholdValue);
             return thresholdValue;
         }
         catch (error) {
