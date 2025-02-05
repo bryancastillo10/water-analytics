@@ -26,7 +26,7 @@ const RadarChart = ({ rawData }: RadarChartProps) => {
 
   return (
       <ResponsiveContainer width="100%" height="100%">
-        <RadarRecharts cx={200} cy={200} outerRadius="100%" data={radarData}>
+        <RadarRecharts cx={190} cy={180} outerRadius="90%" data={radarData}>
             <PolarGrid />
             <PolarAngleAxis 
                 dataKey="parameter"

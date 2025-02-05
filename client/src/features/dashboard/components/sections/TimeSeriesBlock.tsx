@@ -20,11 +20,11 @@ const TimeSeriesBlock = () => {
   if (timeSeriesLoading) {
     return (
       <LoadingBlock
-        layoutClassName="col-span-1 xl:col-span-2" />
+        layoutClassName="col-span-1 sm:col-span-2 xl:col-span-2 w-full min-h-[200px]" />
     )}
 
   return (
-    <div className="col-span-1 xl:col-span-2 w-full">
+    <div className="col-span-1 sm:col-span-2 xl:col-span-2 w-full min-h-[200px]">
         <TimeSeriesFilter
             selectedParameter={selectedParameter}
             selectedDateRange={selectedDateRange}

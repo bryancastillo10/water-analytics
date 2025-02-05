@@ -17,7 +17,7 @@ const RadarChartBlock = () => {
   
   if (isLoading) {
     return (
-      <LoadingBlock layoutClassName="col-span-1 sm:col-span-2 xl:col-span-1 h-[350px]" />);
+      <LoadingBlock layoutClassName="col-span-1 sm:col-span-2 lg:col-span-1 xl:col-span-1 row-span-1 h-auto min-h-[250px]" />);
   }
   
   const formatLabel = (selectedStat: string) => {
@@ -25,8 +25,8 @@ const RadarChartBlock = () => {
   };
   
   return (
-    <div className="col-span-1 sm:col-span-2 xl:col-span-1 h-[345px]">
-      <div className="flex items-center w-full gap-4">
+    <div className="mt-10 xl:mt-0 col-span-1 sm:col-span-2 lg:col-span-1 xl:col-span-1 row-span-1 h-[320px] mb-20">
+      <div className="flex flex-col xl:flex-row items-center w-full gap-2 xl:gap-4">
         <ChartHeader
           h1="Site Profile"
           h2="Data representation"

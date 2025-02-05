@@ -34,14 +34,14 @@ const PieChartBlock = () => {
 
   if (isLoading) {
     return (
-      <div className="col-span-1 h-[350px]">
+      <div className="col-span-1 sm:col-span-1 xl:col-span-1 row-span-1 h-auto min-h-[250px]">
         <MainPageLoadingState/>
       </div>
     )
   };
 
   return (
-      <div className="col-span-1 h-[350px]">
+      <div className="mt-10 xl:mt-0 col-span-1 sm:col-span-1 xl:col-span-1 row-span-1 h-[300px]">
         <ChartHeader
           h1="Distribution of Water Sources Across Sites"
           icon={MapPin}
