@@ -1,9 +1,8 @@
-import { TrashSimple } from "@phosphor-icons/react";
-
 import { flexRender } from "@tanstack/react-table";
+import { PencilSimpleLine, TrashSimple } from "@phosphor-icons/react";
 
 import { MainPageLoadingState } from "@/components/layout";
-import useUserListTable from "../hooks/useUserListTable";
+import useUserListTable from "@/features/user/hooks/useUserListTable";
 
 const UsersListTable = () => {
   const {
@@ -12,7 +11,8 @@ const UsersListTable = () => {
     isLoading,
     userTable,
     setHoveredRow,
-    deleteUserDrawer
+    deleteUserDrawer,
+    toggleEditRole
   } = useUserListTable();
 
   if (isLoading) {
@@ -20,7 +20,7 @@ const UsersListTable = () => {
       <MainPageLoadingState />
     </div>;
   }
-
+  
   return (
     <table className="min-w-full table-auto border-collapse">
       <thead className="relative group">
@@ -61,6 +61,13 @@ const UsersListTable = () => {
               {hoveredRow === rowIndex &&
                 (<div className={`absolute right-2 top-2
                       flex items-center gap-2 p-2 rounded-xl ${theme ? "bg-secondary/80" : "bg-light/80"}`}>
+                  <PencilSimpleLine
+                        onClick={() => toggleEditRole(row.id)}
+                        weight="fill"
+                        size="20"
+                        className="hover:scale-110 duration-150 ease-in-out cursor-pointer"
+                        color={theme ? "#F6F5F4" : "#006da3"}
+                      />
                   <TrashSimple
                     onClick={() => deleteUserDrawer(row.original.id)}
                     weight="fill"
