@@ -25,7 +25,7 @@ const DashboardPage = () => {
                 icon={MapPin}
                 width="w-[250px]"
                 placeholder="Search for the site"
-                value={selectedSiteName}
+                value={selectedSiteName || "No Site Selected"}
                 options={siteOptions}
                 onChangeValue={getSiteIdByName}
               />

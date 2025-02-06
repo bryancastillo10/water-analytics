@@ -34,6 +34,7 @@ const RadarChartBlock = () => {
         />
         <CustomSelect
           label={isLoading ? "Loading...": formatLabel(selectedStat)}
+          value={formatLabel(selectedStat)}
           options={statTypeOptions}
           width="w-[200px]"
           placeholder="Select Statistics"

@@ -45,6 +45,7 @@ const BarChart = (props: BarChartProps) => {
           <div className="col-span-2">
             <CustomSelect
               label={loading ? "Loading..." : selectLabel}
+              value={selectLabel}
               placeholder="Select a category"
               options={options}
               onChangeValue={selectParameterGroup}
