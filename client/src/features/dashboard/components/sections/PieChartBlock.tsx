@@ -9,7 +9,7 @@ import {
   Tooltip
 } from "recharts";
 
-import PieChartToolTip from "@/features/dashboard/components/tooltips/PieChartToolTip";
+import CustomTooltip from "@/features/dashboard/components/tooltips/CustomChartTooltip";
 import ChartHeader from "@/features/dashboard/components/ui/ChartHeader";
 import { MapPin } from "@phosphor-icons/react";
 import { colorTheme } from "@/features/dashboard/utils/colorTheme";
@@ -73,7 +73,7 @@ const PieChartBlock = () => {
                 fill={colorTheme[index % colorTheme.length]} />
               ))}
             </Pie>
-            <Tooltip content={<PieChartToolTip/>}/>
+            <Tooltip content={<CustomTooltip chartType="pie" />}/>
           </PieChart>
         </ResponsiveContainer>
       </div>

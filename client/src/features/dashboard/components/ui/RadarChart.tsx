@@ -9,6 +9,7 @@ import {
   PolarRadiusAxis,
   Tooltip,
 } from "recharts";
+import CustomTooltip from "@/features/dashboard/components/tooltips/CustomChartTooltip";
 
 interface RadarChartProps {
   rawData: ISiteStatResponse<number>;
@@ -26,14 +27,14 @@ const RadarChart = ({ rawData }: RadarChartProps) => {
 
   return (
       <ResponsiveContainer width="100%" height="100%">
-        <RadarRecharts cx={190} cy={180} outerRadius="90%" data={radarData}>
+        <RadarRecharts cx={190} cy={180} outerRadius="75%" data={radarData}>
             <PolarGrid />
             <PolarAngleAxis 
                 dataKey="parameter"
                 tick={{ fontSize: 12 }}
             />
             <PolarRadiusAxis />
-            <Tooltip />
+            <Tooltip content={<CustomTooltip chartType="radar"/>} />
             <Radar
             name={dynamicKey.charAt(0).toUpperCase() + dynamicKey.slice(1)}
             dataKey="value"

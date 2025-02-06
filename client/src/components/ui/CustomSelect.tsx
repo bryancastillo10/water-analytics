@@ -3,13 +3,14 @@ import { useAppSelector } from "@/lib/redux/hooks";
 import { useState } from "react";
 
 interface SelectProps{
-    options: string[];
-    onChangeValue: (selection: string) => void;
-    value?: string | null;
-    width?: string;
-    placeholder?: string;
-    label?: string;
-    icon?:Icon;
+  options: string[];
+  onChangeValue: (selection: string) => void;
+  value: string;
+  width?: string;
+  withSearchBar?: boolean;
+  placeholder?: string;
+  label?: string;
+  icon?:Icon;
 }
 
 const CustomSelect = ({
@@ -19,7 +20,8 @@ const CustomSelect = ({
     label = "Select Options",
     value,
     icon:Icon,
-    placeholder = "Search for Options"  
+    placeholder = "Search for Options",
+    withSearchBar=true,  
 }: SelectProps) => {
   const [isSelectOpened, setIsSelectOpened] = useState<boolean>(false);
   const [inputValue, setInputvalue] = useState<string>("");
@@ -47,7 +49,8 @@ const CustomSelect = ({
             ${isSelectOpened ? "max-h-60" : "max-h-0 hidden"}`}
           onClick={e => e.stopPropagation()}
         >
-          <div className="flex items-center gap-2 px-2 sticky top-0">
+          {withSearchBar &&
+          (<div className="flex items-center gap-2 px-2 sticky top-0">
             <MagnifyingGlass size="18" />
             <input
               type="text"
@@ -58,7 +61,7 @@ const CustomSelect = ({
                     ${theme ? "bg-darkGray text-light": "bg-light"}
               `}
             />
-          </div>
+          </div>)}
           {options.map((opt) => (
             <li
               key={opt}

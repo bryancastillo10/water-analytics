@@ -40,7 +40,7 @@ const TimeSeriesFilter = ({
           label={parameterListLoading ? "Loading..." : "Parameters"}
           width="w-[250px]"
           icon={Drop}
-          placeholder="Select a water quality parameter"
+          placeholder="Water quality parameter"
           value={selectedParameter}
           options={parameterOptions}
           onChangeValue={handleSelectedParameter}
@@ -54,7 +54,7 @@ const TimeSeriesFilter = ({
           label={dateListLoading ? "Loading..." : "Dates"}
           icon={CalendarDot}
           placeholder="Start Date"
-          value={selectedDateRange.startDate ?? dateOptions.at(-1) ?? null}
+          value={selectedDateRange.startDate ?? dateOptions.at(-1) ?? ""}
           options={dateOptions}
           onChangeValue={(value) => handleSelectedDate("startDate", value)}
         />
@@ -66,7 +66,7 @@ const TimeSeriesFilter = ({
           label={dateListLoading ? "Loading..." : "Dates"}
           icon={CalendarDots}
           placeholder="End Date"
-          value={selectedDateRange.endDate ?? filteredEndDateOptions[0] ?? null}
+          value={selectedDateRange.endDate ?? filteredEndDateOptions[0] ?? ""}
           options={filteredEndDateOptions}
           onChangeValue={(value) => handleSelectedDate("endDate", value)}
         />

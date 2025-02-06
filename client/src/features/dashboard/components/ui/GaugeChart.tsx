@@ -1,7 +1,7 @@
 import {  ResponsiveContainer,Pie, PieChart, Cell, Tooltip } from "recharts";
 
 import Needle from "@/features/dashboard/components/tooltips/Needle";
-import GaugeChartToolTip from "@/features/dashboard/components/tooltips/GaugeChartTooltip";
+import CustomTooltip from "@/features/dashboard/components/tooltips/CustomChartTooltip";
 
 interface GaugeChartProps<T> {
     percentage: string;
@@ -53,7 +53,7 @@ const GaugeChart = (props: GaugeChartProps<number>) => {
                   <Cell key={`cell-${index}`} fill={COLORS[index]} />
               ))}
           </Pie>
-          <Tooltip content={<GaugeChartToolTip />} />
+          <Tooltip content={<CustomTooltip chartType="gauge" />} />
           <svg>
             <Needle
               value={filledValue} 
