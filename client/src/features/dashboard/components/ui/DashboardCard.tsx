@@ -20,7 +20,8 @@ const DashboardCard = ({
  
   
   return (
-    <article className="w-full h-[200px] overflow-hidden max-w-md bg-gradient-to-br from-secondary to-primary text-light rounded-xl shadow-lg p-4 lg:p-6 transition-all duration-300 hover:shadow-xl relative">
+    <article className="w-full h-[200px] overflow-hidden max-w-md bg-gradient-to-br 
+    from-secondary to-primary text-light rounded-xl shadow-lg p-4 lg:p-6 transition-all duration-300 hover:shadow-xl relative">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-24 lg:w-32 h-24 lg:h-32 bg-dark/20 rounded-full -translate-y-12 translate-x-12" />
       

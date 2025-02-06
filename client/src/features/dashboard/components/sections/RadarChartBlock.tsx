@@ -29,12 +29,13 @@ const RadarChartBlock = () => {
       <div className="flex flex-col xl:flex-row items-center w-full gap-2 xl:gap-4">
         <ChartHeader
           h1="Site Profile"
-          h2="Data representation"
+          h2="Data Representation"
           icon={Calculator}
         />
         <CustomSelect
           label={isLoading ? "Loading...": formatLabel(selectedStat)}
           value={formatLabel(selectedStat)}
+          withSearchBar={false}
           options={statTypeOptions}
           width="w-[200px]"
           placeholder="Select Statistics"

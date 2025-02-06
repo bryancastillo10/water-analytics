@@ -11,7 +11,7 @@ import {
 import { CustomSelect } from "@/components/ui";
 import { LoadingBlock } from "@/components/common";
 
-import BarChartToolTip from "@/features/dashboard/components/tooltips/BarChartToolTip";
+import CustomTooltip from "@/features/dashboard/components/tooltips/CustomChartTooltip";
 import { colorTheme } from "@/features/dashboard/utils/colorTheme";
 
 import type { IParamStatisticsResponse } from "@/features/dashboard/api/interface";
@@ -72,7 +72,7 @@ const BarChart = (props: BarChartProps) => {
             position: 'insideLeft',
             style: { textAnchor: 'middle', fontSize:12 }
            }} />
-          <Tooltip content={<BarChartToolTip/>} />
+          <Tooltip content={<CustomTooltip chartType="bar"/>} />
             <Bar
               dataKey="avgValue"
               radius={[10, 10, 0, 0]}

@@ -8,7 +8,7 @@ import {
   Tooltip
 } from "recharts";
 import { useAppSelector } from "@/lib/redux/hooks";
-import LineChartToolTip from "@/features/dashboard/components/tooltips/LineChartToolTip";
+import CustomTooltip from "@/features/dashboard/components/tooltips/CustomChartTooltip";
 
 interface TimeSeriesLineChartProps{
    selectedParameter: string;
@@ -48,9 +48,7 @@ const TimeSeriesLineChart = ({
             }}
           />
             <Tooltip 
-              content={<LineChartToolTip
-                            selectedParameter={selectedParameter} 
-                        />} 
+              content={<CustomTooltip chartType="line" selectedParameter={selectedParameter}/>} 
             />
           <Line
             type="monotone"
