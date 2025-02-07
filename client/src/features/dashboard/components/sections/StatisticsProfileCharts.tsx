@@ -41,7 +41,7 @@ const StatisticsProfileCharts = () => {
             options={paramGroupOptions}
             selectParameterGroup={selectParameterGroup }  
         />
-        <div className="grid grid-cols-1 gap-4 mt-20 xl:mt-0">
+        <div className="flex flex-wrap justify-center xl:justify-start gap-4 mt-20 xl:mt-0">
             {statsData.map((param) => (
                 <GaugeCard
                     key={param.parameter}
