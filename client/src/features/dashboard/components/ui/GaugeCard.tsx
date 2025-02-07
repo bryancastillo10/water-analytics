@@ -46,7 +46,7 @@ const GaugeCard = (props: GaugeCardProps) => {
         <div className="col-span-1 sm:col-span-1 lg:col-span-1 xl:col-span-2 flex flex-col text-left w-full">
             <h1 className="font-medium px-2 py-2 text-base sm:text-lg">{formatLabel(parameter)}</h1>
 
-           <div className="flex items-center sm:justify-between w-full px-4 gap-2">
+           <div className="flex items-center sm:justify-between xl:justify-start w-full px-4 gap-2">
                 <Icon size="30" className={`min-w-[40px] ${statusStyle.colorClass}`} />
                 <p className={`font-bold leading-tight tracking-wider sm:text-left
                     text-sm ${statusStyle.colorClass}`}>

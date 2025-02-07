@@ -12,13 +12,10 @@ const useUserListTable = () => {
     const [selectedRole, setSelectedRole] = useState<Record<string, string>>({});
     
     const theme = useAppSelector((state) => state.theme.isDarkMode);
-    const authUser = useAppSelector((state) => state.user);
     const { handleOpenDrawer } = useDrawer();
   
     // Get All User Query
-    const userId = authUser?.user_id!;
-
-    const { data: allUsers, isLoading } = useGetAllUserQuery({ userId });
+    const { data: allUsers, isLoading } = useGetAllUserQuery();
     
     //  Delete User Drawer
     const deleteUserDrawer = (id: string) => {

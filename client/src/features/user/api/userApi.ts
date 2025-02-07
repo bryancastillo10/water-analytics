@@ -41,9 +41,9 @@ export const userApi = createApi({
             },
             invalidatesTags:["getAllUsers"]
         }),
-        getAllUser: build.query < IUsersData[], {userId: string} > ({
-            query: ({ userId }) => ({
-                url: `/?id=${encodeURIComponent(userId)}`
+        getAllUser: build.query < IUsersData[],void> ({
+            query: () => ({
+                url: "/"
             }),
            providesTags:["getAllUsers"] 
         }),
