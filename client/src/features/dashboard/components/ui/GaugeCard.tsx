@@ -28,10 +28,10 @@ const GaugeCard = (props: GaugeCardProps) => {
         )
     }
     return (
-        <div className={`grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 h-auto max-h-[120px] rounded-xl border border-neutral shadow-md px-2 py-1 w-full
-        ${theme ? "bg-darkGray text-light" : "bg-white/80 text-primary"}`}>
-        
-        <div className="col-span-1 sm:col-span-1 lg:col-span-2 xl:col-span-3 w-full place-items-center">
+        <div className={`flex flex-col md:flex-row w-fit rounded-xl border border-neutral shadow-md px-2 py-3  
+        ${theme ? "bg-darkGray text-light" : "bg-white/80 text-primary"}`}>       
+
+        <div className="w-[250px] h-[120px] mx-auto lg:mx-0  place-items-center">
             <GaugeChart
                 cx={cx}
                 cy={cy}
@@ -43,10 +43,9 @@ const GaugeCard = (props: GaugeCardProps) => {
             />
         </div>
 
-        <div className="col-span-1 sm:col-span-1 lg:col-span-1 xl:col-span-2 flex flex-col text-left w-full">
+        <div className="w-[150px] h-[120px] mx-auto lg:mx-0 flex flex-col text-left">
             <h1 className="font-medium px-2 py-2 text-base sm:text-lg">{formatLabel(parameter)}</h1>
-
-           <div className="flex items-center sm:justify-between xl:justify-start w-full px-4 gap-2">
+           <div className="flex items-center justify-start w-full px-4 gap-2">
                 <Icon size="30" className={`min-w-[40px] ${statusStyle.colorClass}`} />
                 <p className={`font-bold leading-tight tracking-wider sm:text-left
                     text-sm ${statusStyle.colorClass}`}>
