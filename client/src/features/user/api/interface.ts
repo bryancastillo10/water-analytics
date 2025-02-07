@@ -2,9 +2,10 @@
 export interface UserProfile {
     username: string;
     email: string;
+    role?: string;
 }
 
-export interface UpdateUserRequest extends UserProfile{
+export interface UpdateUserRequest extends Partial<UserProfile>{
     id: string;
 }
 

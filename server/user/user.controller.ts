@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import { CustomRequest } from "@/infrastructure/middleware/type";
 import { UserService } from "@/user/core/service/userService";
 
 export class UserController {
@@ -24,9 +25,9 @@ export class UserController {
         }
     }
 
-    async getUser(req: Request, res: Response, next: NextFunction) {
+    async getUser(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            const userId = req.query.id;
+            const userId = req?.user?.id;
             const allUsers = await this.userService.getAllUser(String(userId));
 
             res.status(200).json(allUsers);
