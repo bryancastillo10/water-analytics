@@ -2,8 +2,10 @@ import { MonitorPlay, BookmarkSimple } from "@phosphor-icons/react";
 
 import { FormSubheader } from "@/components/common";
 import { Button } from "@/components/ui";
-import type { InfoDrawerProps } from "@/features/app-settings/hooks/useAppInfoDrawer";
 
+import PageCard from "@/features/app-settings/components/PageCard";
+import { pagesGuide } from "@/features/app-settings/constants/pagesGuide";
+import type { InfoDrawerProps } from "@/features/app-settings/hooks/useAppInfoDrawer";
 
 const AppOverview = ({handleCloseDrawer}: InfoDrawerProps) => {
   return (
@@ -21,12 +23,15 @@ const AppOverview = ({handleCloseDrawer}: InfoDrawerProps) => {
       
       <FormSubheader icon={BookmarkSimple} text="Explore the App" />
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 place-items-center gap-4">
-        <div className="w-[200px] h-[150px] bg-teal-500"></div>
-        <div className="w-[200px] h-[150px] bg-amber-500"></div>
-        <div className="w-[200px] h-[150px] bg-indigo-500"></div>
-        <div className="w-[200px] h-[150px] bg-yellow-300"></div>
-        <div className="w-[200px] h-[150px] bg-cyan-500"></div>
-        <div className="w-[200px] h-[150px] bg-stone-500"></div>
+        {pagesGuide.map((page) => (
+          <PageCard
+            name={page.name}
+            icon={page.icon}
+            link={page.link}
+            tagLine={page.tagLine}
+            key={page.id}
+          />
+        ))}
       </div>
       <div className="my-8 mx-4">
         <Button

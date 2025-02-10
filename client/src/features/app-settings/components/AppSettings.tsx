@@ -50,7 +50,7 @@ const AppSettings = () => {
         />
         <SettingItem
           icon={AppWindow}
-          label="Technical Highlight"
+          label="Technical Details"
           btnLabel="Learn More"
           action={techHighlightsDrawer}
         />
