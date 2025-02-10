@@ -19,7 +19,7 @@ const AppSettings = () => {
   };
 
   const appInfoDrawer = () => {
-    handleOpenDrawer("Details About This Web App","AppInfoForm")
+    handleOpenDrawer("About Water Analytics App","AppInfoForm")
   }
 
   return (
