@@ -17,7 +17,9 @@ import DeleteMeasurementData from "@/features/waterquality/components/DeleteMeas
 
 import AddNotesForm from "@/features/stickynote/components/AddNotesForm";
 
-import AppInfoForm from "@/features/app-settings/components/AppInfoForm";
+import AppOverview from "@/features/app-settings/components/AppOverview";
+import KeyFeatures from "@/features/app-settings/components/KeyFeatures";
+import TechHighlights from "@/features/app-settings/components/TechHighlights";
 
 export const drawerForms: Record<string, React.ComponentType<any>> = {
     // Site
@@ -44,6 +46,8 @@ export const drawerForms: Record<string, React.ComponentType<any>> = {
     UpdateThresholdForm,
     DeleteThresholdForm,
 
-    // Extra Features
-    AppInfoForm
+    // App Info 
+    AppOverview,
+    KeyFeatures,
+    TechHighlights
 };
