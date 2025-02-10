@@ -23,9 +23,6 @@ const AppSettings = () => {
     dispatch(setIsDarkMode(!theme));
   };
 
-
-  
-
   return (
     <section className="px-6 py-6">
       <TextHeader text="App  Info & Settings" />
