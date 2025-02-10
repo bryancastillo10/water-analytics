@@ -3,7 +3,7 @@ import { MonitorPlay, Key } from "@phosphor-icons/react";
 
 import { featuresList } from "@/features/app-settings/constants/features";
 
-const AppInfoForm = () => {
+const AppOverview = () => {
   return (
     <section className="grid grid-cols-1">
       
@@ -39,4 +39,4 @@ const AppInfoForm = () => {
   )
 }
 
-export default AppInfoForm;
+export default AppOverview;

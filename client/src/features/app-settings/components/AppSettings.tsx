@@ -1,9 +1,9 @@
 import TextHeader from '@/components/common/TextHeader';
 import { Switch } from '@/components/ui';
 import SettingItem from '@/features/app-settings/components/SettingItem';
-import useDrawer from '@/hooks/useDrawer';
+import useAppInfoDrawer from '@/features/app-settings/hooks/useAppInfoDrawer';
 
-import { Palette, Bell, Info, PaperPlane } from '@phosphor-icons/react';
+import { Palette, AppWindow, Info, Key } from '@phosphor-icons/react';
 
 import { useAppSelector, useAppDispatch } from '@/lib/redux/hooks';
 import { setIsDarkMode } from '@/lib/redux/states/themeSlice';
@@ -11,20 +11,24 @@ import { setIsDarkMode } from '@/lib/redux/states/themeSlice';
 
 const AppSettings = () => {
   const dispatch = useAppDispatch();
-  const { handleOpenDrawer } = useDrawer();
   const theme = useAppSelector((state) => state.theme.isDarkMode);
 
+  const {
+      appOverviewDrawer,
+      keyFeaturesDrawer,
+      techHighlightsDrawer
+  } = useAppInfoDrawer();
+  
   const toggleSwitch = () => {
     dispatch(setIsDarkMode(!theme));
   };
 
-  const appInfoDrawer = () => {
-    handleOpenDrawer("About Water Analytics App","AppInfoForm")
-  }
+
+  
 
   return (
     <section className="px-6 py-6">
-      <TextHeader text="App Settings" />
+      <TextHeader text="App  Info & Settings" />
       <div className="grid grid-cols-1  gap-6 mt-4">
       <div className={`flex items-center justify-between p-4 rounded-lg shadow-md ${theme ? "bg-darkGray" : "bg-light"}`}>
         <div className="flex items-center gap-4 overflow-hidden">
@@ -36,22 +40,22 @@ const AppSettings = () => {
           <div><Switch isOn={theme} toggleSwitch={toggleSwitch} /></div>
         </div>
         <SettingItem
-          icon={Bell}
-          label="Email Notifications"
-          btnLabel="Manage"
-          action={()=>{}}
-        />
-        <SettingItem
-          icon={PaperPlane}
-          label="Newsletter Subscription"
-          btnLabel="Subscribe"
-          action={()=>{}}
-        />
-        <SettingItem
           icon={Info}
-          label="App Info"
-          btnLabel="View"
-          action={appInfoDrawer}
+          label="Overview"
+          btnLabel="Read Info"
+          action={appOverviewDrawer}
+        />
+        <SettingItem
+          icon={Key}
+          label="Key Features"
+          btnLabel="Learn More"
+          action={keyFeaturesDrawer}
+        />
+        <SettingItem
+          icon={AppWindow}
+          label="Technical Highlight"
+          btnLabel="Learn More"
+          action={techHighlightsDrawer}
         />
       </div>
     </section>
