@@ -1,8 +1,10 @@
 import express from 'express';
 import cors from "cors";
-import helmet from 'helmet';
+import { helmetConfig } from '@/utils/helmet';
+
 import cookieParser from "cookie-parser";
 import { errorHandler } from "@/infrastructure/middleware/errorHandler.middleware";
+import { serveClient } from '@/infrastructure/express-server/serveClient';
 
 import authRoutes from "@/auth/auth.route";
 import userRoutes from "@/user/user.route";
@@ -16,7 +18,7 @@ export const startApp = () => {
     const app = express();
 
     // Security Middleware
-    app.use(helmet());
+    app.use(helmetConfig);
     app.use(cors({
         origin: "http://localhost:5173",
         credentials: true
@@ -35,6 +37,9 @@ export const startApp = () => {
     app.use("/api/threshold", thresholdRoutes);
     app.use("/api/notes", notesRoutes);
     app.use("/api/dashboard", dashboardRoutes);
+    
+    // Serve React Frontend
+    serveClient(app);
 
     // Error Handler Middleware
     app.use(errorHandler);

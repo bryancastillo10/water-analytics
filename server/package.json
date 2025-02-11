@@ -5,7 +5,8 @@
   "scripts": {
     "start": "tsx index.ts",
     "dev": "tsx watch index.ts",
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts",
+    "build": "npm run build --prefix client"
   },
   "keywords": [],
   "author": "",
