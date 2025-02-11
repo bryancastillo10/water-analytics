@@ -15,7 +15,7 @@ const useUserListTable = () => {
     const { handleOpenDrawer } = useDrawer();
   
     // Get All User Query
-    const { data: allUsers, isLoading } = useGetAllUserQuery();
+    const { data: allUsers, isLoading, error } = useGetAllUserQuery();
     
     //  Delete User Drawer
     const deleteUserDrawer = (id: string) => {
@@ -52,9 +52,11 @@ const useUserListTable = () => {
     });
     
     return {
+        allUsers,
         hoveredRow,
         theme,
         isLoading,
+        error,
         userTable,
         openEditRole,
         setHoveredRow,

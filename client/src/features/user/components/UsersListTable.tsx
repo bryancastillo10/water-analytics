@@ -3,22 +3,34 @@ import { PencilSimpleLine, TrashSimple } from "@phosphor-icons/react";
 
 import { MainPageLoadingState } from "@/components/layout";
 import useUserListTable from "@/features/user/hooks/useUserListTable";
+import { useToast } from "@/hooks/useToast";
 
 const UsersListTable = () => {
   const {
+    allUsers,
     hoveredRow,
     theme,
     isLoading,
     userTable,
+    error,
     setHoveredRow,
     deleteUserDrawer,
     toggleEditRole
   } = useUserListTable();
+  
+  const { showToast } = useToast();
 
   if (isLoading) {
     return <div className="flex justify-center items-center w-full h-[70vh]">
       <MainPageLoadingState />
     </div>;
+  }
+  
+  if (error) {
+    showToast({
+      status: "warning",
+      message: "User Data is Available for Admin Role Only"
+    });
   }
   
   return (
@@ -42,7 +54,8 @@ const UsersListTable = () => {
         ))}
       </thead>
       <tbody>
-        {userTable.getRowModel().rows.map((row, rowIndex) => (
+        {allUsers && allUsers.length > 0 ? (
+          userTable.getRowModel().rows.map((row, rowIndex) => (
           <tr
             className={`relative ${theme ? "hover:bg-darkGray" : "hover:bg-neutral"}`}
             key={row.id}
@@ -77,8 +90,13 @@ const UsersListTable = () => {
                   />
                 </div>)}
             </td>
-          </tr>
-        ))}
+          </tr>)
+          )) :  <tr>
+                <td colSpan={userTable.getAllColumns().length}
+                  className="text-center font-semibold py-4 border border-neutral">
+                  Failed to Fetch The User Data Available. This is available for Admin Role only.
+              </td>
+            </tr>}
       </tbody>
     </table>
   )
