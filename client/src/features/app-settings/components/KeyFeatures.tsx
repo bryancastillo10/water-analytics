@@ -5,10 +5,11 @@ import { Button } from "@/components/ui";
 import { useAppSelector } from "@/lib/redux/hooks";
 
 import { featuresList } from "@/features/app-settings/constants/features";
-import { type InfoDrawerProps } from "@/features/app-settings/hooks/useAppInfoDrawer";
+import useDrawer from "@/hooks/useDrawer";
 
-const KeyFeatures = ({handleCloseDrawer}:InfoDrawerProps) => {
+const KeyFeatures = () => {
   const theme = useAppSelector((state) => state.theme.isDarkMode);
+  const { handleCloseDrawer } = useDrawer();
   
   return (
   <section>

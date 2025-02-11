@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import { useAppSelector } from "@/lib/redux/hooks";
+import { useToast } from "@/hooks/useToast";
 import useDrawer from "@/hooks/useDrawer";
 
 import { type Icon } from "@phosphor-icons/react";
@@ -16,6 +17,7 @@ interface PageCardProps {
 const PageCard = (props: PageCardProps) => {
     const { name, icon: Icon, tagLine, link } = props;
     const navigate = useNavigate();
+    const { showToast } = useToast();
     const { handleCloseDrawer } = useDrawer();
   
     const theme = useAppSelector((state) => state.theme.isDarkMode);
@@ -23,9 +25,16 @@ const PageCard = (props: PageCardProps) => {
     const user = useAppSelector((state) => state.user);
   
     const role = user.role.toLowerCase();
-    
-  
-    const handleCardClick = () => {
+
+  const handleCardClick = () => {
+    if (link == "/users" && role !== "admin") {
+      showToast({
+        status: "warning",
+        message:"Can Only Be Accessed By Users with Admin Role"
+      })
+      handleCloseDrawer();
+      return;
+    };  
         navigate(`/${role}${link}`);
         handleCloseDrawer();
     };

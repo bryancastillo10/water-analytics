@@ -5,9 +5,10 @@ import { Button } from "@/components/ui";
 
 import PageCard from "@/features/app-settings/components/PageCard";
 import { pagesGuide } from "@/features/app-settings/constants/pagesGuide";
-import type { InfoDrawerProps } from "@/features/app-settings/hooks/useAppInfoDrawer";
+import useDrawer from "@/hooks/useDrawer";
 
-const AppOverview = ({handleCloseDrawer}: InfoDrawerProps) => {
+const AppOverview = () => {
+  const { handleCloseDrawer } = useDrawer();
   return (
     <section className="grid grid-cols-1">   
 
