@@ -14,14 +14,11 @@ const useLogout = () => {
     
     const handleSignOut = async () => {
         try {
-            const res = await signOut().unwrap();
+            await signOut().unwrap();
             
             dispatch(clearUser())
             navigate('/');
-            showToast({
-                status: "success",
-                message: res.message
-            });
+            return;
         }
         catch (error: any) {
             showToast({
