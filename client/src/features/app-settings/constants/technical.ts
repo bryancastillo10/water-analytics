@@ -3,7 +3,7 @@ export const technicalList = [
     id: 1,
     title: "Full-Stack Development",
     description:
-      "Our app is built using modern web tools that handle everything from its clean, easy-to-use design to the way data is stored and managed. This careful organization ensures a smooth and reliable experience for every user.",
+      "This app was built using modern web tools that handle everything from its clean, easy-to-use design to the way data is stored and managed. This careful organization ensures a smooth and reliable experience for every user.",
   },
   {
     id: 2,
