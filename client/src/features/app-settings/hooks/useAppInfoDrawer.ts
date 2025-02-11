@@ -1,31 +1,23 @@
 import useDrawer from "@/hooks/useDrawer";
 
-import { useAppDispatch } from "@/lib/redux/hooks";
-import { closeDrawer } from "@/lib/redux/states/drawerSlice";
-
 export interface InfoDrawerProps {
     handleCloseDrawer: () => void;
 };
 
 const useAppInfoDrawer = () => {
     const { handleOpenDrawer } = useDrawer();
-    const dispatch = useAppDispatch();
-    
-    const handleCloseDrawer = () => {
-        dispatch(closeDrawer());
-    };
     
     const appOverviewDrawer = () => {
-        handleOpenDrawer("About Water Analytics App", "AppOverview", { handleCloseDrawer})
+        handleOpenDrawer("About Water Analytics App", "AppOverview")
     };
     
     const keyFeaturesDrawer = () => {
-        handleOpenDrawer("App Key Features","KeyFeatures", { handleCloseDrawer})
+        handleOpenDrawer("App Key Features","KeyFeatures")
     
     };
     
     const techHighlightsDrawer = () => {
-        handleOpenDrawer("Technical Highlight", "TechHighlights", { handleCloseDrawer})
+        handleOpenDrawer("Technical Highlight", "TechHighlights")
     };
     
     
