@@ -1,13 +1,16 @@
 import { CheckCircle, TrashSimple } from "@phosphor-icons/react";
 import { Spinner } from "@/assets/svg";
 
-import useDeleteNote from "@/features/stickynote/hooks/useDeleteNote";
-import type { INotesData } from "@/features/stickynote/api/interface";
 import { autoGrow, handleZIndex } from "@/features/stickynote/utils";
 import { useAppSelector } from "@/lib/redux/hooks";
+
+import type { INotesData } from "@/features/stickynote/api/interface";
+
 import useDragAndDropStates from "@/features/stickynote/hooks/useDragAndDropStates";
-import useAutoSaveNotes from "../hooks/useAutoSaveNotes";
-import useMouseEvent from "../hooks/useMouseEvent";
+import useAutoSaveNotes from "@/features/stickynote/hooks/useAutoSaveNotes";
+import useMouseEvent from "@/features/stickynote/hooks/useMouseEvent";
+import useTouchEvent from "@/features/stickynote/hooks/useTouchEvent";
+import useDeleteNote from "@/features/stickynote/hooks/useDeleteNote";
 
 interface NoteCardProps {
   note: INotesData;
@@ -15,6 +18,9 @@ interface NoteCardProps {
 }
 
 const NoteCard = ({ note, containerRef }: NoteCardProps) => {
+  const isOpenDrawer = useAppSelector((state) => state.drawer.isOpenDrawer);
+  
+  // Drag & Drops States, Ref
   const {
     textAreaRef,
     cardRef,
@@ -26,6 +32,7 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
     setPosition
   } = useDragAndDropStates(note);
   
+  // Auto Update Feature
   const {
     saving,
     savedSuccess,
@@ -36,6 +43,7 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
   
   const { callDeleteNote } = useDeleteNote();
   
+  //  Mouse Event for Desktop Screen
   const { mouseDown, handleKeyUp } = useMouseEvent(
   {  note,
      mouseStartPos,
@@ -50,7 +58,19 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
      setSaving,
      setSavedSuccess});
 
-  const isOpenDrawer = useAppSelector((state) => state.drawer.isOpenDrawer);
+  //  Touch Event for Mobile Screen
+  const { touchStart } = useTouchEvent({
+      note,
+      isOpenDrawer,
+      cardRef,
+      containerRef,
+      savedSuccessTimer,
+      saveData,        
+      setSelectedNote,
+      setPosition,
+      setSaving,
+      setSavedSuccess 
+  });
   
   const colors = note.colors;
   const content = note.content;
@@ -69,6 +89,7 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
       {/* Note Header */}
       <div
         onMouseDown={mouseDown}
+        onTouchStart={touchStart}
         id="card-header"
         className="flex justify-between items-center bg-[#FDD89B] rounded-l-md rounded-r-md px-4 py-3"
         style={{ backgroundColor: colors.colorHeader }}
