@@ -137,54 +137,9 @@ The server side of this application is built with **Node-TS and Express**. Libra
 
 ### 5. API Documentation
 
-🔑 Authentication Routes ( _/api/auth_ )
+This project demonstrates REST API for managing authentication, user data, water quality dashboard calculations, site, notes, threshold and user profile CRUD operation.
 
-<mark class="post badge">POST</mark> /api/auth/signup
-
-Request Body:
-```json
-    {
-    "username":"NewUser",
-    "email": "newuser@email.com",
-    "password": "somepassword456",
-    "confirmPassword": "somepassword456",
-    }
-```
-
-Response Body (Success):
-
-```json
-    {
-    "message": "Congratulations, your account has been registered",
-    "user": {
-        "id": "123456789",
-        "username": "NewUser",
-        "password": "$hashedpassword",
-        "email": "newuser@email.com",
-        "profilePic": "defaultprofilepicfromcloudinary.png",
-        "role": "PUBLIC"
-    }
-    }
-```
-
-Reponse Body (Error):
-```json
-    {
-        "status":"fail",
-        "message":"error reason"
-    }
-```
-
-<mark class="post badge">POST</mark> /api/auth/signin
-
-<mark class="post badge">POST</mark> /api/auth/signout
-
-
-<mark class="get badge">GET</mark>
-
-<mark class="put badge">PUT</mark>
-
-<mark class="delete badge">DELETE</mark>
+📖 **[View Full API Documentation](server/API.md)**
 
 ### 6. License
 
@@ -224,29 +179,4 @@ LinkedIn: [Bryan Castillo ][2]
     border-radius: 8px; 
   }
 
-   .badge{
-     font-weight:700;
-     padding: 4px 8px;
-     border-radius: 8px; 
-    }
-
-   .post {
-    background-color: #F0E442;
-    color: #111000;
-    }
-
-    .get{
-    background-color: #21DCA9;
-    color: #111000;
-    }
-
-    .put{
-    background-color: #CE9108;
-    color: #F4F3F2;
-    }
-
-    .delete{
-    background-color: #CE0E2B;
-    color: #F4F3F2;
-    }
 </style>
