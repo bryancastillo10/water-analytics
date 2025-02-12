@@ -7,7 +7,7 @@ export const featuresList = [
   },
   {
     id: 2,
-    title: "Readily Available Template Data",
+    title: "Readily Available Data Template",
     description:
       "When you sign up, sample data is automatically added so you can start exploring the app right away.",
   },
