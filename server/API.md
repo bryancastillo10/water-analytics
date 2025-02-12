@@ -17,7 +17,7 @@
     }
 ```
 
-**📬 Response Body (Success):**
+**✅ Response Body (Success):**
 
 ```json
     {
@@ -41,6 +41,7 @@
         "message":"error reason"
     }
 ```
+---
 
 ### <mark class="post badge">Authenticate User (User Login) </mark> 
 
@@ -55,7 +56,7 @@
     }
 ```
 
-**📬 Response Body (Success):**
+**✅ Response Body (Success):**
 
 ```json
     {
@@ -81,12 +82,13 @@
         "message":"error reason"
     }
 ```
+---
 
 ###  <mark class="post badge">End User Session (User Logout)</mark> 
 
 ### **POST** /api/auth/signout
 
-**📬 Response Body (Success):**
+**✅ Response Body (Success):**
 
 ```json
 {
@@ -108,7 +110,125 @@ __Upon a successful response, the authentication cookie (jwt) is automatically c
 
 ## 😎 User Routes ( _/api/user_ )
 
+###  <mark class="put badge">Update User Data</mark> 
 
+### **PUT** /api/auth/user/update/{userId}
+
+**📝 Request Body:**
+
+```json
+    {
+        "username":"UpdatedName",
+        "email":"updatedEmail@email.com"
+    }
+```
+or
+
+```json
+    {
+        "role":"PUBLIC"
+    }
+```
+
+
+**✅ Response Body (Success):**
+
+```json
+    {
+        "message": "Your profile has been updated successfully",
+        "user": {
+            "id":"123456789",
+            "username":"UpdatedName",
+            "email":"updatedEmail@email.com",
+            "password": "$hashedpassword",
+            "profilePic": "defaultprofilepicfromcloudinary.png",
+            "role": "PUBLIC"
+        }
+    }
+```
+
+**🚫 Response Body (Error):**
+
+
+```json
+    {
+        "status": "error",
+        "message": "Something went wrong, Internal Server Error"
+    }
+```
+
+---
+###  <mark class="put badge">Update User Profile Picture</mark> 
+
+### **PUT** /api/auth/user/profile-pic/{userId}
+
+**📝 Request Body:**
+
+| Key | Value | Content-Type |
+| -- | -- | -- |
+| profilePic | picture.png | images/jpeg or images/png |
+
+**✅ Response Body (Success):**
+
+```json
+{
+    "message": "Profile picture has been updated",
+    "profilePic": "newcloudinaryuploadedimage.png"
+}
+```
+
+**🚫 Response Body (Error):**
+
+
+```json
+    {
+        "status": "error",
+        "message": "Something went wrong, Internal Server Error"
+    }
+```
+
+--- 
+###  <mark class="get badge">Get All Users</mark> 
+
+### **POST** /api/user?id={userId}
+⚠️ Admin Role Users Only 
+
+**🚫 Response Body (Error):**
+
+
+```json
+    {
+        "status": "fail",
+        "message": "The user is not auhorized. Admin privileges only"
+    }
+```
+
+---
+###  <mark class="delete badge">Delete User</mark> 
+
+### **DELETE** /api/user/delete/{userId}?username={username}
+
+**✅ Response Body (Success) :**
+
+```json
+    {
+      "message": "You have deleted your account successfully"
+    }
+```
+
+**🚫 Response Body (Error):**
+
+```json
+    {
+        "status": "error",
+        "message": "error reason"
+    }
+```
+---
+
+
+
+<!-- Badge Styles -->
 <style>
    .badge{
      font-weight:700;
@@ -127,8 +247,8 @@ __Upon a successful response, the authentication cookie (jwt) is automatically c
     }
 
     .put{
-    background-color: #CE9108;
-    color: #F4F3F2;
+    background-color: #9BA2D8;
+    color: #111000;
     }
 
     .delete{
@@ -136,3 +256,4 @@ __Upon a successful response, the authentication cookie (jwt) is automatically c
     color: #F4F3F2;
     }
 </style>
+
