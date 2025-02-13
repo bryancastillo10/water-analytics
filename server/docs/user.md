@@ -122,3 +122,96 @@ The _*username*_ query parameter is required
     }
 ```
 ---
+
+### **Request Reset Password**
+
+### ![Static Badge](https://img.shields.io/badge/POST-%23F0E442?style=flat&logoColor=%23111000) /api/user/request-reset-password
+
+**📝 Request Body:**
+```json
+    {
+        "email":"some_emailaddress@email.com"
+    }
+```
+**✅ Response Body (Success) :**
+
+```json
+    {
+      "message": "Verification code sent to your email"
+    }
+```
+
+**🚫 Response Body (Error):**
+
+
+
+```json
+    {
+        "status": "error",
+        "message": "error reason"
+    }
+```
+---
+
+### **Verify Code Reset**
+
+### ![Static Badge](https://img.shields.io/badge/POST-%23F0E442?style=flat&logoColor=%23111000) /api/user/verify-code
+
+
+**📝 Request Body:**
+```json
+    {
+        "email":"some_emailaddress@email.com",
+        "code":"12345"
+    }
+```
+**✅ Response Body (Success) :**
+
+```json
+    {
+      "isVerified": true
+    }
+```
+
+**🚫 Response Body (Error):**
+
+```json
+    {
+        "status": "fail",
+        "message": "error reason"
+    }
+```
+
+---
+
+### **Update Password**
+
+### ![Static Badge](https://img.shields.io/badge/PUT-%23785EF0?style=flat-square&logoColor=%23111000) /api/user/reset-password
+
+**📝 Request Body:**
+```json
+    {
+        "email":"some_emailaddress@email.com",
+        "newPassword":"newPassword123",
+        "confirmNewPassword":"newPassword123"
+    }
+```
+
+**✅ Response Body (Success) :**
+
+```json
+    {
+      "message":"Password has been updated successfully"
+    }
+```
+
+**🚫 Response Body (Error):**
+
+```json
+    {
+        "status": "fail",
+        "message": "error reason"
+    }
+```
+
+---
