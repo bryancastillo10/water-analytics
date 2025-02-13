@@ -24,7 +24,7 @@ export const updateThresholdColumnsConfig = (
       return (
         <FormNumberInput
           id={parameter}
-          ref={(el) => (inputRefs.current[parameter] = el)} // Store reference
+          ref={(el) => (inputRefs.current[parameter] = el)} 
           value={paramsValue[parameter] ?? ""}
           onChange={(e) => onChangeValue(parameter, e.target.value)}
         />

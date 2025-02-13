@@ -3,6 +3,8 @@ export interface IThresholdData{
     parameter: string;
     unit: string;
     value: string;
+    minValue?: string;
+    maxValue?: string;
 }
 
 export interface UpdateThresholdRequest {

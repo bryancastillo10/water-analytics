@@ -18,7 +18,7 @@ export class DashboardService {
         return parameterList;
     };
 
-    async dateFilters(userId: string, siteId:string) {
+    async dateFilters(userId: string, siteId: string) {
         if (!userId) {
             throw new NotFoundError("User ID");
         }
@@ -28,7 +28,7 @@ export class DashboardService {
         return dateFilters;
     };
     
-    async timeSeries({ siteId, parameter, startDate, endDate }: GetTimeSeriesDataRequest) { 
+    async timeSeries({ siteId, parameter, startDate, endDate }: GetTimeSeriesDataRequest) {
         if (!parameter) {
             throw new NotFoundError("Parameter");
         }
@@ -63,11 +63,11 @@ export class DashboardService {
             percentage: ((site._count.id) / totalSites * 100).toFixed(2)
         }));
 
-        return { totalSites, percentages}
+        return { totalSites, percentages }
     };
 
 
-    async getParameterStatistics(siteId: string, paramGroup: string){
+    async getParameterStatistics(siteId: string, paramGroup: string) {
         if (!siteId) {
             throw new NotFoundError("Site ID is required");
         }
@@ -114,7 +114,7 @@ export class DashboardService {
 
 
 
-    async getStatPerSite(siteId:string, statType:string) { 
+    async getStatPerSite(siteId: string, statType: string) {
         if (!siteId) {
             throw new NotFoundError("Site ID");
         }
@@ -128,7 +128,7 @@ export class DashboardService {
         return siteData;
     };
 
-    async getParameterStatus(siteId :string) {
+    async dashboardCard(siteId: string) {
         const parameters = ["pH", "suspendedSolids", "totalCOD", "fecalColiform"];
         
         const kpiData = await Promise.all(
@@ -139,32 +139,38 @@ export class DashboardService {
                     return { parameter, status: "No Data Available" };
                 }
 
-                const parameterName = parameterRecord[parameter] || parameter;
                 const unit = parameterCardDisplayNames[parameter]?.unit || "";
 
-                const thresholdData = await this.dashboardRepository.getThresholdValue(parameterName);
+                const thresholdData = await this.dashboardRepository.getThresholdValue(parameter);
                 
                 if (!thresholdData) {
                     throw new NotFoundError("Threshold for the parameter");
                 }
 
                 let status: string;
+                let thresholdValue: string | number;
                 const averageValue = paramAvg[parameter];
-                const thresholdValue = thresholdData.value || 0;
                 const displayName = parameterCardDisplayNames[parameter]?.displayName || parameter;
-                
+
                 if (parameter === "pH") {
-                    switch (true) {
-                        case averageValue < 6.6:
-                            status = "Acidic";
-                            break;
-                        case averageValue > 7.5:
-                            status =  "Alkaline";
-                        default:
-                            status = "Neutral";
-                            break;
-                    };
+                    // for pH
+                    const { minValue, maxValue } = thresholdData;
+                    
+                    // for other parameters
+                    thresholdValue = `${minValue} - ${maxValue}`;
+
+                    const safeMinValue = minValue ?? 6.5;
+                    const safeMaxValue = maxValue ?? 7.5;
+                    
+                    if (averageValue < safeMinValue) {
+                        status = "Acidic";
+                    } else if (averageValue > safeMaxValue) {
+                        status = "Alkaline";
+                    } else {
+                        status = "Neutral";
+                    }
                 } else {
+                    thresholdValue = thresholdData.value || 0;
                     status = averageValue > thresholdValue ? "Above Threshold" : "Pass";
                 }
 
@@ -174,11 +180,10 @@ export class DashboardService {
                     averageValue,
                     thresholdValue,
                     unit,
-                    status
-                }
+                    status,
+                };
             })
-        )
+        );
         return kpiData;
-
     }
 };

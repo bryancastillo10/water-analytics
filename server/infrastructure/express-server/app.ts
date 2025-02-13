@@ -39,7 +39,9 @@ export const startApp = () => {
     app.use("/api/dashboard", dashboardRoutes);
     
     // Serve React Frontend
-    serveClient(app);
+    if (process.env.NODE_ENV == "production") {
+        serveClient(app);
+    }
 
     // Error Handler Middleware
     app.use(errorHandler);

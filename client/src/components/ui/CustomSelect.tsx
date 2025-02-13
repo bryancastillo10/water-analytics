@@ -36,7 +36,7 @@ const CustomSelect = ({
                       ${isSelectOpened ? "border-primary" : "border-dark/20"}
                       ${theme ? "bg-darkGray text-light": "bg-light"}
                       `}>
-            <div className="flex justify-between items-center w-full px-2 text-sm  border-transparent focus:border-primary">
+            <div className="flex justify-between items-center w-full px-2 gap-2 text-sm  border-transparent focus:border-primary">
               <p className="flex items-center gap-x-1">
                 {Icon && <Icon size="18" color={theme ? "#F6F5F4":"#040710"} />}
                 <span>{value ?? label}</span>

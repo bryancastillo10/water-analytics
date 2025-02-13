@@ -21,6 +21,6 @@ router.get("/pie", protectRoute, dashboardController.sitePercentage);
 router.get("/radar/site/:siteId", protectRoute, dashboardController.getStatDataPerSite);
 
 // Dashboard KPI Card
-router.get("/card/site/:siteId", protectRoute, dashboardController.getParameterStatus);
+router.get("/card/site/:siteId", protectRoute, dashboardController.dashboardCard);
 
 export default router;

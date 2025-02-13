@@ -2,85 +2,12 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 import { DatabaseError, ValidationError } from "@/infrastructure/errors/customErrors";
-import { CreateThresholdRequest, IThresholdRepository, UpdateThresholdRequest } from "@/threshold/core/interface/IThresholdRepository";
+import { IThresholdRepository, UpdateThresholdRequest } from "@/threshold/core/interface/IThresholdRepository";
 import { ThresholdData } from "@/threshold/core/entity/threshold";
 
 
 export class ThresholdRepository implements IThresholdRepository {
     private prisma = new PrismaClient();
-
-    async findUserByThreshold(thresholdId: string): Promise<string>{
-        try {
-            const threshold = await this.prisma.threshold.findUnique({
-                where: { id: thresholdId },
-                select: {userId: true}
-            })
-            if (!threshold) {
-                throw new ValidationError("Threshold not found");
-            }
-    
-            return threshold.userId;
-        }
-        catch (error) {
-            if (error instanceof PrismaClientKnownRequestError) {
-                console.error(error.message);
-                throw new DatabaseError("Database error at getSiteByUser method");
-              }
-             throw Error;
-        }
-    };
-
-    async verifyUserRole(userId: string): Promise<boolean> {
-        try {
-            const user = await this.prisma.user.findUnique({
-                where: { id: userId }
-            });
-
-            if (!user) {
-                throw new ValidationError("User not found");
-            }
-    
-            const isUserVerified = user?.role === "ADMIN" || user?.role === "ANALYST";
-            return isUserVerified;
-        }
-        catch (error) {
-            if (error instanceof PrismaClientKnownRequestError) {
-                console.error(error.message);
-                throw new DatabaseError("Database error at getSiteByUser method");
-              }
-             throw Error;
-           }
-        }
-
-    async createThreshold({userId, threshold}: CreateThresholdRequest): Promise<ThresholdData> {
-        try {
-            const { parameter, value, unit = "NA" } = threshold;
-            const newThreshold = await this.prisma.threshold.create({
-                data: {
-                    parameter,
-                    userId,
-                    value,
-                    unit
-                }
-            });
-    
-            return {
-                id: newThreshold.id,
-                userId: newThreshold.userId,
-                parameter: newThreshold.parameter,
-                value: newThreshold.value || 0,
-                unit: newThreshold.unit
-            };
-            }
-            catch (error) {
-            if (error instanceof PrismaClientKnownRequestError) {
-                console.error(error.message); 
-                throw new DatabaseError("Database error at createThreshold method");
-              }
-             throw Error;
-        }
-    }
-
 
     async getThreshold(userId: string): Promise<ThresholdData[]> {
         try {
@@ -88,53 +15,43 @@ export class ThresholdRepository implements IThresholdRepository {
                 where: { userId }
             });
 
-            return userThreshold as ThresholdData[];
+            return userThreshold;
         }
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
                 console.error(error.message); 
                 throw new DatabaseError("Database error at createThreshold method");
               }
-             throw Error;
+             throw error;
         }
     }
-    async updateThreshold(updates: UpdateThresholdRequest[]): Promise<ThresholdData[]> {
-        try {
-            const updatedThreshold = await this.prisma.$transaction(async (prisma) => {
-                const updateRes = await Promise.all(
-                    updates.map((update) =>
-                        prisma.threshold.update({
-                            where: { id: update.thresholdId },
-                            data: { value: update.value }
-                        })
-                    )
-                );
-                return updateRes as ThresholdData[];
-            })
-            
-            return updatedThreshold;
-        }
-        catch (error) {
-            if (error instanceof PrismaClientKnownRequestError) {
-                console.error(error.message);
-                throw new DatabaseError("Database error at createThreshold method");
-            }
-            throw Error;
-        }
-    }
-    async deleteThreshold(thresholdId: string): Promise<void> {
-        try {
-            await this.prisma.threshold.delete({
-                where: { id: thresholdId }
+    async updateThreshold(updateData: UpdateThresholdRequest[]): Promise<ThresholdData[]> {
+    try {
+        const updatedThreshold = await this.prisma.$transaction(async (prisma) => {
+        const updateRes = await Promise.all(
+            updateData.map((update) => {
+            const dataQuery = update.parameter === "pH"
+                ? { minValue: update.minValue, maxValue: update.maxValue }
+                : { value: update.value };
+
+            return prisma.threshold.update({
+                where: { id: update.thresholdId },
+                data: dataQuery, 
             });
+            })
+        );
+        return updateRes;
+        });
+        
+        return updatedThreshold;
+    } catch (error) {
+        if (error instanceof PrismaClientKnownRequestError) {
+        console.error(error.message);
+        throw new DatabaseError("Database error at updateThreshold method");
         }
-        catch (error) {
-            if (error instanceof PrismaClientKnownRequestError) {
-                console.error(error.message);
-                throw new DatabaseError("Database error at createThreshold method");
-            }
-            throw Error;
-        }
+        throw error;
     }
+    }
+
     
 }
