@@ -17,7 +17,8 @@ const DashboardCard = ({
   trendIcon: TrendIcon,
   colorClass
 }: DashboardCardProps) => {
- 
+  
+  const roundedValue = value != null ? Math.round(value * 10) / 10 : "N/A";
   
   return (
     <article className="w-full h-[200px] overflow-hidden max-w-md bg-gradient-to-br 
@@ -41,7 +42,7 @@ const DashboardCard = ({
         {/* Right Section */}
         <div className="flex flex-col items-start">
           <div className="flex flex-col items-baseline gap-1 mb-2">
-            <span className="text-4xl font-bold tracking-tight">{value.toFixed(1) || "N/A"}</span>
+            <span className="text-4xl font-bold tracking-tight">{roundedValue}</span>
             <span className={`text-lg font-medium ${unit === "" ? "my-3" : "my-0"}`}>
               {unit}
             </span>

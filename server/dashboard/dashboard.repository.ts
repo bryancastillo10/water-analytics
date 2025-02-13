@@ -250,11 +250,10 @@ export class DashboardRepository implements IDashboardRepository {
 
     async getThresholdValue(parameter: string) {
         try {
+            const dataQuery = parameter === "pH" ? { minValue: true, maxValue: true } : { value: true };
             const thresholdValue = await this.prisma.threshold.findFirst({
                 where: { parameter },
-                select: {
-                    value: true
-                }
+                select: dataQuery
             });
             return thresholdValue;
         }

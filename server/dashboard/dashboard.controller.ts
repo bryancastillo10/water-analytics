@@ -10,7 +10,7 @@ export class DashboardController {
         this.getDateFilters = this.getDateFilters.bind(this);
 
         // Dashboard KPI Card 
-        this.getParameterStatus = this.getParameterStatus.bind(this);
+        this.dashboardCard = this.dashboardCard.bind(this);
         
         // Line Chart 
         this.timeSeries = this.timeSeries.bind(this);
@@ -118,11 +118,11 @@ export class DashboardController {
         }
     };
 
-    async getParameterStatus(req: Request, res: Response, next: NextFunction) {
+    async dashboardCard(req: Request, res: Response, next: NextFunction) {
         try {
             const siteId = req.params.siteId;
 
-            const siteData = await this.dashboardService.getParameterStatus(siteId);
+            const siteData = await this.dashboardService.dashboardCard(siteId);
 
             res.status(200).json(siteData);
         }
