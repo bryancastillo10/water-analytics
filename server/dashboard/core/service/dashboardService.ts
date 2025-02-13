@@ -155,7 +155,7 @@ export class DashboardService {
                 
                 if (parameter === "pH") {
                     switch (true) {
-                        case averageValue < 6.6:
+                        case averageValue < thresholdValue:
                             status = "Acidic";
                             break;
                         case averageValue > 7.5:
