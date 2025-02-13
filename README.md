@@ -140,7 +140,7 @@ The server side of this application is built with **Node-TS and Express**. Libra
 
 This project demonstrates REST API for managing authentication, user data, water quality dashboard calculations, site, notes, threshold and user profile CRUD operation.
 
-📖 **[View Full API Documentation](server/API.md)**
+📖 **[View Full API Documentation](server/docs/index.md)**
 
 ### 6. License
 
