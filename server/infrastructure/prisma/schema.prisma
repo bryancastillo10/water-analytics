@@ -96,6 +96,10 @@ model Threshold {
   parameter String   
   value  Float?
   unit      String
+
+  // Special Case for pH parameter to handle range
+  minValue Float?
+  maxValue Float?
   
   // Relationships
   userId    String   @db.ObjectId
