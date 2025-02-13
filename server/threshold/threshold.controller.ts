@@ -11,7 +11,7 @@ export class ThresholdController {
 
     async getThreshold(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            const userId = req.query.id;
+            const userId = req?.user?.id!;
             if (!userId) {
                 throw new Error("User ID is undefined. Ensure auth middleware is applied");
             }
