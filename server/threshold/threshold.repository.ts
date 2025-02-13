@@ -2,14 +2,14 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 import { DatabaseError, ValidationError } from "@/infrastructure/errors/customErrors";
-import { CreateThresholdRequest, IThresholdRepository, UpdateThresholdRequest } from "@/threshold/core/interface/IThresholdRepository";
+import { IThresholdRepository, UpdateThresholdRequest } from "@/threshold/core/interface/IThresholdRepository";
 import { ThresholdData } from "@/threshold/core/entity/threshold";
 
 
 export class ThresholdRepository implements IThresholdRepository {
     private prisma = new PrismaClient();
 
-    async findUserByThreshold(thresholdId: string): Promise<string>{
+    async findThresholdByUser(thresholdId: string): Promise<string>{
         try {
             const threshold = await this.prisma.threshold.findUnique({
                 where: { id: thresholdId },
@@ -24,7 +24,7 @@ export class ThresholdRepository implements IThresholdRepository {
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
                 console.error(error.message);
-                throw new DatabaseError("Database error at getSiteByUser method");
+                throw new DatabaseError("Database error at findThresholdByUser method");
               }
              throw Error;
         }
@@ -46,40 +46,11 @@ export class ThresholdRepository implements IThresholdRepository {
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
                 console.error(error.message);
-                throw new DatabaseError("Database error at getSiteByUser method");
+                throw new DatabaseError("Database error at verifyUserRole method");
               }
              throw Error;
            }
         }
-
-    async createThreshold({userId, threshold}: CreateThresholdRequest): Promise<ThresholdData> {
-        try {
-            const { parameter, value, unit = "NA" } = threshold;
-            const newThreshold = await this.prisma.threshold.create({
-                data: {
-                    parameter,
-                    userId,
-                    value,
-                    unit
-                }
-            });
-    
-            return {
-                id: newThreshold.id,
-                userId: newThreshold.userId,
-                parameter: newThreshold.parameter,
-                value: newThreshold.value || 0,
-                unit: newThreshold.unit
-            };
-            }
-            catch (error) {
-            if (error instanceof PrismaClientKnownRequestError) {
-                console.error(error.message); 
-                throw new DatabaseError("Database error at createThreshold method");
-              }
-             throw Error;
-        }
-    }
 
 
     async getThreshold(userId: string): Promise<ThresholdData[]> {
@@ -110,23 +81,9 @@ export class ThresholdRepository implements IThresholdRepository {
                     )
                 );
                 return updateRes as ThresholdData[];
-            })
+            });
             
             return updatedThreshold;
-        }
-        catch (error) {
-            if (error instanceof PrismaClientKnownRequestError) {
-                console.error(error.message);
-                throw new DatabaseError("Database error at createThreshold method");
-            }
-            throw Error;
-        }
-    }
-    async deleteThreshold(thresholdId: string): Promise<void> {
-        try {
-            await this.prisma.threshold.delete({
-                where: { id: thresholdId }
-            });
         }
         catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
