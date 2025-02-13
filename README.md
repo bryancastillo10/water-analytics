@@ -107,31 +107,32 @@ The server side of this application is built with **Node-TS and Express**. Libra
 
 ### 4. User Features
 
-<mark class="highlight">User Role Management</mark> 
+![Static Badge](https://img.shields.io/badge/User_Role_Management-%23006da3?style=flat)
 
 > This app supports different user roles. Administrators can view all accounts, adjust user privileges, and remove accounts as needed.
 
-<mark class="highlight">Readily Available Data Template</mark> 
+![Static Badge](https://img.shields.io/badge/Readily_Available_Data_Templates-%23006da3?style=flat)
 
 > When you sign up, sample data is automatically added so you can start exploring the app right away.
 
-<mark class="highlight">Monitoring Site Data Management</mark> 
+![Static Badge](https://img.shields.io/badge/Monitoring_Site_Data_Management-%23006da3?style=flat)
+
 
 >Easily manage information for your water quality monitoring sites. Add, update, or remove site details to keep your data organized.
 
-<mark class="highlight">Intuitive Water Quality Table</mark>
+![Static Badge](https://img.shields.io/badge/Intuitive_Water_Quality_Table-%23006da3?style=flat)
 
 >View clear and simple tables that display water quality data for each site, making it easy to track changes over time.
 
-<mark class="highlight">Customizable Parameter Thresholds</mark>
+![Static Badge](https://img.shields.io/badge/Customizable_Parameter_Thresholds-%23006da3?style=flat)
 
 > Set your own acceptable levels for water quality measures. This lets the dashboard highlight when readings passes the regulation or it is above threshold.
 
-<mark class="highlight">Dashboard Analytics</mark>
+![Static Badge](https://img.shields.io/badge/Dashboard_Analytics-%23006da3?style=flat)
 
 >The dashboard presents interactive charts and summaries that compare current water quality readings with your set limits.
 
-<mark class="highlight">Sticky Notes App</mark>
+![Static Badge](https://img.shields.io/badge/Sticky_Notes_App-%23006da3?style=flat)
 
 >Keep track of your thoughts with built-in sticky notes that you can add, edit, and move around easily.
 
@@ -162,21 +163,9 @@ This application relies on **environmental variables** for authentication, API a
 
 ## 🔗 Developer Contacts: 
 
-Github: [bryancastillo10][1]
+[![Static Badge](https://img.shields.io/badge/bryancastillo10-%23181717?style=social&logo=github)](https://github.com/bryancastillo10)
 
 LinkedIn: [Bryan Castillo ][2] 
 
-[1]: https://github.com/bryancastillo10
+
 [2]:[https://www.linkedin.com/in/bryan-castillo-479101171/]
- 
-
-
-<style>
-  .highlight {
-    background-color: #006da3;
-    color: #f4f3f2;
-    padding: 4px 6px;
-    border-radius: 8px; 
-  }
-
-</style>

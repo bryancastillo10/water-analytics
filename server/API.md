@@ -2,9 +2,10 @@
 
 ## 🔑 Authentication Routes ( _/api/auth_ )
 
-### <mark class="post badge">Register a New User</mark>
 
-### **POST** /api/auth/signup
+### **Register A New User**
+
+### ![Static Badge](https://img.shields.io/badge/POST-%23F0E442?style=flat&logoColor=%23111000) /api/auth/signup
 
 **📝 Request Body:**
 
@@ -43,9 +44,9 @@
 ```
 ---
 
-### <mark class="post badge">Authenticate User (User Login) </mark> 
+### **User Login** 
 
-### **POST** /api/auth/signin
+### ![Static Badge](https://img.shields.io/badge/POST-%23F0E442?style=flat-square&logoColor=%23111000) /api/auth/signin
 
 **📝 Request Body:**
 
@@ -84,9 +85,9 @@
 ```
 ---
 
-###  <mark class="post badge">End User Session (User Logout)</mark> 
+### **User Logout**
 
-### **POST** /api/auth/signout
+### ![Static Badge](https://img.shields.io/badge/POST-%23F0E442?style=flat-square&logoColor=%23111000) /api/auth/signout
 
 **✅ Response Body (Success):**
 
@@ -110,9 +111,10 @@ __Upon a successful response, the authentication cookie (jwt) is automatically c
 
 ## 😎 User Routes ( _/api/user_ )
 
-###  <mark class="put badge">Update User Data</mark> 
+### **Update User Data**
 
-### **PUT** /api/auth/user/update/{userId}
+### ![Static Badge](https://img.shields.io/badge/PUT-%23785EF0?style=flat-square&logoColor=%23111000) /api/user/update/{userId}
+
 
 **📝 Request Body:**
 
@@ -158,9 +160,10 @@ or
 ```
 
 ---
-###  <mark class="put badge">Update User Profile Picture</mark> 
+### **Update User Profile Picture**
 
-### **PUT** /api/auth/user/profile-pic/{userId}
+### ![Static Badge](https://img.shields.io/badge/PUT-%23785EF0?style=flat-square&logoColor=%23111000) /api/user/profile-pic/{userId}
+
 
 **📝 Request Body:**
 
@@ -188,10 +191,13 @@ or
 ```
 
 --- 
-###  <mark class="get badge">Get All Users</mark> 
+### **Get All Users**
 
-### **POST** /api/user?id={userId}
-⚠️ Admin Role Users Only 
+### ![Static Badge](https://img.shields.io/badge/GET-%23009E73?style=flat&logoColor=%23111000) /api/user?id={userId}  ⚠️ Admin Role Users Only
+
+**📝 Request Query:**
+
+The _*userId*_ query parameter is required. This is used to validate user role.
 
 **🚫 Response Body (Error):**
 
@@ -204,9 +210,13 @@ or
 ```
 
 ---
-###  <mark class="delete badge">Delete User</mark> 
+### **Delete User**
 
-### **DELETE** /api/user/delete/{userId}?username={username}
+###  ![Static Badge](https://img.shields.io/badge/DELETE-%23CE0E2B?style=flat&logoColor=%23111000) /api/user/delete/{userId}?username={username}
+
+**📝 Request Query:**
+
+The _*username*_ query parameter is required
 
 **✅ Response Body (Success) :**
 
@@ -225,35 +235,3 @@ or
     }
 ```
 ---
-
-
-
-<!-- Badge Styles -->
-<style>
-   .badge{
-     font-weight:700;
-     padding: 4px 8px;
-     border-radius: 8px; 
-    }
-
-   .post {
-    background-color: #F0E442;
-    color: #111000;
-    }
-
-    .get{
-    background-color: #21DCA9;
-    color: #111000;
-    }
-
-    .put{
-    background-color: #9BA2D8;
-    color: #111000;
-    }
-
-    .delete{
-    background-color: #CE0E2B;
-    color: #F4F3F2;
-    }
-</style>
-
