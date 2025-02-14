@@ -98,7 +98,25 @@ This endpoint accepts a _**multipart/form-data**_ payload with the following fie
 
 This endpoint accepts a _**multipart/form-data**_ payload with the following fields:
 
-- **Key** `siteName`
+- **Key** `siteData`  
+  **Content-Type** `text/plain`  
+  **Example Value**  
+
+```json
+  {
+    "siteName":"updateMonitoring Site A",
+    "location": "Clark, Pampanga, Philippines",
+    "description":"A centralized wastewater treatment plant of the city",
+    "imageUrl": "uploadedPhotoAtCloudinary.png",
+    "sourceType": "DOMESTIC",
+    "userId": "123456789"
+  }
+```
+
+- **Key** `sitePhoto`  
+  **Content-Type** `image/jpeg` or `image/png`  
+  **Example Value**  `sitePhoto.png`
+
 
   **Content-Type** `text/plain`
 
@@ -106,9 +124,28 @@ This endpoint accepts a _**multipart/form-data**_ payload with the following fie
 
 **✅ Response Body (Success):**
 
-
+```json
+  {
+    "message":"Site has been updated successfully",
+    "site": {
+      "siteName":"updateMonitoring Site A",
+      "location":"CLark,Pampanga, Philippines",
+      "description":"A centralized wastewater treatment plant of the city",
+      "imageUrl": "uploadedPhotoAtCloudinary.png",
+      "sourceType": "DOMESTIC",
+      "userId": "123456789"
+    }
+  }
+```
 
 **🚫 Response Body (Error):**
+
+```json
+    {
+        "status":"fail",
+        "message": "error reason"
+    }
+```
 
 --- 
 
@@ -119,6 +156,19 @@ This endpoint accepts a _**multipart/form-data**_ payload with the following fie
 
 **✅ Response Body (Success):**
 
+```json
+    {
+      "message": "Site has been deleted successfully"
+    }
+```
+
 **🚫 Response Body (Error):**
+
+```json
+    {
+      "status":"fail",
+      "message": "error reason"
+    }
+```
 
 ---
