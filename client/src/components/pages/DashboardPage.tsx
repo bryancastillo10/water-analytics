@@ -44,8 +44,8 @@ const DashboardPage = () => {
   {/* <RadarChartBlock /> */}
   <section className="col-span-1 sm:col-span-2 lg:col-span-1 xl:col-span-1 row-span-1 h-auto min-h-[300px] bg-cyan-700"/>
 
-  {/* <StatisticsProfileCharts /> */}
-  <section className="col-span-1 sm:col-span-2 xl:col-span-2 row-span-1 grid grid-cols-1 xl:grid-cols-2 gap-y-12 xl:gap-4 bg-rose-500 min-h-[300px]" />
+  <StatisticsProfileCharts />
+  {/* <section className="col-span-1 sm:col-span-2 xl:col-span-2 row-span-1 grid grid-cols-1 xl:grid-cols-2 gap-y-12 xl:gap-4 bg-rose-500 min-h-[300px]" /> */}
 </div>
 
 

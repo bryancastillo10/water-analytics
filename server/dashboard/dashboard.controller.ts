@@ -22,7 +22,7 @@ export class DashboardController {
         this.getStatDataPerSite = this.getStatDataPerSite.bind(this);
 
         // Bar & Gauge Chart
-        this.getParamStats = this.getParamStats.bind(this);
+        this.parameterProfile = this.parameterProfile.bind(this);
     };
 
     async getParameterFilters(req: CustomRequest, res: Response, next: NextFunction) {
@@ -89,7 +89,7 @@ export class DashboardController {
     };
 
   
-    async getParamStats(req: Request, res: Response, next: NextFunction) {
+    async parameterProfile(req: Request, res: Response, next: NextFunction) {
         try {
             const siteId = req.params.siteId;
             const parameter = req.query.paramgroup as string || "nutrients";

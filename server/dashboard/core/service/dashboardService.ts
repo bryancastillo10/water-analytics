@@ -87,8 +87,7 @@ export class DashboardService {
 
         const avgAndStatusData = await Promise.all(
             parameters.map(async (parameter) => {
-                const parameterName = parameterRecord[parameter] || parameter;
-                const thresholdData = await this.dashboardRepository.getThresholdValue(parameterName);
+                const thresholdData = await this.dashboardRepository.getThresholdValue(parameter);
 
                 if (!thresholdData) {
                     throw new ValidationError(`Threshold data for ${parameter} not found`);

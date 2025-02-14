@@ -31,9 +31,9 @@ const StatisticsProfileCharts = () => {
         
         return () => clearTimeout(timeout);
     }, [rawStats, siteId]);
-            
+    
     return (
-      <div className="col-span-1 sm:col-span-2 xl:col-span-2 row-span-1 grid grid-cols-1 xl:grid-cols-2 xl:gap-4 min-h-[300px]">
+      <div className="col-span-1 sm:col-span-2 xl:col-span-2 row-span-1 grid grid-cols-1 xl:grid-cols-2 xl:gap-3 min-h-[400px]">
         <BarChart
             statData={statsData}
             loading={isLoading}
@@ -42,7 +42,9 @@ const StatisticsProfileCharts = () => {
             selectParameterGroup={selectParameterGroup }  
         />
         <div className="flex flex-wrap justify-center xl:justify-start gap-4 mt-20 xl:mt-0">
-            {statsData.map((param) => (
+                {statsData
+                .filter((param) => param.parameter !== "pH")
+                .map((param) => (
                 <GaugeCard
                     key={param.parameter}
                     loading={isLoading}
