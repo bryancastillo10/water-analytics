@@ -9,8 +9,7 @@
 **🚫 Response Body (Error):**
 
 --- 
-
-### **Read Measurement By Site**
+### **Get All Measurements**
 
 ### ![Static Badge](https://img.shields.io/badge/GET-%23009E73?style=flat&logoColor=%23111000) /api/notes/get 
 

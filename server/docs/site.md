@@ -4,9 +4,50 @@
 
 **📝 Request Body:**
 
+This endpoint accepts a _**multipart/form-data**_ payload with the following fields:
+
+- **Key:** `siteData`  
+  **Content-Type:** `text/plain` (JSON string)  
+  **Example Value:**
+
+  ```json
+  {
+    "siteName": "Monitoring Site A",
+    "location": "Manila, Philippines",
+    "description": "A centralized wastewater treatment plant of the city",
+    "sourceType": "DOMESTIC"
+  }
+  ```
+
+- **Key:** `sitePhoto`  
+  **Content-Type:** `image/jpeg` or `image/png`  
+  **Example Value:** `sitePhoto.png`
+
+
 **✅ Response Body (Success):**
 
+```json
+    {
+      "message": "New site has been added",
+      "site": {
+            "siteName": "Monitoring Site A",
+            "location": "Manila, Philippines",
+            "description":"A centralized wastewater treatment plant of the city",
+            "imageUrl": "uploadedPhotoAtCloudinary.png",
+            "sourceType": "DOMESTIC",
+            "userId": "123456789"
+        }
+    }
+```
+
 **🚫 Response Body (Error):**
+
+```json
+    {
+        "status":"fail",
+        "message": "error reason"
+    }
+```
 
 --- 
 ### **Get Sites By User**
