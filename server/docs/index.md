@@ -19,16 +19,16 @@ Welcome to Water Analytics App API documentation. Use the links below to navigat
 - [Update Password](user.md#update-password)
 
 ## 📌 Site Routes (_/api/site_)
-- [Create Site](site.md)
-- [Get Sites By User](site.md)
-- [Update Site Information](site.md)
-- [Delete Site](site.md)
+- [Create Site](site.md#create-site)
+- [Get Sites By User](site.md#get-sites-by-user)
+- [Update Site Information](site.md#update-site-information)
+- [Delete Site](site.md#delete-user)
 
-## 📐 Threshold Routes
-- [Get Thresholds By User](threshold.md)
-- [Update Thresholds](threshold.md)
+## 📐 Threshold Routes(_/api/threshold_)
+- [Get Thresholds By User](threshold.md#get-thresholds-by-user)
+- [Update Thresholds](threshold.md#update-thresholds)
 
-## 💧 Measurement Routes
+## 💧 Measurement Routes(_api/water-quality-data/_)
 - [Create Measurement by Site](measurement.md)
 - [Read Measurement by Site](measurement.md)
 - [Update Measurement](measurement.md)
