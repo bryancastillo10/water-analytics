@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAppSelector } from "@/lib/redux/hooks";
 
 import { useGetDashboardCardValuesQuery } from "@/features/dashboard/api/dashboardApi";
-import { parameterIcons } from "@/features/dashboard/utils/parameterMapping";
+import { parameterIcons } from "@/features/dashboard/utils/parameterIconMapping";
 import { getStatusStyle } from "@/features/dashboard/utils/getStatusStyle";
 
 import DashboardCard from "@/features/dashboard/components/ui/DashboardCard";

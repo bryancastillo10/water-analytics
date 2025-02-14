@@ -9,7 +9,7 @@ import { skipToken } from "@reduxjs/toolkit/query";
 
 import { useAppSelector } from "@/lib/redux/hooks";
 import { formatDate } from "@/features/waterquality/lib/formatDate";
-import { parameterRecord } from "@/features/dashboard/utils/parameterMapping";
+import { parameterRecord } from "@/lib/mappings/parameterRecord";
 
 export interface IDateRange {
     startDate?: string;

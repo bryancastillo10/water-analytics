@@ -9,7 +9,9 @@ export interface IThresholdData{
 
 export interface UpdateThresholdRequest {
     thresholdId: string;
-    value: number;
+    value: number | null;
+    minValue?: number;
+    maxValue?: number;
 }[]
 
 export interface UpdateThresholdResponse{
