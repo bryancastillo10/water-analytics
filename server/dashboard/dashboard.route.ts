@@ -18,7 +18,7 @@ router.get("/bar&gauge/site/:siteId", protectRoute, dashboardController.paramete
 router.get("/pie", protectRoute, dashboardController.sitePercentage);
 
 // Radar Chart 
-router.get("/radar/site/:siteId", protectRoute, dashboardController.getStatDataPerSite);
+router.get("/radar/site/:siteId", protectRoute, dashboardController.siteProfile);
 
 // Dashboard KPI Card
 router.get("/card/site/:siteId", protectRoute, dashboardController.dashboardCard);

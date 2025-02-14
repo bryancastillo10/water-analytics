@@ -22,7 +22,7 @@ const RadarChart = ({ rawData }: RadarChartProps) => {
   const dynamicKey = (Object.keys(rawData.result)[0] as StatType) ?? "average";
   const chartData = rawData.result[dynamicKey] ?? {};
 
-  
+
   const radarData = Object.entries(chartData).map(([key, value]) => ({
     parameter: formatLabel(key),
     value: value ?? 0,
@@ -40,11 +40,11 @@ const RadarChart = ({ rawData }: RadarChartProps) => {
             <PolarRadiusAxis />
             <Tooltip content={<CustomTooltip chartType="radar"/>} />
             <Radar
-            name={dynamicKey.charAt(0).toUpperCase() + dynamicKey.slice(1)}
-            dataKey="value"
-            stroke="#13b6f6"
-            fill="#006da3"
-            fillOpacity={0.6}
+              name={dynamicKey.charAt(0).toUpperCase() + dynamicKey.slice(1)}
+              dataKey="value"
+              stroke="#13b6f6"
+              fill="#006da3"
+              fillOpacity={0.6}
             />
         </RadarRecharts>
       </ResponsiveContainer>

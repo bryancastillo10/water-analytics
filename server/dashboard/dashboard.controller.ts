@@ -19,7 +19,7 @@ export class DashboardController {
         this.sitePercentage = this.sitePercentage.bind(this);
         
         // Radar Chart
-        this.getStatDataPerSite = this.getStatDataPerSite.bind(this);
+        this.siteProfile = this.siteProfile.bind(this);
 
         // Bar & Gauge Chart
         this.parameterProfile = this.parameterProfile.bind(this);
@@ -103,7 +103,7 @@ export class DashboardController {
         }
     };
 
-    async getStatDataPerSite(req: Request, res: Response, next: NextFunction) {
+    async siteProfile(req: Request, res: Response, next: NextFunction) {
         try {
             const siteId = req.params.siteId;
             
