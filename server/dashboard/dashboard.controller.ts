@@ -19,10 +19,10 @@ export class DashboardController {
         this.sitePercentage = this.sitePercentage.bind(this);
         
         // Radar Chart
-        this.getStatDataPerSite = this.getStatDataPerSite.bind(this);
+        this.siteProfile = this.siteProfile.bind(this);
 
         // Bar & Gauge Chart
-        this.getParamStats = this.getParamStats.bind(this);
+        this.parameterProfile = this.parameterProfile.bind(this);
     };
 
     async getParameterFilters(req: CustomRequest, res: Response, next: NextFunction) {
@@ -89,7 +89,7 @@ export class DashboardController {
     };
 
   
-    async getParamStats(req: Request, res: Response, next: NextFunction) {
+    async parameterProfile(req: Request, res: Response, next: NextFunction) {
         try {
             const siteId = req.params.siteId;
             const parameter = req.query.paramgroup as string || "nutrients";
@@ -103,7 +103,7 @@ export class DashboardController {
         }
     };
 
-    async getStatDataPerSite(req: Request, res: Response, next: NextFunction) {
+    async siteProfile(req: Request, res: Response, next: NextFunction) {
         try {
             const siteId = req.params.siteId;
             

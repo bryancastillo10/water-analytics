@@ -18,7 +18,7 @@ Welcome to Water Analytics App API documentation. Use the links below to navigat
 - [Verify Code Reset](user.md#verify-code-reset)
 - [Update Password](user.md#update-password)
 
-## 📌 Site Routes
+## 📌 Site Routes (_/api/site_)
 - [Create Site](site.md)
 - [Get Sites By User](site.md)
 - [Update Site Information](site.md)

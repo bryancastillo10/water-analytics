@@ -12,13 +12,13 @@ router.get("/filter/date/:siteId", protectRoute, dashboardController.getDateFilt
 router.get("/line/site/:siteId", protectRoute, dashboardController.timeSeries);
 
 // Bar and Gauge Chart
-router.get("/bar&gauge/site/:siteId", protectRoute, dashboardController.getParamStats);
+router.get("/bar&gauge/site/:siteId", protectRoute, dashboardController.parameterProfile);
 
 // Pie Chart
 router.get("/pie", protectRoute, dashboardController.sitePercentage);
 
 // Radar Chart 
-router.get("/radar/site/:siteId", protectRoute, dashboardController.getStatDataPerSite);
+router.get("/radar/site/:siteId", protectRoute, dashboardController.siteProfile);
 
 // Dashboard KPI Card
 router.get("/card/site/:siteId", protectRoute, dashboardController.dashboardCard);

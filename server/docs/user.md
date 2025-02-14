@@ -86,6 +86,28 @@ or
 
 The _*userId*_ query parameter is required. This is used to validate user role.
 
+**✅ Response Body (Success):**
+```json
+[
+    {
+        "id": 123456789,
+        "username": "firstUserName",
+        "email": "user1@email.com",
+        "password":"$hashedpassword1",
+        "profilePic": "user1profilePicAtCloudinary.png",
+        "role": "PUBLIC"
+    },
+    {
+        "id": 345678912,
+        "username": "secondUserName",
+        "email": "user2@email.com",
+        "password":"$hashedpassword2",
+        "profilePic": "user2profilePicAtCloudinary.png",
+        "role": "ADMIN"
+    },
+]
+```
+
 **🚫 Response Body (Error):**
 
 

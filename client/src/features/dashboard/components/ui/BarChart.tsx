@@ -39,7 +39,7 @@ const BarChart = (props: BarChartProps) => {
   }));
 
   return (
-      <div className="col-span-1 xl:col-span-1 h-[350px]">
+      <div className="col-span-1 xl:col-span-1 h-[400px]">
         <div className="grid grid-cols-1 items-center mx-2 mb-4">
           <h1 className="text-md font-semibold mr-1">Parameter Profile</h1>
           <div className="col-span-2">
