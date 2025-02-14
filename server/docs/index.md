@@ -29,18 +29,18 @@ Welcome to Water Analytics App API documentation. Use the links below to navigat
 - [Update Thresholds](threshold.md#update-thresholds)
 
 ## 💧 Measurement Routes(_api/water-quality-data/_)
-- [Create Measurement by Site](measurement.md)
-- [Read Measurement by Site](measurement.md)
-- [Update Measurement](measurement.md)
-- [Delete Measurement](measurement.md)
+- [Create Measurement by Site](measurement.md#create-measurement-by-site)
+- [Read Measurement by Site](measurement.md#get-all-measurements)
+- [Update Measurement](measurement.md#update-measurement)
+- [Delete Measurement](measurement.md#delete-measurement)
 
-## 🗒️ Sticky Notes Routes
-- [Create Note](notes.md)
+## 🗒️ Sticky Notes Routes (_api/notes_)
+- [Create Note](notes.md#create-note)
 - [Get User Notes](notes.md)
 - [Update Note](notes.md)
 - [Delete Note](notes.md)
 
-## 📈 Dashboard Routes
+## 📈 Dashboard Routes (_api/dashboard/_)
 - [Date Filters](dashboard.md)
 - [Parameter Filters](dashboard.md)
 - [Time Series](dashoard.md)
