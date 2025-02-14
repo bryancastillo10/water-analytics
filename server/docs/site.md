@@ -6,9 +6,9 @@
 
 This endpoint accepts a _**multipart/form-data**_ payload with the following fields:
 
-- **Key:** `siteData`  
-  **Content-Type:** `text/plain` (JSON string)  
-  **Example Value:**
+- **Key** `siteData`  
+  **Content-Type** `text/plain`   
+  **Example Value**
 
   ```json
   {
@@ -19,9 +19,9 @@ This endpoint accepts a _**multipart/form-data**_ payload with the following fie
   }
   ```
 
-- **Key:** `sitePhoto`  
-  **Content-Type:** `image/jpeg` or `image/png`  
-  **Example Value:** `sitePhoto.png`
+- **Key** `sitePhoto`  
+  **Content-Type** `image/jpeg` or `image/png`  
+  **Example Value**  `sitePhoto.png`
 
 
 **✅ Response Body (Success):**
@@ -54,11 +54,38 @@ This endpoint accepts a _**multipart/form-data**_ payload with the following fie
 
 ### ![Static Badge](https://img.shields.io/badge/GET-%23009E73?style=flat&logoColor=%23111000) /api/site/get 
 
-**📝 Request Body:**
 
 **✅ Response Body (Success):**
 
+```json
+[
+    {
+        "id":"1001",
+        "siteName":"Monitoring Site A",
+        "location": "Manila, Philippines",
+        "imageUrl": "uploadedPhotoAtCloudinary.png",
+        "sourceType":"DOMESTIC", 
+        "userId":"123456789"
+    },
+    {
+        "id":"1002",
+        "siteName":"Monitoring Site B",
+        "location": "Liverpool, United Kingdom",
+        "imageUrl":"anotherUploadedPhotoAtCloudinary.png",
+        "sourceType":"AGRICULTURAL",
+        "userId":"123456789"
+    }
+]
+```
+
 **🚫 Response Body (Error):**
+
+```json
+    {
+        "status":"fail",
+        "message": "error reason"
+    }
+```
 
 --- 
 
@@ -69,7 +96,17 @@ This endpoint accepts a _**multipart/form-data**_ payload with the following fie
 
 **📝 Request Body:**
 
+This endpoint accepts a _**multipart/form-data**_ payload with the following fields:
+
+- **Key** `siteName`
+
+  **Content-Type** `text/plain`
+
+  **Example Value** 
+
 **✅ Response Body (Success):**
+
+
 
 **🚫 Response Body (Error):**
 
