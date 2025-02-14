@@ -33,10 +33,31 @@ const useUpdateThreshold = (thresholdData: IThresholdData[]) => {
   const [updateThreshold, { isLoading }] = useUpdateThresholdMutation();
   const { showToast } = useToast();
 
-  const onChangeValue = useCallback((parameter: string, value: string) => {
-    setParamsValue((prev) => {
-      if (prev[parameter] === value) return prev; 
+ const onChangeValue = useCallback((parameter: string, value: string) => {
+  setParamsValue((prev) => {
+    if (parameter === "pH-min" || parameter === "pH-max") {
+      const currentPH = (prev["pH"] as { minValue: string; maxValue: string }) || {
+        minValue: "",
+        maxValue: "",
+      };
+
+      const updatedPH =
+        parameter === "pH-min"
+          ? { ...currentPH, minValue: value }
+          : { ...currentPH, maxValue: value };
+
+      if (
+        (parameter === "pH-min" && currentPH.minValue === value) ||
+        (parameter === "pH-max" && currentPH.maxValue === value)
+      ) {
+        return prev;
+      }
+
+      return { ...prev, "pH": updatedPH };
+    } else {
+      if (prev[parameter] === value) return prev;
       return { ...prev, [parameter]: value };
+    }
     });
 
     requestAnimationFrame(() => {
@@ -54,7 +75,7 @@ const preparePayload = useCallback((): UpdateThresholdRequest[] => {
 
       return {
         thresholdId: threshold.id,
-        value: null,
+        parameter: "pH",
         minValue: phValue.minValue.trim() === "" ? 0 : parseFloat(phValue.minValue),
         maxValue: phValue.maxValue.trim() === "" ? 0 : parseFloat(phValue.maxValue),
       };
@@ -62,11 +83,13 @@ const preparePayload = useCallback((): UpdateThresholdRequest[] => {
       const value = (paramsValue[threshold.parameter] ?? "").toString();
       return {
         thresholdId: threshold.id,
+        parameter: threshold.parameter,
         value: value.trim() === "" ? 0 : parseFloat(value),
       };
     }
   });
 }, [paramsValue, thresholdData]);
+
 
 
   const callUpdateThreshold = async (payloadData: UpdateThresholdRequest[]) => {

@@ -7,12 +7,21 @@ export interface IThresholdData{
     maxValue?: string;
 }
 
-export interface UpdateThresholdRequest {
-    thresholdId: string;
-    value: number | null;
-    minValue?: number;
-    maxValue?: number;
-}[]
+export type UpdateThresholdRequest =
+  | {
+      thresholdId: string;
+      parameter: "pH";
+      minValue: number;
+      maxValue: number;
+      value?: undefined;
+    }
+  | {
+      thresholdId: string;
+      parameter: Exclude<string, "pH">;
+      value: number;
+      minValue?: undefined;
+      maxValue?: undefined;
+    };
 
 export interface UpdateThresholdResponse{
     message: string;

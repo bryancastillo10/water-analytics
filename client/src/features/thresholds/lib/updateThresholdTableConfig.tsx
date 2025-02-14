@@ -1,6 +1,8 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { FormNumberInput } from "@/components/ui";
+
 import type { IThresholdData } from "@/features/thresholds/api/interface";
+import { parameterRecord } from "@/lib/mappings/parameterRecord";
 
 const columnHelper = createColumnHelper<IThresholdData>();
 
@@ -11,7 +13,13 @@ export const updateThresholdColumnsConfig = (
 ) => [
   columnHelper.accessor("parameter", {
     header: () => "Parameter",
-    cell: (info) => info.getValue()
+    cell: (info) => {
+      const parameterInfo = info.getValue();
+      const parameterLabel = Object.entries(parameterRecord).find(
+        ([_, mappedParam]) => mappedParam === parameterInfo
+      )?.[0] || parameterInfo;
+      return parameterLabel;
+    }
   }),
   columnHelper.accessor("unit", {
     header: () => "Unit",
