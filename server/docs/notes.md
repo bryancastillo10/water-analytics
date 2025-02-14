@@ -4,12 +4,60 @@
 
 **📝 Request Body:**
 
+```json
+    {
+        "id":"12001",
+        "title":"Some Note Title",
+        "content":"This a new note to remind me of something",
+        "colors": {
+            "id": "color-yellow",
+            "colorHeader": "#FDD89B",
+            "colorBody": "#FDF0D3",
+            "colorText": "#222222"
+        },
+        "position": {
+            "x": 750,
+            "y": 500
+        }
+    }
+```
+
 **✅ Response Body (Success):**
+
+```json
+    {
+        "message":"Notes has been created successfully",
+        "notes":  {
+                    "id":"12001",
+                    "title":"Some Note Title",
+                    "content":"This a new note to remind me of something",
+                    "colors": {
+                        "id": "color-yellow",
+                        "colorHeader": "#FDD89B",
+                        "colorBody": "#FDF0D3",
+                        "colorText": "#222222"
+                    },
+                    "position": {
+                        "x": 750,
+                        "y": 500
+                    },
+                    "userId":"123456789"
+                }
+    }
+```
 
 **🚫 Response Body (Error):**
 
+```json
+    {
+        "status":"fail",
+        "error":"error reason"
+    }
+```
+
 --- 
-### **Get User Notes**
+
+### **Get All User Notes**
 
 ### ![Static Badge](https://img.shields.io/badge/GET-%23009E73?style=flat&logoColor=%23111000) /api/notes/get 
 
@@ -18,6 +66,14 @@
 **✅ Response Body (Success):**
 
 **🚫 Response Body (Error):**
+
+```json
+    {
+        "status":"fail",
+        "error":"error reason"
+    }
+```
+
 
 --- 
 
@@ -33,6 +89,14 @@
 
 **🚫 Response Body (Error):**
 
+```json
+    {
+        "status":"fail",
+        "error":"error reason"
+    }
+```
+
+
 ---
 
 ### **Delete Note**
@@ -42,5 +106,13 @@
 **✅ Response Body (Success):**
 
 **🚫 Response Body (Error):**
+
+```json
+    {
+        "status":"fail",
+        "error":"error reason"
+    }
+```
+
 
 ---

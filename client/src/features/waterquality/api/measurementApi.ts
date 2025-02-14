@@ -33,7 +33,7 @@ export const measurementApi = createApi({
         }),
         updateMeasurement: build.mutation<UpdateMeasurementResponse, UpdateMeasurementRequest>({
             query: ({ id, data }) => ({
-                url: `/measurement/${id}`,
+                url: `update/measurement/${id}`,
                 method: "PUT",
                 body: data
             }),
@@ -41,7 +41,7 @@ export const measurementApi = createApi({
         }),
         deleteMeasurement: build.mutation<DeleteMeasurementResponse, {id: string} >({
             query: ({id}) => ({
-                url: `/measurement/${id}`,
+                url: `delete/measurement/${id}`,
                 method: "DELETE"
             }),
             invalidatesTags:[TagType.MEASUREMENTS, TagType.DASHBOARD]

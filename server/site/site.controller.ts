@@ -46,10 +46,10 @@ export class SiteController{
     async updateSite(req: Request, res: Response, next: NextFunction) { 
         try {
             const siteId = req.params.id;
-            const rawData = req.body;
-            const { file } = req;
+            const siteData = JSON.parse(req.body.siteData);
+            const file  = req.file;
           
-            const updatedSite = await this.siteService.updateSite({ siteId, rawData, file });
+            const updatedSite = await this.siteService.updateSite({ siteId, siteData, file });
 
             res.status(200).json({ message: "Site has been updated successfully", site: updatedSite });
 

@@ -90,7 +90,7 @@ The _*userId*_ query parameter is required. This is used to validate user role.
 ```json
 [
     {
-        "id": 123456789,
+        "id": "123456789",
         "username": "firstUserName",
         "email": "user1@email.com",
         "password":"$hashedpassword1",
@@ -98,7 +98,7 @@ The _*userId*_ query parameter is required. This is used to validate user role.
         "role": "PUBLIC"
     },
     {
-        "id": 345678912,
+        "id": "345678912",
         "username": "secondUserName",
         "email": "user2@email.com",
         "password":"$hashedpassword2",

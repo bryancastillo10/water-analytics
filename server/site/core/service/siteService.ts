@@ -50,18 +50,18 @@ export class SiteService {
     return userSites;
   }
 
-  async updateSite({ siteId, rawData, file }: UpdateSiteRequest) {
+  async updateSite({ siteId, siteData, file }: UpdateSiteRequest) {
     if (!siteId) {
-      throw new NotFoundError("Site id was not found");
+      throw new NotFoundError("Site ID");
     }
 
-    const { siteName, location, description, sourceType, imageUrl } = rawData;
+    const { siteName, location, description, sourceType, imageUrl } = siteData;
   
     if (!siteName || !location || !description || !sourceType) {
       throw new ValidationError("Missing required site information");
     }
 
-    let finalImageUrl = imageUrl;
+    let finalImageUrl = imageUrl || "";
     if (file) {
       finalImageUrl = await uploadImage({
         filePath: file.path,
