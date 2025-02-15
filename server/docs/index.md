@@ -36,14 +36,14 @@ Welcome to Water Analytics App API documentation. Use the links below to navigat
 
 ## 🗒️ Sticky Notes Routes (_api/notes_)
 - [Create Note](notes.md#create-note)
-- [Get User Notes](notes.md)
-- [Update Note](notes.md)
-- [Delete Note](notes.md)
+- [Get User Notes](notes.md#get-all-user-notes)
+- [Update Note](notes.md#update-note)
+- [Delete Note](notes.md#delete-note)
 
 ## 📈 Dashboard Routes (_api/dashboard/_)
 - [Date Filters](dashboard.md)
 - [Parameter Filters](dashboard.md)
-- [Time Series](dashoard.md)
+- [Time Series (Line Chart)](dashoard.md)
 - [KPI Card Status](dashboard.md)
 - [Site Percentage (Pie Chart)](dashboard.md)
 - [Parameter Profile Statistics (Bar & Gauge Chart)](dashboard.md)
