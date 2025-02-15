@@ -31,7 +31,7 @@ export class NotesRepository implements INotesRepository{
                 console.error(error.message);
                 throw new DatabaseError("Database error at createNotes method");
               }
-             throw Error;
+             throw error;
         }
     }
 
@@ -53,7 +53,7 @@ export class NotesRepository implements INotesRepository{
                 console.error(error.message);
                 throw new DatabaseError("Database error at createNotes method");
               }
-             throw Error;
+             throw error;
         }     
     }
 
@@ -89,7 +89,7 @@ export class NotesRepository implements INotesRepository{
                 console.error(error.message);
                 throw new DatabaseError("Database error at createNotes method");
               }
-             throw Error;
+             throw error;
         }
     }
     

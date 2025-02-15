@@ -37,7 +37,7 @@ export class NotesService{
 
     async updateNotes(notesId: string, notesData: Partial<NotesDataInput>) {
         if (!notesId) {
-            throw new ValidationError("Notes id was not found");
+            throw new ValidationError("Note ID");
         }
 
         const updatedNotes = await this.notesRepository.updateNotes(notesId, notesData);
@@ -47,7 +47,7 @@ export class NotesService{
 
     async deleteNotes(notesId : string) {
         if (!notesId) {
-            throw new ValidationError("Notes id was not found");
+            throw new ValidationError("Notes ID");
         }
 
         await this.notesRepository.deleteNotes(notesId);
