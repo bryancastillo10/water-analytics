@@ -181,7 +181,7 @@ export class DashboardRepository implements IDashboardRepository {
                 console.error(error.message);
                 throw new DatabaseError("Database error at the getParameterProfile method");
             } 
-            throw Error;
+            throw error;
         }
     }
 
@@ -244,7 +244,7 @@ export class DashboardRepository implements IDashboardRepository {
                 console.error(error.message);
                 throw new DatabaseError("Database error at the getDataPerSite method");
             } 
-            throw Error;
+            throw error;
         }
     }
 
@@ -262,7 +262,7 @@ export class DashboardRepository implements IDashboardRepository {
                 console.error(error.message);
                 throw new DatabaseError("Database error at the getDataPerSite method");
             } 
-            throw Error;
+            throw error;
         }
     }
 }

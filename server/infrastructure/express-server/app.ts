@@ -38,8 +38,8 @@ export const startApp = () => {
     app.use("/api/notes", notesRoutes);
     app.use("/api/dashboard", dashboardRoutes);
     
-    // Serve React Frontend
-    if (process.env.NODE_ENV == "production") {
+    // Serve React Client
+    if (process.env.NODE_ENV === "production") {
         serveClient(app);
     }
 
