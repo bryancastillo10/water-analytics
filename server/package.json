@@ -6,12 +6,15 @@
     "start": "tsx index.ts",
     "dev": "tsx watch index.ts",
     "seed": "tsx prisma/seed.ts",
-    "build": "npm run build --prefix client"
+    "build": "pkgroll"
   },
   "keywords": [],
-  "author": "",
+  "author": "Bryan Castillo",
   "license": "ISC",
   "description": "",
+  "prisma":{
+    "schema":"infrastructure/prisma/schema.prisma"  
+  },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/cookie-parser": "^1.4.7",
