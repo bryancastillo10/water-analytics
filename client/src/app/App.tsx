@@ -12,7 +12,7 @@ const App = () => {
   const authUser = useAppSelector((state) => state.user);
   
   const authRole = authUser.role.toLowerCase();
-  const authHomePage = `${authRole}/dashboard`;
+  const authHomePage = `/${authRole}/dashboard`;
   return (
     <Routes>
       {/*  Public Routes */}
@@ -21,7 +21,7 @@ const App = () => {
       <Route path="/forgot-password" element={authUser.user_id ? <Navigate to={authHomePage} replace /> : <ForgotPassword />} />
 
       {/*  Role-Based Routes */}
-      <Route path={`${authUser.role || "public"}/*`} element={
+      <Route path={`/${authRole || "public"}/*`} element={
         <ProtectedRoute user={authUser}>
           <AppLayout />
         </ProtectedRoute>
