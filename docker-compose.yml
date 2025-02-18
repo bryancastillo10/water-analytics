@@ -1,26 +1,10 @@
 services:
-  client:
-    build:
-      context: ./client
+  app:
+    build: 
+      context: .
       dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    restart: unless-stopped
-    networks:
-      - water-analytics-app
-  api:
-    build:
-      context: ./server
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    env_file: ./server/.env
     ports:
       - "3000:3000"
-    networks:
-      - water-analytics-app
-    depends_on:
-      - client
-
-networks:
-  water-analytics-app:
-    driver: bridge
+    env_file:
+      - server/.env
+    restart: unless-stopped
