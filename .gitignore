@@ -1,3 +1,6 @@
+fly.toml
+.github/*
+
 # Logs
 logs
 *.log
@@ -24,3 +27,8 @@ dist-ssr
 *.sw?
 *.env
 *.env.production
+
+#Server
+server/node_modules/
+server/infrastructure/prisma/migrations
+server/.env
