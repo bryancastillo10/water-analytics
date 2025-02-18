@@ -27,6 +27,8 @@ RUN npm ci
 
 COPY server .
 
+ENV HOSTNAME "0.0.0.0"
+
 RUN cd infrastructure/prisma && npx prisma generate 
 
 # Finalized Image
