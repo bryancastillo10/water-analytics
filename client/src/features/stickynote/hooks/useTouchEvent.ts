@@ -37,7 +37,7 @@ const useTouchEvent = (props: TouchEventProps) => {
     } = props;
     
     const touchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-        if (e.target instanceof HTMLElement && e.target.className === "card-header") {
+        if (e.target instanceof HTMLElement && e.target.id === "card-header") {
             setSelectedNote(note);
 
             const touch = e.touches[0];
