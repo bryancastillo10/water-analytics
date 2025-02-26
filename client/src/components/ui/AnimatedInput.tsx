@@ -73,7 +73,7 @@ const AnimatedInput = ({
       >
         {Icon && <Icon size="24" color={value ? "#040710" : "#c2c2c2"} />}
         <label
-          className={`text-lg ${
+          className={`text-sm xl:text-lg ${
             value ? "text-dark" : "text-neutral"
           } transition-colors duration-150`}
         >

@@ -138,6 +138,7 @@ const ForgotPassword = () => {
       title="Forgot User Password"
       caption="Reset your password by providing your user e-mail. A 5-digit authentication code would be sent to your e-mail upon request."
       body={bodyContent}
+      isPasswordResetScreen
       captionAlignment="text-justify"
     />
   );
