@@ -11,9 +11,21 @@ export class UserService {
     }
 
     async updateUser({userId, toUpdateUser}: UpdateUserRequest) {
+        const { username, email } = toUpdateUser;
         if (!userId) {
             throw new NotFoundError("User id is not found");
         }
+           
+        const usernameRegex = /^[a-zA-Z0-9 ]{5,}$/;
+        if (!usernameRegex.test(username)) {
+            throw new ValidationError("Username must be greater than 5 alphanumeric characters.")
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            throw new ValidationError("Invalid email address");
+        }
+
 
         const updatedUser = await this.userRepository.updateUserProfile({userId, toUpdateUser});
 
