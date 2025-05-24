@@ -1,10 +1,10 @@
-import { LoadingAnimation } from "@/components/common";
+import { LoadingAnimation } from '@/components/common';
 const MainPageLoadingState = () => {
   return (
     <section className="flex w-full h-full justify-center items-center">
-        <LoadingAnimation size="lg"/>
+      <LoadingAnimation size="lg" />
     </section>
-  )
-}
+  );
+};
 
-export default MainPageLoadingState
+export default MainPageLoadingState;

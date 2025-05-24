@@ -1,29 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-
-  // Helper functions to manage media query
+// Helper functions to manage media query
 const getOuterRadius = () => {
-  if (typeof window !== "undefined") {
-    return window.innerWidth <= 768 ? "80%" : "90%";
+  if (typeof window !== 'undefined') {
+    return window.innerWidth <= 768 ? '80%' : '90%';
   }
-  return "75%";
+  return '75%';
 };
 
 const getCx = () => {
-  if (typeof window !== "undefined") {
-      return window.innerWidth <= 768 ? 150 : 250; 
+  if (typeof window !== 'undefined') {
+    return window.innerWidth <= 768 ? 150 : 250;
   }
   return 250;
 };
-  
+
 const handleHideTickMarks = () => {
-  if (typeof window !== "undefined") {
+  if (typeof window !== 'undefined') {
     return window.innerWidth <= 768;
   }
   return false;
 };
-  
-
 
 const useRadarMediaQuery = () => {
   // States
@@ -38,13 +35,11 @@ const useRadarMediaQuery = () => {
       setIsTickMarksHidden(handleHideTickMarks());
     };
 
-
-    window.addEventListener("resize", handleResize);
-
+    window.addEventListener('resize', handleResize);
 
     handleResize();
 
-    return () => window.removeEventListener("resize", handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return { outerRadius, cx, isTickMarksHidden };

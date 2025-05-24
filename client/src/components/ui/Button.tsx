@@ -1,37 +1,36 @@
-
 interface ButtonProps {
   action?: () => void;
-  type?: "submit" | "reset" | "button";
+  type?: 'submit' | 'reset' | 'button';
   width?: string;
-  loading?: boolean; 
+  loading?: boolean;
   disabled?: boolean;
   fontSize?: string;
   variant?: string;
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const Button = ({
   action,
-  type="button",
-  width = "w-fit",
-  fontSize="text-base",
+  type = 'button',
+  width = 'w-fit',
+  fontSize = 'text-base',
   loading,
   disabled,
   variant,
-  children
+  children,
 }: ButtonProps) => {
-    const getBtnStyle = (variant: string) => {
-      switch (variant) {
-        case "primary":
-          return "border border-transparent bg-primary text-white hover:bg-primary/70";
-        case "outline":
-          return "border text-primary border-primary hover:border-primary  hover:bg-primary hover:text-white";
-        case "danger":
-          return "border border-transparent text-white bg-rose-500 hover:bg-rose-700";
-        default:
-          return "bg-cyan-600 text-slate-100  hover:bg-teal-500/90 p-0";
-      }
-    };
+  const getBtnStyle = (variant: string) => {
+    switch (variant) {
+      case 'primary':
+        return 'border border-transparent bg-primary text-white hover:bg-primary/70';
+      case 'outline':
+        return 'border text-primary border-primary hover:border-primary  hover:bg-primary hover:text-white';
+      case 'danger':
+        return 'border border-transparent text-white bg-rose-500 hover:bg-rose-700';
+      default:
+        return 'bg-cyan-600 text-slate-100  hover:bg-teal-500/90 p-0';
+    }
+  };
   return (
     <button
       onClick={action}
@@ -54,6 +53,6 @@ const Button = ({
       )}
     </button>
   );
-}
+};
 
 export default Button;

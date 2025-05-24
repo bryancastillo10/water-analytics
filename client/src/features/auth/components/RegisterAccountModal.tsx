@@ -10,14 +10,12 @@ const RegisterAccountModal = ({ isOpenModal, handleCloseModal }: RegisterAccount
   return (
     <>
       {isOpenModal && (
-        <div 
+        <div
           className="fixed inset-0 bg-dark/50  z-50 flex items-center justify-center 
           transition-opacity duration-300 ease-in-out"
         >
-          <div 
-            className="relative bg-white w-[90%] max-w-md rounded-2xl shadow-xl p-6 transform"
-          >
-            <button 
+          <div className="relative bg-white w-[90%] max-w-md rounded-2xl shadow-xl p-6 transform">
+            <button
               onClick={handleCloseModal}
               className="absolute top-3 right-4 text-neutral hover:rotate-180 hover:text-gray-900 
               transition-all duration-200"
@@ -30,19 +28,22 @@ const RegisterAccountModal = ({ isOpenModal, handleCloseModal }: RegisterAccount
             </h2>
 
             <p className="text-sm text-justify text-darkGray mb-4">
-              Registering a new account will provide you with a personalized dashboard to help you get started. 
-              Please note that it may take a few moments for your account to be fully set up as we prepare your initial data. 
-              We appreciate your patience as we work to provide you with the best possible experience.
+              Registering a new account will provide you with a personalized dashboard to help you
+              get started. Please note that it may take a few moments for your account to be fully
+              set up as we prepare your initial data. We appreciate your patience as we work to
+              provide you with the best possible experience.
             </p>
 
             <div className="flex justify-end mt-6">
-              <Button action={handleCloseModal} variant="primary">Understand</Button>
+              <Button action={handleCloseModal} variant="primary">
+                Understand
+              </Button>
             </div>
           </div>
         </div>
       )}
     </>
   );
-}
+};
 
 export default RegisterAccountModal;

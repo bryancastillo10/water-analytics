@@ -1,10 +1,10 @@
-import { useNavigate } from "react-router-dom";
-import useResetPassword, {STEP} from "@/features/user/hooks/useResetPassword";
-import { Envelope, Lock, Key } from "@phosphor-icons/react";
+import { useNavigate } from 'react-router-dom';
+import useResetPassword, { STEP } from '@/features/user/hooks/useResetPassword';
+import { Envelope, Lock, Key } from '@phosphor-icons/react';
 
-import { ProgressBar } from "@/components/common";
-import { FormInput, Button, CodeInput } from "@/components/ui";
-import AuthContainer from "@/features/auth/components/AuthContainer";
+import { ProgressBar } from '@/components/common';
+import { FormInput, Button, CodeInput } from '@/components/ui';
+import AuthContainer from '@/features/auth/components/AuthContainer';
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -18,24 +18,30 @@ const ForgotPassword = () => {
     handleEmailSubmit,
     handleCodeVerification,
     handlePasswordReset,
-} = useResetPassword();
+  } = useResetPassword();
 
   let bodyContent = (
     <>
-       <form onSubmit={handleEmailSubmit}>
+      <form onSubmit={handleEmailSubmit}>
         <FormInput
           id="email"
           label="Email"
           icon={Envelope}
           value={resetData.email}
-          onChange={(e) => onResetDataChange("email", e.target.value)}
+          onChange={e => onResetDataChange('email', e.target.value)}
           validationMessage="your.email@domain.com"
         />
         <div className="flex items-center justify-between gap-x-2">
-          <Button loading={isSendingCode} action ={()=>navigate("/")} type="button" width="w-full" variant="outline">
+          <Button
+            loading={isSendingCode}
+            action={() => navigate('/')}
+            type="button"
+            width="w-full"
+            variant="outline"
+          >
             Back
           </Button>
-          <Button loading={isSendingCode}  type="submit" width="w-full" variant="primary">
+          <Button loading={isSendingCode} type="submit" width="w-full" variant="primary">
             Send A Code
           </Button>
         </div>
@@ -49,27 +55,17 @@ const ForgotPassword = () => {
   if (step === STEP.VALIDATION) {
     bodyContent = (
       <>
-         <form
-          onSubmit={(e) => {
+        <form
+          onSubmit={e => {
             e.preventDefault();
           }}
         >
-          <CodeInput length={5} onComplete={(code)=> handleCodeVerification(code)} />
+          <CodeInput length={5} onComplete={code => handleCodeVerification(code)} />
           <div className="flex items-center justify-between gap-x-2">
-            <Button
-              action={stepBackward}
-              type="button"
-              width="w-full"
-              variant="outline"
-            >
+            <Button action={stepBackward} type="button" width="w-full" variant="outline">
               Back
             </Button>
-            <Button
-              action={stepForward}
-              type="submit"
-              width="w-full"
-              variant="primary"
-            >
+            <Button action={stepForward} type="submit" width="w-full" variant="primary">
               Verify Code
             </Button>
           </div>
@@ -84,18 +80,20 @@ const ForgotPassword = () => {
   if (step === STEP.RESETPASSWORD) {
     bodyContent = (
       <>
-        <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-          e.preventDefault();
-          handlePasswordReset();
-          navigate("/");
-        }}>
+        <form
+          onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+            handlePasswordReset();
+            navigate('/');
+          }}
+        >
           <FormInput
             id="password"
             label="New Password"
             isPassword
             icon={Lock}
             value={resetData.newPassword}
-            onChange={(e) => onResetDataChange("newPassword", e.target.value)}
+            onChange={e => onResetDataChange('newPassword', e.target.value)}
             validationMessage="Alphanumeric characters"
           />
 
@@ -105,23 +103,14 @@ const ForgotPassword = () => {
             isPassword
             icon={Key}
             value={resetData.confirmNewPassword}
-            onChange={(e) => onResetDataChange("confirmNewPassword", e.target.value)}
+            onChange={e => onResetDataChange('confirmNewPassword', e.target.value)}
             validationMessage="Re-type for password confirmation"
           />
           <div className="flex items-center justify-between gap-x-2">
-            <Button
-              action={stepBackward}
-              type="button"
-              width="w-full"
-              variant="outline"
-            >
+            <Button action={stepBackward} type="button" width="w-full" variant="outline">
               Back
             </Button>
-            <Button
-              type="submit"
-              width="w-full"
-              variant="primary"
-            >
+            <Button type="submit" width="w-full" variant="primary">
               Reset
             </Button>
           </div>
@@ -142,6 +131,6 @@ const ForgotPassword = () => {
       captionAlignment="text-justify"
     />
   );
-}
+};
 
 export default ForgotPassword;

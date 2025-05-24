@@ -2,15 +2,10 @@
   "compilerOptions": {
     // Build Configuration
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "target": "ES2022", 
-    "lib": [
-      "ES2023",
-      "DOM",
-      "DOM.Iterable",
-      "WebWorker"
-    ],
+    "target": "ES2022",
+    "lib": ["ES2023", "DOM", "DOM.Iterable", "WebWorker"],
     "module": "ESNext",
-    "moduleResolution": "bundler", 
+    "moduleResolution": "bundler",
     "useDefineForClassFields": true,
 
     // React Configuration
@@ -19,14 +14,14 @@
 
     // Type Checking
     "strict": true,
-    "noUncheckedIndexedAccess": true, 
+    "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "allowUnusedLabels": false, 
-    "allowUnreachableCode": false, 
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
     "exactOptionalPropertyTypes": true,
     "noUncheckedSideEffectImports": true,
 
@@ -34,10 +29,10 @@
     "moduleDetection": "force",
     "isolatedModules": true,
     "allowImportingTsExtensions": true,
-    "resolveJsonModule": true, 
-    "skipLibCheck": true, 
-    "forceConsistentCasingInFileNames": true, 
-    "verbatimModuleSyntax": true, 
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "verbatimModuleSyntax": true,
     "noEmit": true,
 
     // Path Aliases
@@ -46,11 +41,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": [
-    "src",
-    "vite.config.ts",
-    "**/*.config.ts", 
-    "**/*.d.ts"
-  ],
+  "include": ["src", "vite.config.ts", "**/*.config.ts", "**/*.d.ts"],
   "exclude": ["node_modules", "build", "dist", "coverage"]
 }

@@ -1,11 +1,10 @@
-import { useState, useMemo, useCallback, useRef } from "react";
-import { useReactTable, getCoreRowModel } from "@tanstack/react-table";
-import { useToast } from "@/hooks/useToast";
+import { useState, useMemo, useCallback, useRef } from 'react';
+import { useReactTable, getCoreRowModel } from '@tanstack/react-table';
+import { useToast } from '@/hooks/useToast';
 
-import type { IThresholdData, UpdateThresholdRequest } from "@/features/thresholds/api/interface";
-import { useUpdateThresholdMutation } from "@/features/thresholds/api/thresholdApi";
-import { updateThresholdColumnsConfig } from "@/features/thresholds/lib/updateThresholdTableConfig";
-
+import type { IThresholdData, UpdateThresholdRequest } from '@/features/thresholds/api/interface';
+import { useUpdateThresholdMutation } from '@/features/thresholds/api/thresholdApi';
+import { updateThresholdColumnsConfig } from '@/features/thresholds/lib/updateThresholdTableConfig';
 
 type ReducedThresholdDataType = Record<string, string | { minValue: string; maxValue: string }>;
 
@@ -22,42 +21,40 @@ const useUpdateThreshold = (thresholdData: IThresholdData[]) => {
           acc[item.parameter] = item.value.toString();
         }
         return acc;
-      }, {} as ReducedThresholdDataType)
-  ,
-  [thresholdData]
-);
-
+      }, {} as ReducedThresholdDataType),
+    [thresholdData],
+  );
 
   const [paramsValue, setParamsValue] = useState<ReducedThresholdDataType>(initialParamsValue);
-  const inputRefs = useRef<Record<string, HTMLInputElement | null>>({}); 
+  const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
   const [updateThreshold, { isLoading }] = useUpdateThresholdMutation();
   const { showToast } = useToast();
 
- const onChangeValue = useCallback((parameter: string, value: string) => {
-  setParamsValue((prev) => {
-    if (parameter === "pH-min" || parameter === "pH-max") {
-      const currentPH = (prev["pH"] as { minValue: string; maxValue: string }) || {
-        minValue: "",
-        maxValue: "",
-      };
+  const onChangeValue = useCallback((parameter: string, value: string) => {
+    setParamsValue(prev => {
+      if (parameter === 'pH-min' || parameter === 'pH-max') {
+        const currentPH = (prev['pH'] as { minValue: string; maxValue: string }) || {
+          minValue: '',
+          maxValue: '',
+        };
 
-      const updatedPH =
-        parameter === "pH-min"
-          ? { ...currentPH, minValue: value }
-          : { ...currentPH, maxValue: value };
+        const updatedPH =
+          parameter === 'pH-min'
+            ? { ...currentPH, minValue: value }
+            : { ...currentPH, maxValue: value };
 
-      if (
-        (parameter === "pH-min" && currentPH.minValue === value) ||
-        (parameter === "pH-max" && currentPH.maxValue === value)
-      ) {
-        return prev;
+        if (
+          (parameter === 'pH-min' && currentPH.minValue === value) ||
+          (parameter === 'pH-max' && currentPH.maxValue === value)
+        ) {
+          return prev;
+        }
+
+        return { ...prev, pH: updatedPH };
+      } else {
+        if (prev[parameter] === value) return prev;
+        return { ...prev, [parameter]: value };
       }
-
-      return { ...prev, "pH": updatedPH };
-    } else {
-      if (prev[parameter] === value) return prev;
-      return { ...prev, [parameter]: value };
-    }
     });
 
     requestAnimationFrame(() => {
@@ -65,39 +62,37 @@ const useUpdateThreshold = (thresholdData: IThresholdData[]) => {
     });
   }, []);
 
-const preparePayload = useCallback((): UpdateThresholdRequest[] => {
-  return thresholdData.map((threshold) => {
-    if (threshold.parameter === "pH") {
-      const phValue = paramsValue[threshold.parameter] as {
-        minValue: string;
-        maxValue: string;
-      };
+  const preparePayload = useCallback((): UpdateThresholdRequest[] => {
+    return thresholdData.map(threshold => {
+      if (threshold.parameter === 'pH') {
+        const phValue = paramsValue[threshold.parameter] as {
+          minValue: string;
+          maxValue: string;
+        };
 
-      return {
-        thresholdId: threshold.id,
-        parameter: "pH",
-        minValue: phValue.minValue.trim() === "" ? 0 : parseFloat(phValue.minValue),
-        maxValue: phValue.maxValue.trim() === "" ? 0 : parseFloat(phValue.maxValue),
-      };
-    } else {
-      const value = (paramsValue[threshold.parameter] ?? "").toString();
-      return {
-        thresholdId: threshold.id,
-        parameter: threshold.parameter,
-        value: value.trim() === "" ? 0 : parseFloat(value),
-      };
-    }
-  });
-}, [paramsValue, thresholdData]);
-
-
+        return {
+          thresholdId: threshold.id,
+          parameter: 'pH',
+          minValue: phValue.minValue.trim() === '' ? 0 : parseFloat(phValue.minValue),
+          maxValue: phValue.maxValue.trim() === '' ? 0 : parseFloat(phValue.maxValue),
+        };
+      } else {
+        const value = (paramsValue[threshold.parameter] ?? '').toString();
+        return {
+          thresholdId: threshold.id,
+          parameter: threshold.parameter,
+          value: value.trim() === '' ? 0 : parseFloat(value),
+        };
+      }
+    });
+  }, [paramsValue, thresholdData]);
 
   const callUpdateThreshold = async (payloadData: UpdateThresholdRequest[]) => {
     try {
       const res = await updateThreshold(payloadData).unwrap();
-      showToast({ status: "success", message: res.message });
+      showToast({ status: 'success', message: res.message });
     } catch (error: any) {
-      showToast({ status: "error", message: error.message || "Failed to update the threshold" });
+      showToast({ status: 'error', message: error.message || 'Failed to update the threshold' });
     }
   };
 

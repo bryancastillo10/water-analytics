@@ -9,8 +9,17 @@ interface NeedleProps<T> {
   color?: string;
 }
 
-const Needle= ({ value, data, radian, cx, cy, innerRad, outerRad, color = "#C2C2C2" }: NeedleProps<number>) => {
-  let total = data.reduce((sum, v) => sum + v.value, 0); 
+const Needle = ({
+  value,
+  data,
+  radian,
+  cx,
+  cy,
+  innerRad,
+  outerRad,
+  color = '#C2C2C2',
+}: NeedleProps<number>) => {
+  let total = data.reduce((sum, v) => sum + v.value, 0);
   const ang = 180 * (1 - value / total);
   const length = (innerRad + 2 * outerRad) / 3;
   const sin = Math.sin(-radian * ang);
@@ -27,12 +36,15 @@ const Needle= ({ value, data, radian, cx, cy, innerRad, outerRad, color = "#C2C2
   const yp = y0 + length * sin;
 
   return (
-    <g style={{ zIndex: 10 }}> 
+    <g style={{ zIndex: 10 }}>
       <circle cx={x0} cy={y0} r={r} fill={color} stroke="none" />
-      <path d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} fill={color} stroke="none" />
+      <path
+        d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`}
+        fill={color}
+        stroke="none"
+      />
     </g>
   );
 };
 
 export default Needle;
-

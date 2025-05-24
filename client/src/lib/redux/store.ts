@@ -1,17 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
-import rootReducer, { apis, apiReducerPaths } from "@/lib/redux/reducer";
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer, { apis, apiReducerPaths } from '@/lib/redux/reducer';
 
-import {
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from "redux-persist";
+import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 
-import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 
 /* Redux Persistence */
 const createNoopStorage = () => {
@@ -30,15 +22,12 @@ const createNoopStorage = () => {
   };
 };
 
-const storage =
-  typeof window === "undefined"
-    ? createNoopStorage()
-    : createWebStorage("local");
+const storage = typeof window === 'undefined' ? createNoopStorage() : createWebStorage('local');
 
-    const persistConfig = {
-      key: "root",
-      storage,
-      blacklist: apiReducerPaths
+const persistConfig = {
+  key: 'root',
+  storage,
+  blacklist: apiReducerPaths,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -46,13 +35,13 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 /* Redux Store */
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         ignoredPaths: ['api'],
       },
-    }).concat(apis.map((api)=> api.middleware))
+    }).concat(apis.map(api => api.middleware)),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

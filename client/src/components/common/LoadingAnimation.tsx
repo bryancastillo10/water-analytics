@@ -1,35 +1,35 @@
-interface LoadingAnimationProps{
-    size: "sm" | "md" | "lg"
+interface LoadingAnimationProps {
+  size: 'sm' | 'md' | 'lg';
 }
 
-
-const LoadingAnimation = ({size} : LoadingAnimationProps) => {
-    const centerCircle = "flex justify-center items-center";
-    const getSizeClass = (size: string) => {
-        switch (size) {
-            case "sm":
-                return {
-                    outer: "size-24",
-                    inner: "size-20",
-                    central: "size-14"
-                }
-            case "lg":
-                return {
-                    outer: "size-48",
-                    inner: "size-36",
-                    central:"size-24"
-                }
-            default:
-                return {
-                    outer: "size-36",
-                    inner: "size-28",
-                    central:"size-16"
-                }
-      }  
-    };
+const LoadingAnimation = ({ size }: LoadingAnimationProps) => {
+  const centerCircle = 'flex justify-center items-center';
+  const getSizeClass = (size: string) => {
+    switch (size) {
+      case 'sm':
+        return {
+          outer: 'size-24',
+          inner: 'size-20',
+          central: 'size-14',
+        };
+      case 'lg':
+        return {
+          outer: 'size-48',
+          inner: 'size-36',
+          central: 'size-24',
+        };
+      default:
+        return {
+          outer: 'size-36',
+          inner: 'size-28',
+          central: 'size-16',
+        };
+    }
+  };
   return (
     <div className={`${centerCircle}`}>
-      <div className={`
+      <div
+        className={`
         ${centerCircle} 
         relative 
         rounded-full 
@@ -41,8 +41,10 @@ const LoadingAnimation = ({size} : LoadingAnimationProps) => {
         before:bg-secondary 
         before:animate-ping 
         before:opacity-75
-      `}>
-        <div className={`
+      `}
+      >
+        <div
+          className={`
           ${centerCircle} 
           relative 
           rounded-full 
@@ -54,8 +56,10 @@ const LoadingAnimation = ({size} : LoadingAnimationProps) => {
           before:bg-primary 
           before:animate-ping 
           before:animation-delay-300
-        `}>
-          <div className={`
+        `}
+        >
+          <div
+            className={`
             relative 
             bg-cyan-500 
             rounded-full 
@@ -66,11 +70,12 @@ const LoadingAnimation = ({size} : LoadingAnimationProps) => {
             before:bg-cyan-500 
             before:animate-ping 
             before:animation-delay-600
-          `} />
+          `}
+          />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default LoadingAnimation;

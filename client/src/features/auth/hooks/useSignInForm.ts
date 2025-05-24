@@ -1,23 +1,22 @@
-import { useState, type ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, type ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { setUser } from "@/lib/redux/states/userSlice";
+import { setUser } from '@/lib/redux/states/userSlice';
 
-import { useAppDispatch } from "@/lib/redux/hooks";
-import { useSignInMutation } from "@/features/auth/api/authApi";
-import type { SignInData } from "@/features/auth/api/interface";
+import { useAppDispatch } from '@/lib/redux/hooks';
+import { useSignInMutation } from '@/features/auth/api/authApi';
+import type { SignInData } from '@/features/auth/api/interface';
 
-import { useToast } from "@/hooks/useToast";
+import { useToast } from '@/hooks/useToast';
 
 const initialSignIn = {
-  email: "",
-  password: "",
+  email: '',
+  password: '',
 };
 
 const useSignInForm = () => {
   const [signInData, setSignInData] = useState<SignInData>(initialSignIn);
   const [signIn, { isLoading }] = useSignInMutation();
-
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -29,7 +28,6 @@ const useSignInForm = () => {
     setSignInData({ ...signInData, [id]: value });
   };
 
-
   const callSignIn = async () => {
     try {
       const res = await signIn(signInData).unwrap();
@@ -37,18 +35,17 @@ const useSignInForm = () => {
 
       const userRole = userData.role.toLowerCase();
       showToast({
-        status: "success",
-        message: res.message
+        status: 'success',
+        message: res.message,
       });
       dispatch(setUser(userData));
       navigate(`/${userRole}/dashboard`);
-    }
-    catch (error: any) {
-      const errorMessage = error?.data?.message || "Failed to sign in. Try again!";
+    } catch (error: any) {
+      const errorMessage = error?.data?.message || 'Failed to sign in. Try again!';
       showToast({
-        status: "error",
-        message: errorMessage
-      })
+        status: 'error',
+        message: errorMessage,
+      });
     }
   };
 
@@ -57,7 +54,7 @@ const useSignInForm = () => {
     callSignIn();
   };
 
-  return {signInData, isLoading, onChangeInput, handleSubmit }
-}
+  return { signInData, isLoading, onChangeInput, handleSubmit };
+};
 
 export default useSignInForm;

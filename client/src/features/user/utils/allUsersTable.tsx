@@ -1,41 +1,41 @@
-import { createColumnHelper } from "@tanstack/react-table";
-import type { IUsersData } from "@/features/user/api/interface";
-import { CustomSelect } from "@/components/ui";
+import { createColumnHelper } from '@tanstack/react-table';
+import type { IUsersData } from '@/features/user/api/interface';
+import { CustomSelect } from '@/components/ui';
 
-import useUpdateUserRole from "@/features/user/hooks/useUpdateUserRole";
+import useUpdateUserRole from '@/features/user/hooks/useUpdateUserRole';
 
 const columnHelper = createColumnHelper<IUsersData>();
 
-interface UserColumnsProps{
-    openEditRole: Record<string, boolean>;
-    toggleEditRole: (rowId: string) => void;
-    selectedRole: Record<string,string>;
-    handleSelectedRole: (rowId: string, roleValue:string) => void;
+interface UserColumnsProps {
+  openEditRole: Record<string, boolean>;
+  toggleEditRole: (rowId: string) => void;
+  selectedRole: Record<string, string>;
+  handleSelectedRole: (rowId: string, roleValue: string) => void;
 }
 
 export const userColumns = (props: UserColumnsProps) => {
   const { openEditRole, toggleEditRole, selectedRole, handleSelectedRole } = props;
   const { updateUserRole, isLoading } = useUpdateUserRole();
   return [
-    columnHelper.accessor("username", {
-      header: () => "Username",
-      cell: (info) => info.getValue()
+    columnHelper.accessor('username', {
+      header: () => 'Username',
+      cell: info => info.getValue(),
     }),
-    columnHelper.accessor("email", {
-      header: () => "Email",
-      cell: (info) => info.getValue()
+    columnHelper.accessor('email', {
+      header: () => 'Email',
+      cell: info => info.getValue(),
     }),
-    columnHelper.accessor("role", {
-      header: () => "Role",
-      cell: (info) => {
+    columnHelper.accessor('role', {
+      header: () => 'Role',
+      cell: info => {
         const role = info.getValue();
-        const rowData = info.row.original;  
+        const rowData = info.row.original;
         // User ID from user data
         const userId = rowData.id;
-        
+
         // Row ID as reference from React Table
         const rowId = info.row.id;
-        
+
         const currentRole = role.charAt(0).toUpperCase() + role.slice(1).toLowerCase();
         const isEditing = openEditRole[rowId] || false;
 
@@ -45,25 +45,27 @@ export const userColumns = (props: UserColumnsProps) => {
               <>
                 <CustomSelect
                   value={selectedRole[rowId] || currentRole}
-                  onChangeValue={(newRole) => handleSelectedRole(rowId, newRole)}
+                  onChangeValue={newRole => handleSelectedRole(rowId, newRole)}
                   withSearchBar={false}
-                  options={["Admin", "Public", "Analyst"]}
+                  options={['Admin', 'Public', 'Analyst']}
                 />
                 <div className="flex w-[180px] items-center gap-2">
                   <button
                     onClick={() =>
                       updateUserRole({
                         id: userId,
-                        selectedRole: selectedRole[rowId] || currentRole, 
-                        onSuccess: () => toggleEditRole(rowId)
-                      })}
+                        selectedRole: selectedRole[rowId] || currentRole,
+                        onSuccess: () => toggleEditRole(rowId),
+                      })
+                    }
                     className="bg-primary w-full text-light 
                     text-sm  px-3 py-1 rounded-xl shadow-md"
                     disabled={isLoading}
                   >
-                    {isLoading ? "Loading": "Save"}
+                    {isLoading ? 'Loading' : 'Save'}
                   </button>
-                  <button className="bg-rose-600 text-light
+                  <button
+                    className="bg-rose-600 text-light
                     text-sm w-fit px-3 py-1 rounded-xl shadow-md"
                     onClick={() => toggleEditRole(rowId)}
                   >
@@ -78,15 +80,11 @@ export const userColumns = (props: UserColumnsProps) => {
         );
       },
     }),
-    columnHelper.accessor("profilePic", {
-      header: () => "Profile Picture",
-      cell: (info) => (
-        <img
-          src={info.getValue()}
-          alt="user-profile-pic"
-          className="size-10 rounded-full"
-        />
-      )
+    columnHelper.accessor('profilePic', {
+      header: () => 'Profile Picture',
+      cell: info => (
+        <img src={info.getValue()} alt="user-profile-pic" className="size-10 rounded-full" />
+      ),
     }),
   ];
 };

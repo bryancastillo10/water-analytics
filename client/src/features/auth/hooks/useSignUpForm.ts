@@ -1,18 +1,18 @@
-import { useState, type ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, type ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { type SignUpData } from "@/features/auth/api/interface";
-import { useSignUpMutation } from "@/features/auth/api/authApi";
+import { type SignUpData } from '@/features/auth/api/interface';
+import { useSignUpMutation } from '@/features/auth/api/authApi';
 
-import { useAppDispatch } from "@/lib/redux/hooks";
-import { setUser } from "@/lib/redux/states/userSlice";
-import { useToast } from "@/hooks/useToast";
+import { useAppDispatch } from '@/lib/redux/hooks';
+import { setUser } from '@/lib/redux/states/userSlice';
+import { useToast } from '@/hooks/useToast';
 
 const initialSignUpData = {
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword:"",
+  username: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
 };
 
 const useSignUpForm = () => {
@@ -30,7 +30,7 @@ const useSignUpForm = () => {
   const handleAgreement = () => {
     setIsChecked(!isChecked);
   };
-  
+
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setSignUpData({ ...signUpData, [id]: value });
@@ -44,34 +44,32 @@ const useSignUpForm = () => {
 
       const userRole = userData.role.toLowerCase();
       showToast({
-        status: "success",
-        message: res.message
+        status: 'success',
+        message: res.message,
       });
       dispatch(setUser(userData));
       navigate(`/${userRole}/dashboard`);
-    }
-    catch (error: any) {
+    } catch (error: any) {
       showToast({
-        status: "error",
-        message: error?.data?.message || "Failed to create an account. Please try again."
-        })
-    }
-    finally {
-      setIsModalVisible(false);  
+        status: 'error',
+        message: error?.data?.message || 'Failed to create an account. Please try again.',
+      });
+    } finally {
+      setIsModalVisible(false);
     }
   };
-  
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     callSignUp();
   };
 
   const handleOpenModal = () => {
-      setIsOpen(true);
+    setIsOpen(true);
   };
 
   const handleCloseModal = () => {
-      setIsOpen(false);
+    setIsOpen(false);
   };
 
   return {
@@ -84,7 +82,7 @@ const useSignUpForm = () => {
     handleAgreement,
     handleSubmit,
     handleOpenModal,
-    handleCloseModal
+    handleCloseModal,
   };
 };
 

@@ -1,16 +1,16 @@
-import { CheckCircle, TrashSimple } from "@phosphor-icons/react";
-import { Spinner } from "@/assets/svg";
+import { CheckCircle, TrashSimple } from '@phosphor-icons/react';
+import { Spinner } from '@/assets/svg';
 
-import { autoGrow, handleZIndex } from "@/features/stickynote/utils";
-import { useAppSelector } from "@/lib/redux/hooks";
+import { autoGrow, handleZIndex } from '@/features/stickynote/utils';
+import { useAppSelector } from '@/lib/redux/hooks';
 
-import type { INotesData } from "@/features/stickynote/api/interface";
+import type { INotesData } from '@/features/stickynote/api/interface';
 
-import useDragAndDropStates from "@/features/stickynote/hooks/useDragAndDropStates";
-import useAutoSaveNotes from "@/features/stickynote/hooks/useAutoSaveNotes";
-import useMouseEvent from "@/features/stickynote/hooks/useMouseEvent";
-import useTouchEvent from "@/features/stickynote/hooks/useTouchEvent";
-import useDeleteNote from "@/features/stickynote/hooks/useDeleteNote";
+import useDragAndDropStates from '@/features/stickynote/hooks/useDragAndDropStates';
+import useAutoSaveNotes from '@/features/stickynote/hooks/useAutoSaveNotes';
+import useMouseEvent from '@/features/stickynote/hooks/useMouseEvent';
+import useTouchEvent from '@/features/stickynote/hooks/useTouchEvent';
+import useDeleteNote from '@/features/stickynote/hooks/useDeleteNote';
 
 interface NoteCardProps {
   note: INotesData;
@@ -18,8 +18,8 @@ interface NoteCardProps {
 }
 
 const NoteCard = ({ note, containerRef }: NoteCardProps) => {
-  const isOpenDrawer = useAppSelector((state) => state.drawer.isOpenDrawer);
-  
+  const isOpenDrawer = useAppSelector(state => state.drawer.isOpenDrawer);
+
   // Drag & Drops States, Ref
   const {
     textAreaRef,
@@ -29,52 +29,47 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
     mouseStartPos,
     savedSuccessTimer,
     setSelectedNote,
-    setPosition
+    setPosition,
   } = useDragAndDropStates(note);
-  
+
   // Auto Update Feature
-  const {
-    saving,
-    savedSuccess,
+  const { saving, savedSuccess, setSaving, setSavedSuccess, saveData } = useAutoSaveNotes();
+
+  const { callDeleteNote } = useDeleteNote();
+
+  //  Mouse Event for Desktop Screen
+  const { mouseDown, handleKeyUp } = useMouseEvent({
+    note,
+    mouseStartPos,
+    cardRef,
+    textAreaRef,
+    containerRef,
+    savedSuccessTimer,
+    keyUpTimer,
+    saveData,
+    setSelectedNote,
+    setPosition,
     setSaving,
     setSavedSuccess,
-    saveData
-  } = useAutoSaveNotes();
-  
-  const { callDeleteNote } = useDeleteNote();
-  
-  //  Mouse Event for Desktop Screen
-  const { mouseDown, handleKeyUp } = useMouseEvent(
-  {  note,
-     mouseStartPos,
-     cardRef,
-     textAreaRef,
-     containerRef,
-     savedSuccessTimer,
-     keyUpTimer,
-     saveData,
-     setSelectedNote,
-     setPosition,
-     setSaving,
-     setSavedSuccess});
+  });
 
   //  Touch Event for Mobile Screen
   const { touchStart } = useTouchEvent({
-      note,
-      isOpenDrawer,
-      cardRef,
-      containerRef,
-      savedSuccessTimer,
-      saveData,        
-      setSelectedNote,
-      setPosition,
-      setSaving,
-      setSavedSuccess 
+    note,
+    isOpenDrawer,
+    cardRef,
+    containerRef,
+    savedSuccessTimer,
+    saveData,
+    setSelectedNote,
+    setPosition,
+    setSaving,
+    setSavedSuccess,
   });
-  
+
   const colors = note.colors;
   const content = note.content;
-  
+
   return (
     <article
       data-card="card"
@@ -83,7 +78,7 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
       style={{
         backgroundColor: colors.colorBody,
         left: `${position.x}px`,
-        top: `${position.y}px`
+        top: `${position.y}px`,
       }}
     >
       {/* Note Header */}
@@ -101,20 +96,19 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
             className="cursor-pointer hover:scale-110 duration-150 ease-out"
             size="20"
           />
-          <h1 className="font-semibold tracking-wider w-[180px] truncate">
-            {note.title}
-          </h1>
-        </div>  
+          <h1 className="font-semibold tracking-wider w-[180px] truncate">{note.title}</h1>
+        </div>
         {saving ? (
           <div className="flex items-center gap-3">
-            <Spinner className="animate-spin"/>
+            <Spinner className="animate-spin" />
             <p className="text-sm font-secondary">Saving...</p>
-          </div>) : savedSuccess ? (
+          </div>
+        ) : savedSuccess ? (
           <div className="flex items-center gap-1">
             <CheckCircle size="22" />
             <p className="text-sm font-secondary">Saved</p>
           </div>
-        ): null}
+        ) : null}
       </div>
 
       {/* Note Body */}
@@ -133,7 +127,7 @@ const NoteCard = ({ note, containerRef }: NoteCardProps) => {
         />
       </div>
     </article>
-  )
-}
+  );
+};
 
 export default NoteCard;

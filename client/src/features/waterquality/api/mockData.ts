@@ -1,14 +1,14 @@
-import { mockSiteData } from "@/features/sites/api/mockData";
-import type { IMeasurementData } from "@/features/waterquality/api/interface";
+import { mockSiteData } from '@/features/sites/api/mockData';
+import type { IMeasurementData } from '@/features/waterquality/api/interface';
 
 export const generateMockMeasurements = (
   siteData: typeof mockSiteData,
-  count: number = 10
+  count: number = 10,
 ): IMeasurementData[] => {
   const measurements: IMeasurementData[] = [];
   const today = new Date();
 
-  siteData.forEach((site) => {
+  siteData.forEach(site => {
     for (let i = 0; i < count; i++) {
       const date = new Date(today);
       date.setDate(today.getDate() - i * 5);
