@@ -23,16 +23,8 @@ export class UserService {
     if (!userId) {
       throw new NotFoundError('User id is not found');
     }
-
     
-   async updateUser({ userId, toUpdateUser }: UpdateUserRequest) {
-    if (!userId) {
-      throw new NotFoundError('User id is not found');
-    }
-
-    const updatedUser = await this.userRepository.updateUserProfile({ userId, toUpdateUser });
-
-    return updatedUser;
+    return await this.userRepository.updateUserProfile({ userId, toUpdateUser });
   }
     
   async getAllUser(userId: string) {
