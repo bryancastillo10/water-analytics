@@ -1,5 +1,5 @@
-import { TextHeader } from "@/components/common";
-import UsersListTable from "@/features/user/components/UsersListTable";
+import { TextHeader } from '@/components/common';
+import UsersListTable from '@/features/user/components/UsersListTable';
 
 const UsersPage = () => {
   return (
@@ -7,9 +7,9 @@ const UsersPage = () => {
       <div className="w-fit">
         <TextHeader text="Admins can check the list of users" />
       </div>
-          <UsersListTable/>
+      <UsersListTable />
     </main>
-  )
-}
+  );
+};
 
 export default UsersPage;

@@ -1,4 +1,4 @@
-import { WaterSourceType } from "@prisma/client";
+import { WaterSourceType } from '@prisma/client';
 
 export class SiteData {
   id!: string;

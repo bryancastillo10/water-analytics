@@ -2,7 +2,7 @@
   {
     "title": "Water Quality Analysis",
     "content": "Review the latest pH and dissolved oxygen measurements for all active sites.",
-    "colors":  {
+    "colors": {
       "id": "color-yellow",
       "colorHeader": "#FDD89B",
       "colorBody": "#FDF0D3",
@@ -13,7 +13,7 @@
   {
     "title": "Prepare Report for Stakeholders",
     "content": "Compile findings from the recent water quality monitoring activities and draft a summary for the board meeting.",
-    "colors":{
+    "colors": {
       "id": "color-green",
       "colorHeader": "#B2D39C",
       "colorBody": "#C4E0B0",
@@ -24,18 +24,18 @@
   {
     "title": "Threshold Review",
     "content": "Verify if the set thresholds for ammonia and phosphates align with the updated environmental standards.",
-    "colors":    {
+    "colors": {
       "id": "color-indigo",
       "colorHeader": "#6666FF",
       "colorBody": "#9999FF",
       "colorText": "#111000"
-      },
+    },
     "position": { "x": 150, "y": 270 }
   },
   {
     "title": "Data Backup",
     "content": "Ensure all site data and measurement records are backed up in the cloud storage.",
-    "colors":   {
+    "colors": {
       "id": "color-pink",
       "colorHeader": "#FFB6C1",
       "colorBody": "#FFCCE5",

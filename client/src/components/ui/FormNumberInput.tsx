@@ -1,4 +1,4 @@
-import { forwardRef, type ChangeEvent } from "react";
+import { forwardRef, type ChangeEvent } from 'react';
 
 interface FormNumberInputProps {
   id: string;
@@ -20,18 +20,18 @@ const FormNumberInput = forwardRef<HTMLInputElement, FormNumberInputProps>(
           <input
             type="number"
             id={id}
-            ref={ref} 
-            value={value || ""}
+            ref={ref}
+            value={value || ''}
             onChange={onChange}
             className="rounded-xl w-16 p-2 h-8 border border-neutral focus:outline-none focus:border-primary bg-[#ffffff] text-dark"
           />
         </div>
       </div>
     );
-  }
+  },
 );
 
 // ✅ Add display name for better debugging
-FormNumberInput.displayName = "FormNumberInput";
+FormNumberInput.displayName = 'FormNumberInput';
 
 export default FormNumberInput;

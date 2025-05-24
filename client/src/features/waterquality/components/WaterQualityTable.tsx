@@ -1,10 +1,9 @@
-import { flexRender } from "@tanstack/react-table";
-import { CaretUp, CaretDown, PencilSimpleLine, TrashSimple } from "@phosphor-icons/react";
+import { flexRender } from '@tanstack/react-table';
+import { CaretUp, CaretDown, PencilSimpleLine, TrashSimple } from '@phosphor-icons/react';
 
-import type { IMeasurementData } from "@/features/waterquality/api/interface";
-import useWaterQualityTable from "@/features/waterquality/hooks/useWaterQualityTable";
-import PaginationControl from "@/features/waterquality/components/PaginationControl";
-
+import type { IMeasurementData } from '@/features/waterquality/api/interface';
+import useWaterQualityTable from '@/features/waterquality/hooks/useWaterQualityTable';
+import PaginationControl from '@/features/waterquality/components/PaginationControl';
 
 interface WaterQualityTableProps {
   data: IMeasurementData[];
@@ -17,22 +16,25 @@ const WaterQualityTable = ({ data }: WaterQualityTableProps) => {
     updateMeasurementDrawer,
     deleteMeasurementDrawer,
     hoveredRow,
-    setHoveredRow
+    setHoveredRow,
   } = useWaterQualityTable({ data });
 
   return (
     <section>
       <table className="min-w-full table-auto border-collapse">
         <thead className="relative group">
-          {waterTable.getHeaderGroups().map((headerGroup) => (
+          {waterTable.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th key={header.id} className="border border-primary bg-primary text-light text-left px-3 py-2">
+              {headerGroup.headers.map(header => (
+                <th
+                  key={header.id}
+                  className="border border-primary bg-primary text-light text-left px-3 py-2"
+                >
                   <div
                     {...{
                       className: header.column.getCanSort()
-                        ? "cursor-pointer select-none hover:text-neutral"
-                        : "",
+                        ? 'cursor-pointer select-none hover:text-neutral'
+                        : '',
                       onClick: header.column.getToggleGroupingHandler(),
                     }}
                   >
@@ -51,12 +53,12 @@ const WaterQualityTable = ({ data }: WaterQualityTableProps) => {
           {data.length > 0 ? (
             waterTable.getRowModel().rows.map((row, rowIndex) => (
               <tr
-                className={`relative ${theme ? "hover:bg-darkGray" : "hover:bg-neutral"}`}
+                className={`relative ${theme ? 'hover:bg-darkGray' : 'hover:bg-neutral'}`}
                 key={row.id}
                 onMouseEnter={() => setHoveredRow(rowIndex)}
                 onMouseLeave={() => setHoveredRow(null)}
               >
-                {row.getVisibleCells()?.map((cell) => (
+                {row.getVisibleCells()?.map(cell => (
                   <td key={cell.id} className="border border-neutral text-left px-3 py-2">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
@@ -65,21 +67,21 @@ const WaterQualityTable = ({ data }: WaterQualityTableProps) => {
                   {hoveredRow === rowIndex && (
                     <div
                       className={`absolute right-0 top-0 
-                      flex items-center gap-2 p-2 rounded-xl ${theme ? "bg-secondary/80" : "bg-light/80"}`}
+                      flex items-center gap-2 p-2 rounded-xl ${theme ? 'bg-secondary/80' : 'bg-light/80'}`}
                     >
                       <PencilSimpleLine
                         onClick={() => updateMeasurementDrawer(row.original.id)}
                         weight="fill"
                         size="20"
                         className="hover:scale-110 duration-150 ease-in-out cursor-pointer"
-                        color={theme ? "#F6F5F4" : "#006da3"}
+                        color={theme ? '#F6F5F4' : '#006da3'}
                       />
                       <TrashSimple
                         onClick={() => deleteMeasurementDrawer(row.original.id)}
                         weight="fill"
                         size="20"
                         className="hover:scale-110 duration-150 ease-in-out cursor-pointer"
-                        color={theme ? "#F6F5F4" : "#006da3"}  
+                        color={theme ? '#F6F5F4' : '#006da3'}
                       />
                     </div>
                   )}
@@ -88,8 +90,10 @@ const WaterQualityTable = ({ data }: WaterQualityTableProps) => {
             ))
           ) : (
             <tr>
-                <td colSpan={waterTable.getAllColumns().length}
-                  className="text-center font-semibold py-4 border border-neutral">
+              <td
+                colSpan={waterTable.getAllColumns().length}
+                className="text-center font-semibold py-4 border border-neutral"
+              >
                 No water quality data available. Add some data by clicking the Plus icon above.
               </td>
             </tr>

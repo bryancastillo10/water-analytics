@@ -1,24 +1,23 @@
 [
-    {
-      "siteName": "Marikina River",
-      "location": "Marikina, NCR, Philippines",
-      "description": "Major river system running through Metro Manila, crucial for domestic water supply",
-      "imageUrl": "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410419/domestic_water_tuqrjj.jpg",
-      "sourceType": "DOMESTIC"
-    },
-    {
-      "siteName": "Laguna Industrial Park Water Treatment Facility",
-      "location": "Santa Rosa, Laguna, Philippines",
-      "description": "Central water treatment facility serving multiple manufacturing plants",
-      "imageUrl": "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410434/industrial_water_aqag7u.jpg",
-      "sourceType": "INDUSTRIAL"
-    },
-    {
-      "siteName": "National Irrigation Administration Canal",
-      "location": "Nueva Ecija, Philippines",
-      "description": "Irrigation system supporting rice fields in Central Luzon",
-      "imageUrl": "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410415/agricultural_iwabd7.jpg",
-      "sourceType": "AGRICULTURAL"
-    }
-  ]
-  
+  {
+    "siteName": "Marikina River",
+    "location": "Marikina, NCR, Philippines",
+    "description": "Major river system running through Metro Manila, crucial for domestic water supply",
+    "imageUrl": "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410419/domestic_water_tuqrjj.jpg",
+    "sourceType": "DOMESTIC"
+  },
+  {
+    "siteName": "Laguna Industrial Park Water Treatment Facility",
+    "location": "Santa Rosa, Laguna, Philippines",
+    "description": "Central water treatment facility serving multiple manufacturing plants",
+    "imageUrl": "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410434/industrial_water_aqag7u.jpg",
+    "sourceType": "INDUSTRIAL"
+  },
+  {
+    "siteName": "National Irrigation Administration Canal",
+    "location": "Nueva Ecija, Philippines",
+    "description": "Irrigation system supporting rice fields in Central Luzon",
+    "imageUrl": "https://res.cloudinary.com/dzruafjwq/image/upload/v1732410415/agricultural_iwabd7.jpg",
+    "sourceType": "AGRICULTURAL"
+  }
+]

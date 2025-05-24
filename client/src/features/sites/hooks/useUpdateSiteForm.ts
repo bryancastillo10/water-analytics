@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { useUpdateSiteMutation } from "@/features/sites/api/sitesApi";
-import type { ISiteData } from "@/features/sites/api/interface";
-import { useToast } from "@/hooks/useToast";
+import { useState, useEffect } from 'react';
+import { useUpdateSiteMutation } from '@/features/sites/api/sitesApi';
+import type { ISiteData } from '@/features/sites/api/interface';
+import { useToast } from '@/hooks/useToast';
 
 interface IUpdateSite {
   id: string;
@@ -25,11 +25,11 @@ const useUpdateSiteForm = ({ id, site }: IUpdateSite) => {
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
-    setUpdateSiteData((prev) => ({ ...prev, [id]: value }));
+    setUpdateSiteData(prev => ({ ...prev, [id]: value }));
   };
 
   const onChangeSelect = (id: keyof ISiteData, value: string) => {
-    setUpdateSiteData((prev) => ({ ...prev, [id]: value }));
+    setUpdateSiteData(prev => ({ ...prev, [id]: value }));
   };
 
   const handleImageSelect = (file: File | null) => {
@@ -49,18 +49,18 @@ const useUpdateSiteForm = ({ id, site }: IUpdateSite) => {
   const prepareMultiFormData = () => {
     const formData = new FormData();
     formData.append(
-      "siteData",
+      'siteData',
       JSON.stringify({
         siteName: updateSiteData.siteName,
         location: updateSiteData.location,
         description: updateSiteData.description,
         sourceType: updateSiteData.sourceType.toUpperCase(),
-        imageUrl: updateSiteData.imageUrl || ""
-      })
+        imageUrl: updateSiteData.imageUrl || '',
+      }),
     );
 
     if (imgFile) {
-      formData.append("sitePhoto", imgFile);
+      formData.append('sitePhoto', imgFile);
     }
     return formData;
   };
@@ -70,13 +70,13 @@ const useUpdateSiteForm = ({ id, site }: IUpdateSite) => {
       const formData = prepareMultiFormData();
       const res = await updateSite({ id, site: formData }).unwrap();
       showToast({
-        status: "success",
+        status: 'success',
         message: res.message,
       });
     } catch (error: any) {
       showToast({
-        status: "error",
-        message: error.message || "Failed to update the site",
+        status: 'error',
+        message: error.message || 'Failed to update the site',
       });
     }
   };

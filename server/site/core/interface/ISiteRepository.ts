@@ -1,4 +1,4 @@
-import { SiteData } from "@/site/core/entity/site";
+import { SiteData } from '@/site/core/entity/site';
 
 export interface ISiteRepository {
   createSite(data: CreateSiteRepo): Promise<SiteData>;
@@ -8,10 +8,8 @@ export interface ISiteRepository {
   deleteSite(siteId: string): Promise<void>;
 }
 
-
-export type SiteDataInput = Omit<SiteData, "id" | "userId">; 
-export type FileInput = { path: string }; 
-
+export type SiteDataInput = Omit<SiteData, 'id' | 'userId'>;
+export type FileInput = { path: string };
 
 export interface CreateSiteRequest {
   userId: string;

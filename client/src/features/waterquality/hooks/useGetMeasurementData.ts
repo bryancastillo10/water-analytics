@@ -1,6 +1,6 @@
-import { useGetAllMeasurementsQuery } from "@/features/waterquality/api/measurementApi";
-import { useGetSiteByUserQuery } from "@/features/sites/api/sitesApi";
-import type { IMeasurementData } from "@/features/waterquality/api/interface";
+import { useGetAllMeasurementsQuery } from '@/features/waterquality/api/measurementApi';
+import { useGetSiteByUserQuery } from '@/features/sites/api/sitesApi';
+import type { IMeasurementData } from '@/features/waterquality/api/interface';
 
 type PreProcessedWQData = Record<
   string,
@@ -15,18 +15,16 @@ const useGetMeasurementData = () => {
   const { data: siteData } = useGetSiteByUserQuery();
   const { data: measurementData, isLoading } = useGetAllMeasurementsQuery();
 
-
   const measurementDataWithSiteInfo =
-    measurementData?.map((measure) => {
-      const site = siteData?.find((site) => site.id === measure.siteId);
+    measurementData?.map(measure => {
+      const site = siteData?.find(site => site.id === measure.siteId);
       return {
         ...measure,
-        siteName: site?.siteName ?? "Site Not Found",
-        siteId: site?.id ?? "Site ID Not Found",
-        location: site?.location ?? "Location Not Found",
+        siteName: site?.siteName ?? 'Site Not Found',
+        siteId: site?.id ?? 'Site ID Not Found',
+        location: site?.location ?? 'Location Not Found',
       };
     }) ?? [];
-
 
   const groupMeasurementsBySite = (measurements: IMeasurementData[]): PreProcessedWQData => {
     return measurements.reduce((acc, measurement) => {
@@ -42,14 +40,14 @@ const useGetMeasurementData = () => {
   };
 
   let dataSummary = groupMeasurementsBySite(measurementDataWithSiteInfo);
-  siteData?.forEach((site) => {
+  siteData?.forEach(site => {
     if (!dataSummary[site.siteName]) {
       dataSummary[site.siteName] = { location: site.location, siteId: site.id, data: [] };
     }
   });
 
   return {
-    dataSummary: Object.entries(dataSummary), 
+    dataSummary: Object.entries(dataSummary),
     isLoading,
   };
 };

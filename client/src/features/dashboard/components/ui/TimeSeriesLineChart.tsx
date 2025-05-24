@@ -5,25 +5,22 @@ import {
   XAxis,
   YAxis,
   Line,
-  Tooltip
-} from "recharts";
-import { useAppSelector } from "@/lib/redux/hooks";
-import CustomTooltip from "@/features/dashboard/components/tooltips/CustomChartTooltip";
+  Tooltip,
+} from 'recharts';
+import { useAppSelector } from '@/lib/redux/hooks';
+import CustomTooltip from '@/features/dashboard/components/tooltips/CustomChartTooltip';
 
-interface TimeSeriesLineChartProps{
-   selectedParameter: string;
-   timeSeriesData:  { date: string; value: number }[];
+interface TimeSeriesLineChartProps {
+  selectedParameter: string;
+  timeSeriesData: { date: string; value: number }[];
 }
 
-const TimeSeriesLineChart = ({
-  timeSeriesData,
-  selectedParameter
-}: TimeSeriesLineChartProps) => {
-  const theme = useAppSelector((state) => state.theme.isDarkMode);
+const TimeSeriesLineChart = ({ timeSeriesData, selectedParameter }: TimeSeriesLineChartProps) => {
+  const theme = useAppSelector(state => state.theme.isDarkMode);
 
   return (
-    <section className="w-full h-[250px] lg:h-[300px]">    
-       <ResponsiveContainer className="pt-4" width="100%" height="100%">
+    <section className="w-full h-[250px] lg:h-[300px]">
+      <ResponsiveContainer className="pt-4" width="100%" height="100%">
         <LineChart
           data={timeSeriesData}
           margin={{
@@ -34,22 +31,19 @@ const TimeSeriesLineChart = ({
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis 
-            dataKey="date"
-            tick={{ fontSize: 12, color: theme ? "#ffffff" : "#040710" }}
-          />
+          <XAxis dataKey="date" tick={{ fontSize: 12, color: theme ? '#ffffff' : '#040710' }} />
           <YAxis
-            tick={{ fontSize: 12, color: theme ? "#ffffff" : "#040710" }}
-            label={{ 
-              value: selectedParameter, 
-              angle: -90, 
+            tick={{ fontSize: 12, color: theme ? '#ffffff' : '#040710' }}
+            label={{
+              value: selectedParameter,
+              angle: -90,
               position: 'insideLeft',
-              style: { textAnchor: 'middle' }
+              style: { textAnchor: 'middle' },
             }}
           />
-            <Tooltip 
-              content={<CustomTooltip chartType="line" selectedParameter={selectedParameter}/>} 
-            />
+          <Tooltip
+            content={<CustomTooltip chartType="line" selectedParameter={selectedParameter} />}
+          />
           <Line
             type="monotone"
             dataKey="value"
@@ -61,8 +55,8 @@ const TimeSeriesLineChart = ({
           />
         </LineChart>
       </ResponsiveContainer>
-    </section>    
-  )
-}
+    </section>
+  );
+};
 
 export default TimeSeriesLineChart;

@@ -1,8 +1,8 @@
-import { createContext, useState, useCallback } from "react";
-import Toast, { type ToastProps } from "@/components/ui/Toast";
+import { createContext, useState, useCallback } from 'react';
+import Toast, { type ToastProps } from '@/components/ui/Toast';
 
 interface ToastContextType {
-  showToast: (props: Omit<ToastProps, "onClose">) => void;
+  showToast: (props: Omit<ToastProps, 'onClose'>) => void;
   hideToast: () => void;
 }
 
@@ -11,8 +11,8 @@ export const ToastContext = createContext<ToastContextType | null>(null);
 const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [toastProps, setToastProps] = useState<ToastProps>({
-    status: "warning",
-    message: "",
+    status: 'warning',
+    message: '',
   });
 
   const hideToast = useCallback(() => {
@@ -20,7 +20,7 @@ const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const showToastWithProps = useCallback(
-    (props: Omit<ToastProps, "onClose">) => {
+    (props: Omit<ToastProps, 'onClose'>) => {
       setToastProps({ ...props, onClose: hideToast });
       setIsVisible(true);
 
@@ -30,13 +30,13 @@ const ToastProvider = ({ children }: { children: React.ReactNode }) => {
 
       return () => clearTimeout(timeoutId);
     },
-    [hideToast]
+    [hideToast],
   );
 
   return (
     <ToastContext.Provider value={{ showToast: showToastWithProps, hideToast }}>
       {children}
-          {isVisible && <Toast {...toastProps} isVisible={isVisible} />}
+      {isVisible && <Toast {...toastProps} isVisible={isVisible} />}
     </ToastContext.Provider>
   );
 };

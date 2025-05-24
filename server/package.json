@@ -6,14 +6,15 @@
     "start": "tsx index.ts",
     "dev": "tsx watch index.ts",
     "seed": "tsx prisma/seed.ts",
-    "build": "pkgroll"
+    "build": "pkgroll",
+    "format": "npx prettier . --write"
   },
   "keywords": [],
   "author": "Bryan Castillo",
   "license": "ISC",
   "description": "",
-  "prisma":{
-    "schema":"infrastructure/prisma/schema.prisma"  
+  "prisma": {
+    "schema": "infrastructure/prisma/schema.prisma"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
@@ -24,6 +25,7 @@
     "@types/multer": "^1.4.12",
     "@types/node": "^22.9.0",
     "@types/nodemailer": "^6.4.16",
+    "prettier": "^3.5.3",
     "prisma": "^6.0.1",
     "tsx": "^4.19.2"
   },

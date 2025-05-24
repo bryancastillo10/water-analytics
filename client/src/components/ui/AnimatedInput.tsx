@@ -1,25 +1,22 @@
-import { useState, type ChangeEvent } from "react";
-import { type Icon, Eye, EyeSlash, Info } from "@phosphor-icons/react";
-
+import { useState, type ChangeEvent } from 'react';
+import { type Icon, Eye, EyeSlash, Info } from '@phosphor-icons/react';
 
 interface ToolTipProps {
   message: string;
   show: boolean;
 }
 
-
-const Tooltip = ({ message, show }: ToolTipProps) =>{ 
+const Tooltip = ({ message, show }: ToolTipProps) => {
   return (
     <div
-    className={`absolute bg-primary text-white flex items-center h-12 w-[70%] max-w-fit 
+      className={`absolute bg-primary text-white flex items-center h-12 w-[70%] max-w-fit 
     rounded-md z-40 bottom-10 right-2 py-4 px-2 transition-opacity duration-300 ease-in-out 
     ${show ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-  >
-    <p className="text-xs text-pretty">{message}</p>
-  </div>
-  )}
-;
-
+    >
+      <p className="text-xs text-pretty">{message}</p>
+    </div>
+  );
+};
 interface InputProps {
   id: string;
   type?: string;
@@ -33,10 +30,9 @@ interface InputProps {
   validationMessage?: string;
 }
 
-
 const AnimatedInput = ({
   id,
-  type = "text",
+  type = 'text',
   label,
   value,
   onChange,
@@ -46,18 +42,18 @@ const AnimatedInput = ({
   icon: Icon,
   validationMessage,
 }: InputProps) => {
-      const [isVisible, setIsVisible] = useState<boolean>(false);
-      const [showInfo, setShowInfo] = useState<boolean>(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [showInfo, setShowInfo] = useState<boolean>(false);
 
-      const toggleVisible = () => {
-        setIsVisible(!isVisible);
-      };
-    
+  const toggleVisible = () => {
+    setIsVisible(!isVisible);
+  };
+
   return (
     <div className="relative flex items-start gap-x-1 my-8">
       <input
         id={id}
-        type={type === "password" ? (isVisible ? "text" : "password") : type}
+        type={type === 'password' ? (isVisible ? 'text' : 'password') : type}
         value={value}
         onChange={onChange}
         disabled={disabled}
@@ -71,10 +67,10 @@ const AnimatedInput = ({
         className="absolute z-10 top-2 left-4 origin-[0] duration-150 flex items-center gap-2
         transform -translate-y-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0"
       >
-        {Icon && <Icon size="24" color={value ? "#040710" : "#c2c2c2"} />}
+        {Icon && <Icon size="24" color={value ? '#040710' : '#c2c2c2'} />}
         <label
           className={`text-sm xl:text-lg ${
-            value ? "text-dark" : "text-neutral"
+            value ? 'text-dark' : 'text-neutral'
           } transition-colors duration-150`}
         >
           {label}
@@ -83,7 +79,7 @@ const AnimatedInput = ({
       {isPassword && (
         <div
           onClick={toggleVisible}
-          className={`absolute z-10 top-2.5 ${validationMessage ? "right-8" :"right-4"} cursor-pointer`}
+          className={`absolute z-10 top-2.5 ${validationMessage ? 'right-8' : 'right-4'} cursor-pointer`}
         >
           {isVisible ? <EyeSlash size="24" /> : <Eye size="24" />}
         </div>
@@ -93,8 +89,9 @@ const AnimatedInput = ({
           <Info
             className="cursor-grab hover:text-primary"
             onMouseEnter={() => setShowInfo(true)}
-            onMouseLeave={()=> setShowInfo(false)}
-            size="24" />
+            onMouseLeave={() => setShowInfo(false)}
+            size="24"
+          />
           <Tooltip message={validationMessage} show={showInfo} />
         </>
       )}

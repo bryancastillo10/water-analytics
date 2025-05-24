@@ -1,6 +1,6 @@
-interface ProgressBarProps{
-    step: number;
-    totalSteps: number;
+interface ProgressBarProps {
+  step: number;
+  totalSteps: number;
 }
 
 const ProgressBar = ({ step, totalSteps }: ProgressBarProps) => {
@@ -12,7 +12,7 @@ const ProgressBar = ({ step, totalSteps }: ProgressBarProps) => {
         <div
           key={index}
           className={`w-4 h-4 rounded-full shadow-md border border-dark/20 ${
-            step > index ? "bg-primary" : "bg-neutral"
+            step > index ? 'bg-primary' : 'bg-neutral'
           }`}
         />
       ))}
