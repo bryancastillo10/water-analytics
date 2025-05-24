@@ -1,6 +1,6 @@
-import { ThresholdRepository } from "@/threshold/threshold.repository";
-import { ThresholdService } from "@/threshold/core/service/thresholdService";
-import { ThresholdController } from "@/threshold/threshold.controller";
+import { ThresholdRepository } from '@/threshold/threshold.repository';
+import { ThresholdService } from '@/threshold/core/service/thresholdService';
+import { ThresholdController } from '@/threshold/threshold.controller';
 
 const thresholdRepository = new ThresholdRepository();
 

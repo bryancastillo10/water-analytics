@@ -1,16 +1,17 @@
-import { ThresholdData } from "@/threshold/core/entity/threshold";
+import { ThresholdData } from '@/threshold/core/entity/threshold';
 
-export interface IThresholdRepository{
-    getThreshold(userId: string): Promise<ThresholdData[]>;
-    updateThreshold(updateData:UpdateThresholdRequest[]): Promise<ThresholdData[]>;
-};
+export interface IThresholdRepository {
+  getThreshold(userId: string): Promise<ThresholdData[]>;
+  updateThreshold(updateData: UpdateThresholdRequest[]): Promise<ThresholdData[]>;
+}
 
-export type ThresholdDataInput = Omit<ThresholdData, "id" | "userId">;
+export type ThresholdDataInput = Omit<ThresholdData, 'id' | 'userId'>;
 
 export interface UpdateThresholdRequest {
-        thresholdId: string;
-        value?: number | null;
-        maxValue?: number | null;
-        minValue?: number | null;
-        parameter?: string;
-}[]
+  thresholdId: string;
+  value?: number | null;
+  maxValue?: number | null;
+  minValue?: number | null;
+  parameter?: string;
+}
+[];

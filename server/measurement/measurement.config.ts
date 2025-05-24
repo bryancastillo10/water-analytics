@@ -1,7 +1,6 @@
-import { MeasurementRepository } from "@/measurement/measurement.repository";
-import { MeasurementService } from "@/measurement/core/service/measurementService";
-import { MeasurementController } from "@/measurement/measurement.controller";
-
+import { MeasurementRepository } from '@/measurement/measurement.repository';
+import { MeasurementService } from '@/measurement/core/service/measurementService';
+import { MeasurementController } from '@/measurement/measurement.controller';
 
 const measurementRepository = new MeasurementRepository();
 

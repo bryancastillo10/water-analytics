@@ -1,49 +1,48 @@
 [
-    {
-      "parameter": "pH",
-      "minValue": 6.5,
-      "maxValue": 7.5,
-      "unit": ""
-    },
-    {
-      "parameter": "suspendedSolids",
-      "value": 200,
-      "unit": "mg/L"
-    },
-    {
-      "parameter": "totalCOD",
-      "value": 100,
-      "unit": "mg/L"
-    },
-    {
-      "parameter": "fecalColiform",
-      "value": 1000,
-      "unit": "MPN/100mL"
-    },
-    {
-      "parameter": "temperature",
-      "value": 35,
-      "unit": "°C"
-    },
-    {
-      "parameter": "dissolvedOxygen",
-      "value": 10.0,
-      "unit": "mg/L"
-    },
-    {
-      "parameter": "ammonia",
-      "value": 0.5,
-      "unit": "mg/L"
-    },
-    {
-      "parameter": "nitrates",
-      "value": 0.5,
-      "unit": "mg/L"
-    },
-    {
-      "parameter": "phosphates",
-      "value": 1,
-      "unit": "mg/L"
-    }
-  ]
-  
+  {
+    "parameter": "pH",
+    "minValue": 6.5,
+    "maxValue": 7.5,
+    "unit": ""
+  },
+  {
+    "parameter": "suspendedSolids",
+    "value": 200,
+    "unit": "mg/L"
+  },
+  {
+    "parameter": "totalCOD",
+    "value": 100,
+    "unit": "mg/L"
+  },
+  {
+    "parameter": "fecalColiform",
+    "value": 1000,
+    "unit": "MPN/100mL"
+  },
+  {
+    "parameter": "temperature",
+    "value": 35,
+    "unit": "°C"
+  },
+  {
+    "parameter": "dissolvedOxygen",
+    "value": 10.0,
+    "unit": "mg/L"
+  },
+  {
+    "parameter": "ammonia",
+    "value": 0.5,
+    "unit": "mg/L"
+  },
+  {
+    "parameter": "nitrates",
+    "value": 0.5,
+    "unit": "mg/L"
+  },
+  {
+    "parameter": "phosphates",
+    "value": 1,
+    "unit": "mg/L"
+  }
+]

@@ -1,7 +1,7 @@
-import { AuthRepository } from "@/auth/auth.repository";
-import { AuthService } from "@/auth/core/service/authService";
-import { AuthController } from "@/auth/auth.controller";
-import { AuthMiddleware } from "@/infrastructure/middleware/auth.middleware";
+import { AuthRepository } from '@/auth/auth.repository';
+import { AuthService } from '@/auth/core/service/authService';
+import { AuthController } from '@/auth/auth.controller';
+import { AuthMiddleware } from '@/infrastructure/middleware/auth.middleware';
 
 const authRepository = new AuthRepository();
 

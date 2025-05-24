@@ -1,6 +1,6 @@
 export class UserData {
-    username!: string;
-    email!: string;
-    resetCode?: string;
-    resetCodeExpiry?: Date;
+  username!: string;
+  email!: string;
+  resetCode?: string;
+  resetCodeExpiry?: Date;
 }
