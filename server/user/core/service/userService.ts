@@ -14,7 +14,7 @@ import {
 } from '@/infrastructure/errors/customErrors';
 import { generateAndSendVerificationCode } from '@/utils/nodemailer';
 import { toHashPassword } from '@/utils/bcrypt';
-import { uploadImage } from '@/utils/cloudinary';
+import { uploadImage, getPublicId, deleteImage } from '@/utils/cloudinary';
 
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
@@ -49,12 +49,19 @@ export class UserService {
       throw new NotFoundError('User id is not found');
     }
 
-    const validateUsername = await this.userRepository.findUserByUsername(username);
-    if (!validateUsername) {
+    // This query chgecks if the username exists in the database
+    // At the same time retrieves the profile picture URL
+    const userProfilePic = await this.userRepository.findUserByUsername(username);
+    if (!userProfilePic) {
       throw new ValidationError('Username does not match any existing username');
     }
 
+    const url = userProfilePic;
+    const publicId = getPublicId(url);
+    await deleteImage(`profile-picture/${publicId}`);
+
     await this.userRepository.deleteUserProfile(userId);
+
     return;
   }
 

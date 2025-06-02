@@ -55,3 +55,20 @@ export const uploadImage = async ({
     throw new CloudinaryError('Failed to upload image to Cloudinary');
   }
 };
+
+
+export const getPublicId = (url: string): string => {
+  const urlParts = url.split('/');
+  const filenameWithExt = urlParts[urlParts.length - 1].split('.')[0];
+  return filenameWithExt;
+};
+
+export const deleteImage = async (publicId: string) => {
+  try{
+    return await cloudinary.uploader.destroy(publicId, {
+      resource_type: 'image',     
+    });
+  } catch(error){
+    throw new CloudinaryError('Failed to delete image from Cloudinary');
+  }
+};

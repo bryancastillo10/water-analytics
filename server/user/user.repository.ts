@@ -111,26 +111,29 @@ export class UserRepository implements IUserRepository {
         console.error(error.message);
         throw new DatabaseError('Database error at findUserByEmail method');
       }
-      throw Error;
+      throw error;
     }
   }
 
-  async findUserByUsername(username: string): Promise<UserData | null> {
+  async findUserByUsername(username: string): Promise<string | null> {
     try {
       const user = await this.prisma.user.findUnique({
         where: { username },
+        select: {
+          profilePic: true}
       });
 
       if (!user) {
         throw new ValidationError('User was not found in the database');
       }
-      return user as UserData;
+
+      return user.profilePic;
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         console.error(error.message);
         throw new DatabaseError('Database error at findUserByUsername method');
       }
-      throw Error;
+      throw error;
     }
   }
 
@@ -148,7 +151,7 @@ export class UserRepository implements IUserRepository {
         console.error(error.message);
         throw new DatabaseError('Database error at saveResetCode method');
       }
-      throw Error;
+      throw error;
     }
   }
 
@@ -165,7 +168,7 @@ export class UserRepository implements IUserRepository {
         console.error(error.message);
         throw new DatabaseError('Database error at updatePassword method');
       }
-      throw Error;
+      throw error;
     }
   }
 
@@ -183,7 +186,7 @@ export class UserRepository implements IUserRepository {
         console.error(error.message);
         throw new DatabaseError('Database error at updateProfilePicture method');
       }
-      throw Error;
+      throw error;
     }
   }
 }
