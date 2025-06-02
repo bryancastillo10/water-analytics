@@ -2,7 +2,7 @@ import { CreateSiteRequest, UpdateSiteRequest } from '@/site/core/interface/ISit
 import { SiteRepository } from '@/site/site.repository';
 
 import { NotFoundError, ValidationError } from '@/infrastructure/errors/customErrors';
-import { uploadImage } from '@/utils/cloudinary';
+import { uploadImage, getPublicId, deleteImage } from '@/utils/cloudinary';
 
 export class SiteService {
   constructor(private readonly siteRepository: SiteRepository) {}
@@ -83,8 +83,16 @@ export class SiteService {
   async deleteSite(siteId: string) {
     if (!siteId) {
       throw new NotFoundError('Site Id not found');
-    }
+    };
+
+    const sitePhoto = await this.siteRepository.getSitePhotoById(siteId);
+    if(sitePhoto){
+      const publicId = getPublicId(sitePhoto);
+      await deleteImage(`sites/${publicId}`);
+    };
+
     await this.siteRepository.deleteSite(siteId);
+
     return {
       message: 'Site has been deleted successfully',
     };
