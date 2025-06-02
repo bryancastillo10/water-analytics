@@ -3,7 +3,7 @@ import { UserData } from '@/user/core/entity/user';
 export interface IUserRepository {
   updateUserProfile({ userId, toUpdateUser }: UpdateUserRequest): Promise<UserData>;
   findUserByEmail(email: string): Promise<UserData | null>;
-  findUserByUsername(username: string): Promise<UserData | null>;
+  findUserByUsername(username: string): Promise<string | null>;
   deleteUserProfile(userId: string): Promise<void>;
   saveResetCode({ email, code, expiry }: SaveResetCodeProps): Promise<void>;
   updatePassword({ email, hashedPassword }: UpdatePasswordRepo): Promise<void>;

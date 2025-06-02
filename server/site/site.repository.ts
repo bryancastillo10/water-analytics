@@ -51,7 +51,7 @@ export class SiteRepository implements ISiteRepository {
         console.error(error.message);
         throw new DatabaseError('Database error at verifyUser method');
       }
-      throw Error;
+      throw error;
     }
   }
 
@@ -66,7 +66,7 @@ export class SiteRepository implements ISiteRepository {
         console.error(error.message);
         throw new DatabaseError('Database error at getSiteByUser method');
       }
-      throw Error;
+      throw error;
     }
   }
 
@@ -97,7 +97,26 @@ export class SiteRepository implements ISiteRepository {
         console.error(error.message);
         throw new DatabaseError('Database error at deleteSite method');
       }
-      throw Error;
+      throw error;
     }
   }
+
+  async getSitePhotoById(siteId: string): Promise<string | null> {
+  try {
+    const site = await this.prisma.site.findUnique({
+        where: { id: siteId },  
+        select: { imageUrl: true },
+    });
+
+    return site?.imageUrl || null;
+
+  } catch (error) {
+    if (error instanceof PrismaClientKnownRequestError) {
+      console.error(error.message);
+      throw new DatabaseError('Database error at getSitePhotoById method');
+    }
+    throw error;
+  }
+}
+
 }
