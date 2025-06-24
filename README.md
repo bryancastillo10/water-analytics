@@ -6,12 +6,12 @@ This **TypeScript-based** web application is designed for **modern water analyti
 
 The client side of this application is built with **React and TypeScript**. Additional tools used include:
 
-- **React-Redux** – Global state management  
-- **Redux Toolkit Query** – API call handling  
-- **Recharts** – Interactive chart visualization  
-- **TanStack React Table** – Efficient table rendering  
-- **Phosphor Icons** – Icon library  
-- **Tailwind CSS** – Styling components and layouts  
+- **React-Redux** – Global state management
+- **Redux Toolkit Query** – API call handling
+- **Recharts** – Interactive chart visualization
+- **TanStack React Table** – Efficient table rendering
+- **Phosphor Icons** – Icon library
+- **Tailwind CSS** – Styling components and layouts
 
 The folder structure is organized based on **features**, with each feature containing similar subfolders such as **components**, **api**, **hooks**, and **utils**.
 
@@ -51,19 +51,17 @@ Meanwhile, **globally shared components and scripts** are placed in dedicated fo
 
 ```
 
-
 ## 2. 🌐 Server Side (Backend)
 
 The server side of this application is built with **Node-TS and Express**. Libraries and other tools were used to ensure efficient database management, authentication, security, and file handling:
 
 - **Prisma ORM** – Handle database query & communication with the server
 - **MongoDB** - Scalable No-SQL Database
-- **Helmet** – Enhances security by managing HTTP headers  
-- **Jsonwebtoken & Cookie-Parser** – for secure authentication and session management  
+- **Helmet** – Enhances security by managing HTTP headers
+- **Jsonwebtoken & Cookie-Parser** – for secure authentication and session management
 - **Multer** – Middleware for handling file uploads
-- **Cloudinary SDK** – Cloud-based storage bucket for image uploads 
+- **Cloudinary SDK** – Cloud-based storage bucket for image uploads
 - **Nodemailer** – Manages email sending such as for password reset feature
-
 
 ```bash
 #server
@@ -100,10 +98,10 @@ The server side of this application is built with **Node-TS and Express**. Libra
 ```
 
 ### 3. Preview (Screenshots)
-![Alt text](preview1.png)
 
-![Alt text](preview2.png)
+![water-analytics-screenshot-1](preview1.png)
 
+![water-analytics-screenshot-2](preview2.png)
 
 ### 4. User Features
 
@@ -117,12 +115,11 @@ The server side of this application is built with **Node-TS and Express**. Libra
 
 ![Static Badge](https://img.shields.io/badge/Monitoring_Site_Data_Management-%23006da3?style=flat)
 
-
->Easily manage information for your water quality monitoring sites. Add, update, or remove site details to keep your data organized.
+> Easily manage information for your water quality monitoring sites. Add, update, or remove site details to keep your data organized.
 
 ![Static Badge](https://img.shields.io/badge/Intuitive_Water_Quality_Table-%23006da3?style=flat)
 
->View clear and simple tables that display water quality data for each site, making it easy to track changes over time.
+> View clear and simple tables that display water quality data for each site, making it easy to track changes over time.
 
 ![Static Badge](https://img.shields.io/badge/Customizable_Parameter_Thresholds-%23006da3?style=flat)
 
@@ -130,19 +127,27 @@ The server side of this application is built with **Node-TS and Express**. Libra
 
 ![Static Badge](https://img.shields.io/badge/Dashboard_Analytics-%23006da3?style=flat)
 
->The dashboard presents interactive charts and summaries that compare current water quality readings with your set limits.
+> The dashboard presents interactive charts and summaries that compare current water quality readings with your set limits.
 
 ![Static Badge](https://img.shields.io/badge/Sticky_Notes_App-%23006da3?style=flat)
 
->Keep track of your thoughts with built-in sticky notes that you can add, edit, and move around easily.
+> Keep track of your thoughts with built-in sticky notes that you can add, edit, and move around easily.
 
-### 5. API Documentation
+### 5. Software System Architecture
+
+![water-analytics-architecture](architecture.png)
+
+### 6. Database Schema
+
+![water-analytics-schema](schema.png)
+
+### 7. API Documentation
 
 This project demonstrates REST API for managing authentication, user data, water quality dashboard calculations, site, notes, threshold and user profile CRUD operation.
 
 📖 **[View Full API Documentation](server/docs/index.md)**
 
-### 6. License
+### 8. License
 
 MIT License
 
@@ -152,20 +157,18 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-
-### 7. Developer
+### 9. Developer
 
 This project was built as part of my portfolio to showcase my full-stack web development skills using TypeScript, MERN, Prisma, and Tailwind CSS.
 
-
 ## ⚠️ Important Notice
+
 This application relies on **environmental variables** for authentication, API access, and external services (e.g., database, storage). These variables are not included in this repository for security reasons. If you are interested in running or contributing to this project, please contact me for more details.
 
-## 🔗 Developer Contacts: 
+## 🔗 Developer Contacts:
 
 [![Static Badge](https://img.shields.io/badge/bryancastillo10-%23181717?style=social&logo=github)](https://github.com/bryancastillo10)
 
-LinkedIn: [Bryan Castillo ][2] 
-
+LinkedIn: [Bryan Castillo ][2]
 
 [2]:[https://www.linkedin.com/in/bryan-castillo-479101171/]
