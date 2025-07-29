@@ -1,12 +1,14 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
   "scripts": {
-    "start": "tsx index.ts",
-    "dev": "tsx watch index.ts",
+    "start": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts",
     "seed": "tsx prisma/seed.ts",
-    "build": "pkgroll index.ts",
+    "build": "pkgroll src/index.ts",
     "format": "npx prettier . --write"
   },
   "keywords": [],
@@ -28,7 +30,8 @@
     "pkgroll": "^2.14.5",
     "prettier": "^3.5.3",
     "prisma": "^6.0.1",
-    "tsx": "^4.19.2"
+    "tsx": "^4.19.2",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "@prisma/client": "^6.0.1",

@@ -40,11 +40,12 @@ RUN apk add --no-cache openssl
 COPY --from=client-builder /client/dist /client/dist
 COPY --from=server-builder /server/node_modules /server/node_modules
 COPY --from=server-builder /server/package.json /server/package.json
+COPY --from=server-builder /server/dist /server/dist
 
 WORKDIR /server
 
 EXPOSE 3000
 
-CMD ["node", "dist/app.js"]
+CMD ["node", "dist/index.cjs"]
 
 LABEL name="water-analytics-app"
