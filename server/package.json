@@ -6,7 +6,7 @@
     "start": "tsx index.ts",
     "dev": "tsx watch index.ts",
     "seed": "tsx prisma/seed.ts",
-    "build": "pkgroll",
+    "build": "pkgroll index.ts",
     "format": "npx prettier . --write"
   },
   "keywords": [],
