@@ -27,9 +27,9 @@ RUN npm ci
 
 COPY server .
 
-ENV HOSTNAME "0.0.0.0"
-
 RUN cd infrastructure/prisma && npx prisma generate 
+
+RUN npm run build
 
 # Finalized Image
 
@@ -38,12 +38,13 @@ FROM node:18-alpine
 RUN apk add --no-cache openssl
 
 COPY --from=client-builder /client/dist /client/dist
-COPY --from=server-builder /server /server
+COPY --from=server-builder /server/node_modules /server/node_modules
+COPY --from=server-builder /server/package.json /server/package.json
 
 WORKDIR /server
 
 EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
+CMD ["node", "dist/app.js"]
 
 LABEL name="water-analytics-app"

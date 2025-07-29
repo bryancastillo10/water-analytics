@@ -25,6 +25,7 @@
     "@types/multer": "^1.4.12",
     "@types/node": "^22.9.0",
     "@types/nodemailer": "^6.4.16",
+    "pkgroll": "^2.14.5",
     "prettier": "^3.5.3",
     "prisma": "^6.0.1",
     "tsx": "^4.19.2"
